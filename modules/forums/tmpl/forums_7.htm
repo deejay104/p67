@@ -1,0 +1,51 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+<A href="forums.php?rub=forums_1&fid={fid}" class=clsLien><IMG src="{path_module}/img/icn32_retour.png">Retour</A>
+	<!-- BEGIN: ecrire -->
+	<A href="forums.php?rub=forums_2&fid={fid}&fpars={mid}&fprec=forums_7" title="Répondre à ce message."><IMG src="{path_module}/img/icn32_comment.png" />Répondre</A>
+	<!-- END: ecrire -->
+	<!-- BEGIN: modifier -->
+	<A HREF="forums.php?rub=forums_2&fid={fid}&fpars={mid}&mid={mid}&fprec=forums_7" title="Modifier ce message."><IMG src="{path_module}/img/icn32_modifier.png" />Modifier</A>
+	<!-- END: modifier -->
+	<!-- BEGIN: supprimer -->
+	<A HREF="forums.php?rub=forums_1&fid={fid}&opt={idmsg}&anc=visu" title="Effacer ce message."><IMG src="{path_module}/img/icn32_supprimer.png" />Supprimer</A>
+	<!-- END: supprimer -->
+
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+	<div id="forum_Message_Description">
+		<p id="forum_Message_DescriptionTitre">{titre}</p>
+		<span id="forum_Message_Modif">par {usr_maj} {date}</span>
+	</div>
+
+	<div id="forum_Message_Message"><p>{msg}</p></div>
+
+	<!-- BEGIN: pieces_jointes -->
+	<div id="forum_Message_Description">
+		<p id="forum_Message_DescriptionTitre">Pièce(s) jointe(s) :</p>
+	</div>
+	<div id="forum_Message_PJ">
+	  <!-- BEGIN: lst_document -->
+		<p>{form_document}</p>
+	  <!-- END: lst_document -->
+	</div>
+	<!-- END: pieces_jointes -->
+
+	<br />
+
+<!-- BEGIN: lst_reponse -->
+	<div id="forum_Message_Reponse">
+		<p id="forum_Message_ReponseTitre"><a href="forums.php?rub=forums_7&fid={fid}&mid={rep_mid}">{rep_titre}</a></p>
+		<p id="forum_Message_ReponseModif">par {rep_usr_creat} {rep_dte_creat}</p>
+		<p>{rep_message}</p>
+	</div>
+<!-- END: lst_reponse -->
+	
+<!-- END: corps -->
+

@@ -1,0 +1,91 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	<A href="compta.php"><IMG src="{path_module}/img/icn32_mouvement.png" border=0>&nbsp;Mouvement</A>
+	<A href="compta.php?rub=postes"><IMG src="{path_module}/img/icn32_param.png" border=0>&nbsp;Postes</A>
+<!-- BEGIN: vols -->
+	<A href="compta.php?rub=vols"><IMG src="{path_module}/img/icn32_vols.png" border=0>&nbsp;Vols</A>
+	<A href="compta.php?rub=tarifs"><IMG src="{path_module}/img/icn32_tarifs.png" border=0>&nbsp;Tarifs</A>
+<!-- END: vols -->
+	<A href="compta.php?rub=suivi"><IMG src="{path_module}/img/icn32_suivi.png" border=0>&nbsp;<u>Suivi</u></A>
+	<A href="suivicomptes.php"><IMG src="{path_module}/img/icn32_comptes.png" border=0>&nbsp;Liste des comptes</A>
+	<A href="tableaubord.php"><IMG src="{path_module}/img/icn32_tabbord.png" border=0>&nbsp;Tableau de bord</A>
+<!-- END: infos -->
+
+<!-- BEGIN: corps -->
+
+
+<FORM name="reservation" method="post" action="compta.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="rub" value="suivi">
+
+	<BR>
+
+	<!-- BEGIN: msg_enregistre -->
+	<TABLE border="0" cellspacing="0" cellpadding="0" background="">
+	  <TR>
+		<TD height=1 width=20><IMG src="images/rien.gif" height=1 width=20></TD>
+		<TD height=1 colspan=5><B>{msg_resultat}<B><BR><BR></TD>
+	  </TR>
+	</TABLE>
+	<BR><BR>
+	<!-- END: msg_enregistre -->
+
+
+
+	<!-- BEGIN: aff_suivi -->
+		<TABLE>
+		  <TR class="tableauTitre">
+				<td width=20>&nbsp;</td>
+				<td width=100>Date</td>
+				<td width=200>Mouvement</td>
+				<td width=10>&nbsp;</td>
+				<td width=400>Commentaire</td>
+				<td width=110 align=right class="tableauBorderLeft"Montant</td>
+				<td width=10>&nbsp;</td>
+				<td width=80 align=right>Relevé</td>
+			<tr  class="tableauTitre">
+				<TD >&nbsp;</TD>
+				<TD colspan=4 align=right><I>Ancien solde</I>&nbsp;</TD>
+				<TD align=right><I>{ancien_solde} €</I></TD>
+				<TD>&nbsp;</TD>
+				<TD>&nbsp;</TD>
+		  </TR>
+	
+		<!-- BEGIN: lst_suivi -->
+		  <TR valign=top bgcolor="#{color_suivi}">
+			<TD width=20 bgcolor=white>&nbsp;</TD>
+			<TD>{date_suivi}</TD>
+			<TD>{mouvement_suivi}<BR><I><FONT size=1>{tiers_suivi}</FONT></I></TD>
+			<TD>&nbsp;</TD>
+			<TD>{commentaire_suivi}</TD>
+			<TD align=right class="tableauBorderLeft">{montant_suivi}</TD>
+			<TD>&nbsp;</TD>
+			<TD align=center><INPUT type="checkbox" name="form_releve[{id_suivi}]" {chk_suivi}></TD>
+		  </TR>
+		<!-- END: lst_suivi -->
+		  <TR class="tableauBas">
+				<TD>&nbsp;</TD>
+				<TD colspan=4 align=right><B><I>Solde</I></B>&nbsp;</TD>
+				<TD align=right class="tableauBorderLeft"><B><I>{nouveau_solde} €</I></B></TD>
+				<TD>&nbsp;</TD>
+				<TD align=right><B><I>{pointe_solde} €</I></B></TD>
+		  </TR>
+		  <TR>
+				<TD width=20>&nbsp;</TD>
+				<TD colspan=8><BR>
+					<INPUT type="submit" name="fonc" value="Enregistrer">&nbsp;
+					<INPUT type="submit" name="fonc" value="Annuler">&nbsp;
+					<INPUT type="submit" name="fonc" value="Clore">
+				</TD>
+		  </TR>
+		</TABLE>
+	<!-- END: aff_suivi -->
+
+
+</FORM>
+
+
+
+<!-- END: corps -->

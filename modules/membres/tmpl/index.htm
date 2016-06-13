@@ -1,0 +1,41 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	<a href="membres.php"><IMG src="{path_module}/img/icn32_liste.png" alt="Liste">Liste</a>
+	<a href="membres.php?fonc=trombi"><IMG src="{path_module}/img/icn32_trombi.png" alt="Trombinoscope">Trombinoscope</a>
+<!-- BEGIN: ajout -->
+<A href="membres.php?rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" alt="Ajouter">Ajouter</A>
+<!-- END: ajout -->
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+
+<br />
+
+
+<!-- BEGIN: trombino -->
+	<table>
+	<!-- BEGIN: aff_ligne -->
+	  <tr>
+	    <!-- BEGIN: aff_colonne -->
+	    <td align=center>
+		<a href="membres.php?rub=detail&id={id_membre}">
+		<img src="doc.php?id={id_photo}" alt="" style="width:200px; height:240px; border: 1px solid #013366; border-radius: 5px;" /><br />
+		{prenom_membre} {nom_membre}
+		</a>
+	    </td>
+	    <!-- END: aff_colonne -->
+	  </tr>
+	<!-- END: aff_ligne -->
+	</table>
+<!-- END: trombino -->
+
+
+{aff_tableau}
+
+
+<!-- END: corps -->

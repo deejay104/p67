@@ -1,0 +1,58 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	Recherche sur les forums
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+<FORM name="form_recherche" method="GET" action="forums.php" enctype="multipart/form-data">
+
+	<INPUT name="critere" type="text" value="{crit}">
+
+	<INPUT type="submit" name="fonc" value="Rechercher">
+
+
+	<INPUT type="hidden" name="rub" value="forums_1">
+	<INPUT type="hidden" name="fid" value="{fid}">
+
+</FORM>
+
+<BR><BR>
+
+<!-- BEGIN: resultat -->
+<TABLE width="100%" cellspacing=0 cellpadding=0 background="">
+<TR bgcolor="#{color}" height=25>
+	<TD width=20>&nbsp;</TD>
+	<TD width=150><B><FONT color="white">Forum</FONT></B></TD>
+	<TD width=300><B><FONT color="white">Titre</FONT></B></TD>
+	<TD width=100><B><FONT color="white">Auteur</FONT></B></TD>
+	<TD width=90><B><FONT color="white">Date</FONT></B></TD>
+</TR>
+
+<!-- BEGIN: lst_msg -->
+<TR valign=top bgcolor="#013366">
+	<TD colspan=5><img src="images/rien.gif" alt="" height=1 /></TD>
+</TR>
+<TR valign=top bgcolor="#{bgcolor}">
+	<TD width=20>&nbsp;</TD>
+	<TD><A href="forums.php?rub=forums_1&fid={fid_msg}&critere={crit}" style="display: block;">{forum_msg}</A></TD>
+	<TD><A href="forums.php?rub=forums_7&fid={fid_msg}&mid={mid_msg}&critere={crit}" style="display: block;">{titre_msg}</A></TD>
+	<TD>{pseudo_msg}</TD>
+	<TD>{date_msg}</TD>
+</TR>
+<!-- END: lst_msg -->
+<TR valign=top bgcolor="{bgcolor}">
+	<TD colspan=5 bgcolor="#013366"><img src="images/rien.gif" alt="" height=1 /></TD>
+</TR>
+
+<!-- BEGIN: noresponse -->
+<TR><TD colspan=5>Pas de réponse</TD></TR>
+<!-- END: noresponse -->
+
+</TABLE>
+<!-- END: resultat -->
+
+<BR>
+<!-- END: corps -->

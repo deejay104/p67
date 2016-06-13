@@ -1,0 +1,122 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_login.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+<A href="membres.php"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt="">Liste</A>
+<!-- BEGIN: ajout -->
+<A href="membres.php?rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt="">&nbsp;Ajouter</A>
+<!-- END: ajout -->
+<!-- BEGIN: modification -->
+<A href="membres.php?rub=detail&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_editer.png" border=0 alt="">&nbsp;Modifier</A>
+<!-- END: modification -->
+<!-- BEGIN: password -->
+<A href="membres.php?rub=chgpwd&id={id}"><img src="{path_module}/img/icn32_password.png" border=0 alt="" width=32 height=32 />&nbsp;Changer son mot de passe</A>
+<!-- END: password -->
+<!-- BEGIN: desactive -->
+<A href="#" OnClick="ConfirmeClick('membres.php?rub=detail&id={id}&fonc=desactive','Voulez-vous désactiver cette utilisateur ?');"><IMG src="{path_module}/img/icn32_desactive.png" border=0 alt="">&nbsp;Désactiver</A>
+<!-- END: desactive -->
+<!-- BEGIN: suppression -->
+<A href="#" OnClick="ConfirmeClick('membres.php?rub=detail&id={id}&fonc=delete','Voulez-vous supprimer cette utilisateur ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0 alt="">&nbsp;Supprimer</A>
+<!-- END: suppression -->
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+<FORM name="form_detail" method="post" action="membres.php" enctype="multipart/form-data">
+<INPUT type="hidden" name="rub" value="chgpwd">
+<INPUT type="hidden" name="id" value="{id}">
+<INPUT type="hidden" name="checktime" value="{form_checktime}">
+
+<BR><BR>
+
+<SCRIPT language="JavaScript" src="modules/_md5.js"></SCRIPT>
+<SCRIPT language="javascript">
+	<!-- 
+	function cryptData()
+	  {
+   		var str0 = document.getElementById('my_form_mdp0').value;
+			var str1 = document.getElementById('my_form_mdp1').value;
+			var str2 = document.getElementById('my_form_mdp2').value;
+
+		if ((str1=="") || (str2==""))
+		  {
+        alert("Le mot de passe ne doit pas être vide.");
+		  	return false;
+		  }
+
+		if ((str1==str2))
+		  {
+			if (str1=="")
+			  {
+					document.getElementById('form_newmdp').value = "**NONE**";
+        	alert("Le mot de passe ne doit pas être vide.");
+					return false;
+			  }
+			else
+			  {
+			  	document.getElementById('form_oldmdp').value = MD5(str0);
+			  	document.getElementById('form_newmdp').value = MD5(str1);
+			  }
+
+			document.getElementById('my_form_mdp0').value = "";
+			document.getElementById('my_form_mdp1').value = "";
+			document.getElementById('my_form_mdp2').value = "";
+
+			document.form_detail.submit();
+		  }
+		else
+		  {
+		  	alert ("Les deux mots de passe sont différents !");
+		  	return false;
+		  }
+	  }
+	// -->
+</SCRIPT>
+
+
+<BR><BR>
+<!-- BEGIN: msgerror -->
+<p class="msgerror">{msg_erreur}</p>
+<!-- END: msgerror -->
+<!-- BEGIN: msgok -->
+<p class="msgok">{msg_confirmation}</p>
+<!-- END: msgok -->
+
+	<BR>
+<!-- BEGIN: neverset -->
+	Le mot de passe n'a jamais été défini.<br/><br/>
+<!-- END: neverset -->
+	
+	
+	<TABLE border=0 cellpadding=0 cellspacing=0>
+
+<!-- BEGIN: oldpwd -->
+		<TR height=17>
+			<TD width=190>Ancien mot de passe</TD>
+			<TD><INPUT type="password" id="my_form_mdp0" name="my_form_mdp0"></TD>
+		</TR>
+		<TR height=17>
+			<TD>&nbsp;</TD>
+			<TD>&nbsp;</TD>
+		</TR>
+<!-- END: oldpwd -->
+		<TR height=17>
+			<TD>Nouveau mot de passe</TD>
+			<TD><INPUT type="password" id="my_form_mdp1" name="my_form_mdp1"></TD>
+		</TR>
+		<TR height=17>
+			<TD>Confirmation du mot de passe</TD>
+			<TD><INPUT type="password" id="my_form_mdp2" name="my_form_mdp2"></TD>
+		</TR>
+	</TABLE>
+<!-- BEGIN: oldpwdadm -->
+	<INPUT type="hidden"  id="my_form_mdp0" name="my_form_mdp0">
+<!-- END: oldpwdadm -->
+	<INPUT type="hidden" id="form_oldmdp" name="form_oldmdp">
+	<INPUT type="hidden" id="form_newmdp" name="form_newmdp">
+	<INPUT type="hidden" name="fonc" value="Enregistrer">
+	<BR><INPUT type="submit" name="fonc2" value="Enregistrer" OnClick="return cryptData();"> <INPUT type="submit" name="fonc" value="Annuler">
+</FORM>
+
+<!-- END: corps -->

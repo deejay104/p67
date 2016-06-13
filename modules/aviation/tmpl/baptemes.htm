@@ -1,0 +1,48 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_baptemes.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+&nbsp;
+<!-- BEGIN: ajout -->
+<A href="index.php?mod=aviation&rub=bapteme&fonc=add&id="><IMG src="{path_module}/img/icn32_ajouter.png" alt="">&nbsp;Ajouter</A>
+<!-- END: ajout -->
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+	<script language="JavaScript">
+		var ns4=document.layers
+		var ie4=document.all
+		var ns6=document.getElementById&&!document.all
+	
+		function Recharge()
+		  {
+			if (ns6)
+			  {
+			  	var a = document.getElementById("form_status").value;
+			  	document.location="index.php?mod=aviation&rub=baptemes&form_status="+a+"";
+			  }
+			else
+			  {
+			  	document.location="index.php?mod=aviation&rub=baptemes&form_status="+form_status.value+"&scale=yes";
+			  }
+		  }
+	</script>
+
+<br />
+
+<select id="form_status" name="form_status" OnChange="Recharge();">
+<option value="-2" {form_selected_open}>Ouvert</option>		
+<option value="-1" {form_selected_all}>Tous</option>		
+<!-- BEGIN: lst_status -->
+	<option value="{form_statusid}" {form_selected}>{form_status}</option>		
+<!-- END: lst_status -->
+</select>
+<br /><br />
+
+{aff_tableau}
+
+
+<!-- END: corps -->

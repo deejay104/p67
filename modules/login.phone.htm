@@ -1,0 +1,101 @@
+<!-- BEGIN: main -->
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>{site_title} - Login</title>
+  <link rel='stylesheet' href='modules/style.phone.css' type='text/css' />
+  <link rel="SHORTCUT ICON" href="images/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+
+
+
+  </style>
+  
+	<script language="JavaScript" src="modules/_md5.js"></script>
+	<script language="javascript">
+	<!-- 
+		function setFormFocus()
+		{
+			self.focus();
+			document.forms[0].username.focus(); 
+			document.forms[0].username.select();
+		}
+		
+<!-- BEGIN: secure -->
+		function cryptData()
+		{
+			str = document.FormLogin.mypassword.value;
+
+			if (str=="")
+			{ document.FormLogin.password.value = ""; }
+			else
+			{ document.FormLogin.password.value = MD5(MD5(str)+document.FormLogin.myid.value); }
+			document.FormLogin.mypassword.value = "";
+
+			document.FormLogin.submit();
+		}
+<!-- END: secure -->
+
+<!-- BEGIN: unsecure -->
+		function cryptData()
+		{
+			str = document.FormLogin.mypassword.value;
+			if (str=="")
+			{ document.FormLogin.password.value = ""; }
+			else
+			{ document.FormLogin.password.value = MD5(str); }
+			document.FormLogin.mypassword.value = "";
+			document.FormLogin.submit();
+		}
+<!-- END: unsecure -->
+
+	// -->
+	</script>
+
+  </head>
+
+<body onload="setFormFocus();">
+
+<form METHOD="post" ACTION="login.php" NAME="FormLogin" OnSubmit="cryptData();">
+	<input type="hidden" name="varlogin" value="{var}">
+  <input type="hidden" name="password" />
+  <input type="hidden" name="myid" value="{myid}" />
+
+	<div class="login">
+			<div class="loginLogo">
+				<img src="images/{site_logo}" alt="Home" border="0" />
+			</div>
+	
+			<div class="loginAuthBox">
+				<div class="loginAuthTitre">
+					<p>
+						<label><img src="images/icn64_login.png"></label>
+					  Authentification
+					</p>
+				</div>
+			</div>
+	
+			<div class="loginAuthDesc">
+					Merci d'entrer votre adresse mail ou vos initiales ainsi 
+					que votre mot de passe.<br />
+					<font color=red><B>{errmsg}</b></font>
+			</div>
+				
+			<div class="loginIdent">
+				<p><label for="login">Utilisateur</label> <input name="username" value="{username}" id="login" maxlength=256></p>
+				<p><label for="pwd">Mot de passe</label> <input name="mypassword" value="" type=password id="pwd" maxlength=256 /></p>
+			</div>
+			<div class="loginSubmit">
+				<input type="submit" id="fonc" name="fonc" value="Login">
+			</div>
+		</div>
+	
+	</div>
+
+</form>
+
+</body>
+</html>
+
+
+<!-- END: main -->

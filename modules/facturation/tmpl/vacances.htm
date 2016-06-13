@@ -1,0 +1,63 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_presence.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	Liste des vacances
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+<script type="text/javascript">
+	$(function() {
+		$("#form_dtedeb").datepicker({
+			changeYear: true,
+			dateFormat: "dd/mm/yy",
+			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
+			prevText: "Précédent",
+			nextText: "Suivant"
+		});
+		$("#form_dtefin").datepicker({
+			changeYear: true,
+			dateFormat: "dd/mm/yy",
+			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
+			prevText: "Précédent",
+			nextText: "Suivant"
+		});
+	});
+</script>
+
+<br />
+<table>
+<tr>
+	<td width=630><a href="presence.php">-Tableau des présences-</a> <a href="presence.php?rub=ponctuel">-Présence ponctuelle-</a></td>
+</tr>
+</table>
+
+
+<form name="presence" method="post" action="index.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="mod" value="facturation">
+	<INPUT type="hidden" name="rub" value="vacances">
+
+<br/>
+
+{aff_tableau}
+<table>
+	<tr>
+		<td width=20></td>
+		<td width=100><input type='text' name="form_dtedeb" id="form_dtedeb" size=10></td>
+		<td width=100><input type='text' name="form_dtefin" id="form_dtefin" size=10></td>
+		<td width=420><input type='text' name="form_comment" size=45> <input type="submit" name="fonc" value="Enregistrer" /></td>
+	</tr>
+</table>
+<br/>
+
+
+</form>
+
+<!-- END: corps -->

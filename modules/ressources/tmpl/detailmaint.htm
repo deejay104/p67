@@ -1,0 +1,117 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	<!-- BEGIN: supprimemaint -->
+	<a href="maintenance.php?rub=detailmaint&id={id}&fonc=Supprimer"><img src="{path_module}/img/icn32_supprimer.png" alt=""> Supprimer la maintenance</a>&nbsp;
+	<!-- END: supprimemaint -->
+	
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+<script type="text/javascript">
+	$(function() {
+		$("#form_dte_deb").datepicker({
+			changeYear: true,
+			dateFormat: "dd/mm/yy",
+			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
+			prevText: "Précédent",
+			nextText: "Suivant"
+		});
+	});
+	$(function() {
+		$("#form_dte_fin").datepicker({
+			changeYear: true,
+			dateFormat: "dd/mm/yy",
+			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
+			prevText: "Précédent",
+			nextText: "Suivant"
+		});
+	});
+</script>
+
+<FORM name="maintenance" method="post" action="maintenance.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="rub" value="detailmaint">
+	<INPUT type="hidden" name="id" value="{id}">
+
+	<p class="lastupdate">Dernière mise à jour : {info_maj}</p>
+	<BR>
+
+	
+
+				<FONT color="red"><B>{msg_erreur}</B></FONT>
+				<FONT color="green"><B>{msg_ok}</B></FONT><BR>
+
+<div class="formulaire">
+	<p>
+			<label>Avion</label>
+      <!-- BEGIN: aff_ressource -->
+      <SELECT name="form_ressource"  OnChange="document.maintenance.submit();">
+				<!-- BEGIN: lst_ressource -->
+				<OPTION value="{uid_ressource}" {chk_ressource}>{nom_ressource}</OPTION>
+				<!-- END: lst_ressource -->
+      </SELECT>
+      <!-- END: aff_ressource -->
+
+      <!-- BEGIN: aff_ressource_visu -->
+				{nom_ressource_visu}
+      <!-- END: aff_ressource_visu -->
+	</p>
+	<p>
+			<label>Status</label>
+			{form_status}
+	</p>
+	<p>
+			<label>Atelier</label>
+			
+      <!-- BEGIN: aff_atelier -->
+      <select name="form_atelier">
+				<!-- BEGIN: lst_atelier -->
+				<OPTION value="{uid_atelier}" {chk_atelier}>{nom_atelier}</OPTION>
+				<!-- END: lst_atelier -->
+			</select>
+			<!-- END: aff_atelier -->
+      <!-- BEGIN: aff_atelier_visu -->
+			{nom_atelier_visu}
+      <!-- END: aff_atelier_visu -->
+	</p>
+	<p>
+			<label>Début de l'intervention</label>
+			{form_dte_deb} <FONT color=red>{msg_dtedeb}</FONT>
+	</p>
+	<p>
+			<label>Fin de l'intervention</label>
+			{form_dte_fin} <FONT color=red>{msg_dtefin}</FONT>
+	</p>
+	<p>
+			<label>Temps consommé</label>
+			{form_potentiel} (nombre minutes réportées à la fin de l'intervention)
+	</p>
+	<p><br />Dernier vol effectué avant la maintenance</p>
+	{aff_resa}
+	<p><br />Liste des fiches associées</p>
+	{aff_fiche}
+</div>
+
+<div class="formulaireSubmit">
+
+				<!-- BEGIN: aff_bouttons -->
+				<INPUT type="submit" name="fonc" value="Enregistrer">
+				<!-- END: aff_bouttons -->
+
+				<INPUT type="submit" name="fonc" value="Imprimer">
+				<INPUT type="submit" name="fonc" value="Retour">
+</div>
+
+</FORM>
+
+
+
+<!-- END: corps -->

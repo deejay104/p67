@@ -1,0 +1,112 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+			<a href="reservations.php?rub=reservation_sauve&id={id}&fonc=Annuler"><IMG src="{path_module}/img/icn32_retour.png">Retour</a>
+	<!-- BEGIN: supprimer -->
+			<a href="#" OnClick="ConfirmeClick('reservations.php?rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette réservation ?');"><IMG src="{path_module}/img/icn32_supprimer.png">Supprimer</a>
+	<!-- END: supprimer -->
+			<a href="reservations.php?rub=reservation_sauve&id={id}&fonc=Devis masse">Devis masse</a>
+
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+
+	<p class="lastupdate">Dernière mise à jour : <a href="" OnMouseOver="ShowPopup('{info_historique}');" OnMouseOut="HidePopup();">{info_maj}</a></p>
+	<p>Estimation du temps de vol réalisé à la prise en charge : {potentiel}</p>
+
+	<!-- BEGIN: date_depassee -->
+	<p><B><FONT color="{color_date}">{texte_date}</FONT></B></p>
+	<p>Pour continuer à voler, merci d'envoyer une copie de votre {nom_date} au président.</p>
+	<br />
+	<!-- END: date_depassee -->
+	<!-- BEGIN: texte_erreur -->
+	<p class="msgerror">{texte_date}</p>
+	<!-- END: texte_erreur -->
+
+	<!-- BEGIN: msg_error -->
+	<p class="msgerror">{msg_error}</p>
+	<!-- END: msg_error -->
+
+	<!-- BEGIN: aff_reservation -->
+		<div class="formulaireTitre">
+	  	Réservation
+	  </div>
+
+		<div class="formulaire">
+			<p>
+				<label for="avion">Avion</label> 
+				{aff_nom_avion}
+	  	</p>
+
+			<p>&nbsp;</p>
+			
+		  <p>
+				<label for="pilote">Pilote</label>
+				{aff_nom_pilote}
+	  	</p>
+
+		  <p>
+				<label for="debite">Débité (si différent)</label>
+				{aff_nom_debite}
+		 	</p>
+
+	<!-- BEGIN: aff_instructeur -->
+		  <p>
+				<label for="instructeur">Instructeur</label>
+			  {aff_nom_instructeur}
+			</p>
+	<!-- END: aff_instructeur -->
+		  <p>
+				<label for="destination">Destination</label>
+			  {form_destination}
+		  </p>
+
+		  <p>
+				<label for="pob">Nb de personnes</label>
+				{form_nbpassager}
+			</p>
+
+		  <p>
+				<label for="tpsestime">Temps de vol estimé</label>
+			  {form_tpsestime} min
+		  </p>
+			<p>&nbsp;</p>
+			<p>
+				<label for="form_dte_deb">Du</label>
+		  	{form_dte_deb} à {form_hor_deb}
+		  </p>
+		  <p>
+				<label for="form_dte_fin">Au</label>
+		  	{form_dte_fin} à {form_hor_fin}
+		  </p>
+			<p>&nbsp;</p>
+	
+		  <p>
+				<label for="commentaire" style="vertical-align: top;">Commentaire(s) :</label>
+				{form_description}
+		  </p>
+	  	  
+		</div>
+
+
+		<div class="formulaireTitre">
+	  	Saisi de l'horamètre
+	  </div>
+
+		<div class="formulaire">
+		
+		{aff_horametre}
+
+
+		</div>
+
+
+	<!-- END: aff_reservation -->
+
+
+	<br />
+
+<!-- END: corps -->

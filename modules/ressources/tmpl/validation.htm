@@ -1,0 +1,46 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	<A href="ressources.php"><IMG src="{path_module}/img/icn32_liste.png" border=0 alt="">Liste des avions</A>
+	<A href="maintenance.php?rub=fichemaint"><IMG src="{path_module}/img/icn32_fiche.png" border=0 alt="">Créer une fiche</A>
+	<A href="maintenance.php?rub=liste"><IMG src="{path_module}/img/icn32_maintenance.png" border=0 alt="">Maintenances</A>
+<!-- END: infos -->
+
+
+
+<!-- BEGIN: corps -->
+<SCRIPT language="JavaScript">
+	var ns4=document.layers
+	var ie4=document.all
+	var ns6=document.getElementById&&!document.all
+
+	function Recharge()
+	  {
+	  	var a = document.maintenance.uid_avion.value;
+	  	document.location='maintenance.php?rub=fiche&uid_avion='+a;
+	  }
+</SCRIPT>
+
+<FORM name="maintenance" method="post" action="maintenance.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="rub" value="validation">
+
+
+
+	<br />
+
+	Liste des fiches à valider :<br /><br />
+
+	{aff_tabavalider}
+
+	<!-- BEGIN: aff_valide -->
+	<div class="formulaireSubmit">
+				<input type="submit" name="fonc" value="Accepter" />&nbsp;
+				<input type="submit" name="fonc" value="Refuser" />&nbsp;
+	</div>
+	<!-- END: aff_valide -->
+
+</FORM>
+
+<!-- END: corps -->

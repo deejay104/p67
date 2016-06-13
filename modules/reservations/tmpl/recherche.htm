@@ -1,0 +1,71 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	Recherche de réservation
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+<script language="JavaScript" src="modules/_popdate.js"></script>
+
+<form name="recherche" method="post" action="reservations.php" enctype="multipart/form-data">
+	<input type="hidden" name="rub" value="recherche">
+	<input type="hidden" name="id" value="{id}">
+	<input type="hidden" name="checktime" value="{form_checktime}">
+
+	<table border="0" cellspacing="0" cellpadding="0" background="">
+	  <tr>
+		<td width=20>&nbsp;</td>
+	  	<td width=50>Entre le</td>
+	  	<td><input name="form_dte_deb" value="{form_dte_deb}" size=10> <a href="javascript:show_calendar('document.recherche.form_dte_deb', document.recherche.form_dte_deb.value);"><img src="{path_module}/img/icn_calendrier.gif" border=0></a> et le <input name="form_dte_fin" value="{form_dte_fin}" size=10> <a href="javascript:show_calendar('document.recherche.form_dte_fin', document.recherche.form_dte_fin.value);"><img src="{path_module}/img/icn_calendrier.gif" border=0></a></font></td>
+	  </tr>
+	  <tr>
+		<td>&nbsp;</td>
+	  	<td>Avion&nbsp;</td>
+		<td>
+		<select name="form_uid_ress">
+		<option value="">-</option>
+		<!-- BEGIN: lst_avion -->
+		<option value="{uid_avion}" {chk_avion}>{nom_avion}</option>
+		<!-- END: lst_avion -->
+		</select>
+	  	</td>
+	  </tr>
+	  <tr>
+		<td>&nbsp;</td>
+	  	<td>Pilote&nbsp;</td>
+	  	<td>
+		<select name="form_uid_pilote">
+		<option value="">-</option>
+		<!-- BEGIN: lst_pilote -->
+		<option value="{uid_pilote}" {chk_pilote}>{nom_pilote}</option>
+		<!-- END: lst_pilote -->
+		</select>
+	  	</td>
+	  </tr>
+	  <tr>
+		<td>&nbsp;</td>
+	  	<td>Instructeur&nbsp;</td>
+	  	<td>
+		<select name="form_uid_instructeur">
+		<option value="">-</option>
+		<!-- BEGIN: lst_instructeur -->
+		<option value="{uid_instructeur}" {chk_instructeur}>{nom_instructeur}</option>
+		<!-- END: lst_instructeur -->
+		</select>
+	  	</td>
+	  </tr>
+	  <tr>
+		<td>&nbsp;</td>
+	  	<td colspan=2><br /><input type="submit" name="fonc" value="Rechercher"> <input type="submit" name="fonc" value="Annuler"></TD>
+	  </tr>
+	</table>
+</form>
+
+<br />
+{aff_tableau}
+
+
+<!-- END: corps -->

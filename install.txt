@@ -10,8 +10,14 @@ SoceIt 2.0 Installation
 
 - Décompresser le fichier dans un dossier accessible par le serveur web
 - Donner au compte utilisé pour le serveur web les droits d'écriture aux dossiers documents
-- Executer le script structure.sql sur le serveur MySQL
+- Executer le script config/structure.sql sur le serveur MySQL
 - Copier le fichier config/config.tmpl.inc.php dans config/config.inc.php
 - Modifier le fichier config/config.inc.php avec les bons paramètres d'accès au serveur MySQL
+- Accéder à la page <url du site>/updatedb.php
 - Accéder via le navigateur web vers le dossier du serveur
 - Vous connecter avec le compte adm et mot de passe admin
+
+3. Update
+
+- Décompresser le fichier dans un dossier accessible par le serveur web
+- Accéder à la page <url du site>/updatedb.php

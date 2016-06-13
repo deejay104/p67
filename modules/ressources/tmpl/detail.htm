@@ -1,0 +1,145 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+<A href="ressources.php"><IMG src="{path_module}/img/icn32_liste.png" border=0 alt="">Liste des avions</A>
+<!-- BEGIN: ajout -->
+<A href="ressources.php?rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt="">Ajouter</A>
+<!-- END: ajout -->
+<!-- BEGIN: modification -->
+<A href="ressources.php?rub=detail&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_modifier.png" border=0 alt="">Modifier</A>
+<!-- END: modification -->
+<!-- BEGIN: desactive -->
+<A href="#" OnClick="ConfirmeClick('ressources.php?rub=detail&id={id}&fonc=desactive','Voulez-vous désactiver cet avion ?');"><IMG src="{path_module}/img/icn32_desactive.png" border=0 alt="">Désactiver</A>
+<!-- END: desactive -->
+<!-- BEGIN: suppression -->
+<A href="#" OnClick="ConfirmeClick('ressources.php?rub=detail&id={id}&fonc=delete','Voulez-vous supprimer cet avion ?');"><IMG src="{path_module}/img/icn32_supprime.png" border=0 alt="">Supprimer</A>
+<!-- END: suppression -->
+<A href="maintenance.php?rub=fiche&uid_avion={id}"><IMG src="{path_module}/img/icn32_fiche.png" border=0 alt="">Fiches</A>
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+<FORM name="form_detail" method="post" action="ressources.php" enctype="multipart/form-data">
+<INPUT type="hidden" name="rub" value="detail">
+<INPUT type="hidden" name="id" value="{id}">
+<INPUT type="hidden" name="checktime" value="{form_checktime}">
+
+<BR>
+
+<!-- BEGIN: msg_erreur -->
+<div class="msgerror">{msg_erreur}</div>
+<!-- END: msg_erreur -->
+<!-- BEGIN: msg_confirmation -->
+<div class="msgok">{msg_confirmation}</div>
+<!-- END: msg_enregistre -->
+
+<div class="formulaireTitre">Informations générales</div>
+
+
+<div class="formulaire">
+	<p>
+			<label>Immatriculation</label>
+			{form_immatriculation}
+	</p>
+	<p>
+			<label>Nom</label>
+			{form_nom}
+	</p>
+	<p>
+			<label>Marque</label>
+			{form_marque}
+	</p>
+	<p>
+			<label>Modèle</label>
+			{form_modele}
+	</p>
+	<p>
+			<label>Couleur</label>
+			{form_couleur}
+	</p>
+</div>
+
+<div class="formulaireTitre">Caractéristiques</div>
+
+<div class="formulaire">
+	<p>
+		<label>Nb de place</label>
+		{form_places}
+	</p>
+	<p>
+		<label>Puissance</label>
+		{form_puissance}
+	</p>
+	<p>
+		<label>Masse max.</label>
+		{form_massemax}
+	</p>
+	<p>
+		<label>Vitesse max.</label>
+		{form_vitesse}
+	</p>
+</div>
+
+<div class="formulaireTitre">Tarifs</div>
+
+<div class="formulaire">
+	<p>
+		<label>Pilote</label>
+		{form_tarif}&nbsp;€/h
+	</p>
+	<p>
+		<label>Réduction</label>
+		{form_tarif_reduit}&nbsp;€/h
+	</p>
+	<p>
+		<label>Double</label>
+		{form_tarif_double}&nbsp;€/h
+	</p>
+	<p>
+		<label>Coque nue</label>
+		{form_tarif_nue}&nbsp;€/h
+	</p>
+	<p>
+		<label>Type horamètre</label>
+		{form_typehora}
+	</p>
+</div>
+
+
+<div class="formulaireTitre">Description</div>
+
+<div class="formulaire">
+	<p>
+		{form_description}
+  </p>
+</div>
+
+<!-- BEGIN: parametres -->
+<div class="formulaireTitre">Paramètres</div>
+
+<div class="formulaire">
+	<p>
+		<label>Tolérance</label>
+		{form_tolerance}
+	</p>
+	<p>
+		<label>Centrage</label>
+		<span>{form_centrage}</span>
+	</p>
+</div>
+<!-- END: parametres -->
+
+
+<!-- BEGIN: submit -->
+<div class="formulaireSubmit">
+	<INPUT type="submit" name="fonc" value="Enregistrer" OnClick="return cryptData();">
+	<INPUT type="submit" name="fonc" value="Annuler">
+</div>
+<!-- END: submit -->
+
+
+</FORM>
+
+<!-- END: corps -->

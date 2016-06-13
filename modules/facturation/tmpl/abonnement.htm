@@ -1,0 +1,151 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	Abonnement {id_facture}
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+<form name="abonnement" method="post" action="factures.php" enctype="multipart/form-data">
+
+	<input type="hidden" name="checktime" value="{form_checktime}">
+	<input type="hidden" name="rub" value="abonnement">
+	<input type="hidden" name="id" value="{form_id}">
+	<input type="hidden" name="mode" value="{mode}">
+	<input type="hidden" name="fonc2" value="post">
+
+<script type="text/javascript">
+	$(function() {
+		$("#form_dte_deb").datepicker({
+			dateFormat: "dd/mm/yy",
+			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
+			prevText: "Précédent",
+			nextText: "Suivant"
+		});
+	});
+	$(function() {
+		$("#form_dte_fin").datepicker({
+			dateFormat: "dd/mm/yy",
+			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
+			prevText: "Précédent",
+			nextText: "Suivant"
+		});
+	});
+</script>
+
+<table bgcolor='#FFFFFF' border='0' cellspacing='0' cellpadding='0' background='' >
+<tr height=50 ><td>&nbsp;</td><td><a href="membres.php?rub=famille&id={form_uid}"><img src="images/icn32_retour.png"></a></td><td colspan=3 align=center><h1>{abonnement_titre}</h1></td></tr>
+<tr><td>&nbsp;</td><td colspan=5>
+	<a href="factures.php?rub=abonnement&id={form_id}&mode=edit">-Modifier-</a> 
+	<a href="factures.php?rub=abonnement&id={form_id}&mode=copy">-Copier-</a> 
+	<a href="factures.php?rub=abonnement&id={form_id}&fonc=desactive">-Désactiver-</a> 
+	<a href="#" OnClick="ConfirmeClick('factures.php?rub=abonnement&id={form_id}&fonc=facturer','Souhaitez-vous imputer les lignes de cet abonnement au compte ?');">-Facturer-</a> 
+</td></tr>
+<tr bgcolor='black'><td height='1' colspan='5'><img src='images/rien.gif' height=1 alt=''></td></tr>
+
+<!-- BEGIN: msgok -->
+<tr><td>&nbsp;</td><td colspan=2><br /><div id="{msg_type}" style="width:500px;">{msg_confirmation}</div></td></tr>
+<!-- END: msgok -->
+
+	
+<!-- BEGIN: aff_famille_modif -->
+<tr height=50 ><td>&nbsp;</td><td>&nbsp;</td>
+	<td><br />
+	<!-- BEGIN: aff_famille_copy -->
+	Famille : <select name="form_uid">
+	<!-- BEGIN: lst_compte -->
+	<option value="{id_compte}" {chk_compte}>{nom_compte}</option>
+	<!-- END: lst_compte -->
+	</select>
+	<br />
+	<!-- END: aff_famille_copy -->
+
+	<!-- BEGIN: aff_famille_edit -->
+	Famille : {nom_famille}<br />
+	<!-- END: aff_famille_edit -->
+
+	Date de début : <input name="form_dte_deb" id="form_dte_deb" value="{form_dte_deb}"><br />
+	Date de fin : <input name="form_dte_fin" id="form_dte_fin" value="{form_dte_fin}"><br />
+	Jour d'imputation : <select name="form_jour_num">
+	<option value="0">-</option>
+	<!-- BEGIN: lst_compte_num -->
+	<option value="{id_jour_num}" {chk_jour_num}>{nom_jour_num}</option>
+	<!-- END: lst_compte_num -->
+	</select>&nbsp;
+	<select name="form_jour_sem">
+	<option value="-">-</option>
+	<!-- BEGIN: lst_compte_sem -->
+	<option value="{id_jour_sem}" {chk_jour_sem}>{nom_jour_sem}</option>
+	<!-- END: lst_compte_sem -->
+	</select>
+	<br />
+	<br />
+</td>
+</tr>
+<!-- END: aff_famille_modif -->
+
+<!-- BEGIN: aff_famille -->
+<tr height=50 ><td>&nbsp;</td><td>&nbsp;</td>
+	<td><br />
+	Famille : {nom_famille}<br />
+	Date de début : {form_dte_deb}<br />
+	Date de fin : {form_dte_fin}<br />
+	Jour d'imputation : {form_jour}<br />
+	<br />
+</td>
+</tr>
+<!-- END: aff_famille -->
+
+<tr bgcolor='black'><td height='1' colspan='5'><img src='images/rien.gif' height=1 alt=''></td></tr>
+<tr height=30 bgcolor='#DDDDDD'><td width=20>&nbsp;</td><td width='20'><b>&nbsp;</b></td><td width='600'><b>Poste</b></td><td width='60'><b>Montant</b></td><td>&nbsp;</td></tr>
+<tr bgcolor='black'><td height='1' colspan='5'><img src='images/rien.gif' height=1 alt=''></td></tr>
+
+
+
+<!-- BEGIN: lst_ligne -->
+<tr bgcolor="#{ligne_color}"><td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>
+
+	<!-- BEGIN: lst_affiche_poste -->
+	{poste_description}
+	<!-- END: lst_affiche_poste -->
+
+	<!-- BEGIN: lst_modif_poste -->
+		<select name="form_poste[{ligne_id}]" OnChange="document.abonnement.submit();">
+	<!-- BEGIN: lst_poste -->
+		<option value="{poste_id}" {chk_poste}>{poste_description}</option>
+	<!-- END: lst_poste -->
+		</select>
+	<!-- END: lst_modif_poste -->
+
+	</td>
+	<td>{poste_montant} €
+	<input type="hidden" name="form_montant[{ligne_id}]" value="{poste_montant}"></td>
+	<td>&nbsp;</td>
+</tr>
+<!-- END: lst_ligne -->
+
+<tr bgcolor='black'><td height='1' colspan='5'><img src='images/rien.gif' height=1 alt=''></td></tr>
+<tr height=30 bgcolor='#DDDDDD'><td>&nbsp;</td><td><b>&nbsp;</b></td><td align="right"><b>Total</b>&nbsp;:&nbsp;&nbsp;</td><td><b>{form_total} €</b></td><td>&nbsp;</td></tr>
+<tr bgcolor='black'><td height='1' colspan='5'><img src='images/rien.gif' height=1 alt=''></td></tr>
+
+</table>
+
+<br />
+<!-- BEGIN: submit -->
+<input type="submit" name="fonc" value="Enregistrer">
+<input type="submit" name="fonc" value="Annuler">
+<!-- END: submit -->
+
+<br/>
+
+</form>
+
+<!-- END: corps -->
+

@@ -1,0 +1,55 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	<A href="index.php?mod=admin&rub=groupes"><IMG src="{path_module}/img/icn32_groupes.png" border=0 alt="">Groupes</A>
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+<!-- BEGIN: msgok -->
+<div class="msgok">{msg_ret}</div>
+<!-- END: msgok -->
+
+<script type="text/javascript">
+	$(function() {
+    $(document).tooltip({
+      position: {
+        my: "left top",
+        at: "left+5 top+25",
+        using: function( position, feedback ) {
+          $( this ).css( position );
+          $( "<div>" )
+            .addClass( "settings" )
+            .addClass( feedback.vertical )
+            .addClass( feedback.horizontal )
+            .appendTo( this );
+        }
+      }
+    });
+  });
+</script>
+
+
+<form name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
+<input type="hidden" name="mod" value="admin">
+<input type="hidden" name="rub" value="index">
+
+<div class="formulaire">
+	<ul class="formulaireMulti">
+<!-- BEGIN: lst_param -->
+		<li class="{param_class}">
+			<label>{param_nom}</label>
+			<span>{param_var}</span>
+			<span><input name="MyOptTab[{param_var1}][{param_var2}]" value="{param_txt}"  title="{param_help}"/></span>
+			<span>{param_default}</span>
+		</li>
+<!-- END: lst_param -->
+	</ul>
+</div>
+
+<input type="submit" name="fonc" value="Enregistrer">
+</form>
+<!-- END: corps -->

@@ -1,0 +1,52 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_familles.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	Liste des familles
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+<table>
+<tr>
+<!-- BEGIN: ajout -->
+<td align=center width=100><a href="membres.php?rub=famille&id="><img src="{path_module}/img/icn32_ajouter2.png" alt="" border=0 /><br />-Ajouter famille-</A></td>
+<!-- END: ajout -->
+
+<!-- BEGIN: abonnements -->
+<td align=center width=100><a href="factures.php?rub=abonnements"><img src="images/icn32_factures.png" border=0 /><br />-Abonnements-</a></td>
+<!-- END: abonnements -->
+
+<!-- BEGIN: exporter -->
+<td align=center width=100><a href="export.php?rub=export&list=famille" target="_blank"><img src="images/icn32_excel.png" border=0 /><br />-Exporter-</a></td>
+<!-- END: exporter -->
+</tr>
+</table>
+
+<br />
+
+
+<!-- BEGIN: trombino -->
+	<table>
+	<!-- BEGIN: aff_ligne -->
+	  <tr>
+	    <!-- BEGIN: aff_colonne -->
+	    <td align=center>
+		<a href="membres.php?rub=detail&id={id_membre}">
+		<img src="{photo_membre}" alt="" width="200" height="240" /><br />
+		{prenom_membre} {nom_membre}
+		</a>
+	    </td>
+	    <!-- END: aff_colonne -->
+	  </tr>
+	<!-- END: aff_ligne -->
+	</table>
+<!-- END: trombino -->
+
+
+{aff_tableau}
+
+
+<!-- END: corps -->

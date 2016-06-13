@@ -1,0 +1,38 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_suivivols.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	<!-- BEGIN: suiviVols -->
+	<A href="suivivols.php"><IMG src="{path_module}/img/icn32_listevols.png" border=0>Suivi des membres</A>
+	<!-- END: suiviVols -->
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+<!-- BEGIN: listeVols -->
+<form name="users" method="post" action="vols.php" enctype="multipart/form-data">
+	<input type="hidden" name="checktime" value="{form_checktime}">
+	<br />
+	<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='vols.php?id='+id;">
+	<!-- BEGIN: lst_user -->
+	<option value="{id_user}" {chk_user}>{nom_user}</OPTION>
+	<!-- END: lst_user -->
+	</select>
+</form>
+<br />
+<!-- END: listeVols -->
+
+		<TABLE border="0" cellspacing="0" cellpadding="0" background="">
+		  <TR height=20>
+			<TD width=20>&nbsp;</TD>
+			<TD>{tab_liste}</TD>
+		  </TR>
+		  <TR height=20>
+			<TD width=20>&nbsp;</TD>
+			<TD>Attention : Ne sont comptabilisées que les 
+heures effectuées dans le club.</TD>
+		  </TR>
+		</TABLE>
+
+<!-- END: corps -->

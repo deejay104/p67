@@ -1,0 +1,97 @@
+<!-- BEGIN: corps -->
+
+<table style="width: 190mm;">
+	<tr valign="middle">
+		<td style="width: 75mm;">
+			<img src="{titre_logo}" />
+		</td>
+		<td style="width: 115mm; font-size: 10mm;" align="right">
+			{titre_facture}<br />N°{id_facture}
+		</td>
+	</tr>
+</table>
+
+<table style="width: 190mm;">
+	<tr>
+		<td style="width: 90mm; font-size: 4mm;" >
+			<b>{club_nom_compte}</b><br />
+			{club_addr1}<br />{club_addr2}
+			{club_codepostal} {club_ville}<br />
+			Tél. {club_tel_fixe}<br />
+			email: {club_mail}<br />
+		</td>
+		<td style="width: 100mm; font-size: 4mm;" >
+			<b>{nom_compte}</b><br />
+			{addr1}<br />{addr2}
+			{codepostal} {ville}<br />
+		</td>
+	</tr>
+
+	<tr>
+		<td>&nbsp;</td>
+		<td><span style="font-size: 4mm;">{club_ville2}, le {date_facture1}</span></td>
+	</tr>
+
+</table>
+
+<br />
+
+	<table style="border-width: 0px; border-spacing: 0px; border-padding: 0px; border-collapse: collapse;">
+		<tr style="background-color: #BBBBBB; font-weight: bold; font-size: 4mm; vertical-align:middle;">
+			<td width="130mm" style="height:6mm; border: 0.3mm solid #000000; padding-top: 4mm;">Désignation</td>
+			<td width="30mm" style="border: 0.3mm solid #000000; padding: 2mm;">Date</td>
+			<td width="30mm" style="border: 0.3mm solid #000000; padding: 2mm;">Montant</td>
+		</tr>
+<!-- BEGIN: lst_ligne -->
+		<tr style="height: 15mm; ">
+			<td style="border: 0.3mm solid #000000; padding: 2mm; font-size: 4mm;"><span style="padding:0mm;">{designation_ligne}</span><br /><span align="left" style="font-size: 3mm;">&nbsp;&nbsp;&nbsp;&nbsp;<i>{comment_ligne}</i></span></td>
+			<td style="border: 0.3mm solid #000000; padding: 2mm; font-size: 4mm;">{date_ligne}</td>
+			<td style="border: 0.3mm solid #000000; padding: 2mm; font-size: 4mm;" align="right">{montant_ligne}</td>
+		</tr>
+<!-- END: lst_ligne -->
+		<tr style="background-color: #BBBBBB; height: 10mm; font-weight: bold;  font-size: 4mm;">
+			<td colspan="2" align="right"  style="height:6mm; border: 0.3mm solid #000000; padding: 2mm;">Montant total des prestations</td>
+			<td style="border: 0.3mm solid #000000; padding: 2mm;" align="right">{total_facture}</td>
+		</tr>
+	</table>
+<br />
+	<table style="border-width: 0px; border-spacing: 0px; border-padding: 0px; border-collapse: collapse;">
+<!-- BEGIN: aff_reglement -->
+
+		<tr style="background-color: #BBBBBB; font-weight: bold; font-size: 4mm; vertical-align:middle;">
+			<td width="130mm" style="height:6mm; border: 0.3mm solid #000000; padding-top: 4mm;">Réglements</td>
+			<td width="30mm" style="border: 0.3mm solid #000000; padding: 2mm;">Date</td>
+			<td width="30mm" style="border: 0.3mm solid #000000; padding: 2mm;">Montant</td>
+		</tr>
+<!-- BEGIN: lst_reglement -->
+		<tr style="height: 15mm; ">
+			<td style="border: 0.3mm solid #000000; padding: 2mm; font-size: 4mm;"><span style="padding:0mm;">{designation_ligne}</span><br /><span align="left" style="font-size: 3mm;">&nbsp;&nbsp;&nbsp;&nbsp;<i>{comment_ligne}</i></span></td>
+			<td style="border: 0.3mm solid #000000; padding: 2mm; font-size: 4mm;">{date_ligne}</td>
+			<td style="border: 0.3mm solid #000000; padding: 2mm; font-size: 4mm;" align="right">{montant_ligne}</td>
+		</tr>
+<!-- END: lst_reglement -->
+<!-- END: aff_reglement -->
+		<tr style="background-color: #BBBBBB; height: 10mm; font-weight: bold;  font-size: 4mm;">
+			<td width="160mm" colspan="2" align="right"  style="height:6mm; border: 0.3mm solid #000000; padding: 2mm;">Montant restant à régler</td>
+			<td width="30mm" style="border: 0.3mm solid #000000; padding: 2mm;" align="right">{total_restant}</td>
+		</tr>
+	</table>
+
+<div style="position: absolute; left: 10mm; top: 220mm; width: 190mm;">
+	<div style="width: 100%; margin-bottom: 5mm; font-size: 3mm;">
+		{texte_paiement}
+	</div>
+
+	<div style="width: 100%; margin-bottom: 1mm; font-size: 5mm;">
+		<table style="width: 100%;">
+			<tr><td style="border-top: 0.4mm dashed #000000; font-size: 3mm;">
+			Talon à joindre à tout courrier ou règlement<br /><br />
+			</td></tr>
+		</table>
+		{titre_facture} N°{id_facture} ({date_facture2})<br />
+		{nom_compte}<br />
+		Montant : {total_facture}<br />
+	</div>
+</div>
+
+<!-- END: corps -->

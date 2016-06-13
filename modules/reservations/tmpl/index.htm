@@ -1,0 +1,216 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	{TexteTitre} 
+				<select id="ress" name="ress" OnChange="Recharge();" style="font-size:20px;">
+				<!-- BEGIN: lst_ress -->
+				<option value="{uid_ress}" {chk_ress}>{nom_ress}</option>
+				<!-- END: lst_ress -->
+        </select>
+
+<!-- END: infos -->
+
+<!-- BEGIN: corps -->
+
+<SCRIPT language="JavaScript">
+	var ns4=document.layers
+	var ie4=document.all
+	var ns6=document.getElementById&&!document.all
+
+	function Recharge()
+	  {
+		if (ns6)
+		  {
+		  	var a = document.getElementById("ress").value;
+		  	document.location="reservations.php?ress="+a+"&jour={form_jour}";
+		  }
+		else
+		  {
+		  	document.location='reservations.php?ress='+ress.value+'&jour={form_jour}';
+		  }
+	  }
+</SCRIPT>
+
+<link href='external/fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='external/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+
+<script src='external/fullcalendar/lib/moment.min.js'></script>
+<script src='external/fullcalendar/fullcalendar.min.js'></script>
+<script src='external/fullcalendar/lang/fr.js'></script>
+
+<style>
+	#script-warning {
+		display: none;
+		background: #eee;
+		border-bottom: 1px solid #ddd;
+		padding: 0 10px;
+		line-height: 40px;
+		text-align: center;
+		font-weight: bold;
+		font-size: 12px;
+		color: red;
+	}
+
+	#loading {
+		display: none;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+
+	#calendar {
+		width: 90%;
+		padding: 0 10px;
+	}
+
+.fc-time-grid .fc-slats td {
+    height: 1em;
+    line-height:12px;
+    font-size: 12px;
+	}
+
+.fc-time {	color: #000000; }
+.fc-title {	color: black; }
+.fc-end-resizer { color: #777777; }
+		
+</style>
+
+<script>
+
+	$(document).ready(function() {
+	
+
+	
+		$('#calendar').fullCalendar({
+			defaultDate: '{form_jour}',
+			defaultView: '{defaultView}',
+			defaultEventMinutes: 60,
+			timeFormat: 'H:mm',
+			lang: 'fr',
+			editable: true,
+			eventLimit: true, // allow "more" link when too many events
+			selectable: true,
+			selectHelper: true,
+			minTime: '{form_debjour}:00:00',
+			maxTime: '{form_finjour}:00:00',
+			scrollTime: '{form_debjour}:00:00',
+			axisFormat: 'HH:mm',
+			contentHeight: 'auto',
+			slotEventOverlap: false,
+			eventLimit: 3,
+
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: '{headerListe}'
+			},
+
+			businessHours:
+		       {
+					   start: '0:00', // a start time (10am in this example)
+					   end: '23:59', // an end time (12pm in this example)
+					   dow: [ 1,2,3,4,5 ]
+				   },
+
+
+       views: {
+            agendaFourWeeks: {
+                type: 'agenda',
+                duration: {weeks: 4},
+                buttonText: 'Default',
+                columnFormat: 'DD'
+            }
+        },
+
+			select: function(start, end) {
+						document.location="reservations.php?rub=reservation&ress={form_ress}"+"&jstart="+start+"&jend="+end;
+			},
+
+			eventClick: function(event, element) {
+						document.location="reservations.php?rub=reservation&id="+event.id;
+			    },
+
+			eventResize: function(event, dayDelta, minuteDelta ) {
+           $.ajax({ url: 'reservations.php?rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
+			},
+			eventDrop: function(event,dayDelta,minuteDelta) {
+           $.ajax({ url: 'reservations.php?rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
+			},
+
+
+			events: {
+				url: 'reservations.php?rub=getcal&ress={form_ress}',
+				error: function() {
+					$('#script-warning').show();
+				}
+			},
+
+	<!-- BEGIN: aff_tooltips -->
+			eventMouseover: function(event, jsEvent) {
+			    var tooltip = '<div class="calendarDesc" style="position:absolute;z-index:10001;left:0px;top:0px;display:none">' + event.description + '</div>';
+			    $("body").append(tooltip);
+			    $(this).mouseover(function(e) {
+			        $(this).css('z-index', 10000);
+			        $('.calendarDesc').fadeIn('500');
+			        $('.calendarDesc').fadeTo('10', 1.9);
+			        $('.calendarDesc').css('display', 'visible');
+			    }).mousemove(function(e) {
+			        $('.calendarDesc').css('top', e.pageY + 10);
+			        $('.calendarDesc').css('left', e.pageX + 20);
+			    });
+			},
+			eventMouseout: function(event, jsEvent) {
+			    $(this).css('z-index', 8);
+			    $('.calendarDesc').remove();
+			},
+	<!-- END: aff_tooltips -->
+		
+
+
+			loading: function(bool) {
+				$('#loading').toggle(bool);
+			}
+		});
+		
+	});
+
+</script>
+
+	<br />
+
+	<div id='script-warning'>
+		Erreur : <code>cal.php</code> doit être accessible.
+	</div>
+
+	<div id='loading'>loading...</div>
+
+	<div id='calendar'></div>
+
+
+<p style="font-size: 10px; line-height:12px;">
+Couché et Levé du soleil calculés pour le terrain de {terrain_nom}, plus ou moins la 1/2 heure réglementaire.
+</p>
+
+<style>
+.afficheLegende { line-height:16px; margin: 5px; }
+.afficheLegende label { width:20px; height:20px; border: 1px solid #013366; border-radius: 4px; float:left; display: block-inline; margin: 0px 5px; }
+</style>
+	
+
+<p class="afficheLegende">
+	<label style="background-color: #{maintconf}; "></label>
+	<span>Une maintenance est confirmée pour l'avion, l'avion risque de ne pas être disponible.</span>
+</p>
+
+<p class="afficheLegende">
+	<label style="background-color: #{maintplan};"></label>
+	Une maintenance est planifiée, vérifiez la disponibilité avant de réserver un vol.
+</p>
+<p class="afficheLegende">
+	<label style="background-color: #{meeting};"></label>
+	Une manifestation est prévue ce jour là.
+</p>
+
+<!-- END: corps -->

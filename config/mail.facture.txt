@@ -1,0 +1,24 @@
+---- [Français] ------------------------------------------------
+Bonjour,
+
+Veuillez trouver ci-joint votre facture du mois de {facdate}.   
+
+Le solde sera débité automatiquement si vous avez complété et retourné l’autorisation de prélèvement. Dans le cas contraire, merci d’effectuer le virement correspondant sur le compte du Playgroup.
+
+Pour toute question relative aux factures vous pouvez nous écrire à l’adresse suivante : playgroup@playgroup.fr ou passer au secrétariat en matinée du lundi au vendredi.
+
+Cordialement
+L'équipe du Playgroup
+ 
+
+---- [English] -------------------------------------------------
+Hello,
+
+Please find enclosed your invoice for month of September 2012
+
+The balance will be automatically withdrawn from your bank account if you have filled up and returned the Auto debit authorization form. Otherwise, kindly wire transfer the due amount to the Playgroup’s account.
+
+For any further queries regarding your bill you could contact either via email to playgroup@playgroup.fr or in person at the secretariat in the mornings, from Monday to Friday.
+
+Best regards
+Playgroup

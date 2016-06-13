@@ -1,0 +1,116 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	Facture {id_facture}
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+<form name="facture" method="post" action="factures.php" enctype="multipart/form-data">
+
+	<input type="hidden" name="checktime" value="{form_checktime}">
+	<input type="hidden" name="rub" value="detail">
+	<input type="hidden" name="usr" value="{id_user}">
+
+	<IMG src="images/rien.gif" height=1 width=20 alt=""><a href="factures.php?usr={id_user}"><img src="images/icn16_retour.png"></a></TD>
+<!-- BEGIN: aff_compte -->
+			<select id="form_id" name="form_id" OnChange="document.location='factures.php?rub=detail&usr='+document.getElementById('form_id').value;">
+			<option value="0">-</OPTION>
+			<!-- BEGIN: lst_compte -->
+			<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
+			<!-- END: lst_compte -->
+			</select>
+<!-- END: aff_compte -->
+
+<!-- BEGIN: msgok -->
+<div id="msgok">Un mail de relance a été envoyé.</div>
+<!-- END: msgok -->
+
+<table>
+<tr height="50"><td>&nbsp;</td><td colspan=2 align=center><h1>{titre_facture}</h1></td>
+	<td>
+<!-- BEGIN: aff_pdf -->
+	<a href="factures.php?rub=facture&usr={id_user}&facid={id_facture}&export=pdf" target="_blank"><img src="images/icn32_pdf.png" border="0" /></a>
+<!-- END: aff_pdf -->
+<!-- BEGIN: aff_relance -->
+	<a href="factures.php?rub=detail&usr={id_user}&facid={id_facture}&fonc=relance"><img src="{path_module}/img/icn32_mail.png" border="0" title="Relancer sur cette facture"/></a>
+<!-- END: aff_relance -->
+	</td>
+</tr>
+<tr class="tableauTitre">
+	<td width="80">&nbsp;</td>
+	<td width="400">D&eacute;signation</td>
+	<td width="90">Date</td>
+	<td width="90">Montant</td>
+</tr>
+
+<!-- BEGIN: lst_ligne -->
+<tr bgcolor="#{ligne_color}">
+	<td>&nbsp;
+	<!-- BEGIN: edit_ligne -->
+	<span class="bouttonSupprime">
+		<a href="factures.php?rub=detail&usr={id_user}&hideline={id_ligne}" title="Ne plus afficher cette ligne dans les montants à facturer"><img src="{path_module}/img/icn12_supprimer.png" /></a>
+	</span>
+	<input type="checkbox" name="form_facture[{id_ligne}]" value="{montant_ligne}" {chk_ligne}>
+	<!-- END: edit_ligne -->
+	</td>
+	<td>{designation_ligne} <br /> <font size=1><i>{comment_ligne}</i></font></td>
+	<td>{date_ligne}</td>
+	<td align="right">{montant_ligne}&nbsp;&nbsp;</td>
+</tr>
+<!-- END: lst_ligne -->
+
+
+<!-- BEGIN: show_facture -->
+<tr height=30 style="background-color: #DDDDDD; border-top: 1px solid #000000; border-bottom: 1px solid #000000;"><td>&nbsp;</td><td align="right" colspan=2><b>Montant total</b></td><td align="right"><b>{total_facture}&nbsp;&nbsp;</b></td></tr>
+
+<tr><td height="8" colspan="4"><img src="images/rien.gif" height=1 alt=""></td></tr>
+
+<!-- BEGIN: lst_reglement -->
+<tr bgcolor="#{ligne_color}">
+	<td>&nbsp;</td>
+	<td>{designation_ligne} <br /> <font size=1><i>{comment_ligne}</i></font></td>
+	<td>{date_ligne}</td>
+	<td align="right">{montant_ligne}&nbsp;&nbsp;</td>
+</tr>
+<!-- END: lst_reglement -->
+
+<tr><td height="8" colspan="4"><img src="images/rien.gif" height=1 alt=""></td></tr>
+
+<tr height=30 style="background-color: #DDDDDD; border-top: 1px solid #000000; border-bottom: 1px solid #000000;"><td>&nbsp;</td><td align="right" colspan=2><b>Restant à régler sur cette facture</b></td><td align="right"><b>{reste_facture}&nbsp;&nbsp;</b></td></tr>
+
+<!-- END: show_facture -->
+
+<!-- BEGIN: show_total -->
+<tr  class="tableauTitre"><td>&nbsp;</td><td align="right" colspan=2>Total</td><td align="right">{reste_facture}&nbsp;&nbsp;</td></tr>
+<!-- END: show_total -->
+
+
+<!-- BEGIN: edit_facture -->
+<tr  class="tableauTitre"><td>&nbsp;</td><td colspan=3><input type="submit" name="fonc" value="Enregistrer"></td></tr>
+<!-- END: edit_facture -->
+
+</table>
+
+<br /><br />
+
+<!-- BEGIN: aff_payer -->
+	Payer : <input name="montant" value="{reste_facture1}" size=5>
+	<input type="submit" name="fonc" value="Chèque"> <input type="submit" name="fonc" value="Virement"> <input type="submit" name="fonc" value="Prélèvement"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	Compte : <input name="montantcpt" value="{reste_facture2}" size=5>
+	<input type="submit" name="fonc" value="Compte"> ({reste_compte})
+
+	<input type="hidden" name="facid" value="{id_facture}">
+	<input type="hidden" name="id" value="{id_user}">
+<!-- END: aff_payer -->
+
+
+<br/>
+
+</form>
+
+<!-- END: corps -->
+

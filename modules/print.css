@@ -1,0 +1,207 @@
+/* CSS file for maze layout*/
+/* ($Author: miniroot $) */
+/* ($Date: 2012-07-23 10:18:01 +0200 (lun., 23 juil. 2012) $) */
+/* ($Revision: 385 $) */
+
+
+/* **** Page **** */
+html { /* general settings, background */
+	background-position: 0px 73px;
+	background-repeat: no-repeat;
+	background-color: #FFFFFF;
+	height: 100%;
+	font: 12px "Trebuchet MS", arial, sans-serif;
+	}
+
+body { /* setting vertical line */
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+	}
+
+/* **** Haut de page **** */
+#head { /* display and backround of heading area */
+	height: 110px;
+	width: 100%;
+	font: 35px "Trebuchet MS", arial, sans-serif;
+	}
+
+#head img { /* position of Logo-graphics */
+	position: absolute;
+	top: 5px;
+	left: 10px;
+	}
+
+/* **** Menu **** */
+#left { /* display of the menu area */
+	position: absolute; /* defined position is necessary for correct display with IE */
+	top: 81px;
+	left: 0px;
+	width: 180px;
+	float: left;
+	}
+
+#left a {
+	display: block;
+	border: none;
+	font-weight: bold;
+	color: #013366;
+	padding: 0px 5px 0px 5px;
+	margin: 0px 0 0 5px;
+	}
+
+#left a:hover {
+	font-weight: bold;
+	color: #FF6600;
+	background-color: #F5F5F5;
+	}
+
+#left img {
+	border: 0;
+	}
+
+/* **** Corps de la page **** */
+#main { /* display of the text area */
+	margin-left: 10px;
+	min-height: 550px;
+	height: 550px; 
+	width: 750px;
+	background-color: #FFFFFF;
+	background-repeat: no-repeat;
+	padding-left: 5px;
+	padding-right: 50px;
+	}
+body>#main { /* hack necessary for correct display of the height with IE and Mozilla */
+	height: auto;
+	}
+
+img.curve { /* display of the curved graphic in main text area */
+	float:left;
+	clear:left;
+	margin: 0 0px 0 0;
+	}
+
+#pagetitle { /* format and position of pagetitle */
+	padding-left: 70px;
+	height: 45px;
+	font: bold italic 30px "Trebuchet MS", arial, sans-serif;
+	background-color: #F5F5F5;
+	border-bottom: 1px solid #013366;
+	border-top: 1px solid #013366;
+	color: #013366;
+	}
+#pagetitle a:hover {
+	color: #FF6600;
+	}
+
+#icone {
+	position: absolute;
+	top: 110px;
+	left: 10px;
+	}
+
+/* **** Bas de Page **** */
+#footer { /* general settings for footer*/
+	float: left;
+	border-top: 1px solid #013366;
+	border-bottom: 1px solid #013366;
+	margin-top: 15px;
+	background-color: #F5F5F5;
+	width: 100%;
+	height: 37px;
+	}
+
+#lastmod { /* last modified information */
+	float: right;
+	position: relative;
+	text-align: right;
+	top: -8px;
+	font: 10px "Trebuchet MS", arial, sans-serif;
+	}
+
+#helplink {
+	height: 32px;
+	}
+
+/* **** Tableau **** */
+.tableau {
+	border: 1px solid #013366;
+	}
+
+.tableau a {
+	display: block;
+	}
+
+.tableau a:hover {
+	background-color: #FEE1EE;
+	}
+
+.tabtit {
+	text-align: center;
+	background-color: #013366;
+	font-weight: bold;
+	color: #FFFFFF;
+	width: 128px
+	}
+
+
+.tabdte {
+	text-align: center;
+	width: 22px
+	}
+
+
+
+/* **** Affichage général **** */
+a {
+	text-decoration: none;
+	}
+
+a:link {
+	color: black;
+	}
+a:visited {
+	color: black;
+	}
+a:hover {
+	color: #FF6600;
+	}
+
+img {
+	color: #FFFFFF;
+	}
+
+img:hover {
+	color: #FF6600;
+	}
+
+
+h1 {
+	font-size:200%; 
+	}
+h2 {
+	font-size:170%; 
+	}
+h3 {
+	font-size:140%; 
+	}
+h4 {
+	font-size:125%; 
+	}
+h5 {
+	font-size:110%; 
+	}
+h6 {
+	font: bold 15px "Trebuchet MS", arial, sans-serif;
+	}
+
+.indent { 
+	margin-left:40px; 
+	}
+
+
+a.titre { color: white; }
+a.titre:visited { color: white; }
+a.titre:hover { color: #FF6600; }
+
+

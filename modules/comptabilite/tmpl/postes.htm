@@ -1,0 +1,119 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	<A href="compta.php"><IMG src="{path_module}/img/icn32_mouvement.png" border=0>&nbsp;Mouvement</A>
+	<A href="compta.php?rub=postes"><IMG src="{path_module}/img/icn32_param.png" border=0>&nbsp;<u>Postes</u></A>
+<!-- BEGIN: vols -->
+	<A href="compta.php?rub=vols"><IMG src="{path_module}/img/icn32_vols.png" border=0>&nbsp;Vols</A>
+	<A href="compta.php?rub=tarifs"><IMG src="{path_module}/img/icn32_tarifs.png" border=0>&nbsp;Tarifs</A>
+<!-- END: vols -->
+	<A href="compta.php?rub=suivi"><IMG src="{path_module}/img/icn32_suivi.png" border=0>&nbsp;Suivi</A>
+	<A href="suivicomptes.php"><IMG src="{path_module}/img/icn32_comptes.png" border=0>&nbsp;Liste des comptes</A>
+	<A href="tableaubord.php"><IMG src="{path_module}/img/icn32_tabbord.png" border=0>&nbsp;Tableau de bord</A>
+<!-- END: infos -->
+
+<!-- BEGIN: corps -->
+
+
+<FORM name="reservation" method="post" action="compta.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="rub" value="postes">
+
+	<BR>
+
+	<!-- BEGIN: msg_enregistre -->
+	<div class="msgok">{msg_resultat}</div>
+	<!-- END: msg_enregistre -->
+
+
+	<TABLE>
+	  <TR height=20>
+		<TD width=20>&nbsp;</TD>
+		<TD><B>Ordre</B></TD>
+		<TD width="410"><B>Poste</B></TD>
+		<TD width="90"><B>Compte</B></TD>
+		<TD width="90"><B>Débiteur</B></TD>
+		<TD width="90"><B>Créditeur</B></TD>
+		<TD width="90"><B>Montant</B></TD>
+		<TD align='center'><B>Di</B></TD>
+		<TD align='center'><B>Lu</B></TD>
+		<TD align='center'><B>Ma</B></TD>
+		<TD align='center'><B>Me</B></TD>
+		<TD align='center'><B>Je</B></TD>
+		<TD align='center'><B>Ve</B></TD>
+		<TD align='center'><B>Sa</B></TD>
+		<TD align='center'><B>Vac</B></TD>
+		<TD>&nbsp;</TD>
+	  </TR>
+
+	<!-- BEGIN: lst_mouvement -->
+	  <TR>
+		<TD width=20>&nbsp;</TD>
+		<TD>
+			<INPUT type="text" name="form_ordre[{form_id}]" style="width:50px;" value="{ordre_poste}" maxlength="4">
+		</TD>
+		<TD>
+			<INPUT type="text" name="form_poste[{form_id}]" style="width:400px;" value="{nom_poste}">
+		</TD>
+		<TD>
+			<INPUT type="text" name="form_compte[{form_id}]" style="width:80px;" value="{nom_compte}" maxlength="10">
+		</TD>
+		<TD>
+			<SELECT name="form_debiteur[{form_id}]">
+			<OPTION value="0" {chk_debiteur_0}>Tiers</OPTION>
+			<OPTION value="B" {chk_debiteur_B}>Banque</OPTION>
+			<OPTION value="C" {chk_debiteur_C}>Club</OPTION>
+		        </SELECT>
+		</TD>
+		<TD>
+			<SELECT name="form_crediteur[{form_id}]">
+			<OPTION value="0" {chk_crediteur_0}>Tiers</OPTION>
+			<OPTION value="B" {chk_crediteur_B}>Banque</OPTION>
+			<OPTION value="C" {chk_crediteur_C}>Club</OPTION>
+		        </SELECT>
+		</TD>
+		<TD>
+			<INPUT type="text" name="form_montant[{form_id}]" style="width:80px;" value="{montant_poste}">
+		</TD>
+		<TD align='right'>
+			<INPUT type="text" name="form_j0[{form_id}]" style="width:30px;" value="{j0_poste}">
+		</TD>
+		<TD>
+			<INPUT type="text" name="form_j1[{form_id}]" style="width:30px;" value="{j1_poste}">
+		</TD>
+		<TD>
+			<INPUT type="text" name="form_j2[{form_id}]" style="width:30px;" value="{j2_poste}">
+		</TD>
+		<TD>
+			<INPUT type="text" name="form_j3[{form_id}]" style="width:30px;" value="{j3_poste}">
+		</TD>
+		<TD>
+			<INPUT type="text" name="form_j4[{form_id}]" style="width:30px;" value="{j4_poste}">
+		</TD>
+		<TD>
+			<INPUT type="text" name="form_j5[{form_id}]" style="width:30px;" value="{j5_poste}">
+		</TD>
+		<TD>
+			<INPUT type="text" name="form_j6[{form_id}]" style="width:30px;" value="{j6_poste}">
+		</TD>
+		<TD>
+			<INPUT type="text" name="form_j7[{form_id}]" style="width:30px;" value="{j7_poste}">
+		</TD>
+		<TD>
+			<span class="bouttonSupprime"><a href="compta.php?rub=postes&fonc=delete&id={form_id}"><img src="{path_module}/img/icn12_supprimer.png" border=0 /></a></span>
+		</TD>
+		
+	  </TR>
+	<!-- END: lst_mouvement -->
+
+	  <TR>
+		<TD width=20>&nbsp;</TD>
+		<TD colspan=4><BR><INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler"></TD>
+	  </TR>
+	</TABLE>
+</FORM>
+
+
+
+<!-- END: corps -->

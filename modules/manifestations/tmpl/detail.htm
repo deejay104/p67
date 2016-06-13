@@ -1,0 +1,188 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+
+<!-- BEGIN: bouttons -->
+
+		<a href="manips.php?dte={aff_dte}"><img src="{path_module}/img/icn32_retour.png" alt="Retour" border=0/>&nbsp;Liste</a>
+<!-- BEGIN: modification -->
+		<a href="manips.php?rub=detail&id={aff_id_manip}&fonc=modifier"><img src="{path_module}/img/icn32_modifier.png" alt="Modifier" border=0/>&nbsp;Modifier</a>
+<!-- END: modification -->
+<!-- BEGIN: suppression -->
+		<a href="manips.php?rub=detail&id={aff_id_manip}&fonc=supprimer"><img src="{path_module}/img/icn32_supprimer.png" alt="Modifier" border=0/>&nbsp;Supprimer</a>
+<!-- END: suppression -->
+<!-- BEGIN: participe -->
+		<a href="manips.php?rub=detail&id={aff_id_manip}&fonc=ok"><img src="{path_module}/img/icn32_participe.png" alt="Participer" border=0/>&nbsp;Participer</a>
+		<a href="manips.php?rub=detail&id={aff_id_manip}&fonc=nok"><img src="{path_module}/img/icn32_absent.png" alt="Absent" border=0/>&nbsp;Absent</a>
+<!-- END: participe -->
+<!-- BEGIN: facture -->
+		<a href="manips.php?rub=detail&id={aff_id_manip}&fonc=facture"><img src="{path_module}/img/icn32_facture.png" alt="Absent" border=0/>&nbsp;Facturer la manifestation</a>
+<!-- END: facture -->
+
+<!-- END: bouttons -->
+
+<!-- END: infos -->
+
+<!-- BEGIN: corps -->
+<script type="text/javascript">
+	$(function() {
+		$("#form_date").datepicker({
+			dateFormat: "dd/mm/yy",
+			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+			monthNames: ["Janvier","Février","Mars","Avril","Mars","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
+			prevText: "Précédent",
+			nextText: "Suivant"
+		});
+	});
+	$(function() {
+		$("#form_date_limite").datepicker({
+			dateFormat: "dd/mm/yy",
+			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+			monthNames: ["Janvier","Février","Mars","Avril","Mars","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
+			prevText: "Précédent",
+			nextText: "Suivant"
+		});
+	});
+</script>
+
+<form name="manips" method="post" action="manips.php" enctype="multipart/form-data">
+	<input type="hidden" name="rub" value="detail" />
+	<input type="hidden" name="id" value="{aff_id_manip}" />
+	<input type="hidden" name="checktime" value="{form_checktime}" />
+
+
+<!-- BEGIN: aff_form_titre -->
+<div class="formulaireTitre">Informations</div>
+
+<div class="formulaire">
+	<p>
+			<label for="titre">Titre</label>
+			<input id="titre" name="form_titre" value="{form_titre}" size="40" />&nbsp;&nbsp;
+	</p>
+
+	<p>
+			<label for="form_date">Date de la manifestation</label>
+			<input id="form_date" name="form_date" value="{form_date}" size="10" />
+	</p>
+
+	<p>
+			<label for="form_date_limite">Date limite d'inscription</label>
+			<input id="form_date_limite" name="form_date_limite" value="{form_date_limite}" size="10" />
+	</p>
+
+	<p>
+			<label for="cout">Cout par personne</label>
+			<input id="cout" name="form_cout" value="{form_cout}" id="form_cout" size="5" /> €<br/><br/>
+	</p>
+
+	<p>
+			<label for="destinataire">Type de participants</label>
+			<span id="destinataire">
+			<!-- BEGIN: lst_type -->
+				<INPUT type="checkbox" name="mtype[{forum_type_id}]" {forum_type_check}> {forum_type_description}.<br />
+			<!-- END: lst_type -->
+			</span>
+	</p>
+
+	<p>
+			<label for="commentaire">Descriptif</label>
+			<span id="commentaire">
+	  		{aff_detail_manip}
+				<textarea name="form_comment" cols=60 rows=5>{form_detail}</textarea>
+			</span>
+	</p>
+</div>
+
+<div class="formulaireSubmit">
+			<input type="submit" name="fonc" value="Enregistrer" />&nbsp;
+			<input type="submit" name="fonc" value="Annuler" />
+</div>
+
+<br />
+<!-- END: aff_form_titre -->
+
+<!-- BEGIN: aff_form_type -->
+<div class="formulaireTitre">Informations</div>
+
+<div class="formulaire">
+	<p>
+			<label>Titre</label>
+			{form_titre}
+	</p>
+	<p>
+			<label>Type de participants</label>
+			{form_type}
+	</p>
+<!-- END: aff_form_type -->
+
+<!-- BEGIN: aff_form_date_limite -->
+	<p>
+			<label>Date limite d'inscription</label>
+			{form_date_limite}
+	</p>
+<!-- END: aff_form_date_limite -->
+
+<!-- BEGIN: aff_form_cout -->
+	<p>
+			<label>Cout par personne</label>
+			{form_cout}
+	</p>
+<!-- END: aff_form_cout -->
+
+<!-- BEGIN: aff_form_comment -->
+	<p>
+			<label>Descriptif</label>
+			{aff_detail_manip}
+	</p>
+<!-- END: aff_form_comment -->
+
+<!-- BEGIN: aff_retour -->
+			<a href="manips.php">Retourner à la liste des manifestations</a><br /><br />
+<!-- END: aff_retour -->
+
+<!-- BEGIN: aff_msgok -->
+			<div id="msgok">Cette manifestation a été facturées aux participants</div>
+<!-- END: aff_msgok -->
+
+
+
+<!-- BEGIN: participants -->
+		<div class="formulaireTitre">Participants ({aff_nbok})</div>
+		<div  class="formulaireListe">
+			{aff_participants_manip}
+		</div>
+<!-- END: participants -->
+
+<!-- BEGIN: absents -->
+		<div class="formulaireTitre">Absents ({aff_nbnok})</div>
+		<div  class="formulaireListe">
+			{aff_absents_manip}
+		</div>
+<!-- END: absents -->
+
+<!-- BEGIN: na -->
+		<div class="formulaireTitre">Non répondus</div>
+		<div  class="formulaireListe">
+			{aff_na_manip}
+		</div>
+<!-- END: na -->
+
+
+<!-- BEGIN: autre_manip -->
+<div class="formulaireTitre">Autre(s) manifestation(s) ayant lieu le meme jour</div>
+
+<div class="formulaire">
+<!-- BEGIN: lst_autre_manip -->
+	<p>
+		<a href="manips.php?rub=detail&id={id_autre_manip}">{aff_autre_manip}</a>
+	</p>
+<!-- END: lst_autre_manip -->
+<!-- END: autre_manip -->
+</div>
+
+</form>
+

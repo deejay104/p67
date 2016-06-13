@@ -1,0 +1,165 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	 {site_title}
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+<script type="text/javascript">
+	$(function() {
+
+			// auto adjust the height of
+			$('#actualitesNouveau').delegate( 'textarea', 'keydown', function (){
+			    $(this).height( 0 );
+			    $(this).height( this.scrollHeight );
+			});
+			$('#actualitesNouveau').find( 'textarea' ).keydown();
+
+  });
+
+	function ClearText(e,txt) {
+	
+		if(window.event)
+	          {
+	          	//IE
+	          	var t = window.event.srcElement;
+	          } 
+		else
+	          { //firefox
+	          	var t = e.target;
+	          } 
+			
+		if (t.value==txt)
+		  { t.value=''; t.style.color="#000000"; }
+		return;
+	}
+	function CapturePost(e) {
+		seconds=timer;
+		text="";
+	
+		if(window.event)
+	          { key = window.event.keyCode;	} //IE
+		else
+	          { key = e.which;  } //firefox
+	
+		if (key==13)
+		 { 
+		 	document.forms["recherche"].submit(); 
+	 	 }
+	}
+</script>
+
+<div class="cadreinfos">
+
+	<div class="encadreInfos">
+		<div class="encadreTitre">Informations Personnelles</div>
+  
+<!-- BEGIN: mod_aviation_detail -->
+	  <p><label>Solde du compte pilote</label>{solde}</p>
+	  <p><label>Expiration de la licence</label>{dte_licence}</p>
+	  <p><label>Expiration de la visite médicale</label>{dte_medicale}</p>
+	  <p><label>Nombre de vols dans les 3 derniers mois</label>{nb_vols} vols</p>
+<!-- END: mod_aviation_detail -->
+	  <p><label><A href="forums.php">Nombre de documents non lus</A></label><span><A href="forums.php" class="{color_nonlus}">{nb_nonlus}</A></span></p>
+	</div>
+
+<!-- BEGIN: aff_manips -->
+	<div class="encadreInfos">
+		<div class="encadreTitre">{manip_titre} le {manip_date}</div>
+	 	<p align="justify">{manip_txt}</p>
+	 	<p align="right"><a href="manips.php?rub=detail&id={manip_id}">-Voir les participants-</a></p>
+	</div>
+<!-- END: aff_manips -->
+	<div class="encadreInfos">
+		<div class="encadreTitre">Rechercher dans les actualités</div>
+		<form name="recherche" method="post" action="index.php" enctype="multipart/form-data">
+			<input type="hidden" name="mod" value="actualites">
+			<p><input type="text" name="search" OnClick="ClearText(event,'Termes à rechercher');" value="Termes à rechercher" OnKeyPress="CapturePost(event);" style="color:#bbbbbb;"></p>
+		</form>
+	</div>
+</div>
+
+<div id="actualites">
+	<div id="actualitesNouveau">
+		<form name="actualites" method="post" action="index.php" enctype="multipart/form-data">
+			<input type="hidden" name="mod" value="actualites">
+			<input type="hidden" name="id" value="{form_id}">
+			<input type="hidden" name="checktime" value="{form_checktime}">
+	
+			<input type="text" name="form_titre" value="{news_title}"  OnClick="ClearText(event,'{news_title_clear}');"  style="color:#{new_color};"><br />
+			<textarea name="form_message" OnClick="ClearText(event,'{news_message_clear}');"  style="color:#{new_color};">{news_message}</textarea>
+			<p>
+				<input name='fonc' type='submit' value='Poster'>
+			</p>
+		</form>
+	</div>
+	<div id="actualitesMail"></div>
+
+	<br/>
+
+
+<!-- BEGIN: aff_message -->
+	<div id="actualitesMessage">
+		<div class="actualitesTitre">
+			<div class="actualitesIcones">
+				<!-- BEGIN: icn_modifier -->
+				<a href="index.php?mod=actualites&fonc=editer&id={msg_id}"><img src="{path_module}/img/icn24_modifier.png" /></a>
+				<!-- END: icn_modifier -->
+				<!-- BEGIN: icn_supprimer -->
+				<a href="#" OnClick="ConfirmeClick('index.php?mod=actualites&fonc=supprimer&id={msg_id}#id{msg_idprev}','Souhaitez-vous supprimer cette actualité ?');"><img src="{path_module}/img/icn24_supprimer.png" /></a>
+				<!-- END: icn_supprimer -->
+			</div>
+			<a name="id{msg_id}"></a>
+			<p>{msg_titre}</p>
+			
+			<span>par {msg_autheur}, {msg_date}</span>
+		</div>
+		<div class="actualitesTexte">
+			<p>{msg_message}</p>
+		</div>
+	</div>
+<!-- END: aff_message -->
+
+	<div id="actualitesMessage">
+		<div class="actualitesSuivant">
+			<a href="index.php?mod=actualites&limit={aff_limit}&search={aff_search}#id{msg_lastid}">-Afficher les actualités suivantes-</a>
+		</div>
+	</div>
+
+	<br />
+	<br />
+
+</div>
+
+<!-- BEGIN: aff_sendmail -->
+<script type="text/javascript">
+			$(function() {     
+			    $.ajax({
+			        url:'index.php?mod=actualites&rub=sendmail&id={aff_id}',
+			        type: 'html',
+			        success: function(content,code) {
+			        	if (content.charAt(0)=="O")
+			        	  {
+										document.getElementById("actualitesMail").style.backgroundColor = "#BBFFAA";
+									}
+								else
+			        	  {
+										document.getElementById("actualitesMail").style.backgroundColor = "#FFBBAA";
+									}
+
+								document.getElementById("actualitesMail").innerHTML =content;
+
+			        	if (content.charAt(0)!="*")
+			        	  {
+										document.getElementById("actualitesMail").style.display = 'block';
+									}
+			        }
+			    });        
+			});
+</script>
+<!-- END: aff_sendmail -->
+
+<!-- END: corps -->

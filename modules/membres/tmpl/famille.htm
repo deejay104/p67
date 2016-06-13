@@ -1,0 +1,426 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_famille.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	{titre}
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+<FORM name="form_detail" method="post" action="membres.php" enctype="multipart/form-data">
+<INPUT type="hidden" name="rub" value="famille">
+<INPUT type="hidden" name="id" value="{id}">
+<INPUT type="hidden" name="checktime" value="{form_checktime}">
+
+<div style="visibility:hidden">
+{form_id}
+{form_pere_id}
+{form_mere_id}
+</div>
+
+
+<A href="familles.php"><IMG src="images/icn32_retour.png" border=0 alt="">Liste</A> &nbsp&nbsp;
+<!-- BEGIN: ajout -->
+<A href="membres.php?rub=famille&id="><IMG src="{path_module}/img/icn32_ajouter2.png" border=0 alt="">Ajouter</A> &nbsp&nbsp;
+<!-- END: ajout -->
+<!-- BEGIN: modification -->
+<A href="membres.php?rub=famille&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_editer2.png" border=0 alt="">Modifier</A> &nbsp&nbsp;
+<!-- END: modification -->
+<!-- BEGIN: password -->
+<A href="membres.php?rub=chgpwd&id={id}"><img src="{path_module}/img/icn32_password.png" border=0 alt="" width=32 height=32 />Changer son mot de passe</A> &nbsp&nbsp;
+<!-- END: password -->
+<!-- BEGIN: desactive -->
+<A href="#" OnClick="ConfirmeClick('membres.php?rub=famille&id={id}&fonc=desactive','Voulez-vous désactiver cette famille ?');"><IMG src="{path_module}/img/icn32_emptytrash.png" border=0 alt="">Désactiver</A>
+<!-- END: desactive -->
+<!-- BEGIN: suppression -->
+<A href="#" OnClick="ConfirmeClick('membres.php?rub=famille&id={id}&fonc=delete','Voulez-vous supprimer cette famille ?');"><IMG src="{path_module}/img/icn32_edittrash.png" border=0 alt="">Supprimer</A>
+<!-- END: suppression -->
+<BR><BR>
+<TABLE border="0" cellspacing="0" cellpadding="0" background="" width=100%>
+<TR><TD height=1 width=30><IMG src="images/rien.gif" alt=""></TD><TD height=1 bgcolor="#013366"><IMG src="images/rien.gif" alt=""></TD></TR>
+<TR><TD width=30><IMG src="images/rien.gif" alt=""></TD><TD><I><FONT size=1>Dernière mise à jour : {info_maj}</FONT></I></TD></TR>
+
+</TABLE>
+<BR>
+
+<!-- BEGIN: msgerror -->
+<div id="msgerror">{msg_erreur}</div>
+<!-- END: msgerror -->
+<!-- BEGIN: msgok -->
+<div id="msgok">{msg_confirmation}</div>
+<!-- END: msgok -->
+
+
+<script type="text/javascript">
+	$(function() {
+		$("#dte_naissance").datepicker({
+			changeYear: true,
+			dateFormat: "dd/mm/yy",
+			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
+			prevText: "Précédent",
+			nextText: "Suivant"
+		});
+	});
+	$(function() {
+		$("#dte_inscription").datepicker({
+			changeYear: true,
+			dateFormat: "dd/mm/yy",
+			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
+			prevText: "Précédent",
+			nextText: "Suivant"
+		});
+	});
+
+	$(function() {
+		$("#enregistrer1").button();
+		$("#annuler1").button();
+		$("#enregistrer2").button();
+		$("#annuler2").button();
+	});
+
+</script>
+
+<!-- BEGIN: submit1 -->
+	<INPUT type="submit" name="fonc" id="enregistrer1" value="Enregistrer" style="margin-left:30px;"> <INPUT type="submit" name="fonc" id="annuler1" value="Annuler">
+<br /><br />
+<!-- END: submit1 -->
+
+<TABLE border="0" cellspacing="0" cellpadding="0" background="" width="850" style="margin-left: 30px;">
+  <TR height=20 style="border-bottom: 1px #000000 solid;">
+	<TD bgcolor="#DDDDDD" colspan=2>&nbsp;&nbsp;<B>Fiche de renseignements de l'enfant</B></TD>
+  </TR>
+  <TR>
+    <TD width=300 align="center"><br /><IMG src="doc.php?id={id_photo}" alt="" width=200 height=240></TD>
+    <TD>
+	<table border=0 cellpadding=0 cellspacing=0>
+	 <tr height=17>
+	  <td height=17 width=200 align=right><B>Prénom :</B>&nbsp;</td>
+	  <td width=300>{form_prenom}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Nom :</B>&nbsp;</td>
+	  <td>{form_nom}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Initiales :</B>&nbsp;</td>
+	  <td>{form_initiales}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Sexe :</B>&nbsp;</td>
+	  <td>{form_sexe}</td>
+	 </tr>
+	 <tr height=17>
+		<td align=right><B>Date de naissance :</b>&nbsp;</td>
+		<td>{form_dte_naissance}&nbsp;</td>
+	 </tr>
+	 <tr height=17>
+		<td align=right><B>Date d'inscription :</b>&nbsp;</td>
+		<td>{form_dte_inscription}&nbsp;</td>
+	 </tr>
+	 <tr height=17>
+		<td align=right><B>Mail :</b>&nbsp;</td>
+		<td>{form_mail}&nbsp;</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>N° allocataire CAF :</B>&nbsp;</td>
+	  <td>{form_num_caf}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Zone :</B>&nbsp;</td>
+	  <td>{form_zone}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Régime :</B>&nbsp;</td>
+	  <td>{form_regime}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Autorisation prélèvement :</B>&nbsp;</td>
+	  <td>{form_aut_prelevement}</td>
+	 </tr>
+
+<!-- BEGIN: aff_photo -->
+	 <tr height=17>
+	  <td align=right><B>Photo :</B>&nbsp;</td>
+	  <td><input name="form_photo" type="file" size=40 /></td>
+	 </tr>
+<!-- END: aff_photo -->
+
+	</table>
+    </TD>
+  </TR>
+
+</TABLE>
+
+<br />
+
+<table border="0" cellspacing="0" cellpadding="0" background="" width=880>
+<tr height=20><td width=30><img src="images/rien.gif" alt=""></td><td bgcolor="#DDDDDD">&nbsp;&nbsp;<b>Documents</b></td></tr>
+<tr><td height=1 width=30><img src="images/rien.gif" alt=""></td><td height=1 bgcolor="#013366"><img src="images/rien.gif" alt=""></td></tr>
+</table>
+<table border=0 cellpadding=0 cellspacing=0 width=600>
+ <tr height=5>
+	<td colspan=3><img src="images/rien.gif" alt="" /></td>
+ </tr>
+<!-- BEGIN: lst_document -->
+ <tr height=17>
+	<td width=30><img src="images/rien.gif" alt="" /></td>
+	<td height=17>&nbsp;</td>
+	<td>{form_document}</td>
+ </tr>
+<!-- END: lst_document -->
+</table>
+<br />
+
+<TABLE border="0" cellspacing="0" cellpadding="0" background="" width=880>
+<TR height=20><TD width=30><IMG src="images/rien.gif" alt=""></TD><TD bgcolor="#DDDDDD" colspan=2>&nbsp;&nbsp;<B>Fiche de renseignements des responsables</B></TD></TR>
+<TR><TD height=1 width=30><IMG src="images/rien.gif" alt=""></TD><TD colspan=2 height=1 bgcolor="#013366"><IMG src="images/rien.gif" alt=""></TD></TR>
+  <tr>
+    <td width=30><IMG src="images/rien.gif" alt=""></td>
+    <td align=center><b>Père</b> {lst_pere}</td>
+    <td align=center><b>Mère</b> {lst_mere}</td>
+  </tr>
+  <TR>
+    <TD width=30><IMG src="images/rien.gif" alt=""></TD>
+    <TD>
+	<table border=0 cellpadding=0 cellspacing=0>
+	 <tr height=17>
+	  <td height=17 width=150 align=right><B>Prénom:</B>&nbsp;</td>
+	  <td width=300>{form_pere_prenom}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Nom :</B>&nbsp;</td>
+	  <td>{form_pere_nom}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Tel domicile :</B>&nbsp;</td>
+	  <td>{form_pere_tel_fixe}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Tel portable :</B>&nbsp;</td>
+	  <td>{form_pere_tel_portable}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Tel bureau :</B>&nbsp;</td>
+	  <td>{form_pere_tel_bureau}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Mail :</B>&nbsp;</td>
+	  <td>{form_pere_mail}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Adresse :</B>&nbsp;</td>
+	  <td>{form_pere_adresse1}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right></td>
+	  <td>{form_pere_adresse2}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Code Postal :</B>&nbsp;</td>
+	  <td>{form_pere_codepostal}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Ville :</B>&nbsp;</td>
+	  <td>{form_pere_ville}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Profession :</B>&nbsp;</td>
+	  <td>{form_pere_profession}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Employeur :</B>&nbsp;</td>
+	  <td>{form_pere_employeur}</td>
+	 </tr>
+	</table>
+    </TD>
+    <td>
+	<table border=0 cellpadding=0 cellspacing=0>
+	 <tr height=17>
+	  <td height=17 width=150 align=right><B>Prénom :</B>&nbsp;</td>
+	  <td width=250>{form_mere_prenom}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Nom :</B>&nbsp;</td>
+	  <td>{form_mere_nom}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Tel domicile :</B>&nbsp;</td>
+	  <td>{form_mere_tel_fixe}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Tel portable :</B>&nbsp;</td>
+	  <td>{form_mere_tel_portable}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Tel bureau :</B>&nbsp;</td>
+	  <td>{form_mere_tel_bureau}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Mail :</B>&nbsp;</td>
+	  <td>{form_mere_mail}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Adresse :</B>&nbsp;</td>
+	  <td>{form_mere_adresse1}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right></td>
+	  <td>{form_mere_adresse2}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Code Postal :</B>&nbsp;</td>
+	  <td>{form_mere_codepostal}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Ville :</B>&nbsp;</td>
+	  <td>{form_mere_ville}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Profession :</B>&nbsp;</td>
+	  <td>{form_mere_profession}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Employeur :</B>&nbsp;</td>
+	  <td>{form_mere_employeur}</td>
+	 </tr>
+	</table>
+    </td>    	
+  </TR>
+
+</TABLE>
+
+<BR>
+
+
+<TABLE border="0" cellspacing="0" cellpadding="0" background="" width=880>
+<TR height=20><TD width=30><IMG src="images/rien.gif" alt=""></TD><TD bgcolor="#DDDDDD">&nbsp;&nbsp;<B>Fiche sanitaire</B></TD></TR>
+<TR><TD height=1 width=30><IMG src="images/rien.gif" alt=""></TD><TD height=1 bgcolor="#013366"><IMG src="images/rien.gif" alt=""></TD></TR>
+  <TR>
+    <TD width=30><IMG src="images/rien.gif" alt=""></TD>
+    <TD>
+	<table border=0 cellpadding=0 cellspacing=0>
+	 <tr height=17>
+	  <td height=17 width=150 align=right><B>Médecin :</B>&nbsp;</td>
+	  <td width=250>{form_nom_medecin}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Tel médecin :</B>&nbsp;</td>
+	  <td>{form_tel_medecin}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Adresse médecin :</B>&nbsp;</td>
+	  <td>{form_adr_medecin}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Type repas :</B>&nbsp;</td>
+	  <td>{form_type_repas}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Handicap :</B>&nbsp;</td>
+	  <td>{form_handicap}</td>
+	 </tr>
+	 <tr valign="top">
+	  <td align=right><B>Compléments :</B>&nbsp;</td>
+	  <td>{form_remarque_sante}</td>
+	 </tr>
+	</table>
+    </TD>
+  </TR>
+
+</TABLE>
+<br />
+
+<table border="0" cellspacing="0" cellpadding="0" background="" width=880>
+<tr height=20><TD width=30><IMG src="images/rien.gif" alt=""></TD><TD bgcolor="#DDDDDD">&nbsp;&nbsp;<B>Allergies</B></TD></TR>
+<tr><td height=1 width=30><IMG src="images/rien.gif" alt=""></TD><TD height=1 bgcolor="#013366"><IMG src="images/rien.gif" alt=""></TD></TR>
+  <tr>
+    <td width=30><IMG src="images/rien.gif" alt=""></TD>
+    <td>
+	<table border=0 cellpadding=0 cellspacing=0>
+	 <tr height=17>
+	  <td align=right width=150><B>Asthme :</B>&nbsp;</td>
+	  <td width=100>{form_allergie_asthme}</td>
+	  <td align=right><B>Compléments :</B>&nbsp;</td>
+	  <td rowspan=4>{form_allergie_commentaire}</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Médicamenteuse :</B>&nbsp;</td>
+	  <td>{form_allergie_medicament}</td>
+	  <td>&nbsp;</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right><B>Alimentaire :</B>&nbsp;</td>
+	  <td>{form_allergie_alimentaire}</td>
+	  <td>&nbsp;</td>
+	 </tr>
+	 <tr height=17>
+	  <td align=right>&nbsp;</td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	 </tr>
+	</table>
+    </td>
+  </tr>
+
+</table>
+<br />
+
+
+<!-- BEGIN: abonnement -->
+<br />
+<table border="0" cellspacing="0" cellpadding="0" background="" width=880>
+  <tr height=20>
+	<td width=30><img src="images/rien.gif" alt=""></td>
+	<td colspan=4 bgcolor="#DDDDDD">&nbsp;&nbsp;<b>Abonnement(s)</b> <a href="index.php?mod=facturation&rub=abonnement&id=&form_uid={id}&mode=copy">-Ajouter-</a></td>
+  </tr>
+  <tr><td height=1 width=30><img src="images/rien.gif" alt=""></td><td height=1 bgcolor="#013366" colspan=4><img src="images/rien.gif" alt=""></td></tr>
+
+<!-- BEGIN: lst_abonnement -->
+  <tr>
+	<td width=30>&nbsp;</td>
+	<td width=30>&nbsp;</td>
+	<td colspan=2><b>* <a href="index.php?mod=facturation&rub=abonnement&id={abonnement_id}">{abonnement_titre}</a></b></td>
+	<td width=250><b>{abonnement_total}</b></td>
+  </tr>
+
+<!-- BEGIN: lst_abo_ligne -->
+  <tr>
+	<td width=30>&nbsp;</td>
+	<td width=30>&nbsp;</td>
+	<td width=30>&nbsp;</td>
+	<td>{abonnement_ligne}</td>
+	<td>{abonnement_montant}</td>
+  </tr>
+<!-- END: lst_abo_ligne -->
+<!-- END: lst_abonnement -->
+</table>
+<!-- END: abonnement -->
+
+<br />
+
+<TABLE border="0" cellspacing="0" cellpadding="0" background="" width=880>
+  <TR height=20>
+	<TD width=30><IMG src="images/rien.gif" alt=""></TD>
+	<TD bgcolor="#DDDDDD">&nbsp;&nbsp;<B>Commentaires</B></td>
+  </TR>
+  <TR><TD height=1 width=30><IMG src="images/rien.gif" alt=""></TD><TD height=1 bgcolor="#013366"><IMG src="images/rien.gif" alt=""></TD></TR>
+  <TR>
+	<TD width=30><IMG src="images/rien.gif" alt=""></TD>
+	<TD>{form_commentaire}</td>
+  </TR>
+</TABLE>
+
+<BR>
+<!-- BEGIN: submit -->
+	<br />
+	<input type="submit" name="fonc" id="enregistrer2" value="Enregistrer" style="margin-left:30px;"> <input type="submit" name="fonc" id="annuler2" value="Annuler">
+<!-- END: submit -->
+
+</FORM>
+
+<!-- END: corps -->

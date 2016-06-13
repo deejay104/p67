@@ -1,0 +1,41 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_presence.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	Liste des présents
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+<br />
+<a href="presence.php?dtey={dtey}&dtem={dtem}">-Tableau des présences-</a>&nbsp;
+<a href="presence.php?rub=ponctuel">-Présence ponctuelle-</a>&nbsp;
+<a href="presence.php?rub=vacances">-Vacances-</a>
+
+
+<form name="presence" method="post" action="index.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="mod" value="facturation">
+	<INPUT type="hidden" name="rub" value="presence">
+	<INPUT type="hidden" name="dte" value="{dte}">
+
+<table>
+<tr bgcolor="#000000"><td colspan=3><img src="images/rien.gif"></td></tr>
+<tr>
+<td width=100 align=center><a href="index.php?mod=facturation&rub=presence&dte={dte_prec}">-Précédent-</a></td>
+<td width=520 align=center><font size=5px>{dte_txt}</font></td>
+<td width=100 align=center><a href="index.php?mod=facturation&rub=presence&dte={dte_suiv}">-Suivant-</a></td>
+</tr>
+<tr bgcolor="#000000"><td colspan=3><img src="images/rien.gif"></td></tr>
+</table>
+
+{aff_tableau}
+
+<input type="submit" name="fonc" value="Enregistrer" />
+<input type="submit" name="fonc" value="Suivant" />
+
+</form>
+
+<!-- END: corps -->

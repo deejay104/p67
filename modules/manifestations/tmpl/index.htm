@@ -1,0 +1,96 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	Manifestations
+<!-- END: infos -->
+
+<!-- BEGIN: corps -->
+<link href='external/fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='external/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+
+<script src='external/fullcalendar/lib/moment.min.js'></script>
+<script src='external/fullcalendar/fullcalendar.min.js'></script>
+<script src='external/fullcalendar/lang/fr.js'></script>
+
+<script>
+
+	$(document).ready(function() {
+
+		$('#calendar').fullCalendar({
+			defaultDate: '{form_jour}',
+			defaultView: 'month',
+			lang: 'fr',
+			editable: true,
+			eventLimit: true, // allow "more" link when too many events
+			selectable: true,
+			selectHelper: true,
+			allDayDefault: true,
+			contentHeight: 'auto',
+			eventLimit: 3,
+
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: ''
+			},
+
+			businessHours:
+		       {
+					   start: '0:00', // a start time (10am in this example)
+					   end: '23:59', // an end time (12pm in this example)
+					   dow: [ 1,2,3,4,5 ]
+				   },
+
+
+       views: {
+            agendaFourWeeks: {
+                type: 'agenda',
+                duration: {weeks: 4},
+                buttonText: 'Default',
+                columnFormat: 'DD'
+            }
+        },
+
+			select: function(start, end) {
+						document.location="manips.php?rub=detail&jstart="+start;
+			},
+			eventClick: function(event, element) {
+						document.location="manips.php?rub=detail&id="+event.id;
+			    },
+
+			eventResize: function(event, dayDelta, minuteDelta ) {
+           $.ajax({ url: 'manips.php?rub=updatecal&id='+event.id+'&jstart='+event.start });
+			},
+			eventDrop: function(event,dayDelta,minuteDelta) {
+           $.ajax({ url: 'manips.php?rub=updatecal&id='+event.id+'&jstart='+event.start });
+			},
+
+
+			events: {
+				url: 'manips.php?rub=getcal',
+				error: function() {
+					$('#script-warning').show();
+				}
+			},
+			loading: function(bool) {
+				$('#loading').toggle(bool);
+			}
+		});
+		
+	});
+
+</script>
+
+
+
+	<div id='script-warning'>
+		Erreur : <code>manips/getcal.php</code> doit être accessible.
+	</div>
+
+	<div id='loading'>loading...</div>
+
+	<div id='calendar'></div>
+	
+<!-- END: corps -->

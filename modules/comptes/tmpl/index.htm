@@ -1,0 +1,41 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+
+		<!-- BEGIN: liste_compte -->
+			<A href="compta.php?rub=liste"><IMG src="{path_module}/img/icn32_comptes.png" />Liste des comptes</A>
+		<!-- END: liste_compte -->
+
+
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+<br />
+<form name="compte" method="post" action="comptes.php" enctype="multipart/form-data">
+
+	<input type="hidden" name="checktime" value="{form_checktime}">
+
+<!-- BEGIN: compte -->
+	
+			<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='comptes.php?id='+id;">
+			<!-- BEGIN: lst_compte -->
+			<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
+			<!-- END: lst_compte -->
+			</select>
+
+	<br /><br />
+<!-- END: compte -->
+
+{aff_tableau}
+<br/>
+
+<!-- BEGIN: nbheures -->
+<p>Total d'heure de vol effectuée dans le club : {nb_heure} dont {nb_heure_an} cette année et {nb_heure_deran} dans les 12 derniers mois.</p>
+<!-- END: nbheures -->
+
+</form>
+
+<!-- END: corps -->

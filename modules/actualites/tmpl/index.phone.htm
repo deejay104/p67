@@ -1,0 +1,206 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	 {site_title}
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+		<div class="navigation">
+			<ul class="main-menu">
+     		<li><a href="membres.php"><img src="modules/membres/img/icn32_membres.png" /> Membres</a>
+
+<!-- BEGIN: menu_famille -->
+				<li><a href="familles.php"><img src="modules/membres/img/icn32_famille.png" /> Familles</a>
+<!-- END: menu_famille -->
+<!-- BEGIN: menu_reservations -->
+				<li><a href="reservations.php?jour=-"><img src="modules/reservations/img/icn32_titre.png" /> Réservations</a>
+<!-- END: menu_reservations -->
+<!-- BEGIN: menu_manips -->
+				<li><a href="manips.php"><img src="modules/manifestations/img/icn32_titre.png" /> Manifestations</a>
+<!-- END: menu_manips -->
+ <!-- BEGIN: menu_comptes -->
+				<li><a href="comptes.php"><img src="modules/comptes/img/icn32_titre.png" /> Comptes</a>
+<!-- END: menu_comptes -->
+<!-- BEGIN: menu_vols -->
+				<li><a href="vols.php"><img src="modules/aviation/img/icn32_suivivols.png" /> Suivi des vols</a>
+<!-- END: menu_vols -->
+<!-- BEGIN: menu_ressources -->
+     		<li><a href="ressources.php"><img src="modules/ressources/img/icn32_titre.png" /> Suivi des Avions</a>
+<!-- END: menu_ressources -->
+<!-- BEGIN: menu_mesinfos -->
+				<li><a href="mesinfos.php"><img src="modules/membres/img/icn32_detail.png" /> Mes informations</a>
+<!-- END: menu_mesinfos -->
+       </ul> <!-- /.main_menu -->
+		</div> <!-- /.navigation -->
+
+<p style="text-align:center;"><a href="index.php?settheme=default">-Revenir à l'affichage classique-</a></p>
+
+
+<script type="text/javascript">
+	$(function() {
+
+			// auto adjust the height of
+			$('#actualitesNouveau').delegate( 'textarea', 'keydown', function (){
+			    $(this).height( 0 );
+			    $(this).height( this.scrollHeight );
+			});
+			$('#actualitesNouveau').find( 'textarea' ).keydown();
+  });
+
+	function ClearText(e,txt) {
+	
+		if(window.event)
+	          {
+	          	//IE
+	          	var t = window.event.srcElement;
+	          } 
+		else
+	          { //firefox
+	          	var t = e.target;
+	          } 
+			
+		if (t.value==txt)
+		  { t.value=''; t.style.color="#000000"; }
+		return;
+	}
+	function CapturePost(e) {
+		seconds=timer;
+		text="";
+	
+		if(window.event)
+	          { key = window.event.keyCode;	} //IE
+		else
+	          { key = e.which;  } //firefox
+	
+		if (key==13)
+		 { 
+		 	document.forms["recherche"].submit(); 
+	 	 }
+	}
+</script>
+
+<div class="cadreinfos">
+
+	<div class="encadreInfos">
+		<div class="encadreTitre">Informations Personnelles</div>
+  
+<!-- BEGIN: mod_aviation_detail -->
+	  <p><label>Solde du compte pilote</label>{solde}</p>
+	  <p><label>Expiration de la licence</label>{dte_licence}</p>
+	  <p><label>Expiration de la visite médicale</label>{dte_medicale}</p>
+	  <p><label>Nombre de vols dans les 3 derniers mois</label>{nb_vols} vols</p>
+<!-- END: mod_aviation_detail -->
+	  <p><label><A href="forums.php">Nombre de documents non lus</A></label><A href="forums.php" class="{color_nonlus}">{nb_nonlus}</A></p>
+	</div>
+
+<!-- BEGIN: aff_manips -->
+	<div class="encadreInfos">
+		<div class="encadreTitre">{manip_titre} le {manip_date}</div>
+	 	<p align="justify">{manip_txt}</p>
+	 	<p align="right"><a href="manips.php?rub=detail&id={manip_id}">-Voir les participants-</a></p>
+	</div>
+<!-- END: aff_manips -->
+	<div class="encadreInfos">
+		<div class="encadreTitre">Rechercher dans les actualités</div>
+		<form name="recherche" method="post" action="index.php" enctype="multipart/form-data">
+			<input type="hidden" name="mod" value="actualites">
+			<p><input type="text" name="search" OnClick="ClearText(event,'Termes à rechercher');" value="Termes à rechercher" OnKeyPress="CapturePost(event);" style="color:#bbbbbb;"></p>
+		</form>
+	</div>
+
+	<a name="poster"></a>
+
+	<div class="encadreInfos">
+		<div class="encadreTitre">Poster un nouveau message</div>
+			<div id="actualitesNouveau">
+		
+				<form name="actualites" method="post" action="index.php#poster" enctype="multipart/form-data">
+					<input type="hidden" name="mod" value="actualites">
+					<input type="hidden" name="id" value="{form_id}">
+					<input type="hidden" name="checktime" value="{form_checktime}">
+			
+					<input type="text" name="form_titre" value="{news_title}"  OnClick="ClearText(event,'{news_title_clear}');"  style="color:#bbbbbb;"><br />
+					<textarea name="form_message" OnClick="ClearText(event,'{news_message_clear}');" style="color:#bbbbbb;">{news_message}</textarea>
+					<p>
+						<input name='fonc' type='submit' value='Poster'>
+					</p>
+				</form>
+			</div>
+	</div>
+
+	<div id="actualitesMail"></div>
+
+</div>
+
+<div id="actualites">
+
+<!-- BEGIN: aff_message -->
+	<div id="actualitesMessage">
+		<div class="actualitesTitre">
+			<div class="actualitesIcones">
+				<!-- BEGIN: icn_modifier -->
+				<a href="index.php?mod=actualites&fonc=editer&id={msg_id}#poster"><img src="{path_module}/img/icn24_modifier.png" /></a>
+				<!-- END: icn_modifier -->
+				<!-- BEGIN: icn_supprimer -->
+				<a href="#" OnClick="ConfirmeClick('index.php?mod=actualites&fonc=supprimer&id={msg_id}#poster','Souhaitez-vous supprimer cette actualité ?');"><img src="{path_module}/img/icn24_supprimer.png" /></a>
+				<!-- END: icn_supprimer -->
+			</div>
+			<a name="id{msg_id}"></a>
+			<p>{msg_titre}</p>
+			
+			<span>par {msg_autheur}, {msg_date}</span>
+		</div>
+		<div class="actualitesTexte">
+			<p>{msg_message}</p>
+		</div>
+	</div>
+<!-- END: aff_message -->
+
+	<div id="actualitesMessage">
+		<div class="actualitesSuivant">
+			<a href="index.php?mod=actualites&limit={aff_limit}&search={aff_search}#id{msg_lastid}">-Afficher les actualités suivantes-</a>
+		</div>
+	</div>
+
+	<br />
+	<br />
+
+
+</div>
+
+
+
+<!-- BEGIN: aff_sendmail -->
+<script type="text/javascript">
+			$(function() {     
+			    $.ajax({
+			        url:'index.php?mod=actualites&rub=sendmail&id={aff_id}',
+			        type: 'html',
+			        success: function(content,code) {
+			        	if (content.charAt(0)=="O")
+			        	  {
+										document.getElementById("actualitesMail").style.backgroundColor = "#BBFFAA";
+									}
+								else
+			        	  {
+										document.getElementById("actualitesMail").style.backgroundColor = "#FFBBAA";
+									}
+
+								document.getElementById("actualitesMail").innerHTML =content;
+
+			        	if (content.charAt(0)!="*")
+			        	  {
+										document.getElementById("actualitesMail").style.display = 'block';
+									}
+			        }
+			    });        
+			});
+</script>
+<!-- END: aff_sendmail -->
+
+<!-- END: corps -->
+

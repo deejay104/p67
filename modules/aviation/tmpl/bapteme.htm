@@ -1,0 +1,148 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_baptemes.png" alt="" />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+<A href="baptemes.php"><IMG src="{path_module}/img/icn32_retour.png" alt="">&nbsp;Liste</A>
+<!-- BEGIN: affecter -->
+<A href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=affecte"><IMG src="{path_module}/img/icn32_affecte.png" alt="">&nbsp;Prendre</A>
+<!-- END: affecter -->
+<!-- BEGIN: planifier -->
+<A href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=planifier"><IMG src="{path_module}/img/icn32_planifie.png" alt="">&nbsp;Planifier</A>
+<!-- END: planifier -->
+<!-- BEGIN: reserver -->
+<a href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=reserver"><IMG src="{path_module}/img/icn32_reservation.png" alt="">&nbsp;Réserver</A>
+<!-- END: reserver -->
+<!-- BEGIN: effectue -->
+<a href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=effectue"><IMG src="{path_module}/img/icn32_effectue.png" alt="">&nbsp;Effectué</A>
+<!-- END: effectue -->
+<!-- BEGIN: ajout -->
+<A href="index.php?mod=aviation&rub=bapteme&fonc=add&id="><IMG src="{path_module}/img/icn32_ajouter.png" alt="">&nbsp;Ajouter</A>
+<!-- END: ajout -->
+<!-- BEGIN: modification -->
+<A href="index.php?mod=aviation&rub=bapteme&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_modifier.png" alt="">&nbsp;Modifier</A>
+<!-- END: modification -->
+<!-- BEGIN: suppression -->
+<A href="#" OnClick="ConfirmeClick('index.php?mod=aviation&rub=bapteme&id={id}&fonc=delete','Voulez-vous supprimer ce baptème ?');"><IMG src="{path_module}/img/icn32_supprimer.png" alt="">&nbsp;Supprimer</A>
+<!-- END: suppression -->
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+<link rel="stylesheet" type="text/css" href="external/jquery/css/timePicker.css" />
+<script type="text/javascript" src="external/jquery/jquery.timePicker.min.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		$("#form_dte_j").datepicker({
+			dateFormat: "dd/mm/yy",
+			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+			monthNames: ["Janvier","Février","Mars","Avril","Mars","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
+			prevText: "Précédent",
+			nextText: "Suivant"
+		});
+
+		$("#form_dte_h").timePicker();
+	});
+
+
+	$(function() {
+		$("#enregistrer").button();
+		$("#annuler").button();
+	});
+</script>
+
+
+<FORM name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
+<INPUT type="hidden" name="mod" value="aviation">
+<INPUT type="hidden" name="rub" value="bapteme">
+<INPUT type="hidden" name="id" value="{id}">
+<INPUT type="hidden" name="checktime" value="{form_checktime}">
+
+
+<br />
+
+<!-- BEGIN: msgerror -->
+<div id="msgerror">{msg_erreur}</div>
+<!-- END: msgerror -->
+<!-- BEGIN: msgok -->
+<div id="msgok">{msg_confirmation}</div>
+<!-- END: msgok -->
+
+
+<div class="formulaireTitre">Informations</div>
+
+<div class="formulaire">
+	<p>
+		<label for="num">Numéro</label>
+		{form_num}
+	</p>
+	<p>
+		<label for="">Nom</label>
+		{form_nom}
+	</p>
+	<p>
+		<label for="">Nb de personnes</label>
+		{form_nb}
+	</p>
+	<p>
+		<label for="">Téléphone</label>
+		{form_telephone}
+	</p>
+	<p>
+		<label for="">Mail</label>
+		{form_mail}
+	</p>
+	<p>
+		<label for="">Type</label>
+		{form_type}
+	</p>
+	<p>
+		<label for="">Payé</label>
+		{form_paye}
+	</p>
+</div>
+
+<BR>
+
+<div class="formulaireTitre">Affectation</div>
+
+<div class="formulaire">
+<p>
+ 	<label for="">Statut</label>
+	{form_status}&nbsp;
+</p>
+<p>
+	<label for="">Pilote</label>
+	{form_id_pilote}&nbsp;
+</p>
+<p>
+	<label for="">Avion</label>
+	{form_id_avion}&nbsp;
+</p>
+<p>
+	<label for="">Date</label>
+	{form_dte_j}&nbsp;{form_dte_h}
+</p>
+<!-- BEGIN: lst_dispo -->
+<p>
+	<label for="">{dispo_immat}</label>
+	<img src="modules/aviation/disponibilite.php?id={lst_uid_avion}&resa={id_resa}&deb={deb}&fin={fin}"><br/>
+</p>
+<!-- END: lst_dispo -->
+</div>
+
+<div class="formulaireTitre">Commentaires</div>
+<div class="formulaireTextarea">{form_description}</div>
+
+<!-- BEGIN: submit -->
+<div class="formulaireSubmit">
+	<input type="submit" name="fonc" id="enregistrer" value="Enregistrer">
+	<input type="submit" name="fonc" id="annuler" value="Annuler">
+</div>
+<!-- END: submit -->
+
+</FORM>
+
+<!-- END: corps -->

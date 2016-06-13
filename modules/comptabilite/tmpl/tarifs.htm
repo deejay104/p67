@@ -1,0 +1,103 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	<A href="compta.php"><IMG src="{path_module}/img/icn32_mouvement.png" border=0>&nbsp;Mouvement</A>
+	<A href="compta.php?rub=postes"><IMG src="{path_module}/img/icn32_param.png" border=0>&nbsp;Postes</A>
+<!-- BEGIN: vols -->
+	<A href="compta.php?rub=vols"><IMG src="{path_module}/img/icn32_vols.png" border=0>&nbsp;Vols</A>
+	<A href="compta.php?rub=tarifs"><IMG src="{path_module}/img/icn32_tarifs.png" border=0>&nbsp;<u>Tarifs</u></A>
+<!-- END: vols -->
+	<A href="compta.php?rub=suivi"><IMG src="{path_module}/img/icn32_suivi.png" border=0>&nbsp;Suivi</A>
+	<A href="suivicomptes.php"><IMG src="{path_module}/img/icn32_comptes.png" border=0>&nbsp;Liste des comptes</A>
+	<A href="tableaubord.php"><IMG src="{path_module}/img/icn32_tabbord.png" border=0>&nbsp;Tableau de bord</A>
+<!-- END: infos -->
+
+<!-- BEGIN: corps -->
+
+
+<FORM name="reservation" method="post" action="compta.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="rub" value="tarifs">
+	<br />
+
+	<!-- BEGIN: msg_enregistre -->
+	<TABLE border="0" cellspacing="0" cellpadding="0" background="">
+	  <TR>
+		<TD height=1 width=20><IMG src="images/rien.gif" height=1 width=20></TD>
+		<TD height=1 colspan=5><B>{msg_resultat}<B><BR><BR></TD>
+	  </TR>
+	</TABLE>
+	<BR><BR>
+	<!-- END: msg_enregistre -->
+
+	<!-- BEGIN: aff_tarifs -->
+		<TABLE border="0" cellspacing="0" cellpadding="0" background="">
+		  <TR height=20>
+			<TD width=20>&nbsp;</TD>
+			<TD width=100><B>Avion</B></TD>
+			<TD width=40><B>Code</B></TD>
+			<TD width=160><B>Nom</B></TD>
+			<TD width=70><B>Pilote</B></TD>
+			<TD width=70><B>Instructeur</B></TD>
+			<TD width=70><B>Réduction (min)</B></TD>
+			<TD width=70><B>Défaut Pilote</B></TD>
+			<TD width=70><B>Défaut Instructeur</B></TD>
+			<TD width=10>&nbsp;</TD>
+		  </TR>
+
+		<!-- BEGIN: lst_tarifs -->
+			<!-- BEGIN: lst_espace -->
+			  <TR>
+				<TD width=20>&nbsp;</TD>
+				<TD colspan=9>&nbsp;</TD>
+			  </TR>
+			<!-- END: lst_espace -->
+		  <TR>
+			<TD width=20>&nbsp;</TD>
+			<TD>{tarif_immat}</TD>
+			<TD><INPUT type="text" name="tarif_code[{id_tarifs}]" value="{tarif_code}" size=2></TD>
+			<TD><INPUT type="text" name="tarif_nom[{id_tarifs}]" value="{tarif_nom}" size=20></TD>
+			<TD><INPUT type="text" name="tarif_pilote[{id_tarifs}]" value="{tarif_pilote}" size=6></TD>
+			<TD><INPUT type="text" name="tarif_instructeur[{id_tarifs}]" value="{tarif_instructeur}" size=6></TD>
+			<TD><INPUT type="text" name="tarif_reduction[{id_tarifs}]" value="{tarif_reduction}" size=5></TD>
+			<TD><INPUT type="radio" name="tarif_defaut_pil[{id_avion}]" value="{id_tarifs}" {tarif_defautpil_selected} size=5></TD>
+			<TD><INPUT type="radio" name="tarif_defaut_ins[{id_avion}]" value="{id_tarifs}" {tarif_defautins_selected} size=5></TD>
+			<TD><span class="bouttonSupprime"><a href="compta.php?rub=tarifs&fonc=delete&id={id_tarifs}"><img src="{path_module}/img/icn12_supprimer.png"></a></span></TD>
+		  </TR>
+		<!-- END: lst_tarifs -->
+			  <TR>
+				<TD width=20>&nbsp;</TD>
+				<TD colspan=9>&nbsp;</TD>
+			  </TR>
+		  <TR>
+			<TD width=20>&nbsp;</TD>
+			<TD>
+				<SELECT id="idavion" name="idavion">
+				<!-- BEGIN: lst_avion -->
+				  <OPTION value="{id_avion}" {sel_avion}>{nom_avion}</OPTION>
+				<!-- END: lst_avion -->
+				</SELECT>
+			</TD>
+			<TD><INPUT type="text" name="tarif_code[0]" value="" size=2></TD>
+			<TD><INPUT type="text" name="tarif_nom[0]" value="" size=20></TD>
+			<TD><INPUT type="text" name="tarif_pilote[0]" value="0" size=6></TD>
+			<TD><INPUT type="text" name="tarif_instructeur[0]" value="0" size=6></TD>
+			<TD><INPUT type="text" name="tarif_reduction[0]" value="0" size=5></TD>
+			<TD>&nbsp;</TD>
+			<TD>&nbsp;</TD>
+			<TD>&nbsp;</TD>
+		  </TR>
+		  <TR>
+			<TD width=20>&nbsp;</TD>
+			<TD colspan=4><br /><INPUT type="submit" name="fonc" value="Enregistrer"></TD>
+		  </TR>
+		</TABLE>
+	<!-- END: aff_tarifs -->
+
+</FORM>
+
+
+
+<!-- END: corps -->

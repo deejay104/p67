@@ -1,0 +1,29 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	<A href="index.php?mod=navigation"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt="">Liste</A>
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+<form name="form_import" method="post" action="index.php" enctype="multipart/form-data">
+<input type="hidden" name="mod" value="navigation">
+<input type="hidden" name="rub" value="import">
+<input type="hidden" name="checktime" value="{form_checktime}">
+<br />
+<select name="form_icone">
+	<option value="Airport">Airport</option>
+	<option value="Waypoint">Waypoint</option>
+	<option value="Navaid, Blue">Navaid, Blue</option>
+</select><br/>	
+Chargement du fichier GPXdes waypoints :<br />
+<input name="form_gpx" type="file" size=60>
+
+<input name="fonc" type="submit" value="Importer">
+
+<p>{aff_resultat}</p>
+
+</form>
+<!-- END: corps -->

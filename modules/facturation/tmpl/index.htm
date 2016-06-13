@@ -1,0 +1,54 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	<a href="factures.php?rub=detail&usr={id_user}&facid=">Nouvelle facture</a>
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+<form name="facture" method="post" action="factures.php" enctype="multipart/form-data">
+
+	<input type="hidden" name="checktime" value="{form_checktime}">
+
+	<table border="0" cellspacing="0" cellpadding="0" background="">
+	  <tr height=40 valign=top>
+		<td width=20><IMG src="images/rien.gif" height=1 width=20 alt=""></TD>
+<!-- BEGIN: aff_compte -->
+		<td>
+			<select id="form_id" name="form_id" OnChange="document.location='factures.php?usr='+document.getElementById('form_id').value;">
+			<!-- BEGIN: lst_compte -->
+			<option value="{id_compte}" {chk_compte}>{nom_compte}</option>
+			<!-- END: lst_compte -->
+			</select>
+		</td>
+<!-- END: aff_compte -->
+
+		<td>
+			<select name="form_dte" OnChange="document.location='factures.php?usr='+document.facture.form_id.value+'&dte='+document.facture.form_dte.value;">
+			<option value="">-</option>
+			<!-- BEGIN: lst_dte -->
+			<option value="{id_dte}" {chk_dte}>{aff_dte}</option>
+			<!-- END: lst_dte -->
+			</select>
+		</td>
+
+		<td width=20><IMG src="images/rien.gif" height=1 width=20 alt=""></td>
+
+<!-- BEGIN: aff_nouvellefacture -->
+		<td width=300></td>
+<!-- END: aff_nouvellefacture -->
+		<td align=center width=42><a href="export.php?list=facturation&dte={year1}" target="_blank"><img src="images/icn32_excel.png" /><br />{year1}</a></td>
+		<td align=center width=42><a href="export.php?list=facturation&dte={year2}" target="_blank"><img src="images/icn32_excel.png" /><br />{year2}</a></td>
+	  </tr>
+	</table>
+
+
+{aff_tableau}
+<br/>
+
+</form>
+
+<!-- END: corps -->
+

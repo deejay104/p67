@@ -1,0 +1,164 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	<A href="index.php?mod=admin&rub=groupes"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt="">Liste</A>
+	<A href="index.php?mod=admin&rub=grpdetail"><IMG src="{path_module}/img/icn32_groupeadd.png" border=0 alt="">Nouveau</A>
+	<A href="index.php?mod=admin&rub=grpdetail&grp={form_grp}&fonc=copier"><IMG src="{path_module}/img/icn32_groupecopy.png" border=0 alt="">Copier</A>
+	<A href="#" OnClick="ConfirmeClick('index.php?mod=admin&rub=grpdetail&grp={form_grp}&fonc=supprimer','Souhaitez-vous supprimer ce groupe ?');"><IMG src="{path_module}/img/icn32_groupesup.png" border=0 alt="">Supprimer</A>
+	<A href="index.php?mod=admin"><IMG src="{path_module}/img/icn32_config.png" border=0 alt="">Configuration</A>
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+  <style>
+
+  .dropBox { display: inline-block; list-style-type: none; margin: 0px; padding: 5px; width: 220px; border: 1px solid #000000; border-radius: 5px;  margin-right: 10px; vertical-align: top; }
+  .dropBox li { margin: 5px; padding: 2px 5px 2px 5px; width: 200px; background: #eee; font-size:14px; }
+  .dropBox p { margin: 0px; padding: 2px 5px 2px 5px; width: 100%; font-size:14px; }
+
+	.dropDisable { width: 620px; }
+  .dropDisable li { margin: 1px; float: left; }
+
+
+  </style>
+
+
+<script type="text/javascript">
+$(function() {
+
+   $(document).tooltip({
+ 			hide: { duration:0 },
+ 			show: { duration:0 },
+      position: {
+        my: "center bottom-5",
+        at: "center top",
+        using: function( position, feedback ) {
+          $( this ).css( position );
+          $( "<div>" )
+            .addClass( "arrow" )
+            .addClass( feedback.vertical )
+            .addClass( feedback.horizontal )
+            .appendTo( this );
+        }
+      }
+    });
+
+    $( "#DropEnable" ).sortable({
+      connectWith: "ul",
+      update: function (event, ui) {
+	        var order = $(this).sortable('serialize');
+	
+	        // POST to server using $.post or $.ajax
+	        $.ajax({
+							data: order,
+	            type: 'POST',
+	            url: 'index.php?mod=admin&rub=updgrp&grp={form_grp}'
+	        });
+    		}
+
+
+
+    });
+
+ 
+
+    $( "#DropDisable" ).sortable({
+      connectWith: "ul"
+
+    });
+
+ 
+
+    $( "#DropEnable, #DropDisable" ).disableSelection();
+
+
+  });
+
+	function ClearText(e,txt) {
+	
+		if(window.event)
+	          {
+	          	//IE
+	          	var t = window.event.srcElement;
+	          } 
+		else
+	          { //firefox
+	          	var t = e.target;
+	          } 
+			
+		if (t.value==txt)
+		  { t.value=''; t.style.color="#000000"; }
+		return;
+	}
+
+	function CapturePost(e) {
+		text="";
+	
+		if(window.event)
+	          { key = window.event.keyCode;	} //IE
+		else
+	          { key = e.which;  } //firefox
+	
+		if (key==13)
+		 { 
+		 	document.location="index.php?mod=admin&rub=grpdetail&grp={form_grp}&search="+document.getElementById("search").value; 
+	 	 }
+	}
+
+</script>
+
+
+<form name="form_route" method="post" action="index.php" enctype="multipart/form-data">
+<input type="hidden" name="mod" value="admin">
+<input type="hidden" name="rub" value="grpdetail">
+<input type="hidden" name="grp" value="{form_grp}">
+<input type="hidden" name="checktime" value="{form_checktime}">
+
+<div class="formulaire">
+	<p><label>Code</label><input name="form_grp" value="{form_grp}" style="width:100px;"></p>
+	<p><label>Description</label><input name="form_desc" value="{form_desc}" style="width:500px;"></p>
+	<input type="submit" name="fonc" value="Enregistrer">
+</div>
+
+</form>
+
+<!-- BEGIN: aff_config -->
+
+<br />
+<div>
+	
+	<style>
+		.adminRouge { background-color:#FFBBAA !important; }
+	</style>
+
+<ul id="DropEnable" class="dropBox">
+<!-- BEGIN: lst_roles_ok -->
+		<li id="id_{aff_role}" class="ui-state-default" title="{aff_help}">{aff_role}</li>
+<!-- END: lst_roles_ok -->
+</ul>
+
+<ul id="DropDisable" class="dropBox dropDisable">
+	<p><input type="text" id="search" value="Texte à rechercher"  OnClick="ClearText(event,'Texte à rechercher');"  OnKeyPress="CapturePost(event);" style="color:#bbbbbb;"></p>
+<!-- BEGIN: lst_roles_nok -->
+		<li id="id_{aff_role}" class="ui-state-default {aff_couleur}" title="{aff_help}">{aff_role}</li>
+<!-- END: lst_roles_nok -->
+</ul>
+
+<div class="dropBox">
+<p>Utilisateurs dans ce groupe</p>
+<!-- BEGIN: lst_user -->
+<p>{aff_user}
+<!-- BEGIN: aff_sup -->
+<span class="bouttonSupprime"><a href="index.php?mod=admin&rub=grpdetail&grp={form_grp}&sup={aff_uid}"><img src="{path_module}/img/icn12_supprimer.png"></a></span>
+<!-- END: aff_sup -->
+</p>
+<!-- END: lst_user -->
+</div>
+
+</div>
+<!-- END: aff_config -->
+
+<!-- END: corps -->

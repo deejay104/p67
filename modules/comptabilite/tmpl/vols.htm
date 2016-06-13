@@ -1,0 +1,164 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	<A href="compta.php"><IMG src="{path_module}/img/icn32_mouvement.png" border=0>&nbsp;Mouvement</A>
+	<A href="compta.php?rub=postes"><IMG src="{path_module}/img/icn32_param.png" border=0>&nbsp;Postes</A>
+<!-- BEGIN: vols -->
+	<A href="compta.php?rub=vols"><IMG src="{path_module}/img/icn32_vols.png" border=0>&nbsp;<u>Vols</u></A>
+	<A href="compta.php?rub=tarifs"><IMG src="{path_module}/img/icn32_tarifs.png" border=0>&nbsp;Tarifs</A>
+<!-- END: vols -->
+	<A href="compta.php?rub=suivi"><IMG src="{path_module}/img/icn32_suivi.png" border=0>&nbsp;Suivi</A>
+	<A href="suivicomptes.php"><IMG src="{path_module}/img/icn32_comptes.png" border=0>&nbsp;Liste des comptes</A>
+	<A href="tableaubord.php"><IMG src="{path_module}/img/icn32_tabbord.png" border=0>&nbsp;Tableau de bord</A>
+<!-- END: infos -->
+
+<!-- BEGIN: corps -->
+
+
+<FORM name="reservation" method="post" action="compta.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="rub" value="vols">
+
+	<BR>
+
+	<!-- BEGIN: msg_enregistre -->
+	<div class="msgok">{msg_resultat}</div>
+	<!-- END: msg_enregistre -->
+
+
+	<!-- BEGIN: enregistre -->
+	<TABLE>
+	  <TR style="height:20px; border-bottom: 1px solid black;">
+		<th width=20>&nbsp;</TD>
+		<th width=100><B>Date</B></TD>
+		<th width=100><B>Mouvement</B></TD>
+		<th width=350><B>Commentaire</B></TD>
+		<th width=200><B>Tiers</B></TD>
+		<th width=70 style="border-left: 1px solid black; text-align: right;" ><B>Montant</B></TD>
+	  </TR>
+	<!-- BEGIN: lst_enregistre -->
+	  <TR style="border-bottom: 1px solid black;">
+			<TD>
+				&nbsp;
+				<INPUT type="hidden" name="form_id[{enr_id}a]" value="{enr_idcal}">
+				<INPUT type="hidden" name="form_uid[{enr_id}a]" value="{enr_uid_deb}">
+				<INPUT type="hidden" name="form_uidt[{enr_id}a]" value="{enr_uid_cre}">
+				<INPUT type="hidden" name="form_montant[{enr_id}a]" value="{enr_montant_deb}">
+				<INPUT type="hidden" name="form_commentaire[{enr_id}a]" value="{enr_commentaire}">
+				<INPUT type="hidden" name="form_mouvement[{enr_id}a]" value="{enr_mouvement}">
+				<INPUT type="hidden" name="form_date[{enr_id}a]" value="{enr_date}">
+	
+				<INPUT type="hidden" name="form_id[{enr_id}b]" value="">
+				<INPUT type="hidden" name="form_uid[{enr_id}b]" value="{enr_uid_cre}">
+				<INPUT type="hidden" name="form_uidt[{enr_id}b]" value="{enr_uid_deb}">
+				<INPUT type="hidden" name="form_montant[{enr_id}b]" value="{enr_montant_cre}">
+				<INPUT type="hidden" name="form_commentaire[{enr_id}b]" value="{enr_commentaire}">
+				<INPUT type="hidden" name="form_mouvement[{enr_id}b]" value="{enr_mouvement}">
+				<INPUT type="hidden" name="form_date[{enr_id}b]" value="{enr_date}">
+			</TD>
+			<TD>{enr_date}</TD>
+			<TD>{enr_mouvement}</TD>
+			<TD>{enr_commentaire}</TD>
+			<TD><p style="border-bottom:1px dashed #aaaaaa; margin:0px;">{enr_tiers_deb}</p><p style="margin:0px;">{enr_tiers_cre}</p></TD>
+			<TD style="border-left: 1px dashed #aaaaaa; text-align: right;"><p style="border-bottom:1px dashed #aaaaaa; margin:0px;">{enr_affmontant_deb}</p><p style="margin:0px;">{enr_affmontant_cre}</p></TD>
+	  </TR>
+	<!-- END: lst_enregistre -->
+	</TABLE>
+
+	<div class="formulaireSubmit">
+		<INPUT type="submit" name="fonc" value="Valider"> <INPUT type="submit" name="fonc" value="Annuler">
+	</div>
+	<!-- END: enregistre -->
+
+	<!-- BEGIN: aff_vols -->
+		<TABLE border="0" cellspacing="0" cellpadding="0" background="">
+		  <TR height=20>
+			<TD width=20>&nbsp;</TD>
+			<TD colspan=5>Changer d'avion 
+				<SELECT id="idavion" name="idavion">
+				<!-- BEGIN: lst_avion -->
+				<OPTION value="{id_avion}" {sel_avion}>{nom_avion}</OPTION>
+				<!-- END: lst_avion -->
+			        </SELECT>
+			        <INPUT type="submit" name="fonc2" value="Changer"><BR><BR>
+			</TD>
+		  </TR>
+		</TABLE>
+		<TABLE>
+		  <tr style="">
+			<th width=20>&nbsp;</TD>
+			<th width=100><B>Date</B></TD>
+			<th width=170><B>Pilote</B></TD>
+			<th width=170><B>Instructeur</B></TD>
+			<th width=170><B>Tarif</B></TD>
+			<th width=200 colspan=2><B>Horamètre</B></TD>
+			<th width=120><B>Temps (minutes)</B></TD>
+			<th width=160><B>Bloc (minutes)</B></TD>
+		  </tr>
+		<!-- BEGIN: lst_vols -->
+		  <TR>
+			<TD width=20>&nbsp;</TD>
+			<TD><a href="reservations.php?rub=reservation&id={idresa}">{date_vols}</a></TD>
+			<TD>{pilote_vols}</TD>
+			<TD>{instructeur_vols}</TD>
+			<TD>
+				{tarif_vols}
+				<SELECT name="form_tarif[{id_ligne}]">
+				<!-- BEGIN: lst_tarifs -->
+				<OPTION value="{tarif_code}" {tarif_selected}>{tarif_nom}</OPTION>
+				<!-- END: lst_tarifs -->
+			      </SELECT>
+			</TD>
+			<TD width=100>{horadeb}</TD>
+			<TD width=100>{horafin}</TD>
+			<TD>{temps_vols}</TD>
+			<TD>{bloc_vols}</TD>
+		  </TR>
+		<!-- END: lst_vols -->
+
+		<!-- BEGIN: lst2_vols -->
+		  <TR>
+			<TD width=20>&nbsp;</TD>
+			<TD><INPUT type="text" name="form_date[{id_new}]" size=8></TD>
+			<TD>
+				<SELECT name="form_pilote[{id_new}]">
+				<OPTION value="">...</OPTION>
+				<!-- BEGIN: lst_pilote -->
+				<OPTION value="{id_pilote}">{nom_pilote}</OPTION>
+				<!-- END: lst_pilote -->
+			        </SELECT>
+			</TD>
+			<TD>
+				<SELECT name="form_instructeur[{id_new}]">
+				<OPTION value="0">Aucun</OPTION>
+				<!-- BEGIN: lst_instructeur -->
+				<OPTION value="{id_instructeur}">{nom_instructeur}</OPTION>
+				<!-- END: lst_instructeur -->
+			        </SELECT>
+			</TD>
+			<TD>
+				<SELECT name="form_tarif[{id_new}]">
+				<!-- BEGIN: lst_tarifs -->
+				<OPTION value="{tarif_code}">{tarif_nom}</OPTION>
+				<!-- END: lst_tarifs -->
+			      </SELECT>
+			</TD>
+			<TD><INPUT type="text" name="form_horadeb[{id_new}]" size=5></TD>
+			<TD><INPUT type="text" name="form_horafin[{id_new}]" size=5></TD>
+			<TD><INPUT type="text" name="form_temps[{id_new}]" size=5></TD>
+			<TD><INPUT type="text" name="form_bloc[{id_new}]" size=5></TD>
+		  </TR>
+		<!-- END: lst2_vols -->
+		  <TR>
+			<TD width=20>&nbsp;</TD>
+			<TD colspan=4><BR><INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler"></TD>
+		  </TR>
+		</TABLE>
+	<!-- END: aff_vols -->
+
+</FORM>
+
+
+
+<!-- END: corps -->

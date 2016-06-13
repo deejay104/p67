@@ -1,0 +1,173 @@
+<!-- BEGIN: icone -->
+		<img src="{path_module}/img/icn48_indicateurs.png" alt="" border=0 />
+
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	<form name="choixannee">
+	Indicateurs pour l'année
+	<select id="dte" name="dte" OnChange="Recharge();" style="font-size: 22px;">
+		<!-- BEGIN: lst_date -->
+			<option value="{form_dte}" {form_selected}>{form_dte}</option>		
+		<!-- END: lst_date -->
+	</select>
+	</form>
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+	<script language="JavaScript">
+		var ns4=document.layers
+		var ie4=document.all
+		var ns6=document.getElementById&&!document.all
+	
+		function Recharge()
+		  {
+			if (ns6)
+			  {
+			  	var a = document.getElementById("dte").value;
+			  	document.location="indicateurs.php?dte="+a+"&scale=yes";
+			  }
+			else
+			  {
+			  	document.location='indicateurs.php?dte='+dte.value+"&scale=yes";
+			  }
+		  }
+	</script>
+
+<div class="formulaire">
+	<p class="tableauTitre">
+		<span style="width:20px;">&nbsp;</span><label><b>Avion</b></label><b>Total d'heures</b>
+	</p>
+		<!-- BEGIN: lst_ress_tot -->
+  <p><span style="width:20px;">&nbsp;</span><label>{ress_immat}</label>{tot}/{prev}</p>
+		<!-- END: lst_ress_tot -->
+</div>
+
+<div class="formulaireTitre">Evolution</div>
+
+
+<script src="external/highchart/js/highcharts.js"></script>
+<script src="external/highchart/js/modules/exporting.js"></script>
+
+<div id="chart_total" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0;"></div>
+<div id="chart_cumul" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0;"></div>
+
+
+<script type="text/javascript">
+$(function () {
+    $('#chart_total').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Total des heures de vols par avion et par mois'
+        },
+        xAxis: {
+            categories: [
+                'Jan',
+                'Fev',
+                'Mar',
+                'Avr',
+                'Mai',
+                'Jun',
+                'Jul',
+                'Aou',
+                'Sep',
+                'Oct',
+                'Nov',
+                'Dec'
+            ],
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'heures'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{seriescolor};padding:0">{seriesname} : </td><td style="padding:0"><b>{point.y:.1f} h</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+				credits: {
+				      enabled: false
+				  },
+        series: [
+        				{aff_charttotal}
+				],
+				colors: [{aff_colortotal}]
+
+    });
+
+
+    $('#chart_cumul').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Cumul des heures de vols par avion sur l\'année'
+        },
+        xAxis: {
+            categories: [
+                'Jan',
+                'Fev',
+                'Mar',
+                'Avr',
+                'Mai',
+                'Jun',
+                'Jul',
+                'Aou',
+                'Sep',
+                'Oct',
+                'Nov',
+                'Dec'
+            ],
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'heures'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{seriescolor};padding:0">{seriesname}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} h</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+				credits: {
+				      enabled: false
+				  },
+        series: [
+        
+        				{aff_chartcumul}
+        ],
+		 		colors: [{aff_colorcumul}]
+
+    });
+
+});
+</script>
+
+
+
+
+<!-- END: corps -->

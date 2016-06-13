@@ -1,0 +1,130 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_presence.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	Liste des plages horaires
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+<br />
+<table>
+<tr>
+	<td width=630><a href="presence.php">-Tableau des présences-</a> <a href="presence.php?rub=ponctuel">-Présence ponctuelle-</a></td>
+</tr>
+</table>
+
+
+<form name="presence" method="post" action="index.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="mod" value="facturation">
+	<INPUT type="hidden" name="rub" value="plage">
+
+<br/>
+
+{aff_tableau}
+
+<table>
+	<tr>
+		<td width=10></td>
+		<td width=50><input type='text' name="form_jour" id="form_jour" size=1></td>
+		<td width=60><input type='text' name="form_plage" id="form_plage" size=1></td>
+		<td width=100><input type='text' name="form_titre" id="form_titre" size=10></td>
+		<td width=200><input type='text' name="form_nom" id="form_nom" size=24></td>
+		<td width=190><input type='text' name="form_libelle" id="form_libelle" size=24></td>
+		<td width=60><input type='text' name="form_deb" id="form_deb" size=2></td>
+		<td width=60><input type='text' name="form_fin" id="form_fin" size=2></td>
+		<td><input type="submit" name="fonc" value="Enregistrer" /></td>
+	</tr>
+</table>
+<br/>
+
+</form>
+
+<table style="border: 1px solid #013366;">
+	<tr style="border: 1px solid #013366; text-align: center;">
+		<td width=60></td>
+		<td width=50>Lun</td>
+		<td width=50>Mar</td>
+		<td width=50>Mer</td>
+		<td width=50>Jeu</td>
+		<td width=50>Ven</td>
+		<td width=50>Sam</td>
+		<td width=50>Dim</td>
+		<td width=50>Vac</td>
+	</tr>
+	<tr height=240>
+		<td style="border: 1px solid #013366;">
+			<div style='position:relative; width:50px; height:240px;'>
+			<div style='position:absolute; top:0px;'>8h</div>
+			<div style='position:absolute; top:40px;'>10h</div>
+			<div style='position:absolute; top:80px;'>12h</div>
+			<div style='position:absolute; top:120px;'>14h</div>
+			<div style='position:absolute; top:160px;'>16h</div>
+			<div style='position:absolute; top:200px;'>18h</div>
+			</div>
+		</td>
+
+		<td>
+			<div style='position: relative; width:50px; height:240px;'>
+			<!-- BEGIN: divj1 -->
+			<div class='plage' style='position:absolute; top:{divj1_y}px; width:48px; height:{divj1_h}px;'>{divj1_txt}</div>
+			<!-- END: divj1 -->
+			</div>
+		</td>
+		<td>
+			<div style='position: relative; width:50px; height:240px;'>
+			<!-- BEGIN: divj2 -->
+			<div class='plage' style='position:absolute; top:{divj2_y}px; width:48px; height:{divj2_h}px;'>{divj2_txt}</div>
+			<!-- END: divj2 -->
+			</div>
+		</td>
+		<td>
+			<div style='position: relative; width:50px; height:240px;'>
+			<!-- BEGIN: divj3 -->
+			<div class='plage' style='position:absolute; top:{divj3_y}px; width:48px; height:{divj3_h}px;'>{divj3_txt}</div>
+			<!-- END: divj3 -->
+			</div>
+		</td>
+		<td>
+			<div style='position: relative; width:50px; height:240px;'>
+			<!-- BEGIN: divj4 -->
+			<div class='plage' style='position:absolute; top:{divj4_y}px; width:48px; height:{divj4_h}px;'>{divj4_txt}</div>
+			<!-- END: divj4 -->
+			</div>
+		</td>
+		<td>
+			<div style='position: relative; width:50px; height:240px;'>
+			<!-- BEGIN: divj5 -->
+			<div class='plage' style='position:absolute; top:{divj5_y}px; width:48px; height:{divj5_h}px;'>{divj5_txt}</div>
+			<!-- END: divj5 -->
+			</div>
+		</td>
+		<td>
+			<div style='position: relative; width:50px; height:240px;'>
+			<!-- BEGIN: divj6 -->
+			<div class='plage' style='position:absolute; top:{divj6_y}px; width:48px; height:{divj6_h}px;'>{divj6_txt}</div>
+			<!-- END: divj6 -->
+			</div>
+		</td>
+		<td>
+			<div style='position: relative; width:50px; height:240px;'>
+			<!-- BEGIN: divj0 -->
+			<div class='plage' style='position:absolute; top:{divj0_y}px; width:48px; height:{divj0_h}px;'>{divj0_txt}</div>
+			<!-- END: divj0 -->
+			</div>
+		</td>
+		<td>
+			<div style='position: relative; width:50px; height:240px;'>
+			<!-- BEGIN: divj7 -->
+			<div class='plage' style='position:absolute; top:{divj7_y}px; width:48px; height:{divj7_h}px;'>{divj7_txt}</div>
+			<!-- END: divj7 -->
+			</div>
+		</td>
+	</tr>
+</table>
+
+
+<!-- END: corps -->

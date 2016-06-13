@@ -1,0 +1,235 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_detail.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+<A href="membres.php"><IMG src="images/icn32_retour.png" border=0 alt=""></A>
+<!-- BEGIN: ajout -->
+<A href="membres.php?rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt=""></A>
+<!-- END: ajout -->
+<!-- BEGIN: modification -->
+<A href="membres.php?rub=detail&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_editer.png" border=0 alt=""></A>
+<!-- END: modification -->
+<!-- BEGIN: password -->
+<A href="membres.php?rub=chgpwd&id={id}"><img src="{path_module}/img/icn32_password.png" border=0 alt="" width=32 height=32 /></A>
+<!-- END: password -->
+<!-- BEGIN: desactive -->
+<A href="#" OnClick="ConfirmeClick('membres.php?rub=detail&id={id}&fonc=desactive','Voulez-vous désactiver cette utilisateur ?');"><IMG src="{path_module}/img/icn32_desactive.png" border=0 alt=""></A>
+<!-- END: desactive -->
+<!-- BEGIN: suppression -->
+<A href="#" OnClick="ConfirmeClick('membres.php?rub=detail&id={id}&fonc=delete','Voulez-vous supprimer cette utilisateur ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0 alt=""></A>
+<!-- END: suppression -->
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+
+<FORM name="form_detail" method="post" action="membres.php" enctype="multipart/form-data">
+<INPUT type="hidden" name="rub" value="detail">
+<INPUT type="hidden" name="id" value="{id}">
+<INPUT type="hidden" name="checktime" value="{form_checktime}">
+
+<br />
+<p class="lastupdate">Dernière mise à jour : {info_maj}</p>
+<!-- BEGIN: mod_aviation_detail -->
+<p>Solde du compte pilote : {solde}<br />
+Nombre d'heure de vol : {nbheurevol}<br />
+(dont {nbheuresan} depuis le début de l'année et {nbheuresderan} dans les 12 derniers mois précédant la prorogation).</p>
+<!-- END: mod_aviation_detail -->
+
+
+<!-- BEGIN: msgerror -->
+<div class="msgerror">{msg_erreur}</div>
+<!-- END: msgerror -->
+<!-- BEGIN: msgok -->
+<div class="msgok">{msg_confirmation}</div>
+<!-- END: msgok -->
+
+<div class="formulaireTitre">Etat civil</div>
+<div class="formulaire">
+	<p>
+		<label for="prenom">Prénom :</label>
+		{form_prenom}
+	</p>
+	<p>
+		<label for="nom">Nom :</label>
+		{form_nom}
+	</p>
+
+	<p>
+		<label for="initiales">Initiales :</label>
+		{form_initiales}
+	</p>
+	<p>
+		<label for="sexe">Sexe :</label>
+		{form_sexe}
+	</p>
+	<p>
+		<label for="tel_fixe">Tel domicile :</label>
+		{form_tel_fixe}
+	</p>
+	<p>
+		<label for="tel_portable">Tel portable :</label>
+		{form_tel_portable}
+	</p>
+	<p>
+		<label for="tel_bureau">Tel bureau :</label>
+		{form_tel_bureau}
+	</p>
+	<p>
+		<label for="mail">Mail :</label>
+		{form_mail}
+	</p>
+	<p>
+		<label for="adresse1">Adresse :</label>
+		{form_adresse1}
+	</p>
+	<p>
+		<label for="adresse2"></label>
+		{form_adresse2}
+	</p>
+	<p>
+		<label for="codepostal">Code Postal :</label>
+		{form_codepostal}
+	</p>
+	<p>
+		<label for="ville">Ville :</label>
+		{form_ville}
+	</p>
+	<p>
+		<label for="zone">Zone :</label>
+		{form_zone}
+	</p>
+</div>
+
+<div class="formulaireTitre">Photos</div>
+<div class="formulaire">
+<!-- BEGIN: photos -->
+  <p>
+    Sélectionner ci-dessous la photo voulue. Celle-ci sera transférée sur le 
+    	serveur et remplacera la photo existante.<br />
+    	<INPUT name="form_photo" type="file" style="width: 400px;">
+  </p>
+<!-- END: photos -->
+</div>
+
+
+<div class="formulaireTitre">Documents</div>
+
+<div class="formulaire">
+	<!-- BEGIN: lst_document -->
+	<p>{form_document}</p>
+	<!-- END: lst_document -->
+</div>
+
+
+<div class="formulaireTitre">Options</div>
+
+<div class="formulaire">
+	<!-- BEGIN: type -->
+	<p>
+		<label for="type">Type</label>
+		{form_type}
+	</p>
+	<!-- END: type -->
+	<!-- BEGIN: mod_creche_enfant -->
+	<p>
+		<label for="pere">Père</label>
+		{form_pere}
+	</p>
+	<p>
+		<label for="mere">Mère</label>
+		
+		{form_mere}
+	</p>
+	<!-- END: mod_creche_enfant -->
+	<!-- BEGIN: mod_creche_parent -->
+	<p>
+		<label for="enfant">Enfant(s)</label>
+		{form_enfant}
+	</p>
+	<!-- END: mod_creche_parent -->
+	<p>
+		<label for="idcpt">Compte</label>
+		{form_idcpt}
+	</p>
+
+	<p>
+		<label>Notifications</label>
+		{form_notification}
+	</p>
+	
+	<p>
+		<label for="dte_naissance">Naissance</label>
+		{form_dte_naissance}
+	</p>
+	<p>
+		<label for="dte_inscription">Inscription</label>
+		{form_dte_inscription}
+	</p>
+
+	<!-- BEGIN: mod_aviation_validite -->
+	<p>
+		<label for="dte_licence">Dte licence</label>
+		{form_dte_licence}
+	</p>
+	<p>
+		<label for="dte_medicale">Dte médicale</label>
+		{form_dte_medicale}
+	</p>
+	<!-- END: mod_aviation_validite -->
+	
+	<p>
+		<label for="poids">Poids (en {unitPoids})</label>
+		{form_poids}
+	</p>
+
+	<!-- BEGIN: mod_aviation_lache -->
+	<p>
+		<label for="lache">Laché avions</label>
+		<span>{form_lache}</span>
+	</p>
+	<!-- END: mod_aviation_lache -->
+	
+	<!-- BEGIN: decouvert -->
+	<p>
+		<label for="decouvert">Découvert</label>
+		{form_decouvert}
+	</p>
+	<!-- END: decouvert -->
+
+	<!-- BEGIN: tarif -->
+	<p>
+		<label for="tarif">Tarif</label>
+		{form_tarif}
+	</p>
+	<!-- END: tarif -->
+
+	<!-- BEGIN: droits -->
+	<p>
+		<label for="droits">Droits</label>
+		<span>{form_droits}</span>
+	</p>
+	<!-- END: droits -->
+</div>
+
+<div class="formulaireTitre">Commentaires</div>
+<div class="formulaire">
+  <p>
+			{form_commentaire}
+  </p>
+</div>
+
+
+
+<!-- BEGIN: submit -->
+<div class="formulaireSubmit">
+	<input type="submit" name="fonc" id="enregistrer" value="Enregistrer">
+	<input type="submit" name="fonc" id="annuler" value="Annuler">
+</div>
+<!-- END: submit -->
+
+
+</FORM>
+
+<!-- END: corps -->

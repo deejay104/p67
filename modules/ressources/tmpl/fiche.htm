@@ -1,0 +1,48 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+<A href="ressources.php"><IMG src="{path_module}/img/icn32_avions.png" border=0 alt="">&nbsp;Liste des avions</A>
+<A href="maintenance.php?rub=fichemaint"><IMG src="{path_module}/img/icn32_ficheajout.png" border=0 alt="">&nbsp;Créer une fiche</A>
+<A href="maintenance.php?rub=validation"><IMG src="{path_module}/img/icn32_ficheok.png" border=0 alt="">&nbsp;Fiches à valider</A>
+<A href="maintenance.php?rub=liste"><IMG src="{path_module}/img/icn32_maintenance.png" border=0 alt="">&nbsp;Maintenances</A>
+<!-- END: infos -->
+
+
+
+<!-- BEGIN: corps -->
+<SCRIPT language="JavaScript">
+	var ns4=document.layers
+	var ie4=document.all
+	var ns6=document.getElementById&&!document.all
+
+	function Recharge()
+	  {
+	  	var a = document.maintenance.uid_avion.value;
+	  	document.location='maintenance.php?rub=fiche&uid_avion='+a;
+	  }
+</SCRIPT>
+
+<FORM name="maintenance" method="post" action="maintenance.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="rub" value="validation">
+
+	<BR>
+
+	<br />Liste des fiches en cours :
+
+	<select name="uid_avion" OnChange="Recharge();">
+	<option value="">Tous</option>
+	<!-- BEGIN: lst_avion -->
+	<option value="{uid_avion}" {chk_avion}>{nom_avion}</option>
+	<!-- END: lst_avion -->
+	</select>
+
+	<br />
+	<br />
+	{aff_tableau}
+	<br />
+
+</FORM>
+
+<!-- END: corps -->

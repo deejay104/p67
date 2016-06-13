@@ -1,0 +1,67 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_centrage.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	Devis de masse et centrage
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+
+<form name="reservation" method="post" action="reservations.php" enctype="multipart/form-data">
+	<input type="hidden" name="mod" value="aviation" />
+	<input type="hidden" name="rub" value="centrage" />
+	<input type="hidden" name="id" value="{id}" />
+	<input type="hidden" id="maj" name="maj" value="" />
+	<input type="hidden" name="checktime" value="{form_checktime}" />
+
+<div class="formulaireTitre">Sélection des passagers</div>
+
+<div class="formulaire">
+
+	<!-- BEGIN: lst_passager -->
+	<p>
+		<label for="passager{passager_id}">{passager_txt}</label>
+		<span id="passager{passager_id}" style="width: 250px;">
+		<!-- BEGIN: aff_pilote -->
+			<select name="form_passager_pilote[{passager_id}]" OnChange="document.getElementById('maj').value='{passager_id}'; reservation.submit();">
+				<option value="0">Aucun</option>
+				<option value="65535" {chk_pax}>PAX</option>
+				<!-- BEGIN: lst_pilote -->
+				<option value="{uid_pilote}" {chk_pilote}>{nom_pilote}</option>
+				<!-- END: lst_pilote -->
+			</select>
+		<!-- END: aff_pilote -->
+		&nbsp;
+		</span>		
+		<input type="text" name="form_passager_poids[{passager_id}]" value="{passager_poids}" size="3" /> {passager_unite}
+	</p>
+	<!-- END: lst_passager -->
+
+	<p>
+		<label for="passager{passager_id}">&nbsp;</label>
+		<span id="passager{passager_id}" style="width: 250px; text-align:right;">
+			Masse Totale :
+		</span>
+		<b>{masse_totale} {masse_max}</b>
+	</p>
+</div>
+
+<div class="formulaireSubmit">
+	<input type="submit" name="fonc" value="Actualiser">
+	<input type="submit" name="fonc" value="Retour">
+</div>
+
+<div class="formulaireTitre">Graphique de centrage et masse</div>
+
+ 	<table border="0" cellspacing="0" cellpadding="0">	
+ 	<tr height=1>
+  		<td width=20>&nbsp;</td>
+  		<td><img src="{path_module}/imgcentrage.php?id={id}" border="0" /></td>
+	</tr>
+	</table>
+
+	<br />
+</form>
+<!-- END: corps -->

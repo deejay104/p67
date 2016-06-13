@@ -1,0 +1,86 @@
+<!-- BEGIN: icone -->
+	<img src="images/icn_conso.gif" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	Saisie de la consommation
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+
+<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="rub" value="conso">
+
+	<A href="index.php?rub=conso"><IMG src="images/icn_modifier.gif" border=0>Saisie</A> &nbsp&nbsp
+	<A href="index.php?rub=conso"><IMG src="images/icn_suivi.gif" border=0>Suivi</A> &nbsp&nbsp
+
+	<BR><BR>
+	<TABLE border="0" cellspacing="0" cellpadding="0" background="" width=100%>
+	<TR><TD height=1 width=30><IMG src="images/rien.gif"></TD><TD height=1 bgcolor="#013366"><IMG src="images/rien.gif"></TD></TR>
+	</TABLE>
+	<BR>
+
+	<!-- BEGIN: msg_enregistre -->
+	<TABLE border="0" cellspacing="0" cellpadding="0" background="">
+	  <TR>
+		<TD height=1 width=20><IMG src="images/rien.gif" height=1 width=20></TD>
+		<TD height=1 colspan=5><B>{msg_resultat}<B><BR><BR></TD>
+	  </TR>
+	</TABLE>
+	<BR><BR>
+	<!-- END: msg_enregistre -->
+
+
+
+	<!-- BEGIN: aff_vols -->
+		<TABLE border="0" cellspacing="0" cellpadding="0" background="">
+		  <TR height=20>
+			<TD width=20>&nbsp;</TD>
+			<TD colspan=5>Changer d'avion 
+				<SELECT id="idavion" name="idavion">
+				<!-- BEGIN: lst_avion -->
+				<OPTION value="{id_avion}" {sel_avion}>{nom_avion}</OPTION>
+				<!-- END: lst_avion -->
+			        </SELECT>
+			        <INPUT type="submit" name="fonc2" value="Changer"><BR><BR>
+			</TD>
+		  </TR>
+		  <TR height=20>
+			<td width=20>&nbsp;</td>
+			<td width=80><b>Date</b></td>
+			<td width=220><b>Pilote</b></td>
+			<td width=65><b>Quantité</b></td>
+			<td width=65><b>Prix</b></td>
+			<td width=170><b>Tiers</b></td>
+		  </TR>
+		<!-- BEGIN: lst_vols -->
+		  <tr>
+			<td width=20>&nbsp;</td>
+			<td>{date_vols}</td>
+			<td>{pilote_vols}</td>
+			<td><input type="text" name="form_qte[{fid}]" size="4" value="{qte_vols}" /></td>
+			<td><input type="text" name="form_prix[{fid}]" size="4" value="{prix_vols}" /></td>
+			<td>
+				<input type="text" name="form_tiers[{fid}]" size="30" value="{tiers_vols}" />
+				<input type="hidden" name="form_id[{fid}]" value="{id_vols}" />
+				<input type="hidden" name="form_vid[{fid}]" value="{vid_vols}" />
+			</td>
+		  </tr>
+		<!-- END: lst_vols -->
+
+		  <TR>
+			<TD width=20>&nbsp;</TD>
+			<TD colspan=4><BR><INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler"></TD>
+		  </TR>
+		</TABLE>
+	<!-- END: aff_vols -->
+
+
+
+</FORM>
+
+
+
+<!-- END: corps -->

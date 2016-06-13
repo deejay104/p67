@@ -1,0 +1,98 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	{infos}
+<!-- END: infos -->
+
+	<script type="text/javascript" src="external/jwysiwyg/lib/jquery1.5.js" charset="utf-8"></script>
+
+<!-- BEGIN: corps -->
+
+<FORM name="forums" method="post" action="forums.php" enctype="multipart/form-data">
+<INPUT type="hidden" name="rub" value="forums_2_sauve">
+<INPUT type="hidden" name="fid" value="{fid}">
+<INPUT type="hidden" name="mid" value="{mid}">
+<INPUT type="hidden" name="fpars" value="{fpars}">
+<INPUT type="hidden" name="fprec" value="{fprec}">
+
+<!-- BEGIN: msg_error -->
+<p class="msgerror">{msg_error}</p>
+<!-- END: msg_error -->
+
+
+<SCRIPT language="javascript">
+<!--
+// Ajoute une ligne pour les pieces jointes
+nbpj=1;  
+
+function AddPJ()
+  {
+	if (document.all)
+	  {
+			obj = eval("piecejointe"+nbpj);
+			obj.innerHTML="<INPUT type=\"file\" name=\"form_pj"+nbpj+"\" size=40 OnChange=\"AddPJ();\"><DIV id=piecejointe"+(nbpj+1)+"> </DIV>";
+			nbpj = nbpj+1;
+	  }
+  }
+//-->
+</SCRIPT>
+
+
+<div>
+	    <BR>Titre :<BR>
+	    <INPUT type="text" name="form_titre" style="width:600px;"  value="{titre}"><BR>
+	    <BR>
+			<TEXTAREA id="mytxt" name="form_corps" style="width:600px;"  rows="20">{corps}</TEXTAREA>
+</div>
+
+	<!-- BEGIN: droits -->
+<div>
+		<p>
+		Droit en lecture :
+		<select name="form_droit_r" >
+			<option value="ALL">ALL</option>
+	<!-- BEGIN: lst_droits_r -->
+			<option value="{droit_grp}" {chk_droit_r}>{droit_grp}</option>
+	<!-- END: lst_droits_r -->
+		</select>
+	</p>
+	<p>
+		Droit en écriture :
+		<select name="form_droit_w" >
+			<option value="ALL">ALL</option>
+	<!-- BEGIN: lst_droits_w -->
+			<option value="{droit_grp}" {chk_droit_w}>{droit_grp}</option>
+	<!-- END: lst_droits_w -->
+		</select>
+	</p>
+</div>
+	<!-- END: droits -->
+
+<div>
+	<p>Pièce(s) jointe(s) :</p>
+	<!-- BEGIN: lst_document -->
+	<p>{form_document}</p>
+	<!-- END: lst_document -->
+</div>
+
+<div>
+		<p>Envoyer un mail aux personnes suivantes :</p>
+<!-- BEGIN: lst_type -->
+		<p><INPUT type="checkbox" name="mailtype[{forum_type_id}]" {forum_type_check}> {forum_type_description}.</p>
+<!-- END: lst_type -->
+
+<!-- BEGIN: maildiff -->
+		<p><INPUT type="checkbox" name="maildiff"> Liste de diffusion du forum {forum_listediff}.</p>
+<!-- END: maildiff -->
+</div>
+
+<div>
+		<INPUT type="submit" name="fonc" value="Enregistrer">
+		<INPUT type="submit" name="fonc" value="Annuler">
+</div>
+
+</FORM>
+
+<!-- END: corps -->
+

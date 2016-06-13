@@ -1,0 +1,143 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	<A href="index.php?mod=navigation"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt="">Liste</A>
+	<A href="index.php?mod=navigation&rub=export&id={form_id}"><IMG src="{path_module}/img/icn32_exporter.png" border=0 alt="">Exporter</A>
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+<style>
+	.entete label { display: inline-block; width: 120px; margin-right:15px; }
+	.waypoint { margin: 0px; list-style-type: none; }
+	.waypoint li { padding-bottom:3px; padding-top:3px; border-bottom: 1px dashed black; }
+	.waypoint label { border-bottom: 1px dashed black; display: inline-block; width:100px; background-color: #dddddd; border: 1px solid black; border-radius: 3px; height:24px; padding-left:5px; padding-right: 5px; }
+	.waypoint label:hover { background-color: #eeeeee; }
+	.waypoint span { display: inline-block; width:50px; text-align:center; }
+	.waypoint div { display: inline-block; position: relative;top: -15px; background-color:#ffffff; border:1px solid black; width:50px; text-align: center; }
+	.waypoint a { display: inline-block; width:20px; text-align:center;}
+	.waypoint a:hover { background-color: #38a9e3; border-radius: 4px; }
+	.waypointth { background-color: #dddddd;  }
+	.waypointth li { padding-top:5px; }
+	.waypointth span { border: 0px; }
+</style>
+
+<script type="text/javascript">
+$(function() {
+    $("#form_point").autocomplete({
+        source: "index.php?mod=navigation&rub=getwp",
+        select: function(event, ui) { oFormObject = document.forms['form_route']; oFormObject.elements["form_point"].value=ui.item.value; form_route.submit() },
+        delay: 0
+    });
+
+   $(document).tooltip({
+      position: {
+        my: "center bottom-20",
+        at: "center top",
+        using: function( position, feedback ) {
+          $( this ).css( position );
+          $( "<div>" )
+            .addClass( "arrow" )
+            .addClass( feedback.vertical )
+            .addClass( feedback.horizontal )
+            .appendTo( this );
+        }
+      }
+    });
+  });
+</script>
+
+<!-- BEGIN: aff_sortable -->
+<script type="text/javascript">
+$(function() {
+   $( "#waypoint" ).sortable({
+        update: function (event, ui) {
+	        var order = $(this).sortable('serialize');
+	
+	        // POST to server using $.post or $.ajax
+	        $.ajax({
+							data: order,
+	            type: 'POST',
+	            url: 'index.php?mod=navigation&rub=updwp&nid={form_id}'
+	        });
+    		}
+
+  	});
+    $( "#waypoint" ).disableSelection();
+  });
+</script>
+<!-- END: aff_sortable -->
+
+<form name="form_route" method="post" action="index.php" enctype="multipart/form-data">
+<input type="hidden" name="mod" value="navigation">
+<input type="hidden" name="rub" value="detail">
+<input type="hidden" name="id" value="{form_id}">
+<input type="hidden" name="checktime" value="{form_checktime}">
+<div class="entete">
+		<p><label>Titre :</label><input id="form_titre" name="form_titre" value="{form_titre}" size="40"></p>
+		<p><label>Vitesse :</label><input id="form_vitesse" name="form_vitesse" value="{form_vitesse}" size="6"> kt</p>
+		<p><label>Vent :</label><input id="form_vitvent" name="form_vitvent" value="{form_vitvent}" size="6"> kt <input id="form_dirvent" name="form_dirvent" value="{form_dirvent}" size="6"> degrés</p>
+
+		<!-- BEGIN: aff_creer -->
+		<p><label></label><input type="submit" name="fonc" value="Créer"></p>
+		<!-- END: aff_creer -->
+		<!-- BEGIN: aff_update -->
+		<p><label></label><input type="submit" name="fonc" value="Mettre à jour"></p>
+		<!-- END: aff_update -->
+</div>
+<br />
+<ul class="waypoint waypointth">
+		<li>
+			<span style="width:100px;">Point</span>
+			<span style="width:300px; text-align:left;">Description</span>
+			<span></span>
+			<span title="Distance en nautique">Dist</span>
+			<span title="Route vraie en degré">RV</span>
+			<span title="Temps sans vent en minutes">TSV</span>
+			<span style="width:15px;"></span>
+			<span title="Cap réel en degré">Cap</span>
+			<span title="Temps réel en minutes">Tps</span>
+		</li>
+</ul>
+
+<ul id="waypoint" class="waypoint">
+<!-- BEGIN: lst_point -->
+		<li id="id_{aff_id}">
+			<label>{aff_nom}</label>
+			<span style="width:300px; text-align:left;">{aff_description}</span>
+			<span><a href="index.php?mod=navigation&rub=detail&id={form_id}&fonc=supprimer&idpoint={aff_id}"><img src="{path_module}/img/icn12_supprimer.png" /></a></span>
+			<div >{aff_distance}</div>
+			<div>{aff_rm}</div>
+			<div>{aff_tsv}</div>
+			<div style="width:15px; border: 0px;"></div>
+			<div>{aff_cap}</div>
+			<div >{aff_tps}</div>
+		</li>
+<!-- END: lst_point -->
+<!-- BEGIN: aff_ajout -->
+		<li>
+			<span style="width:100px;padding-right: 15px;"><input id="form_point" name="form_route" style="width:100px;"></span>
+			<span style="width:300px; text-align:left;"><i>Ajouter un nouveau point</i></span>
+		</li>
+</ul>
+<!-- END: aff_ajout -->
+<ul class="waypoint waypointth">
+		<li>
+			<span style="width:100px;"></span>
+			<span style="width:300px; text-align:left;">Total</span>
+			<span></span>
+			<span>{tot_distance}Nm</span>
+			<span></span>
+			<span>{tot_tsv}</span>
+			<div style="width:15px; border: 0px;"></div>
+			<span></span>
+			<span>{tot_tps}</span>
+		</li>
+</ul>
+
+</form>
+
+
+<!-- END: corps -->

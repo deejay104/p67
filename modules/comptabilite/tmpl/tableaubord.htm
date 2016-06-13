@@ -1,0 +1,126 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	<A href="compta.php"><IMG src="{path_module}/img/icn32_mouvement.png" border=0>&nbsp;Mouvement</A>
+	<A href="compta.php?rub=postes"><IMG src="{path_module}/img/icn32_param.png" border=0>&nbsp;Postes</A>
+<!-- BEGIN: vols -->
+	<A href="compta.php?rub=vols"><IMG src="{path_module}/img/icn32_vols.png" border=0>&nbsp;Vols</A>
+	<A href="compta.php?rub=tarifs"><IMG src="{path_module}/img/icn32_tarifs.png" border=0>&nbsp;Tarifs</A>
+<!-- END: vols -->
+	<A href="compta.php?rub=suivi"><IMG src="{path_module}/img/icn32_suivi.png" border=0>&nbsp;Suivi</A>
+	<A href="suivicomptes.php"><IMG src="{path_module}/img/icn32_comptes.png" border=0>&nbsp;Liste des comptes</A>
+	<A href="tableaubord.php"><IMG src="{path_module}/img/icn32_tabbord.png" border=0>&nbsp;<u>Tableau de bord</u></A>
+<!-- END: infos -->
+
+<!-- BEGIN: corps -->
+<script type="text/javascript">
+	$(function() {
+		$("#form_mois").datepicker({
+			dateFormat: "dd/mm/yy",
+			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
+			prevText: "Précédent",
+			nextText: "Suivant"
+		});
+	});
+</script>
+
+<script language="JavaScript">
+function Recharge()
+{
+ 	document.location='tableaubord.php?id='+document.getElementById('form_id').value+'&dte='+document.getElementById('form_date').value+'&m='+document.getElementById('form_mois').value;
+}
+
+</script>
+
+
+<FORM name="compte" id="compte" method="post" action="tableaubord.php" enctype="multipart/form-data" OnSubmit="return false;">
+
+	<INPUT type="hidden" name="rub" value="tableaubord">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+
+
+	<BR>
+
+	<p>
+			Compte :
+			<SELECT id="form_id" name="form_id" OnChange="Recharge();">
+				<!-- BEGIN: lst_compte -->
+				<OPTION value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
+				<!-- END: lst_compte -->
+      </SELECT>
+
+			Année : 
+			<SELECT id="form_date" name="form_date" OnChange="Recharge();">
+				<!-- BEGIN: lst_annee -->
+				<OPTION value="{dte_annee}" {chk_annee}>{dte_annee}</OPTION>
+				<!-- END: lst_annee -->
+			</SELECT>
+
+			&nbsp;afficher le bilan au : <input id="form_mois" name="form_mois" value="{form_mois}" size="10" OnChange="Recharge();" />
+	</p>
+	<br />
+
+	<TABLE border="0" cellspacing="0" cellpadding="0" background="" style="margin-left: 20px;">
+	  <TR height=20 bgcolor="#DDDDDD" style="border-bottom: 1px solid #000000; border-top: 1px solid #000000;">
+		<TD width=400><b>Poste</b></TD>
+		<TD>&nbsp;</TD>
+		<td width=100 align=right style="border-left: 1px solid #000000;"><b>{annee}</b></td>
+		<!-- BEGIN: old_poste -->
+		<td width=100 align=right><b>{old_annee}</b></td>
+		<!-- END: old_poste -->
+	  </TR>
+	<!-- BEGIN: lst_poste -->
+	  <TR height=20 bgcolor="#DDDDDD" style="border-bottom: 1px solid #000000;">
+		<TD>{nom_poste}</TD>
+		<TD>&nbsp;</TD>
+		<td align=right style="border-left: 1px solid #000000;"><b>{total_poste}&nbsp;</b></td>
+		<!-- BEGIN: lst_old_poste -->
+		<td align=right><b><i>{old_total_poste}</i>&nbsp;</b></td>
+		<!-- END: lst_old_poste -->
+	  </TR>
+
+	  <!-- BEGIN: lst_sousposte -->
+	  	<!-- BEGIN: lst_ligne -->
+		<TR>
+			<TD colspan=5 style="border-top: 1px solid black; height: 1px;"></TD>
+		</TR>
+	 	<!-- END: lst_ligne -->
+	  <TR>
+		<TD>{nom_sousposte}</TD>
+		<TD>{date_sousposte}&nbsp;</TD>
+		<TD align=right bgcolor="#FEE1EE" style="border-left: 1px solid #000000;">{tot_sousposte}&nbsp;</TD>
+		<!-- BEGIN: lst_old_sousposte -->
+		<TD align=right><i>{old_tot_sousposte}</i>&nbsp;</TD>
+		<!-- END: lst_old_sousposte -->
+	  </TR>
+	  <!-- END: lst_sousposte -->
+
+	<!-- END: lst_poste -->
+
+	  <TR height=20>
+		<TD width=400 align=right>&nbsp;</TD>
+		<TD>&nbsp;</TD>
+		<TD width=100 bgcolor="#FEE1EE" style="border-left: 1px solid #000000;">&nbsp;</TD>
+	  	<!-- BEGIN: aff_old_vide -->
+		<TD width=100>&nbsp;</TD>
+		<!-- END: aff_old_vide -->
+	  </TR>
+	  <TR height=20 bgcolor="#DDDDDD" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000;">
+		<TD width=400 align=right><b>Total :</b>&nbsp;</TD>
+		<TD>&nbsp;</TD>
+		<TD width=100 align=right style="border-left: 1px solid #000000;"><B>{total}&nbsp;</B></TD>
+	  	<!-- BEGIN: aff_old_total -->
+		<td width=100 align=right><b><i>{old_total}</i>&nbsp;</b></td>
+		<!-- END: aff_old_total -->
+	  </TR>
+
+	</TABLE>
+
+</FORM>
+
+
+
+<!-- END: corps -->
