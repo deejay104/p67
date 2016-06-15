@@ -33,7 +33,10 @@
 // ---- Charge les variables
 	require ("version.txt");
 	require ("config/config.inc.php");
-	require ("config/variables.inc.php");
+	if (file_exists("config/variables.inc.php"))
+  {
+  	require ("config/variables.inc.php");
+  }
 
 	require ("modules/admin/variables.tmpl.php");
 	require ("modules/fonctions.inc.php");
