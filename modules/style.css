@@ -61,7 +61,11 @@ input[type=checkbox]:checked:after { content: "x"; }
     #main-content { width: 80%; left: 20%; }
     #main-sidebar { display: block; }
 }
-
+@media print {
+    #responsive-navigation { display: none; }
+    #main-content { width: 100%; left: 0px; }
+    #main-sidebar { display: none; }
+}
 
 /* **** Menu **** */
 .main-menu { text-align: left; background-color: #888e91;  }
