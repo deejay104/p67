@@ -91,6 +91,9 @@
 	require ("config/variables.inc.php");
 	require ("modules/fonctions.inc.php");
 
+	if ($MyOpt["timezone"]!="")
+	  { date_default_timezone_set($MyOpt["timezone"]); }
+
 // ---- Gestion des thèmes
 
 // Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_2 like Mac OS X; fr-fr) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5

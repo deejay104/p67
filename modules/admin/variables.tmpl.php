@@ -12,13 +12,18 @@ $MyOptHelp[""]="";
 $MyOptTmpl["tbl"]="p67";
 $MyOptHelp["tbl"]="Prefixe des tables dans la base de données";
 
-// Prefixe des tables
+// Site en maintenance
 $MyOptTmpl["maintenance"]="off";
 $MyOptHelp["maintenance"]="Mettre le site en maintenance (on=site en maintenance, off=site accessible)";
 
 // path
 $MyOptTmpl["mydir"]=htmlentities(preg_replace("/updatedb\.php/","",$_SERVER["SCRIPT_FILENAME"]));
 $MyOptHelp["mydir"]="Chemin de l'installation. Utilisé pour l'exécution des scripts";
+
+// Timezone
+$MyOptTmpl["timezone"]=date_default_timezone_get();
+$MyOptHelp["timezone"]="Sélectionner la timezone locale (Europe/Paris)";
+
 
 // Devise
 $MyOptTmpl["devise"]="€";
