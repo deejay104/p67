@@ -92,7 +92,7 @@ class document_class{
 			$filename=substr(GetFilename($name),0,96).".".$myext;
 		}
 
-	  	$query="INSERT INTO ".$this->tbl."_document SET name='$name', uid='$id', droit='$this->droit', type='$this->type', actif='oui', uid_creat='$gl_uid',dte_creat=NOW()";
+	  	$query="INSERT INTO ".$this->tbl."_document SET name='$name', uid='$id', droit='$this->droit', type='$this->type', actif='oui', uid_creat='$gl_uid',dte_creat='".now()."'";
 		$this->id=$sql->Insert($query);
 
 		$myname=CompleteTxt($this->id,6,"0");
@@ -130,7 +130,7 @@ class document_class{
 			$filename=substr(GetFilename($name),0,96).".".$myext;
 		}
 
-	  	$query="INSERT INTO ".$this->tbl."_document SET name='".(($filename!="") ? $filename : $name)."', uid='$id', type='$this->type', droit='$droit',actif='oui', uid_creat='$gl_uid',dte_creat=NOW()";
+	  	$query="INSERT INTO ".$this->tbl."_document SET name='".(($filename!="") ? $filename : $name)."', uid='$id', type='$this->type', droit='$droit',actif='oui', uid_creat='$gl_uid',dte_creat='".now()."'";
 		$this->id=$sql->Insert($query);
 
 		$myname=CompleteTxt($this->id,6,"0");

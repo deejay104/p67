@@ -97,13 +97,13 @@ class abonnement_class{
 		  {
 			$query ="UPDATE p67_abonnement SET ";
 			$query.="actif='non', ";
-			$query.="uid_maj=$uid, dte_maj=NOW() ";
+			$query.="uid_maj=$uid, dte_maj='".now()."' ";
 			$query.="WHERE abonum LIKE '".substr($this->abonum,0,6)."%'";
 			$sql->Update($query);
 			$this->abonum=$this->NewRevision();
 		  }
 
-		$query="INSERT INTO p67_abonnement SET abonum='".$this->abonum."', uid='".$this->uid."', dtedeb='".date2sql($this->dte_deb)."', dtefin='".date2sql($this->dte_fin)."', jour_num='".$this->jour_num."', jour_sem='".$this->jour_sem."', actif='oui', uid_maj=$uid, dte_maj=NOW()";
+		$query="INSERT INTO p67_abonnement SET abonum='".$this->abonum."', uid='".$this->uid."', dtedeb='".date2sql($this->dte_deb)."', dtefin='".date2sql($this->dte_fin)."', jour_num='".$this->jour_num."', jour_sem='".$this->jour_sem."', actif='oui', uid_maj=$uid, dte_maj='".now()."'";
 		$this->id=$sql->Insert($query);
 
 		
@@ -117,7 +117,7 @@ class abonnement_class{
 		  }
 
 		$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'abonnement', 'p67_abonnement', '".$this->id."', '$uid', NOW(), 'ADD', 'Create subscription')";
+		$query.="VALUES (NULL , 'abonnement', 'p67_abonnement', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create subscription')";
 		$sql->Insert($query);
 
 		return $this->id;
@@ -135,7 +135,7 @@ class abonnement_class{
 		$sql=$this->sql;
 		$query ="UPDATE p67_abonnement SET ";
 		$query.="actif='non', ";
-		$query.="uid_maj=$gl_uid, dte_maj=NOW() ";
+		$query.="uid_maj=$gl_uid, dte_maj='".now()."' ";
 		$query.="WHERE abonum = '".$this->abonum."'";
 		$sql->Update($query);
 	  }
@@ -176,11 +176,11 @@ class abonnement_class{
 	function Delete()
 	{ global $uid;
 		$sql=$this->sql;
-		$query="UPDATE p67_abonnement SET actif='non', uid_maj=$uid, dte_maj=NOW() WHERE abonum='$this->abonum'";
+		$query="UPDATE p67_abonnement SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE abonum='$this->abonum'";
 		$sql->Update($query);
 
 		$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'reservation', 'p67_calendrier', '".$this->id."', '$uid', NOW(), 'DEL', 'Delete subscription')";
+		$query.="VALUES (NULL , 'reservation', 'p67_calendrier', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete subscription')";
 		$sql->Insert($query);
 	}
 

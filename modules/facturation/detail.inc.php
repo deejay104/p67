@@ -135,16 +135,16 @@
 			// Rembourse le compte membre
 			if ($fonc=="Compte")
 			  {
-		 	  	$query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='$usr', tiers='".$MyOpt["uid_banque"]."', montant='".$montant."', mouvement='".$res2["description"]."', commentaire='Règlement facture $facid (".$fonc.")', date_valeur=NOW(), facture='$facid', uid_creat='$uid', date_creat=NOW()";
+		 	  	$query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='$usr', tiers='".$MyOpt["uid_banque"]."', montant='".$montant."', mouvement='".$res2["description"]."', commentaire='Règlement facture $facid (".$fonc.")', date_valeur='".now()."', facture='$facid', uid_creat='$uid', date_creat='".now()."'";
 				$sql->Insert($query);
-		 	  	$query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='$usr', tiers='".$MyOpt["uid_banque"]."', montant='-".$montant."', mouvement='".$res2["description"]."', commentaire='Compensation compte pour facture $facid', date_valeur=NOW(), facture='NOFAC', uid_creat='$gl_uid', date_creat=NOW()";
+		 	  	$query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='$usr', tiers='".$MyOpt["uid_banque"]."', montant='-".$montant."', mouvement='".$res2["description"]."', commentaire='Compensation compte pour facture $facid', date_valeur='".now()."', facture='NOFAC', uid_creat='$gl_uid', date_creat='".now()."'";
 				$sql->Insert($query);
 			  }
 			else
 			  {
-		 	  	$query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='".$MyOpt["uid_banque"]."', tiers='$usr', montant='-".$montant."', mouvement='".$res2["description"]."', commentaire='Règlement facture $facid (".$fonc.")', date_valeur=NOW(), facture='$facid', uid_creat='$gl_uid', date_creat=NOW()";
+		 	  	$query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='".$MyOpt["uid_banque"]."', tiers='$usr', montant='-".$montant."', mouvement='".$res2["description"]."', commentaire='Règlement facture $facid (".$fonc.")', date_valeur='".now()."', facture='$facid', uid_creat='$gl_uid', date_creat='".now()."'";
 				$sql->Insert($query);
-		 	  	$query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='$usr', tiers='".$MyOpt["uid_banque"]."', montant='".$montant."', mouvement='".$res2["description"]."', commentaire='Règlement facture $facid (".$fonc.")', date_valeur=NOW(), facture='$facid', uid_creat='$uid', date_creat=NOW()";
+		 	  	$query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='$usr', tiers='".$MyOpt["uid_banque"]."', montant='".$montant."', mouvement='".$res2["description"]."', commentaire='Règlement facture $facid (".$fonc.")', date_valeur='".now()."', facture='$facid', uid_creat='$uid', date_creat='".now()."'";
 				$sql->Insert($query);
 
 				if ($MyOpt["CompenseClub"]==1)
@@ -152,9 +152,9 @@
 				  	$facusr=new user_class($fac->uid,$sql);
 				  	
 					// Compte le compte du club
-			 	  	$query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='".$MyOpt["uid_club"]."', tiers='".$MyOpt["uid_banque"]."', montant='-".$montant."', mouvement='".$res2["description"]."', commentaire='Facture $facid (".$facusr->fullname.")', date_valeur=NOW(), facture='$facid', uid_creat='$gl_uid', date_creat=NOW()";
+			 	  	$query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='".$MyOpt["uid_club"]."', tiers='".$MyOpt["uid_banque"]."', montant='-".$montant."', mouvement='".$res2["description"]."', commentaire='Facture $facid (".$facusr->fullname.")', date_valeur='".now()."', facture='$facid', uid_creat='$gl_uid', date_creat='".now()."'";
 					$sql->Insert($query);
-			 	  	$query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='".$MyOpt["uid_banque"]."', tiers='".$MyOpt["uid_club"]."', montant='".$montant."', mouvement='".$res2["description"]."', commentaire='Facture $facid (".$facusr->fullname.")', date_valeur=NOW(), facture='$facid', uid_creat='$uid', date_creat=NOW()";
+			 	  	$query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='".$MyOpt["uid_banque"]."', tiers='".$MyOpt["uid_club"]."', montant='".$montant."', mouvement='".$res2["description"]."', commentaire='Facture $facid (".$facusr->fullname.")', date_valeur='".now()."', facture='$facid', uid_creat='$uid', date_creat='".now()."'";
 					$sql->Insert($query);
 				  }
 			  }

@@ -122,30 +122,30 @@ class ress_class{
 	function Create(){
 		global $uid;
 		$sql=$this->sql;
-		$query="INSERT INTO p67_ressources SET uid_maj='$uid', dte_maj=NOW()";
+		$query="INSERT INTO p67_ressources SET uid_maj='$uid', dte_maj='".now()."'";
 		$this->id=$sql->Insert($query);
 
-		$query="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', 'p67_ressources', '".$this->id."', '$uid', NOW(), 'ADD', 'Create ressource')";
+		$query="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', 'p67_ressources', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create ressource')";
 		$sql->Insert($query);
 	}
 
 	function Delete(){
 		global $uid;
 		$sql=$this->sql;
-		$query="UPDATE p67_ressources SET actif='non', uid_maj='$uid', dte_maj=NOW() WHERE id='$this->id'";
+		$query="UPDATE p67_ressources SET actif='non', uid_maj='$uid', dte_maj='".now()."' WHERE id='$this->id'";
 		$this->id=$sql->Update($query);
 
-		$query="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', 'p67_ressources', '".$this->id."', '$uid', NOW(), 'DEL', 'Delete ressource')";
+		$query="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', 'p67_ressources', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete ressource')";
 		$sql->Insert($query);
 	}
 
 	function Desactive(){
 		global $uid;
 		$sql=$this->sql;
-		$query="UPDATE p67_ressources SET actif='off', uid_maj='$uid', dte_maj=NOW() WHERE id='$this->id'";
+		$query="UPDATE p67_ressources SET actif='off', uid_maj='$uid', dte_maj='".now()."' WHERE id='$this->id'";
 		$this->id=$sql->Update($query);
 
-		$query="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', 'p67_ressources', '".$this->id."', '$uid', NOW(), 'DEL', 'Disable ressource')";
+		$query="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', 'p67_ressources', '".$this->id."', '$uid', '".now()."', 'DEL', 'Disable ressource')";
 		$sql->Insert($query);
 	}
 
@@ -247,11 +247,11 @@ class ress_class{
 			  	$query.="$k='$vv',";
 			  }
 		  }
-		$query.="uid_maj=$uid, dte_maj=NOW() ";
+		$query.="uid_maj=$uid, dte_maj='".now()."' ";
 		$query.="WHERE id='$this->id'";
 		$sql->Update($query);
 
-		$query="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', 'p67_ressources', '".$this->id."', '$uid', NOW(), 'MOD', 'Modify ressource')";
+		$query="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', 'p67_ressources', '".$this->id."', '$uid', '".now()."', 'MOD', 'Modify ressource')";
 		$sql->Insert($query);
 	}
 

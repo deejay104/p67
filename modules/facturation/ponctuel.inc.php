@@ -162,7 +162,7 @@
 						  		$query.="date_valeur='".$dte."', ";
 						  		$query.="dte='".date("Ym",strtotime($dte))."', ";
 						  		$query.="compte='".$res["compte"]."', ";
-						  		$query.="uid_creat=$uid, date_creat=NOW()";
+						  		$query.="uid_creat=$uid, date_creat='".now()."'";
 						  		$sql->Insert($query);
 
 						  		$query ="INSERT p67_compte SET ";
@@ -174,7 +174,7 @@
 						  		$query.="date_valeur='".$dte."', ";
 						  		$query.="dte='".date("Ym",strtotime($dte))."', ";
 						  		$query.="compte='".$res["compte"]."', ";
-						  		$query.="uid_creat=$uid, date_creat=NOW()";
+						  		$query.="uid_creat=$uid, date_creat='".now()."'";
 						  		$sql->Insert($query);
 
 					  		  }

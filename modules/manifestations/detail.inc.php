@@ -70,9 +70,9 @@
 		$query.="cout='".addslashes($form_cout)."', ";
 		$query.="type='".addslashes($type)."', ";
 		$query.="uid_creat='$uid', ";
-		$query.="dte_creat=NOW(), ";
+		$query.="dte_creat='".now()."', ";
 		$query.="uid_modif='$uid', ";
-		$query.="dte_modif=NOW()";
+		$query.="dte_modif='".now()."'";
 		$id=$sql->Insert($query);
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	  }
@@ -92,7 +92,7 @@
 		$query.="cout='".addslashes($form_cout)."', ";
 		$query.="type='$type', ";
 		$query.="dte_manip='".date2sql($form_date)."', ";
-		$query.="uid_modif='$uid', dte_modif=NOW() WHERE id='$id'";
+		$query.="uid_modif='$uid', dte_modif='".now()."' WHERE id='$id'";
 		$sql->Update($query);
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	  }
@@ -148,7 +148,7 @@
 	  		$query.="commentaire='".addslashes($res["titre"])." du ".sql2date($res["dte_manip"])." (".$v["nb"]."x".$res["cout"]."€)', ";
 	  		$query.="date_valeur='".$dte."', ";
 	  		$query.="facture='NOFAC', ";
-	  		$query.="uid_creat=0, date_creat=NOW()";
+	  		$query.="uid_creat=0, date_creat='".now()."'";
 	  		$sql->Insert($query);
 	
 	  		$query ="INSERT p67_compte SET ";
@@ -159,7 +159,7 @@
 	  		$query.="commentaire='".addslashes($res["titre"])." du ".sql2date($res["dte_manip"])." (".$v["nb"]."x".$res["cout"]."€)', ";
 	  		$query.="date_valeur='".$dte."', ";
 	  		$query.="facture='NOFAC', ";
-	  		$query.="uid_creat=0, date_creat=NOW()";
+	  		$query.="uid_creat=0, date_creat='".now()."'";
 			$sql->Insert($query);
 
 		  }
@@ -224,12 +224,12 @@
 	
 			if ($ins["idusr"]>0)
 			  {
-					$query="UPDATE p67_participants SET nb='".($ins["nb"]+1)."', uid_creat='$uid', dte_creat=NOW() WHERE idmanip='$id' AND idusr='$idusr' AND participe='Y'";
+					$query="UPDATE p67_participants SET nb='".($ins["nb"]+1)."', uid_creat='$uid', dte_creat='".now()."' WHERE idmanip='$id' AND idusr='$idusr' AND participe='Y'";
 					$sql->Update($query);
 			  }
 			else
 			  {
-					$query="INSERT INTO p67_participants SET idmanip='$id', idusr='$idusr', participe='Y', nb='1', uid_creat='$uid', dte_creat=NOW()";
+					$query="INSERT INTO p67_participants SET idmanip='$id', idusr='$idusr', participe='Y', nb='1', uid_creat='$uid', dte_creat='".now()."'";
 					$sql->Insert($query);
 			  }
 	  }
@@ -237,7 +237,7 @@
 	  {
 			$query="DELETE FROM p67_participants WHERE idmanip='$id' AND idusr='$idusr'";
 			$sql->Delete($query);
-			$query="INSERT INTO p67_participants SET idmanip='$id', idusr='$idusr', participe='N', uid_creat='$uid', dte_creat=NOW()";
+			$query="INSERT INTO p67_participants SET idmanip='$id', idusr='$idusr', participe='N', uid_creat='$uid', dte_creat='".now()."'";
 			$sql->Insert($query);
 	  }
 

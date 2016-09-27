@@ -58,7 +58,7 @@
 				$sql->Update($query);
 
 				$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-				$query.="VALUES (NULL , 'poste', 'p67_mouvement', '$id', '$uid', NOW(), 'MOD', 'Update movement')";
+				$query.="VALUES (NULL , 'poste', 'p67_mouvement', '$id', '$uid', '".now()."', 'MOD', 'Update movement')";
 				$sql->Insert($query);
 			  }
 			else if (trim($description)!="")
@@ -75,7 +75,7 @@
 				$sql->Insert($query);
 
 				$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-				$query.="VALUES (NULL , 'poste', 'p67_mouvement', '$id', '$uid', NOW(), 'ADD', 'Create movement')";
+				$query.="VALUES (NULL , 'poste', 'p67_mouvement', '$id', '$uid', '".now()."', 'ADD', 'Create movement')";
 				$sql->Insert($query);
 			  }
 	  	  }

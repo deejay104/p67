@@ -931,4 +931,10 @@ function GenereVariables($tab)
 	return $ret;
 }
 
+
+function '".now()."'
+{
+	return date("Y-m-d H:i:s");
+}
+
 ?>

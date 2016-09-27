@@ -43,13 +43,13 @@
 		  {
 			if ($form_id[$k]>0)
 			  {
-			  	$query="UPDATE p67_conso SET idvol='".$form_vid[$k]."', idavion='$idavion', quantite='".$form_qte[$k]."', prix='".$form_prix[$k]."', tiers='".$form_tiers[$k]."', uid_modif=$uid, dte_modif=NOW() ";
+			  	$query="UPDATE p67_conso SET idvol='".$form_vid[$k]."', idavion='$idavion', quantite='".$form_qte[$k]."', prix='".$form_prix[$k]."', tiers='".$form_tiers[$k]."', uid_modif=$uid, dte_modif='".now()."' ";
 			  	$query.="WHERE id='".$form_id[$k]."'";
 				$sql->Update($query);
 			  }
 			else if ($form_qte[$k]>0)
 			  {
-			  	$query="INSERT INTO p67_conso SET idvol='".$form_vid[$k]."', idavion='$idavion', quantite='".$form_qte[$k]."', prix='".$form_prix[$k]."', tiers='".$form_tiers[$k]."', uid_creat=$uid, dte_creat=NOW(), uid_modif=$uid, dte_modif=NOW() ";
+			  	$query="INSERT INTO p67_conso SET idvol='".$form_vid[$k]."', idavion='$idavion', quantite='".$form_qte[$k]."', prix='".$form_prix[$k]."', tiers='".$form_tiers[$k]."', uid_creat=$uid, dte_creat='".now()."', uid_modif=$uid, dte_modif='".now()."' ";
 				$sql->Insert($query);
 			  }
 		  }
@@ -83,7 +83,7 @@
 	$dte='2006-04-16';
 	$query = "SELECT p67_calendrier.id AS vid, p67_calendrier.dte_deb AS dte_deb, p67_avion.id AS aid, p67_avion.immatriculation AS immatriculation, pilote.nom AS pnom, pilote.prenom AS pprenom, pilote.id AS puid, instructeur.nom AS inom, instructeur.prenom AS iprenom, instructeur.id AS iuid, conso.quantite AS quantite, conso.prix AS prix, conso.tiers AS tiers, conso.id AS id ";
 	$query.= "FROM p67_calendrier, p67_avion, p67_utilisateurs AS pilote LEFT JOIN p67_utilisateurs AS instructeur ON p67_calendrier.uid_instructeur = instructeur.id  LEFT JOIN p67_conso AS conso ON p67_calendrier.id = conso.idvol ";
-	$query.= "WHERE p67_calendrier.uid_avion = p67_avion.id AND p67_calendrier.uid_pilote = pilote.id AND dte_deb>='$dte' AND dte_deb<NOW() AND p67_calendrier.actif='oui' AND p67_calendrier.prix<>0 AND p67_avion.id='$idavion' ORDER BY p67_calendrier.dte_deb";
+	$query.= "WHERE p67_calendrier.uid_avion = p67_avion.id AND p67_calendrier.uid_pilote = pilote.id AND dte_deb>='$dte' AND dte_deb<'".now()."' AND p67_calendrier.actif='oui' AND p67_calendrier.prix<>0 AND p67_avion.id='$idavion' ORDER BY p67_calendrier.dte_deb";
 	
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)

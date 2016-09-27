@@ -87,7 +87,7 @@
 		  		$query.="date_valeur='".$dte."', ";
 		  		$query.="dte='".date("Ym",strtotime($dte))."', ";
 		  		$query.="compte='".$d["compte"]."', ";
-		  		$query.="uid_creat=0, date_creat=NOW()";
+		  		$query.="uid_creat=0, date_creat='".now()."'";
 		  		$sql->Insert($query);
 
 		  		$query ="INSERT p67_compte SET ";
@@ -99,7 +99,7 @@
 		  		$query.="date_valeur='".$dte."', ";
 		  		$query.="dte='".date("Ym",strtotime($dte))."', ";
 		  		$query.="compte='".$d["compte"]."', ";
-		  		$query.="uid_creat=0, date_creat=NOW()";
+		  		$query.="uid_creat=0, date_creat='".now()."'";
 				$sql->Insert($query);
 		
 				myPrint($d["prenom"]." ".$d["nom"]." (".$d["uid"].") -> Mvt:".$d["description"]." Description:".$d["abonum"]." -".$d["montant"]);

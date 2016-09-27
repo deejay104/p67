@@ -58,13 +58,13 @@
 		
 							if ( (GetDroit("ModifActualite")) || ( ($uid==$res["uid_creat"]) && (time()-strtotime($d["dte_creat"])<3600) ) )
 							  {
-									$query="UPDATE ".$MyOpt["tbl"]."_actualites SET titre='".addslashes($form_titre)."',message='".addslashes($form_message)."',uid_modif='$uid',dte_modif=NOW() WHERE id='$id'";
+									$query="UPDATE ".$MyOpt["tbl"]."_actualites SET titre='".addslashes($form_titre)."',message='".addslashes($form_message)."',uid_modif='$uid',dte_modif='".now()."' WHERE id='$id'";
 									$sql->Update($query);
 							  }
 						}
 					else
 						{
-							$query="INSERT INTO ".$MyOpt["tbl"]."_actualites (titre,message,uid_creat,dte_creat,uid_modif,dte_modif) VALUES ('".addslashes($form_titre)."','".addslashes($form_message)."','$uid',NOW(),'$uid',NOW())";
+							$query="INSERT INTO ".$MyOpt["tbl"]."_actualites (titre,message,uid_creat,dte_creat,uid_modif,dte_modif) VALUES ('".addslashes($form_titre)."','".addslashes($form_message)."','$uid','".now()."','$uid','".now()."')";
 							$id=$sql->Insert($query);
 						}
 					$tmpl_x->assign("aff_id", $id);
@@ -115,7 +115,7 @@
 
 // ---- Prochaine manips
 
-	$query = "SELECT p67_manips.* FROM p67_manips WHERE p67_manips.dte_manip>NOW() ORDER BY dte_manip LIMIT 1";
+	$query = "SELECT p67_manips.* FROM p67_manips WHERE p67_manips.dte_manip>'".now()."' ORDER BY dte_manip LIMIT 1";
 	$res = $sql->QueryRow($query);
 
 	if ($res["id"]>0)

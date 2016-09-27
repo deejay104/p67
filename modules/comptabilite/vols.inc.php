@@ -139,7 +139,7 @@
 					  	if (!isset($_SESSION['tab_checkpost'][$checktime]))
 						  {
 // A rajouter la période de facture ,dte='".date("Ym",strtotime($dte))."'" -> A tester
-								$query="INSERT INTO ".$MyOpt["tbl"]."_calendrier SET dte_deb='$dte', dte_fin='$dte', uid_pilote='$uid_p', uid_instructeur='$uid_i', uid_avion='$uid_a', tarif='$tarif', temps='$tps', reel='non', horadeb='$horadeb', horafin='$horafin', dte_maj=NOW(), uid_maj=$uid, actif='oui'";
+								$query="INSERT INTO ".$MyOpt["tbl"]."_calendrier SET dte_deb='$dte', dte_fin='$dte', uid_pilote='$uid_p', uid_instructeur='$uid_i', uid_avion='$uid_a', tarif='$tarif', temps='$tps', reel='non', horadeb='$horadeb', horafin='$horafin', dte_maj='".now()."', uid_maj=$uid, actif='oui'";
 						  	$id=$sql->Insert($query);
 						  }
 
@@ -174,7 +174,7 @@
 		  		$query.="mouvement='".$form_mouvement[$k]."', ";
 		  		$query.="commentaire='".addslashes($form_commentaire[$k])."', ";
 		  		$query.="date_valeur='".date2sql($form_date[$k])."', ";
-		  		$query.="uid_creat=$uid, date_creat=NOW()";
+		  		$query.="uid_creat=$uid, date_creat='".now()."'";
 		  		//echo "$query<BR>";
 		  		$sql->Insert($query);
 
@@ -236,7 +236,7 @@
 		// Liste des vols réservés
 		$query = "SELECT id ";
 		$query.= "FROM ".$MyOpt["tbl"]."_calendrier ";
-		$query.= "WHERE dte_deb>='$dte' AND dte_deb<NOW() AND actif='oui' AND prix=0 AND uid_avion='$idavion' ORDER BY dte_deb,horadeb";
+		$query.= "WHERE dte_deb>='$dte' AND dte_deb<'".now()."' AND actif='oui' AND prix=0 AND uid_avion='$idavion' ORDER BY dte_deb,horadeb";
 		$sql->Query($query);
 		$tvols=array();
 		for($i=0; $i<$sql->rows; $i++)

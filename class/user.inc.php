@@ -1014,7 +1014,7 @@ class user_class{
 		$sql->Update($query);
 
 		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$uid', NOW(), 'MOD', 'Modify password')";
+		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$uid', '".now()."', 'MOD', 'Modify password')";
 		$sql->Insert($query);
 		return "";
 	}
@@ -1022,12 +1022,12 @@ class user_class{
 	function Create(){
 		global $uid;
 		$sql=$this->sql;
-		$query="INSERT INTO ".$this->tbl."_utilisateurs SET uid_maj='$uid', dte_maj=NOW()";
+		$query="INSERT INTO ".$this->tbl."_utilisateurs SET uid_maj='$uid', dte_maj='".now()."'";
 		$this->uid=$sql->Insert($query);
 		$this->data["idcpt"]=$this->uid;
 
 		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$uid', NOW(), 'ADD', 'Create user')";
+		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$uid', '".now()."', 'ADD', 'Create user')";
 		$sql->Insert($query);
 		
 		return $this->uid;
@@ -1144,7 +1144,7 @@ class user_class{
 			  	$query.="$k='$vv',";
 			  }
 		  }
-		$query.="uid_maj=$uid, dte_maj=NOW() ";
+		$query.="uid_maj=$uid, dte_maj='".now()."' ";
 		$query.="WHERE id='$this->uid'";
 		$sql->Update($query);
 
@@ -1157,7 +1157,7 @@ class user_class{
 		  }
 
 		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$uid', NOW(), 'MOD', 'Modify user')";
+		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$uid', '".now()."', 'MOD', 'Modify user')";
 		$sql->Insert($query);
 	}
 
@@ -1168,7 +1168,7 @@ class user_class{
 		if (trim($grp)!="")
 		  {	
 				$query ="INSERT INTO ".$this->tbl."_droits (`groupe` ,`uid` ,`uid_creat` ,`dte_creat`) ";
-				$query.="VALUES ('".trim($grp)."' , '".$this->uid."', '$uid', NOW())";
+				$query.="VALUES ('".trim($grp)."' , '".$this->uid."', '$uid', '".now()."')";
 				$sql->Insert($query);
 			}
 	}
@@ -1222,7 +1222,7 @@ class user_class{
 		  {
 			if (($v["bd"]=="") && ($v["new"]=="N"))
 			  {
-				$query="INSERT INTO ".$this->tbl."_lache SET uid_pilote='$this->uid', id_avion='$avion', uid_creat='$uid', dte_creat=NOW()";
+				$query="INSERT INTO ".$this->tbl."_lache SET uid_pilote='$this->uid', id_avion='$avion', uid_creat='$uid', dte_creat='".now()."'";
 				$sql->Insert($query);
 			  }
 			else if (($v["bd"]>0) && ($v["new"]==""))
@@ -1233,7 +1233,7 @@ class user_class{
 		  }
 
 		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$uid', NOW(), 'MOD', 'Modify ressource access')";
+		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$uid', '".now()."', 'MOD', 'Modify ressource access')";
 		$sql->Insert($query);
 	}
 
@@ -1243,17 +1243,17 @@ class user_class{
 		$sql=$this->sql;
 		$this->actif="off";
 
-		$query="UPDATE ".$this->tbl."_utilisateurs SET actif='off', uid_maj=$gl_uid, dte_maj=NOW() WHERE id=$this->uid";
+		$query="UPDATE ".$this->tbl."_utilisateurs SET actif='off', uid_maj=$gl_uid, dte_maj='".now()."' WHERE id=$this->uid";
 		$sql->Update($query);
 
-		$query="UPDATE ".$this->tbl."_abonnement SET actif='non', uid_maj=$gl_uid, dte_maj=NOW() WHERE uid=$this->uid";
+		$query="UPDATE ".$this->tbl."_abonnement SET actif='non', uid_maj=$gl_uid, dte_maj='".now()."' WHERE uid=$this->uid";
 		$sql->Update($query);
 
-		$query="UPDATE ".$this->tbl."_calendrier SET actif='non', uid_maj=$gl_uid, dte_maj=NOW() WHERE uid_pilote=$this->uid AND dte_deb>NOW()";
+		$query="UPDATE ".$this->tbl."_calendrier SET actif='non', uid_maj=$gl_uid, dte_maj='".now()."' WHERE uid_pilote=$this->uid AND dte_deb>'".now()."'";
 		$sql->Update($query);
 
 		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$gl_uid', NOW(), 'DEL', 'Disable user')";
+		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$gl_uid', '".now()."', 'DEL', 'Disable user')";
 		$sql->Insert($query);
 	}
 
@@ -1262,14 +1262,14 @@ class user_class{
 		$sql=$this->sql;
 		$this->actif="non";
 
-		$query="UPDATE ".$this->tbl."_utilisateurs SET actif='non', uid_maj=$uid, dte_maj=NOW() WHERE id=$this->uid";
+		$query="UPDATE ".$this->tbl."_utilisateurs SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE id=$this->uid";
 		$sql->Update($query);
 
 		$query="UPDATE ".$this->tbl."_document SET actif='non' WHERE uid=$this->uid";
 		$sql->Update($query);
 
 		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$uid', NOW(), 'DEL', 'Delete user')";
+		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$uid', '".now()."', 'DEL', 'Delete user')";
 		$sql->Insert($query);
 	}	
 

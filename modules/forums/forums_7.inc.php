@@ -47,12 +47,12 @@
 		$res=$sql->QueryRow($query);
 		if ($res["id"]>0)
 		  {
-				$query ="UPDATE ".$MyOpt["tbl"]."_forums_lus SET forum_date = NOW() WHERE forum_msg=$mid AND forum_usr=$uid";
+				$query ="UPDATE ".$MyOpt["tbl"]."_forums_lus SET forum_date = '".now()."' WHERE forum_msg=$mid AND forum_usr=$uid";
 				$sql->Update($query);
 		  }
 		else
 		  {
-				$query="INSERT INTO ".$MyOpt["tbl"]."_forums_lus SET forum_msg=$mid, forum_usr=$uid, forum_date=NOW()";
+				$query="INSERT INTO ".$MyOpt["tbl"]."_forums_lus SET forum_msg=$mid, forum_usr=$uid, forum_date='".now()."'";
 				$sql->Insert($query);
 		  }
 	  }

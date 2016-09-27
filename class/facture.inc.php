@@ -125,7 +125,7 @@ class facture_class{
 			$this->total=$total;
 		}
 
- 	  	$query="INSERT INTO ".$this->tbl."_factures SET id='".$this->id."', uid='".$this->uid."', total='".$this->total."', dte=NOW(), dteid='".date("Ym")."', comment='".$this->comment."'";
+ 	  	$query="INSERT INTO ".$this->tbl."_factures SET id='".$this->id."', uid='".$this->uid."', total='".$this->total."', dte='".now()."', dteid='".date("Ym")."', comment='".$this->comment."'";
 		$sql->Insert($query);
 	}
 

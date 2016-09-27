@@ -71,7 +71,7 @@
 
 		foreach($tablus as $id)
 		  {
-			$query ="INSERT INTO ".$MyOpt["tbl"]."_forums_lus SET forum_msg=$id, forum_usr=$uid, forum_date=NOW()"; 
+			$query ="INSERT INTO ".$MyOpt["tbl"]."_forums_lus SET forum_msg=$id, forum_usr=$uid, forum_date='".now()."'"; 
 			$sql->Insert($query);
 		  }
 	  }

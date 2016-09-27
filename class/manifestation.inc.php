@@ -77,11 +77,11 @@ class manip_class{
 
 		if ($this->id==0)
 		  {
-			$query="INSERT INTO p67_manips SET uid_creat=$uid, dte_creat=NOW()";
+			$query="INSERT INTO p67_manips SET uid_creat=$uid, dte_creat='".now()."'";
 			$this->id=$sql->Insert($query);
 
 			$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-			$query.="VALUES (NULL , 'manifestations', 'p67_manips', '".$this->id."', '$uid', NOW(), 'ADD', 'Create meeting')";
+			$query.="VALUES (NULL , 'manifestations', 'p67_manips', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create meeting')";
 			$sql->Insert($query);
 		  }
 
@@ -90,12 +90,12 @@ class manip_class{
 		$query.="titre='$this->titre',";
 		$query.="comment='$this->comment',";
 		$query.="dte_manip='$this->dte_manip',";
-		$query.="uid_maj=$uid, dte_maj=NOW() ";
+		$query.="uid_maj=$uid, dte_maj='".now()."' ";
 		$query.="WHERE id=$this->id";
 		$sql->Update($query);
 
 		$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'manifestations', 'p67_manips', '".$this->id."', '$uid', NOW(), 'MOD', 'Modify meeting')";
+		$query.="VALUES (NULL , 'manifestations', 'p67_manips', '".$this->id."', '$uid', '".now()."', 'MOD', 'Modify meeting')";
 		$sql->Insert($query);
 
 		return "";
@@ -104,11 +104,11 @@ class manip_class{
 	function Delete()
 	{ global $uid;
 		$sql=$this->sql;
-		$query="UPDATE p67_manips SET actif='non', uid_maj=$uid, dte_maj=NOW() WHERE id='$this->id'";
+		$query="UPDATE p67_manips SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE id='$this->id'";
 		$sql->Update($query);
 
 		$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'manifestations', 'p67_manips', '".$this->id."', '$uid', NOW(), 'DEL', 'Delete meeting')";
+		$query.="VALUES (NULL , 'manifestations', 'p67_manips', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete meeting')";
 		$sql->Insert($query);
 	}
 }

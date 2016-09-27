@@ -71,7 +71,7 @@
 					$query.="mail_diff='".$myuser->data["mail"]."',";
 					$query.="droit_r='".$form_droit_r."',";
 					$query.="droit_w='".$form_droit_w."',";			
-					$query.="dte_maj=NOW(),";
+					$query.="dte_maj='".now()."',";
 					$query.="uid_maj=$uid ";
 					$query.="WHERE id=$mid";
 					$sql->Update($query);
@@ -93,9 +93,9 @@
 					$query.="mail_diff='".$myuser->data["mail"]."',";
 					$query.="droit_r='".$form_droit_r."',";
 					$query.="droit_w='".$form_droit_w."',";			
-					$query.="dte_maj=NOW(),";
+					$query.="dte_maj='".now()."',";
 					$query.="uid_maj=$uid,";
-					$query.="dte_creat=NOW(),";
+					$query.="dte_creat='".now()."',";
 					$query.="uid_creat=$uid";
 		
 					$mid=$sql->Insert($query);

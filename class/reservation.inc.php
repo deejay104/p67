@@ -302,7 +302,7 @@ class resa_class{
 			$this->id=$sql->Insert($query);
 
 			$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-			$query.="VALUES (NULL , 'reservation', '".$this->tbl."_calendrier', '".$this->id."', '$uid', NOW(), 'ADD', 'Create schedule')";
+			$query.="VALUES (NULL , 'reservation', '".$this->tbl."_calendrier', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create schedule')";
 			$sql->Insert($query);
 		  }
 
@@ -323,12 +323,12 @@ class resa_class{
 		$query.="horadeb='$this->horadeb',";
 		$query.="horafin='$this->horafin',";
 		$query.="potentiel='$this->potentiel',";
-		$query.="uid_maj=$uid, dte_maj=NOW() ";
+		$query.="uid_maj=$uid, dte_maj='".now()."' ";
 		$query.="WHERE id=$this->id";
 		$sql->Update($query);
 
 		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'reservation', '".$this->tbl."_calendrier', '".$this->id."', '$uid', NOW(), 'MOD', 'Modify schedule')";
+		$query.="VALUES (NULL , 'reservation', '".$this->tbl."_calendrier', '".$this->id."', '$uid', '".now()."', 'MOD', 'Modify schedule')";
 		$sql->Insert($query);
 
 		$query ="DELETE FROM ".$this->tbl."_masses ";
@@ -348,11 +348,11 @@ class resa_class{
 	function Delete()
 	{ global $uid;
 		$sql=$this->sql;
-		$query="UPDATE ".$this->tbl."_calendrier SET actif='non', uid_maj=$uid, dte_maj=NOW() WHERE id='$this->id'";
+		$query="UPDATE ".$this->tbl."_calendrier SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE id='$this->id'";
 		$sql->Update($query);
 
 		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'reservation', '".$this->tbl."_calendrier', '".$this->id."', '$uid', NOW(), 'DEL', 'Delete schedule')";
+		$query.="VALUES (NULL , 'reservation', '".$this->tbl."_calendrier', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete schedule')";
 		$sql->Insert($query);
 	}
 

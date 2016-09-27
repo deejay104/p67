@@ -216,7 +216,7 @@
 	  {
 		if ($v["idenr"]>0)
 		  {
-		  	$query="UPDATE p67_masses SET uid_vol='$id', uid_pilote='".$v["idpilote"]."', uid_place=$k, poids='".$v["poids"]."', uid_modif='$uid', dte_modif=NOW() WHERE id='".$v["idenr"]."'";
+		  	$query="UPDATE p67_masses SET uid_vol='$id', uid_pilote='".$v["idpilote"]."', uid_place=$k, poids='".$v["poids"]."', uid_modif='$uid', dte_modif='".now()."' WHERE id='".$v["idenr"]."'";
 			$sql->Update($query);
 		  	//echo $query."<br>\n";
 		  }
@@ -224,7 +224,7 @@
 		  {
 		  	if (!is_numeric($v["idpilote"]))
 		  	  { $v["idpilote"]=0; }
-		  	$query="INSERT INTO p67_masses SET uid_vol='$id', uid_pilote='".$v["idpilote"]."', uid_place='$k', poids='".$v["poids"]."', uid_creat='$uid', dte_creat=NOW(), uid_modif='$uid', dte_modif=NOW()";
+		  	$query="INSERT INTO p67_masses SET uid_vol='$id', uid_pilote='".$v["idpilote"]."', uid_place='$k', poids='".$v["poids"]."', uid_creat='$uid', dte_creat='".now()."', uid_modif='$uid', dte_modif='".now()."'";
 			$sql->Insert($query);
 		  	//echo $query."<br>\n";
 		  }

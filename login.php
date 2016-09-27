@@ -92,11 +92,11 @@
 
 		if (($res["id"]>0) && (md5($res["password"].md5(session_id()))==$password))
 		  {
-				$query="INSERT INTO p67_login (username,dte_maj,header) VALUES ('".addslashes($res["prenom"])." ".addslashes($res["nom"])."',NOW(),'".substr(addslashes($_SERVER["HTTP_USER_AGENT"]),0,200)."')";
+				$query="INSERT INTO ".$MyOpt["tbl"]."_login (username,dte_maj,header) VALUES ('".addslashes($res["prenom"])." ".addslashes($res["nom"])."','".now()."','".substr(addslashes($_SERVER["HTTP_USER_AGENT"]),0,200)."')";
 				$sql->Insert($query);
 				$_SESSION['uid']=$res["id"];
 
-				$query="UPDATE p67_utilisateurs SET dte_login=NOW() WHERE id='".$res["id"]."'";
+				$query="UPDATE p67_utilisateurs SET dte_login='".now()."' WHERE id='".$res["id"]."'";
 				$sql->Update($query);
 
 	

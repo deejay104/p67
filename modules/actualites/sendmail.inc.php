@@ -54,7 +54,7 @@
 
 	MyMail($from,"matthieu@les-mnms.net","",$res["titre"],"**".$dest);
 
-	$query="UPDATE ".$MyOpt["tbl"]."_actualites SET mail='oui',dte_mail=NOW() WHERE id='$id'";
+	$query="UPDATE ".$MyOpt["tbl"]."_actualites SET mail='oui',dte_mail='".now()."' WHERE id='$id'";
 	$sql->Update($query);
 
 

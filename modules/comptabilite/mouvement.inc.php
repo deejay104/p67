@@ -162,7 +162,7 @@
 		  		$query.="date_valeur='".date2sql($form_date[$k])."', ";
 		  		$query.="dte='".date("Ym",strtotime(date2sql($form_date[$k])))."', ";
 		  		$query.="compte='".$form_compte[$k]."', ";
-		  		$query.="uid_creat=$uid, date_creat=NOW()";
+		  		$query.="uid_creat=$uid, date_creat='".now()."'";
 		  		//echo "$query<BR>";
 		  		$sql->Insert($query);
 

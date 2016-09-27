@@ -65,7 +65,7 @@
 
 
 // ---- Lit les factures
-		$query ="SELECT * FROM ".$MyOpt["tbl"]."_calendrier WHERE dte_fin<=NOW()-".(($MyOpt["tempscloture"]>0) ? $MyOpt["tempscloture"] : "30")."*60 AND horafin=0";
+		$query ="SELECT * FROM ".$MyOpt["tbl"]."_calendrier WHERE dte_fin<='".now()."'-".(($MyOpt["tempscloture"]>0) ? $MyOpt["tempscloture"] : "30")."*60 AND horafin=0";
 	
 	//	if ($gl_mode!="batch")
 	//	  { $query.="LIMIT 0,20"; }

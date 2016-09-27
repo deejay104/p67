@@ -54,13 +54,13 @@
   	
 	  	if (($res["uid_creat"]==$uid) || (GetDroit("ModifNavigation")))
 	  	  {
-			  	$q="UPDATE ".$MyOpt["tbl"]."_navigation SET titre='".$form_titre."',vitesse='".$form_vitesse."',vitvent='".$form_vitvent."',dirvent='".$form_dirvent."',uid_modif='".$uid."',dte_modif=NOW() WHERE id='".$id."'";
+			  	$q="UPDATE ".$MyOpt["tbl"]."_navigation SET titre='".$form_titre."',vitesse='".$form_vitesse."',vitvent='".$form_vitvent."',dirvent='".$form_dirvent."',uid_modif='".$uid."',dte_modif='".now()."' WHERE id='".$id."'";
 			  	$sql->Update($q);
 				}
 	  }
 	else if (($fonc=="Créer") && ($id==0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	  {
-			$q="INSERT INTO ".$MyOpt["tbl"]."_navigation SET titre='".$form_titre."',vitesse='".$form_vitesse."',vitvent='".$form_vitvent."',dirvent='".$form_dirvent."',uid_creat='".$uid."',dte_creat=NOW(),uid_modif='".$uid."',dte_modif=NOW()";
+			$q="INSERT INTO ".$MyOpt["tbl"]."_navigation SET titre='".$form_titre."',vitesse='".$form_vitesse."',vitvent='".$form_vitvent."',dirvent='".$form_dirvent."',uid_creat='".$uid."',dte_creat='".now()."',uid_modif='".$uid."',dte_modif='".now()."'";
 			$id=$sql->Insert($q);
 			$_SESSION['tab_checkpost'][$checktime]=$checktime;
 		}

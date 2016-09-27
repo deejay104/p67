@@ -56,16 +56,16 @@
 // **************************************
 //	Calcul du temps de vol
 		// Récupère la date de la dernière maintenance
-		$query="SELECT dte_fin,idmaint FROM p67_calendrier WHERE idmaint>0 AND dte_fin<=NOW() AND uid_avion='".$usr->id."' ORDER BY dte_fin DESC LIMIT 0,1";
+		$query="SELECT dte_fin,idmaint FROM p67_calendrier WHERE idmaint>0 AND dte_fin<='".now()."' AND uid_avion='".$usr->id."' ORDER BY dte_fin DESC LIMIT 0,1";
 		$res["first"]=$sql->QueryRow($query);
 	
 		$query="SELECT potentiel AS tot FROM p67_maintenance WHERE id='".$res["first"]["idmaint"]."'";
 		$respot=$sql->QueryRow($query);
 		
-//		$query="SELECT SUM(tpsestime) AS tot FROM p67_calendrier WHERE dte_deb>='".$res["first"]["dte_fin"]."' AND dte_fin<='NOW()' AND tpsreel=0 AND actif='oui' AND uid_avion='".$resa["resa"]->uid_ressource."'";
+//		$query="SELECT SUM(tpsestime) AS tot FROM p67_calendrier WHERE dte_deb>='".$res["first"]["dte_fin"]."' AND dte_fin<=''".now()."'' AND tpsreel=0 AND actif='oui' AND uid_avion='".$resa["resa"]->uid_ressource."'";
 //		$resestim=$sql->QueryRow($query);
 	
-		$query="SELECT SUM(tpsreel) AS tot FROM p67_calendrier WHERE dte_deb>='".$res["first"]["dte_fin"]."' AND dte_fin<='NOW()' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$usr->id."'";
+		$query="SELECT SUM(tpsreel) AS tot FROM p67_calendrier WHERE dte_deb>='".$res["first"]["dte_fin"]."' AND dte_fin<=''".now()."'' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$usr->id."'";
 		$resreel=$sql->QueryRow($query);
 	
 		$t=$respot["tot"]+$resestim["tot"]+$resreel["tot"];

@@ -194,11 +194,11 @@ class maint_class{
 
 		if ($this->id==0)
 		  {
-			$query="INSERT INTO p67_maintenance SET uid_creat=$uid, dte_creat=NOW()";
+			$query="INSERT INTO p67_maintenance SET uid_creat=$uid, dte_creat='".now()."'";
 			$this->id=$sql->Insert($query);
 
 			$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-			$query.="VALUES (NULL , 'maintenance', 'p67_maintenance', '".$this->id."', '$uid', NOW(), 'ADD', 'Create maintenance')";
+			$query.="VALUES (NULL , 'maintenance', 'p67_maintenance', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create maintenance')";
 			$sql->Insert($query);
 		  }
 
@@ -211,12 +211,12 @@ class maint_class{
 		$query.="dte_fin='$this->dte_fin',";
 		$query.="potentiel='$this->potentiel',";
 		$query.="uid_lastresa='$this->uid_lastresa',";
-		$query.="uid_maj=$uid, dte_maj=NOW() ";
+		$query.="uid_maj=$uid, dte_maj='".now()."' ";
 		$query.="WHERE id=$this->id";
 		$sql->Update($query);
 
 		$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'maintenance', 'p67_maintenance', '".$this->id."', '$uid', NOW(), 'MOD', 'Modifiy maintenance')";
+		$query.="VALUES (NULL , 'maintenance', 'p67_maintenance', '".$this->id."', '$uid', '".now()."', 'MOD', 'Modifiy maintenance')";
 		$sql->Insert($query);
 
 
@@ -235,14 +235,14 @@ class maint_class{
 	function Delete()
 	{ global $uid;
 		$sql=$this->sql;
-		$query="UPDATE p67_maintenance SET actif='non', uid_maj=$uid, dte_maj=NOW() WHERE id='$this->id'";
+		$query="UPDATE p67_maintenance SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE id='$this->id'";
 		$sql->Update($query);
 
-		$query="UPDATE p67_calendrier SET idmaint=0, uid_maj=$uid, dte_maj=NOW() WHERE idmaint='$this->id'";
+		$query="UPDATE p67_calendrier SET idmaint=0, uid_maj=$uid, dte_maj='".now()."' WHERE idmaint='$this->id'";
 		$sql->Update($query);
 
 		$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'maintenance', 'p67_maintenance', '".$this->id."', '$uid', NOW(), 'DEL', 'Delete maintenance')";
+		$query.="VALUES (NULL , 'maintenance', 'p67_maintenance', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete maintenance')";
 		$sql->Insert($query);
 	}
 
@@ -374,11 +374,11 @@ class fichemaint_class{
 
 		if ($this->id==0)
 		  {
-			$query="INSERT INTO p67_maintfiche SET uid_creat=$uid, dte_creat=NOW()";
+			$query="INSERT INTO p67_maintfiche SET uid_creat=$uid, dte_creat='".now()."'";
 			$this->id=$sql->Insert($query);
 
 			$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-			$query.="VALUES (NULL , 'maintenance', 'p67_maintfiche', '".$this->id."', '$uid', NOW(), 'ADD', 'Create maintenance sheet')";
+			$query.="VALUES (NULL , 'maintenance', 'p67_maintfiche', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create maintenance sheet')";
 			$sql->Insert($query);
 		  }
 
@@ -390,12 +390,12 @@ class fichemaint_class{
 		$query.="dte_valid='$this->dte_valid',";
 		$query.="traite='$this->traite',";
 		$query.="uid_planif='$this->uid_planif',";
-		$query.="uid_maj=$uid, dte_maj=NOW() ";
+		$query.="uid_maj=$uid, dte_maj='".now()."' ";
 		$query.="WHERE id=$this->id";
 		$sql->Update($query);
 
 		$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'maintenance', 'p67_maintfiche', '".$this->id."', '$uid', NOW(), 'MOD', 'Modify maintenance sheet')";
+		$query.="VALUES (NULL , 'maintenance', 'p67_maintfiche', '".$this->id."', '$uid', '".now()."', 'MOD', 'Modify maintenance sheet')";
 		$sql->Insert($query);
 
 		return "";
@@ -404,11 +404,11 @@ class fichemaint_class{
 	function Delete()
 	{ global $uid;
 		$sql=$this->sql;
-		$query="UPDATE p67_maintfiche SET actif='non', uid_maj=$uid, dte_maj=NOW() WHERE id='$this->id'";
+		$query="UPDATE p67_maintfiche SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE id='$this->id'";
 		$sql->Update($query);
 
 		$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'maintenance', 'p67_maintfiche', '".$this->id."', '$uid', NOW(), 'DEL', 'Delete maintenance sheet')";
+		$query.="VALUES (NULL , 'maintenance', 'p67_maintfiche', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete maintenance sheet')";
 		$sql->Insert($query);
 	}
 
