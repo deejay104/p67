@@ -279,7 +279,7 @@ class user_class{
 
 	# Show user informations
 	function aff($key,$typeaff="html",$formname="form_info")
-	  { global $MyOpt,$tabTypeNom;
+	{ global $MyOpt,$tabTypeNom;
 		$txt=$this->data[$key];
 
 
@@ -610,6 +610,10 @@ class user_class{
 			  	  { $ret="<s>".$ret."</s>"; }
 				else if ( ($key=="nom") && ($this->data["actif"]=="off"))
 			  	  { $ret="<s>".$ret."</s>"; }
+				else if ( ($key=="prenom") && ($this->data["actif"]=="non"))
+			  	  { $ret="<s style='color:#ff0000;'>".$ret."</s>"; }
+				else if ( ($key=="nom") && ($this->data["actif"]=="non"))
+			  	  { $ret="<s style='color:#ff0000;'>".$ret."</s>"; }
 				else if ( ($key=="nom")  && ($this->data["password"]=="") && (GetDroit("ModifUserPassword")))
 			  	  { $ret=$ret." (*)"; }
 			  	  
@@ -629,142 +633,150 @@ class user_class{
 			  			  	{ $ret.=$avion["avion"]->immatriculation."<br />"; }
 			  	  	}
 						if ($ret=="") { $ret="Aucun"; }
-				  }
+				}
 				else if ($key=="pere")
 			  	{
-			  	  $t=$this->data[$key];
-						$ret=$t->fullname;
-				  }
+					$t=$this->data[$key];
+					$ret=$t->fullname;
+				}
 				else if ($key=="mere")
 			  	{
 			  	 	$t=$this->data[$key];
-						$ret=$t->fullname;
-				  }
+					$ret=$t->fullname;
+				}
 				else if (($key=="allergie_asthme") || ($key=="allergie_medicament") || ($key=="allergie_alimentaire"))
 			  	{
 			  	 	$t=$this->data[$key];	  	  	
-						$ret=(($t=="N") ? "Non" : "Oui" );
-				  }
+					$ret=(($t=="N") ? "Non" : "Oui" );
+				}
 				else if ($key=="aut_prelevement")
 			  	{
-			  	  $t=$this->data[$key];	  	  	
-						$ret=(($t=="N") ? "Non" : "Oui" );
-				  }
+					$t=$this->data[$key];	  	  	
+					$ret=(($t=="N") ? "Non" : "Oui" );
+				}
 		  }
 		else
-		  {
-				if ($key=="commentaire")
-			  	  { $ret=nl2br(htmlentities($ret,ENT_HTML5,"ISO-8859-1"));  }
-				else if ($key=="mail")
-			  	  { $ret="<A href=\"mailto:".strtolower($ret)."\">".strtolower($ret)."</A>"; }
-				else if (($key=="dte_licence") || ($key=="dte_medicale"))
-			  	  {
-			  	  	$ret=sql2date($ret);
-			  	  	if ($txt!="0000-00-00")
-			  	  	  {
-				  	  	if (date_diff_txt($txt,date("Y-m-d"))>0)
-				  	  	  { $ret="<B><font color=\"red\">$ret</font></B>"; }
-				  	  	else if (date_diff_txt($txt,date("Y-m-d"))>-30*24*3600)
-				  	  	  { $ret="<B><font color=\"orange\">$ret</font></B>"; }
-					  }
-					else
-					  {	$ret="-"; }
-			  	  }
-				else if (($key=="dte_naissance") || ($key=="dte_inscription"))
-			  	  {
-			  	  	$ret=sql2date($ret);
-						}
-				else if ($key=="lache")
-			  	  {
-					$ret="";
-			  	  	foreach($this->data[$key] as $avion)
-			  	  	  {
-			  	  		if ($avion["idlache"]>0)
-			  	  		  { $ret.=$avion["avion"]->immatriculation." <font size=1><i>(par ".$avion["usr"]->prenom." ".$avion["usr"]->nom.")</i></font><br />"; }
-			  	  	  }
-					if ($ret=="") { $ret="Aucun"; }
+		{
+			if ($key=="commentaire")
+			{ $ret=nl2br(htmlentities($ret,ENT_HTML5,"ISO-8859-1"));  }
+			else if ($key=="mail")
+			{ $ret="<A href=\"mailto:".strtolower($ret)."\">".strtolower($ret)."</A>"; }
+			else if (($key=="dte_licence") || ($key=="dte_medicale"))
+			{
+				$ret=sql2date($ret);
+				if ($txt!="0000-00-00")
+				  {
+					if (date_diff_txt($txt,date("Y-m-d"))>0)
+					  { $ret="<B><font color=\"red\">$ret</font></B>"; }
+					else if (date_diff_txt($txt,date("Y-m-d"))>-30*24*3600)
+					  { $ret="<B><font color=\"orange\">$ret</font></B>"; }
 				  }
-				else if ($key=="enfant")
-			  	  {
-					$ret="";
-					if (is_array($this->data[$key]))
+				else
+				  {	$ret="-"; }
+			}
+			else if (($key=="dte_naissance") || ($key=="dte_inscription"))
+			{
+				$ret=sql2date($ret);
+			}
+			else if ($key=="lache")
+			{
+				$ret="";
+				foreach($this->data[$key] as $avion)
+				{
+					if ($avion["idlache"]>0)
+					{ $ret.=$avion["avion"]->immatriculation." <font size=1><i>(par ".$avion["usr"]->prenom." ".$avion["usr"]->nom.")</i></font><br />"; }
+				}
+				if ($ret=="") { $ret="Aucun"; }
+			}
+			else if ($key=="enfant")
+			{
+				$ret="";
+				if (is_array($this->data[$key]))
+				  {
+					foreach($this->data[$key] as $enfant)
 					  {
-				  	  	foreach($this->data[$key] as $enfant)
-				  	  	  {
-				  	  		if ($enfant["id"]>0)
-				  	  		  { $ret.="<a href=\"membres.php?rub=detail&id=".$enfant["id"]."\">".$enfant["usr"]->fullname."</a><br />"; }
-				  	  	  }
-	 				  }
-					if ($ret=="") { $ret="Aucun"; }
-				  }			
-				else if ($key=="idcpt")
-			  	  {
-			  	  	if ($txt==$this->uid)
-			  	  	  {
-			  	  	  	$ret=$this->fullname;
-			  	  	  }
-			  	  	else if (is_array($this->data["enfant"]))
-			  	  	  {
-				  	  	foreach($this->data["enfant"] as $enfant)
-				  	  	  {
-				  	  		if ($enfant["id"]==$txt)
-				  	  		  { $ret="<a href=\"membres.php?rub=detail&id=".$enfant["id"]."\">".$enfant["usr"]->fullname."</a>"; }
-				  	  	  }
-			  	  	  }
+						if ($enfant["id"]>0)
+						  { $ret.="<a href=\"membres.php?rub=detail&id=".$enfant["id"]."\">".$enfant["usr"]->fullname."</a><br />"; }
+					  }
 				  }
-				else if ($key=="pere")
-			  	  {
-			  	  	$t=$this->data[$key];
-					$ret="<a href=\"membres.php?rub=detail&id=".$t->uid."\">".$t->fullname."</a>";
-				  }
-				else if ($key=="mere")
-			  	  {
-			  	  	$t=$this->data[$key];
-					$ret="<a href=\"membres.php?rub=detail&id=".$t->uid."\">".$t->fullname."</a>";
-				  }
-				else if ( ($key=="fullname") && ($this->data["actif"]=="off"))
-			  	  {
-					$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s>".$ret."</s></a>";
-				  }
-				else if ($key=="fullname")
-			  	  {
-					$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\">".$ret."</a>";
-				  }
-				else if ( ($key=="nom") && ($this->data["actif"]=="off"))
-			  	  {
-					$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s>".$ret."</s></a>";
-				  }
-				else if ( ($key=="nom") && ($this->data["password"]=="") && (GetDroit("ModifUserPassword")))
-			  	  {
-					$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><i>".$ret." (*)</i></a>";
-				  }
-				else if ($key=="nom")
-			  	  {
-					$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\">".$ret."</a>";
-				  }
-				else if ( ($key=="prenom") && ($this->data["actif"]=="off"))
-			  	  {
-					$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s>".$ret."</s></a>";
-				  }
-				else if ($key=="prenom")
-			  	  {
-					$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\">".$ret."</a>";
-				  }
-				else if ($key=="droits")
-			  	{
-		  		 	$sql=$this->sql;
-		  	  	$query="SELECT droits.groupe, groupe.description FROM ".$this->tbl."_droits AS droits LEFT JOIN ".$this->tbl."_groupe AS groupe ON droits.groupe=groupe.groupe WHERE uid='".$this->uid."'";
-						$sql->Query($query);
-			
-						$ret="";
-						for($i=0; $i<$sql->rows; $i++)
-						  { 
-								$sql->GetRow($i);
-								$ret.=(($sql->data["description"]!="") ? $sql->data["description"]." (".$sql->data["groupe"].")" : $sql->data["groupe"])."<br/>";
-						  }
-				  }
+				if ($ret=="") { $ret="Aucun"; }
+			}			
+			else if ($key=="idcpt")
+			{
+				if ($txt==$this->uid)
+				{
+					$ret=$this->fullname;
+				}
+				else if (is_array($this->data["enfant"]))
+				{
+					foreach($this->data["enfant"] as $enfant)
+					{
+						if ($enfant["id"]==$txt)
+						{ $ret="<a href=\"membres.php?rub=detail&id=".$enfant["id"]."\">".$enfant["usr"]->fullname."</a>"; }
+					}
+				}
+			}
+			else if ($key=="pere")
+			{
+				$t=$this->data[$key];
+				$ret="<a href=\"membres.php?rub=detail&id=".$t->uid."\">".$t->fullname."</a>";
+			}
+			else if ($key=="mere")
+			{
+				$t=$this->data[$key];
+				$ret="<a href=\"membres.php?rub=detail&id=".$t->uid."\">".$t->fullname."</a>";
+			}
+			else if ( ($key=="fullname") && ($this->data["actif"]=="off"))
+			{
+				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s>".$ret."</s></a>";
+			}
+			else if ($key=="fullname")
+			{
+				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\">".$ret."</a>";
+			}
+			else if ( ($key=="nom") && ($this->data["actif"]=="off"))
+			{
+				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s>".$ret."</s></a>";
+			}
+			else if ( ($key=="nom") && ($this->data["password"]=="") && (GetDroit("ModifUserPassword")))
+			{
+				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><i>".$ret." (*)</i></a>";
+			}
+			else if ( ($key=="nom") && ($this->data["actif"]=="non"))
+			{
+				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s style='color:#ff0000;'>".$ret."</s></a>";
+			}
+			else if ($key=="nom")
+			{
+				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\">".$ret."</a>";
+			}
+			else if ( ($key=="prenom") && ($this->data["actif"]=="off"))
+			{
+				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s>".$ret."</s></a>";
+			}
+			else if ( ($key=="prenom") && ($this->data["actif"]=="non"))
+			{
+				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s style='color:#ff0000;'>".$ret."</s></a>";
+			}
+			else if ($key=="prenom")
+			{
+				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\">".$ret."</a>";
+			}
+			else if ($key=="droits")
+			{
+				$sql=$this->sql;
+				$query="SELECT droits.groupe, groupe.description FROM ".$this->tbl."_droits AS droits LEFT JOIN ".$this->tbl."_groupe AS groupe ON droits.groupe=groupe.groupe WHERE uid='".$this->uid."'";
+				$sql->Query($query);
+		
+				$ret="";
+				for($i=0; $i<$sql->rows; $i++)
+				{ 
+					$sql->GetRow($i);
+					$ret.=(($sql->data["description"]!="") ? $sql->data["description"]." (".$sql->data["groupe"].")" : $sql->data["groupe"])."<br/>";
+				}
+			}
 //				$ret="<span  id='".$key."'>".$ret."</span>";
-		  }
+		}
 	
 		return $ret;
 	}
@@ -1309,7 +1321,19 @@ function ListActiveUsers($sql,$order="",$tabtype="",$virtuel="non")
 	if ($order=="std")
 	  { $order=(($MyOpt["globalTrie"]=="nom") ? "nom,prenom" : "prenom,nom"); }
 
-	$query="SELECT id FROM ".$MyOpt["tbl"]."_utilisateurs WHERE (actif='oui' ".((GetDroit("SupprimeUser")) ? "OR actif='off'" : "" ).") ";
+	$query="SELECT id FROM ".$MyOpt["tbl"]."_utilisateurs WHERE (";
+	$query.="actif='oui'";
+
+	if ((GetDroit("ListeUserDesactive")) && ($MyOpt["showDesactive"]=="on"))
+	{
+		$query.=" OR actif='off'";
+	}
+	if ((GetDroit("ListeUserSupprime")) && ($MyOpt["showSupprime"]=="on"))
+	{
+		$query.="OR actif='non'";
+	}
+
+	$query.=") ";
 	$query.=(($virtuel!="") ? " AND virtuel='$virtuel'" : "").(($reqOr!="") ? " AND (".$reqOr.")" : "").(($reqAnd!="") ? $reqAnd : "").(($order!="") ? " ORDER BY $order" : "");
 	$sql->Query($query);
 

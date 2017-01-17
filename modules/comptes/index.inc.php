@@ -43,13 +43,13 @@
 			$lst=ListActiveUsers($sql,"std",$MyOpt["restrict"]["comptes"],"");
 		
 			foreach($lst as $i=>$tmpuid)
-			  {
+			{
 			  	$resusr=new user_class($tmpuid,$sql);
 	
-					$tmpl_x->assign("id_compte", $resusr->data["id"]);
-					$tmpl_x->assign("chk_compte", ($resusr->data["id"]==$id) ? "selected" : "") ;
-					$tmpl_x->assign("nom_compte", $resusr->fullname);
-					$tmpl_x->parse("corps.compte.lst_compte");
+				$tmpl_x->assign("id_compte", $resusr->data["id"]);
+				$tmpl_x->assign("chk_compte", ($resusr->data["id"]==$id) ? "selected" : "") ;
+				$tmpl_x->assign("nom_compte", $resusr->fullname);
+				$tmpl_x->parse("corps.compte.lst_compte");
 			}
 			$tmpl_x->parse("infos.liste_compte");
 			$tmpl_x->parse("corps.compte");

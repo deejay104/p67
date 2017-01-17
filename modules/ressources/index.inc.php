@@ -65,7 +65,7 @@
 //		$query="SELECT SUM(tpsestime) AS tot FROM p67_calendrier WHERE dte_deb>='".$res["first"]["dte_fin"]."' AND dte_fin<=''".now()."'' AND tpsreel=0 AND actif='oui' AND uid_avion='".$resa["resa"]->uid_ressource."'";
 //		$resestim=$sql->QueryRow($query);
 	
-		$query="SELECT SUM(tpsreel) AS tot FROM p67_calendrier WHERE dte_deb>='".$res["first"]["dte_fin"]."' AND dte_fin<=''".now()."'' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$usr->id."'";
+		$query="SELECT SUM(tpsreel) AS tot FROM p67_calendrier WHERE dte_deb>='".$res["first"]["dte_fin"]."' AND dte_fin<='".now()."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$usr->id."'";
 		$resreel=$sql->QueryRow($query);
 	
 		$t=$respot["tot"]+$resestim["tot"]+$resreel["tot"];

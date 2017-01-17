@@ -129,19 +129,25 @@ $MyOptTmpl["typeMail"]["parent"]="";
 $MyOptTmpl["typeMail"]["enfant"]="";
 $MyOptTmpl["typeMail"]["employe"]="";
 
+// Active la visualisation des membres supprimés
+$MyOptTmpl["showDesactive"]="";
+$MyOptHelp["showDesactive"]="on : Affiche les membres supprimés";
+
+$MyOptTmpl["showSupprime"]="";
+$MyOptHelp["showSupprime"]="on : Affiche les membres supprimés";
 
 // Modules
 // on : Affiché et actif
 $MyOptTmpl["module"]["aviation"]="on";
-$MyOptHelp["module"]["aviation"]="Si on, affiche et active le module aviation";
+$MyOptHelp["module"]["aviation"]="on : Affiche et active le module aviation";
 $MyOptTmpl["module"]["compta"]="on";
-$MyOptHelp["module"]["compta"]="Si on, affiche et active le module comptabilité";
+$MyOptHelp["module"]["compta"]="on : Affiche et active le module comptabilité";
 $MyOptTmpl["module"]["creche"]="";
-$MyOptHelp["module"]["creche"]="Si on, affiche et active le module crèche";
+$MyOptHelp["module"]["creche"]="on : Affiche et active le module crèche";
 $MyOptTmpl["module"]["facture"]="";
-$MyOptHelp["module"]["facture"]="Si on, affiche et active le module facture";
+$MyOptHelp["module"]["facture"]="on : Affiche et active le module facture";
 $MyOptTmpl["module"]["abonnement"]="";
-$MyOptHelp["module"]["abonnement"]="Si on, affiche et active le module abonnement";
+$MyOptHelp["module"]["abonnement"]="on : Affiche et active le module abonnement";
 
 // Dénini les droits d'accès aux rubriques
 // [vide] : Visible par tous

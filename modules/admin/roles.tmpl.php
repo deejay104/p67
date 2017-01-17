@@ -93,8 +93,12 @@ $tabRoles["EnregistreFacture"]="Droit d'enregistrer une facture";
 $tabRoles["EnregistreMaintenance"]="Enregistre une maintenance";
 
 
-$tabRoles["ListeVols"]="Autorise l'affiche des vols des membres";
-$tabRoles["ListeComptes"]="Autorise l'affiche de la liste des membres pour les pages de comptes";
+$tabRoles["ListeVols"]="Autorise l'affichage des vols des membres";
+$tabRoles["ListeComptes"]="Autorise l'affichage de la liste des membres pour les pages de comptes";
+$tabRoles["ListeUserSupprime"]="Autorise l'affichage des membres supprimés";
+$tabRoles["ListeUserDesactive"]="Autorise l'affichage des membres désactivés";
+
+
 $tabRoles["ValideFichesMaintenance"]="Valider une fiche de maintenance";
 $tabRoles["RefuserFicheMaintenance"]="Refuser une fiche de maintenance";
 $tabRoles["ListeFactures"]="Lister l'ensemble des factures";
