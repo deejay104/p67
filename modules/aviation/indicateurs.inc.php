@@ -150,7 +150,6 @@
 	$query.="FROM p67_calendrier ";
 	$query.="WHERE p67_calendrier.dte_deb>='$dte' AND p67_calendrier.dte_deb<'$dte2' AND p67_calendrier.prix<>0 ";
 	$query.="GROUP BY p67_calendrier.uid_avion, date_format(p67_calendrier.dte_deb,'%Y%m') ORDER BY dte_deb";
-
 	$sql->Query($query);
 
 	$tabval=array();
@@ -192,35 +191,32 @@
 
   	$x=0;
 
-$cs=array();
+	$cs=array();
 	for($i=1;$i<=12;$i++)
-	  {
+	{
 		$tmpl_x->assign("aff_leftm", $x);
 		$tmpl_x->assign("aff_widthm", count($tress)*25);
 		
 		foreach ($tress as $id=>$k)
-		  {
+		{
 			if ($max>0)
 			  { $hh=floor($tabaff[$id][$i]*$h/$max); }
 			else
 			  { $hh=1; }
-/*
-			if ($hh<16)
-			  { $hh=16; }
-*/
+
 			$tabprev[$id][$i]=(is_numeric($tabprev[$id][$i])) ? $tabprev[$id][$i] : "0";
 			$pp=$tabprev[$id][$i]*60*$h/$max;
 
-			$tot=floor($tabaff[$id][$i]/60);
+			$tot=($tabaff[$id][$i]/60);
 
-$chart[$id]["val"]=$chart[$id]["val"].$cs[$id]."{y:".$tot.", color:'#".$tress[$id]["couleur"]."'}";
-$chart[$id]["prev"]=$chart[$id]["prev"].$cs[$id]."{y:".$tabprev[$id][$i].", color:'#".(($tot<$tabprev[$id][$i]) ? "ff0000" : "00ff00" )."'}";
-$chart[$id]["cumul"]=$chart[$id]["cumul"]+$tot;
-$chart[$id]["cumulp"]=$chart[$id]["cumulp"]+$tabprev[$id][$i];
+			$chart[$id]["val"]=$chart[$id]["val"].$cs[$id]."{y:".$tot.", color:'#".$tress[$id]["couleur"]."'}";
+			$chart[$id]["prev"]=$chart[$id]["prev"].$cs[$id]."{y:".$tabprev[$id][$i].", color:'#".(($tot<$tabprev[$id][$i]) ? "ff0000" : "00ff00" )."'}";
+			$chart[$id]["cumul"]=$chart[$id]["cumul"]+$tot;
+			$chart[$id]["cumulp"]=$chart[$id]["cumulp"]+$tabprev[$id][$i];
 
-$chart[$id]["cumulval"]=$chart[$id]["cumulval"].$cs[$id]."{y:".$chart[$id]["cumul"].", color:'#".$tress[$id]["couleur"]."'}";
-$chart[$id]["cumulpval"]=$chart[$id]["cumulpval"].$cs[$id]."{y:".$chart[$id]["cumulp"].", color:'#".(($chart[$id]["cumul"]<$chart[$id]["cumulp"]) ? "ff0000" : "00ff00" )."'}";
-$cs[$id]=", ";
+			$chart[$id]["cumulval"]=$chart[$id]["cumulval"].$cs[$id]."{y:".$chart[$id]["cumul"].", color:'#".$tress[$id]["couleur"]."'}";
+			$chart[$id]["cumulpval"]=$chart[$id]["cumulpval"].$cs[$id]."{y:".$chart[$id]["cumulp"].", color:'#".(($chart[$id]["cumul"]<$chart[$id]["cumulp"]) ? "ff0000" : "00ff00" )."'}";
+			$cs[$id]=", ";
 
 			$tmpl_x->assign("aff_left", $x);
 			$tmpl_x->assign("h_width", 20);
@@ -244,7 +240,7 @@ $cs[$id]=", ";
 
 			$tmpl_x->parse("corps.tableau.lst_tableau.lst_ressource");
 			$x=$x+25;
-		  }
+		}
 
 		$x=$x+5;
 		$tmpl_x->assign("nbress", count($tress)*2);
@@ -252,7 +248,7 @@ $cs[$id]=", ";
 
 		$tmpl_x->parse("corps.tableau.lst_tableau");
 		$tmpl_x->parse("corps.tableau.lst_mois");
-	  }
+	}
 	
 	$tmpl_x->assign("titre","Total des heures de vols par avion et par mois");
 	$tmpl_x->parse("corps.tableau");
