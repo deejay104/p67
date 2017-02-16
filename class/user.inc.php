@@ -143,8 +143,8 @@ class user_class{
 			$this->idcpt=$res["idcpt"];
 	
 			if ($setdata)
-		  { 
-		  	$this->data=$res;
+			{ 
+				$this->data=$res;
 
 				// Charge les droits
 				$query = "SELECT groupe FROM ".$this->tbl."_droits WHERE uid='$uid'";
@@ -155,8 +155,8 @@ class user_class{
 				{ 
 					$sql->GetRow($i);
 				 	$this->groupe[$sql->data["groupe"]]=true;
-		  		$this->data["droits"].=$s.$sql->data["groupe"];
-		  		$s=",";
+					$this->data["droits"].=$s.$sql->data["groupe"];
+					$s=",";
 				}
 			}
 
@@ -606,33 +606,33 @@ class user_class{
 				if ($key=="commentaire")
 			  	  { $ret=nl2br(htmlentities($ret)); }
 	
-				else if ( ($key=="prenom") && ($this->data["actif"]=="off"))
+/*				else if ( ($key=="prenom") && ($this->data["actif"]=="off"))
 			  	  { $ret="<s>".$ret."</s>"; }
 				else if ( ($key=="nom") && ($this->data["actif"]=="off"))
 			  	  { $ret="<s>".$ret."</s>"; }
-				else if ( ($key=="prenom") && ($this->data["actif"]=="non"))
+			  else if ( ($key=="prenom") && ($this->data["actif"]=="non"))
 			  	  { $ret="<s style='color:#ff0000;'>".$ret."</s>"; }
 				else if ( ($key=="nom") && ($this->data["actif"]=="non"))
 			  	  { $ret="<s style='color:#ff0000;'>".$ret."</s>"; }
 				else if ( ($key=="nom")  && ($this->data["password"]=="") && (GetDroit("ModifUserPassword")))
 			  	  { $ret=$ret." (*)"; }
-			  	  
+*/			  	  
 				else if ($key=="mail")
 			  	  { $ret=strtolower($ret); }
 				else if (($key=="dte_naissance") || ($key=="dte_licence") || ($key=="dte_medicale") || ($key=="dte_inscription"))
 			  	  {
 			  	  	if ($txt=="0000-00-00")
-					 			{ $ret="-"; }
+			 			{ $ret="-"; }
 			  	  }
 				else if ($key=="lache")
 			  	{
-						$ret="";
+					$ret="";
 			  	 	foreach($this->data[$key] as $avion)
-			  	 	  {
+			  	 	{
 			  	  		if ($avion["idlache"]>0)
 			  			  	{ $ret.=$avion["avion"]->immatriculation."<br />"; }
 			  	  	}
-						if ($ret=="") { $ret="Aucun"; }
+					if ($ret=="") { $ret="Aucun"; }
 				}
 				else if ($key=="pere")
 			  	{
@@ -726,15 +726,19 @@ class user_class{
 				$t=$this->data[$key];
 				$ret="<a href=\"membres.php?rub=detail&id=".$t->uid."\">".$t->fullname."</a>";
 			}
-			else if ( ($key=="fullname") && ($this->data["actif"]=="off"))
+			else if ( ($key=="fullname") && ($this->actif=="off"))
 			{
 				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s>".$ret."</s></a>";
+			}
+			else if ( ($key=="fullname") && ($this->actif=="non"))
+			{
+				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s style='color:#ff0000;'>".$ret."</s></a>";
 			}
 			else if ($key=="fullname")
 			{
 				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\">".$ret."</a>";
 			}
-			else if ( ($key=="nom") && ($this->data["actif"]=="off"))
+			else if ( ($key=="nom") && ($this->actif=="off"))
 			{
 				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s>".$ret."</s></a>";
 			}
@@ -742,7 +746,7 @@ class user_class{
 			{
 				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><i>".$ret." (*)</i></a>";
 			}
-			else if ( ($key=="nom") && ($this->data["actif"]=="non"))
+			else if ( ($key=="nom") && ($this->actif=="non"))
 			{
 				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s style='color:#ff0000;'>".$ret."</s></a>";
 			}
@@ -750,11 +754,11 @@ class user_class{
 			{
 				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\">".$ret."</a>";
 			}
-			else if ( ($key=="prenom") && ($this->data["actif"]=="off"))
+			else if ( ($key=="prenom") && ($this->actif=="off"))
 			{
 				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s>".$ret."</s></a>";
 			}
-			else if ( ($key=="prenom") && ($this->data["actif"]=="non"))
+			else if ( ($key=="prenom") && ($this->actif=="non"))
 			{
 				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s style='color:#ff0000;'>".$ret."</s></a>";
 			}

@@ -112,7 +112,7 @@
 	// Entete du tableau d'affichage
 	$tabTitre=array();
 	$tabTitre["date"]["aff"]="Date";
-	$tabTitre["date"]["width"]=85;
+	$tabTitre["date"]["width"]=100;
 	if ($theme!="phone")
 	  {
 		$tabTitre["mvt"]["aff"]="Mouvement";
