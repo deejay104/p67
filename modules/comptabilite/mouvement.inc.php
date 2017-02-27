@@ -1,15 +1,12 @@
 <?
 // ---------------------------------------------------------------------------------------------
 //   Saisie des mouvements
-//     ($Author: miniroot $)
-//     ($Date: 2013-01-21 23:01:53 +0100 (lun., 21 janv. 2013) $)
-//     ($Revision: 418 $)
 // ---------------------------------------------------------------------------------------------
 //   Variables  : 
 // ---------------------------------------------------------------------------------------------
 /*
     SoceIt v2.2
-    Copyright (C) 2012 Matthieu Isorez
+    Copyright (C) 2017 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -241,8 +238,12 @@
 			  }
 
 			$dte=sql2date(current($form_date));
+
+			if ($_REQUEST["form_dte"]!='')
+			  { $dte=$_REQUEST["form_dte"]; }
 			if ($dte=="")
 			  { $dte=date("d/m/Y"); }
+	
 			$tmpl_x->assign("date_mouvement", $dte);
 			$tmpl_x->assign("form_montant", ((current($form_montant)<>0) ? -current($form_montant) : $montant));
 			$tmpl_x->assign("form_commentaire", current($form_commentaire));
