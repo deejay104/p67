@@ -81,7 +81,7 @@
 
 // ---- Liste les comptes actifs
 
-		$query="SELECT usr.id, usr.nom, usr.prenom, usr.mail, usr.dte_licence, usr.dte_medicale, usr.decouvert, usr.type, SUM(cpt.montant) AS total FROM p67_utilisateurs AS usr, p67_compte AS cpt WHERE usr.id = cpt.uid AND usr.actif='oui' AND usr.virtuel='non' GROUP BY usr.id";
+		$query="SELECT usr.id, usr.nom, usr.prenom, usr.mail, usr.dte_licence, usr.dte_medicale, usr.decouvert, usr.type, SUM(cpt.montant) AS total FROM p67_utilisateurs AS usr, p67_compte AS cpt WHERE usr.id = cpt.uid AND usr.actif<>'non' AND usr.virtuel='non' GROUP BY usr.id";
 		$sql->Query($query);
 		for($i=0; $i<$sql->rows; $i++)
 		  { 
