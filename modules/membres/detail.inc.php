@@ -129,6 +129,11 @@
 		$usr->Desactive();
 	  }
 
+  	if (($fonc=="active") && ($id>0) && (GetDroit("DesactiveUser")))
+	  {
+		$usr->Active();
+	  }
+
 // ---- Modifie les infos
 	if (($fonc=="modifier") && ((GetMyId($id)) || (GetDroit("ModifUser"))))
 	  {
@@ -186,6 +191,9 @@
 
 	if ((GetDroit("DesactiveUser")) && ($usr->actif=="oui"))
 	  { $tmpl_x->parse("infos.desactive"); }
+
+  	if ((GetDroit("DesactiveUser")) && ($usr->actif=="off"))
+	  { $tmpl_x->parse("infos.active"); }
 
 	if ((GetDroit("SupprimeUser")) && ($usr->actif=="off"))
 	  { $tmpl_x->parse("infos.suppression"); }

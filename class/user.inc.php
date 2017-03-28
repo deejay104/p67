@@ -1273,6 +1273,19 @@ class user_class{
 		$sql->Insert($query);
 	}
 
+	function Active(){
+		global $gl_uid;
+		$sql=$this->sql;
+		$this->actif="oui";
+
+		$query="UPDATE ".$this->tbl."_utilisateurs SET actif='oui', uid_maj=$gl_uid, dte_maj='".now()."' WHERE id=$this->uid";
+		$sql->Update($query);
+
+		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
+		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$gl_uid', '".now()."', 'DEL', 'Enable user')";
+		$sql->Insert($query);
+	}
+	
 	function Delete(){
 		global $uid;
 		$sql=$this->sql;
