@@ -792,6 +792,14 @@
 			}
 		}
 
+// ----
+	$nver=463;
+	if ($ver<$nver)
+	{
+	  	$sql=array();
+		$sql[]= "ALTER TABLE `".$MyOpt["tbl"]."_compte` ADD `mid` INT UNSIGNED NOT NULL AFTER `id`, ADD INDEX (`mid`);";
+		UpdateDB($sql,$nver);
+	}
 
 // *********************************************************************************************************
 

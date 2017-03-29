@@ -903,22 +903,22 @@ function GenereVariables($tab)
 		$fd=fopen($conffile,"w");
 		fwrite($fd,"<?\n");
 		foreach($tab as $nom=>$d)
-	  {
+		{
 			if (is_array($d))
 			{
-					foreach($d as $var=>$dd)
+				foreach($d as $var=>$dd)
+				{
+					if ($var=="valeur")
 					{
-						if ($var=="valeur")
-						{
-							fwrite($fd,"\$MyOpt[\"".$nom."\"]=\"".$dd."\";\n");
-						}
-						else
-						{
-							fwrite($fd,"\$MyOpt[\"".$nom."\"][\"".$var."\"]=\"".$dd."\";\n");
-						}
+						fwrite($fd,"\$MyOpt[\"".$nom."\"]=\"".$dd."\";\n");
 					}
+					else
+					{
+						fwrite($fd,"\$MyOpt[\"".$nom."\"][\"".$var."\"]=\"".$dd."\";\n");
+					}
+				}
 			}
-	  }
+		}
 		
 		fwrite($fd,"?>\n");
 		fclose($fd);
@@ -931,6 +931,28 @@ function GenereVariables($tab)
 	return $ret;
 }
 
+function UpdateVariables($tab)
+{
+	$MyOpt=array();
+	foreach($tab as $nom=>$d)
+	{
+		if (is_array($d))
+		{
+			foreach($d as $var=>$dd)
+			{
+				if ($var=="valeur")
+				{
+					$MyOpt[$nom]=$dd;
+				}
+				else
+				{
+					$MyOpt[$nom][$var]=$dd;
+				}
+			}
+		}
+	}
+	return $MyOpt;
+}
 
 function now()
 {

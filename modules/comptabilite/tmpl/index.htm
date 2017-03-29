@@ -38,6 +38,23 @@ function Recharge()
 	document.location='compta.php?form_mvt='+form_mouvement+'&form_tiers='+form_tiers+'&form_dte='+form_date;
 }
 
+function AffVentilation()
+{
+	var form_ventilation = document.getElementById("form_ventilation").value;
+	var form_mouvement = document.getElementById("form_mouvement").value;
+	
+	if (form_ventilation == 'non')
+	{
+		document.getElementById("aff_ventilation").style.visibility="hidden";
+		document.getElementById("aff_ventilation").style.height="0";
+	}
+	else
+	{
+		document.getElementById("aff_ventilation").style.visibility="visible";
+		document.getElementById("aff_ventilation").style.height="";
+		document.getElementById("aff_ventilation").value=form_mouvement;
+	}
+}
 </script>
 
 <FORM name="mouvement" method="post" action="compta.php" enctype="multipart/form-data">
@@ -48,7 +65,7 @@ function Recharge()
 
 
 	<!-- BEGIN: msg_enregistre -->
-	<div class="msgok">{msg_confirmation}</div>
+	<div class="{msg_confirmation_class}">{msg_confirmation}</div>
 	<!-- END: msg_enregistre -->
 
 
@@ -66,31 +83,21 @@ function Recharge()
 	  <TR style="border-bottom:1px solid black;">
 			<TD>
 				&nbsp;
-				<INPUT type="hidden" name="form_id[{enr_id}a]" value="{enr_idcal}">
-				<INPUT type="hidden" name="form_uid[{enr_id}a]" value="{enr_uid_deb}">
-				<INPUT type="hidden" name="form_uidt[{enr_id}a]" value="{enr_uid_cre}">
-				<INPUT type="hidden" name="form_montant[{enr_id}a]" value="{enr_montant_deb}">
-				<INPUT type="hidden" name="form_commentaire[{enr_id}a]" value="{enr_commentaire}">
-				<INPUT type="hidden" name="form_mouvement[{enr_id}a]" value="{enr_mouvement}">
-				<INPUT type="hidden" name="form_date[{enr_id}a]" value="{enr_date}">
-				<INPUT type="hidden" name="form_compte[{enr_id}a]" value="{enr_compte}">
-				<INPUT type="hidden" name="form_facture[{enr_id}a]" value="{enr_facture}">
-	
-				<INPUT type="hidden" name="form_id[{enr_id}b]" value="">
-				<INPUT type="hidden" name="form_uid[{enr_id}b]" value="{enr_uid_cre}">
-				<INPUT type="hidden" name="form_uidt[{enr_id}b]" value="{enr_uid_deb}">
-				<INPUT type="hidden" name="form_montant[{enr_id}b]" value="{enr_montant_cre}">
-				<INPUT type="hidden" name="form_commentaire[{enr_id}b]" value="{enr_commentaire}">
-				<INPUT type="hidden" name="form_mouvement[{enr_id}b]" value="{enr_mouvement}">
-				<INPUT type="hidden" name="form_date[{enr_id}b]" value="{enr_date}">
-				<INPUT type="hidden" name="form_compte[{enr_id}b]" value="{enr_compte}">
-				<INPUT type="hidden" name="form_facture[{enr_id}b]" value="{enr_facture}">
+				<INPUT type="hidden" name="form_id[{enr_id}]" value="{enr_idcal}">
+				<INPUT type="hidden" name="form_uid[{enr_id}]" value="{enr_uid_deb}">
+				<INPUT type="hidden" name="form_uidt[{enr_id}]" value="{enr_uid_cre}">
+				<INPUT type="hidden" name="form_montant[{enr_id}]" value="{enr_montant}">
+				<INPUT type="hidden" name="form_commentaire[{enr_id}]" value="{enr_commentaire}">
+				<INPUT type="hidden" name="form_mouvement[{enr_id}]" value="{enr_mouvement}">
+				<INPUT type="hidden" name="form_date[{enr_id}]" value="{enr_date}">
+				<INPUT type="hidden" name="form_compte[{enr_id}]" value="{enr_compte}">
+				<INPUT type="hidden" name="form_facture[{enr_id}]" value="{enr_facture}">
 			</TD>
 			<TD>{enr_date}</TD>
 			<TD>{enr_mouvement}</TD>
 			<TD>{enr_commentaire}</TD>
-			<TD><p style="border-bottom:1px dashed #aaaaaa; margin:0px;">{enr_tiers_deb}</p><p style="margin:0px;">{enr_tiers_cre}</p></TD>
-			<TD style="border-left:1px solid black; text-align:right;margin:0px;"><p style="border-bottom:1px dashed #aaaaaa; margin:0px;">{enr_affmontant_deb}</p><p style="margin:0px;">{enr_affmontant_cre}</p></TD>
+			<TD>{enr_tiers}</TD>
+			<TD style="border-left:1px solid black; text-align:right;margin:0px;">{enr_affmontant}</TD>
 	  </TR>
 	<!-- END: lst_enregistre -->
 	  <TR>
@@ -102,20 +109,20 @@ function Recharge()
 	<!-- END: enregistre -->
 
 	<!-- BEGIN: aff_mouvement -->
-	<TABLE border="0" cellspacing="0" cellpadding="0" background="">
-	  <TR height=20>
-		<TD width=20>&nbsp;</TD>
-		<TD><B>Date</B></TD>
-		<TD><B>Poste</B></TD>
-		<TD><B>Tiers</B></TD>
-		<TD><B>Montant</B></TD>
-	  </TR>
-
+	<TABLE>
+	  <tr>
+		<td width=20>&nbsp;</td>
+		<td width=120 style="border-top: 1px solid black; padding-top:10px; padding-bottom:10px;"><B>Date</B></td>
+		<td width=400 style="border-top: 1px solid black; padding-top:10px; padding-bottom:10px"><B>Poste</B></td>
+		<td width=250 style="border-top: 1px solid black; padding-top:10px; padding-bottom:10px;"><B>Tiers</B></td>
+		<td width=150 style="border-top: 1px solid black; padding-top:10px; padding-bottom:10px;"><B>Montant</B></TD>
+	  </tr>
+	
 	<!-- BEGIN: lst_aff_mouvement -->
 	  <TR>
-		<TD width=20>&nbsp;</TD>
+		<TD>&nbsp;</TD>
 		<TD>
-			<INPUT type="text" name="form_date" id="form_date" size=10 value="{date_mouvement}">
+			<INPUT type="text" name="form_date" id="form_date" size=8 value="{date_mouvement}">
 		</TD>
 		<TD>
 			<SELECT id="form_mouvement" name="form_mouvement" OnChange="Recharge();" >
@@ -139,24 +146,58 @@ function Recharge()
 	  </TR>
 
 	  <TR>
-		<TD width=20>&nbsp;</TD>
-		<TD>&nbsp;</TD>
+		<TD style="padding-top:20px;">&nbsp;</TD>
+		<TD>Commentaire</TD>
 		<TD colspan=3>
-			<B>Commentaire</B> : <INPUT name="form_commentaire" value="{form_commentaire}" size=80>
+			<INPUT name="form_commentaire" value="{form_commentaire}" size=80>
 		</TD>
 	  </TR>
-	  <TR>
-		<TD width=20>&nbsp;</TD>
-		<TD>&nbsp;</TD>
-		<TD colspan=3>
-			<B>Ne pas saisir en facturation</B> : <input type='checkbox' name='form_facture' value="on" checked> 
-		</TD>
-	  </TR>
-	<!-- END: lst_aff_mouvement -->
 
 	  <TR>
 		<TD width=20>&nbsp;</TD>
-		<TD colspan=4><BR><INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler"></TD>
+		<TD colspan=4>&nbsp;</TD>
+	  </TR>	
+	  <TR>
+		<TD width=20>&nbsp;</TD>
+		<TD colspan=4 style="border-top: 1px solid black; padding-top:10px; padding-bottom:10px; background-color: #dddddd;">
+			Ventilation du mouvement :
+			<SELECT id="form_ventilation" name="form_ventilation"  OnChange="AffVentilation();">
+			<OPTION value="non">Non</OPTION>
+			<OPTION value="debiteur">Débiteur</OPTION>
+			<OPTION value="crediteur">Créditeur</OPTION>
+	        </SELECT>
+		</TD>
+
+	  </TR>
+	  <TR>
+		<TD width=20>&nbsp;</TD>
+		<TD>&nbsp;</TD>
+		<TD colspan=3 style="padding-bottom:10px;">
+			<div id="aff_ventilation" style="visibility: hidden; height:0px;">
+				<!-- BEGIN: lst_ventilation -->
+				<div>
+				<SELECT id="form_mouvement_ventil[{ventilid}]" name="form_mouvement_ventil[{ventilid}]" >
+				<!-- BEGIN: lst_mouvement -->
+				<OPTION value="{id_mouvement}" {chk_mouvement}>{nom_mouvement}</OPTION>
+				<!-- END: lst_mouvement -->
+				</SELECT>
+				<INPUT name="form_mvtmontant_ventil[{ventilid}]" value="0" size=10>
+				</div>
+				<!-- END: lst_ventilation -->
+			</div>
+		</TD>
+	  </TR>
+	  <TR>
+		<TD width=20>&nbsp;</TD>
+		<TD colspan=4  style="border-top: 1px solid black; padding-top:10px; padding-bottom:10px;">
+			Saisir en Facturation : <input type='checkbox' name='form_facture' value="on"> 
+		</TD>
+	  </TR> 
+   <!-- END: lst_aff_mouvement -->
+	
+	  <TR>
+		<TD width=20>&nbsp;</TD>
+		<TD colspan=4 style="border-top: 1px solid black; padding-top:10px; padding-bottom:10px;"><INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler"></TD>
 	  </TR>
 	</TABLE>
 	<!-- END: aff_mouvement -->

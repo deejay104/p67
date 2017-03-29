@@ -43,7 +43,7 @@
 		$ret=GenereVariables($MyOptTab);
 		$tmpl_x->assign("msg_ret", $ret);
 		$tmpl_x->parse("corps.msgok");
-		require("config/variables.inc.php");	
+		$MyOpt=UpdateVariables($MyOptTab);
 	}
 
 // ---- Charge les variables

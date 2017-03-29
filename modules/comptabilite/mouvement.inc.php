@@ -46,7 +46,7 @@
 		  }
 
 		// Récupère les infos sur le type de mouvement
-		$query = "SELECT * FROM p67_mouvement WHERE id=$form_mouvement";
+		$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE id=$form_mouvement";
 		$res=$sql->QueryRow($query);
 
 		$deb=array();
@@ -58,7 +58,7 @@
 		  { $deb[0]=$res["debiteur"]; }
 		else if ($form_tiers=="*")
 		  {
-			$query = "SELECT id FROM p67_utilisateurs WHERE actif='oui' AND virtuel='non'";
+			$query = "SELECT id FROM ".$MyOpt["tbl"]."_utilisateurs WHERE actif='oui' AND virtuel='non'";
 			$sql->Query($query);
 			for($i=0; $i<$sql->rows; $i++)
 			  { 
@@ -78,7 +78,7 @@
 		  { $cre[0]=$res["crediteur"]; }
 		else if ($form_tiers=="*")
 		  {
-			$query = "SELECT id FROM p67_utilisateurs WHERE actif='oui' AND virtuel='non'";
+			$query = "SELECT id FROM ".$MyOpt["tbl"]."_utilisateurs WHERE actif='oui' AND virtuel='non'";
 			$sql->Query($query);
 			for($i=0; $i<$sql->rows; $i++)
 			  { 
@@ -89,42 +89,128 @@
 		else
 		  { $cre[0]=$form_tiers; }
 
+		$enrid=0;
 		foreach ($deb as $d)
-		  {
+		{
 		    foreach ($cre as $c)
-		      {
-			if (($c>0) && ($d>0) && ($dte!=""))
-			  {
-				// Vérifie le montant
-				preg_match("/^(-?[0-9]*)\.?,?([0-9]*)?$/",$form_mvtmontant,$t);
-				$form_mvtmontant=$t[1].".".$t[2];
+		    {
+				if (($c>0) && ($d>0) && ($dte!=""))
+				{
+					// Vérifie le montant
+					preg_match("/^(-?[0-9]*)\.?,?([0-9]*)?$/",$form_mvtmontant,$t);
+					$form_mvtmontant=$t[1].".".$t[2];
+			
+					// Récupère les infos du débiteur
+					$query = "SELECT * FROM ".$MyOpt["tbl"]."_utilisateurs WHERE id=$d";
+					$res_usr=$sql->QueryRow($query);
+					$tmpl_x->assign("enr_commentaire", $form_commentaire);
+					$tmpl_x->assign("enr_facture", $form_facture);
+					$tmpl_x->assign("enr_date", sql2date($dte));
+					$tmpl_x->assign("enr_compte", $res["compte"]);
+					$tmpl_x->assign("enr_uid_deb", $d);
+					$tmpl_x->assign("enr_uid_cre", $c);
+					$tmpl_x->assign("enr_tiers", AffInfo($res_usr["prenom"],"prenom")." ".AffInfo($res_usr["nom"],"nom"));
 
-				$tmpl_x->assign("enr_mouvement", $res["description"]);
-				$tmpl_x->assign("enr_commentaire", $form_commentaire);
-				$tmpl_x->assign("enr_facture", $form_facture);
-				$tmpl_x->assign("enr_date", sql2date($dte));
-				$tmpl_x->assign("enr_compte", $res["compte"]);
-		
-				// Récupère les infos du débiteur
-				$query = "SELECT * FROM p67_utilisateurs WHERE id=$d";
-				$res_usr=$sql->QueryRow($query);
-				$tmpl_x->assign("enr_uid_deb", $d);
-				$tmpl_x->assign("enr_tiers_deb", AffInfo($res_usr["prenom"],"prenom")." ".AffInfo($res_usr["nom"],"nom"));
-				$tmpl_x->assign("enr_montant_deb", -$form_mvtmontant);
-				$tmpl_x->assign("enr_affmontant_deb", AffMontant(-$form_mvtmontant));
+					$ventil_totmontant=0;
+					if ($form_ventilation=="debiteur")
+					{
+						foreach($form_mouvement_ventil as $i=>$v)
+						{
+							preg_match("/^(-?[0-9]*)\.?,?([0-9]*)?$/",$form_mvtmontant_ventil[$i],$t);
+							$ventil_montant=$t[1].".".$t[2];
 
-				// Récupère les infos du créditeur
-				$query = "SELECT * FROM p67_utilisateurs WHERE id=$c";
-				$res_usr=$sql->QueryRow($query);
-				$tmpl_x->assign("enr_uid_cre", $c);
-				$tmpl_x->assign("enr_tiers_cre", AffInfo($res_usr["prenom"],"prenom")." ".AffInfo($res_usr["nom"],"nom"));
-				$tmpl_x->assign("enr_montant_cre", "$form_mvtmontant");
-				$tmpl_x->assign("enr_affmontant_cre", AffMontant($form_mvtmontant));
+							if ($ventil_montant<>0)
+							{
+								$ventil_totmontant=$ventil_totmontant+$ventil_montant;
 
-				$tmpl_x->parse("corps.enregistre.lst_enregistre");
-			  }
-		      }
-		  }
+								$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE id=$v";
+								$resv=$sql->QueryRow($query);
+								
+								$tmpl_x->assign("enr_id", $enrid);
+								$tmpl_x->assign("enr_mouvement", $resv["description"]);
+								$tmpl_x->assign("enr_montant", -$ventil_montant);
+								$tmpl_x->assign("enr_affmontant", AffMontant(-$ventil_montant));
+								$tmpl_x->parse("corps.enregistre.lst_enregistre");
+								$enrid++;
+							}							
+						}
+						if ($ventil_totmontant<>$form_mvtmontant)
+						{
+							$tmpl_x->assign("enr_id", $enrid);
+							$tmpl_x->assign("enr_mouvement", $res["description"]);
+							$tmpl_x->assign("enr_montant", -$form_mvtmontant+$ventil_totmontant);
+							$tmpl_x->assign("enr_affmontant", AffMontant(-$form_mvtmontant+$ventil_totmontant));
+							$tmpl_x->parse("corps.enregistre.lst_enregistre");
+							$enrid++;
+						}
+					}					
+					else
+					{
+						$tmpl_x->assign("enr_id", $enrid);
+						$tmpl_x->assign("enr_mouvement", $res["description"]);
+						$tmpl_x->assign("enr_montant", -$form_mvtmontant);
+						$tmpl_x->assign("enr_affmontant", AffMontant(-$form_mvtmontant));
+						$tmpl_x->parse("corps.enregistre.lst_enregistre");
+						$enrid++;
+					}
+					
+					// Récupère les infos du créditeur
+					$query = "SELECT * FROM ".$MyOpt["tbl"]."_utilisateurs WHERE id=$c";
+					$res_usr=$sql->QueryRow($query);
+
+					$tmpl_x->assign("enr_commentaire", $form_commentaire);
+					$tmpl_x->assign("enr_facture", $form_facture);
+					$tmpl_x->assign("enr_date", sql2date($dte));
+					$tmpl_x->assign("enr_compte", $res["compte"]);
+					$tmpl_x->assign("enr_uid_deb", $c);
+					$tmpl_x->assign("enr_uid_cre", $d);
+					$tmpl_x->assign("enr_tiers", AffInfo($res_usr["prenom"],"prenom")." ".AffInfo($res_usr["nom"],"nom"));
+
+
+					$ventil_totmontant=0;
+					if ($form_ventilation=="crediteur")
+					{
+						foreach($form_mouvement_ventil as $i=>$v)
+						{
+							preg_match("/^(-?[0-9]*)\.?,?([0-9]*)?$/",$form_mvtmontant_ventil[$i],$t);
+							$ventil_montant=$t[1].".".$t[2];
+
+							if ($ventil_montant<>0)
+							{
+								$ventil_totmontant=$ventil_totmontant+$ventil_montant;
+
+								$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE id=$v";
+								$resv=$sql->QueryRow($query);
+								
+								$tmpl_x->assign("enr_id", $enrid);
+								$tmpl_x->assign("enr_mouvement", $resv["description"]);
+								$tmpl_x->assign("enr_montant", $ventil_montant);
+								$tmpl_x->assign("enr_affmontant", AffMontant($ventil_montant));
+								$tmpl_x->parse("corps.enregistre.lst_enregistre");
+								$enrid++;
+							}							
+						}
+						if ($ventil_totmontant<>$form_mvtmontant)
+						{
+							$tmpl_x->assign("enr_id", $enrid);
+							$tmpl_x->assign("enr_mouvement", $res["description"]);
+							$tmpl_x->assign("enr_montant", $form_mvtmontant-$ventil_totmontant);
+							$tmpl_x->assign("enr_affmontant", AffMontant($form_mvtmontant-$ventil_totmontant));
+							$tmpl_x->parse("corps.enregistre.lst_enregistre");
+							$enrid++;
+						}
+					}					
+					else
+					{
+						$tmpl_x->assign("enr_id", $enrid);
+						$tmpl_x->assign("enr_mouvement", $res["description"]);
+						$tmpl_x->assign("enr_montant", $form_mvtmontant);
+						$tmpl_x->assign("enr_affmontant", AffMontant($form_mvtmontant));
+						$tmpl_x->parse("corps.enregistre.lst_enregistre");
+						$enrid++;
+					}				}
+		    }
+		}
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 
@@ -145,27 +231,36 @@
 // ---- Enregistre les opérations
 	else if (($fonc=="Valider") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	  {
+		$nbmvt=0;
+		$totmnt=0;
 		if (is_array($form_id))
-		  {
+		{
+			$query="SELECT MAX(mid) AS mid FROM ".$MyOpt["tbl"]."_compte";
+			$res=$sql->QueryRow($query);
+			$mid=$res["mid"]+1;
+	  
 			foreach ($form_id as $k=>$idcal)
 			  {
-		  		$query ="INSERT p67_compte SET ";
+		  		$query ="INSERT ".$MyOpt["tbl"]."_compte SET ";
+		  		$query.="mid='".$mid."', ";
 		  		$query.="uid='".$form_uid[$k]."', ";
 		  		$query.="tiers='".$form_uidt[$k]."', ";
 		  		$query.="montant='".$form_montant[$k]."', ";
 		  		$query.="mouvement='".addslashes($form_mouvement[$k])."', ";
 		  		$query.="commentaire='".addslashes($form_commentaire[$k])."', ";
-		  		$query.="facture='".(($form_facture[$k]=="on") ? "NOFAC" : "")."', ";
+		  		$query.="facture='".(($form_facture[$k]=="off") ? "NOFAC" : "")."', ";
 		  		$query.="date_valeur='".date2sql($form_date[$k])."', ";
 		  		$query.="dte='".date("Ym",strtotime(date2sql($form_date[$k])))."', ";
 		  		$query.="compte='".$form_compte[$k]."', ";
 		  		$query.="uid_creat=$uid, date_creat='".now()."'";
 		  		//echo "$query<BR>";
 		  		$sql->Insert($query);
-
+				$nbmvt++;
+				$totmnt=$totmnt+$form_montant[$k];
+				
 				if (is_numeric($idcal))
 				  {
-				  	$query="UPDATE p67_calendrier SET prix='".(-$form_montant[$k])."' WHERE id=$idcal";
+				  	$query="UPDATE ".$MyOpt["tbl"]."_calendrier SET prix='".(-$form_montant[$k])."' WHERE id=$idcal";
 				  	//echo "$query<BR>";
 				  	$sql->Update($query);
   				  }
@@ -175,10 +270,19 @@
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 
-		$tmpl_x->assign("msg_resultat", "<FONT color=green>Mouvement(s) enregistré(s)</FONT>");
-
-		$tmpl_x->assign("form_page", "vols");
+		if ($totmnt==0)
+		{
+			$tmpl_x->assign("msg_confirmation", $nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré(s)");
+			$tmpl_x->assign("msg_confirmation_class", "msgok");
+		}
+		else
+		{
+			$tmpl_x->assign("msg_confirmation", "Total non nul : ".$totmnt."€ d'écart<br/>".$nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré(s)");
+			$tmpl_x->assign("msg_confirmation_class", "msgerror");
+		}
 		$tmpl_x->parse("corps.msg_enregistre");
+		
+		$tmpl_x->assign("form_page", "vols");
 	  }
 
 // ---- Affiche la page demandée
@@ -209,7 +313,7 @@
 		for ($ii=0; $ii<1;$ii++)
 		  {
 			// Liste des mouvements
-			$query = "SELECT * FROM p67_mouvement WHERE actif='oui' ORDER BY ordre,description";
+			$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE actif='oui' ORDER BY ordre,description";
 			$sql->Query($query);
 			$montant=0;
 			for($i=0; $i<$sql->rows; $i++)
@@ -220,6 +324,7 @@
 				$tmpl_x->assign("nom_mouvement", $sql->data["description"].((($sql->data["debiteur"]=="0") || ($sql->data["crediteur"]=="0")) ? "" : " (sans tiers)"));
 				$tmpl_x->assign("chk_mouvement", ((current($form_mouvement)==$sql->data["description"]) || ($form_mvt==$sql->data["id"])) ? "selected" : "");
 				$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_mouvement");
+				$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_ventilation.lst_mouvement");
 				if ((current($form_mouvement)==$sql->data["description"]) || ($form_mvt==$sql->data["id"]))
 				  { $montant=$sql->data["montant"]; }
 			  }
@@ -248,6 +353,14 @@
 			$tmpl_x->assign("form_montant", ((current($form_montant)<>0) ? -current($form_montant) : $montant));
 			$tmpl_x->assign("form_commentaire", current($form_commentaire));
 
+			$tmpl_x->AUTORESET=0;
+			for ($iii=1; $iii<=$MyOpt["ventilationNbLigne"]; $iii++)
+			{
+				$tmpl_x->assign("ventilid",$iii);
+				$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_ventilation");
+			}
+			$tmpl_x->AUTORESET=1;
+		
 			$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement");
 		  }
 

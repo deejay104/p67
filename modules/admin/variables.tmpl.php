@@ -136,6 +136,10 @@ $MyOptHelp["showDesactive"]="on : Affiche les membres supprimés";
 $MyOptTmpl["showSupprime"]="";
 $MyOptHelp["showSupprime"]="on : Affiche les membres supprimés";
 
+// Nombre de lignes affichées pour la ventilation
+$MyOptTmpl["ventilationNbLigne"]="4";
+$MyOptHelp["ventilationNbLigne"]="Nombre de lignes à afficher lors d'une ventilation de mouvement";
+
 // Modules
 // on : Affiché et actif
 $MyOptTmpl["module"]["aviation"]="on";

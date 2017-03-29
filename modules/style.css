@@ -34,6 +34,12 @@ h6 { font-size:100%; }
 input {	-webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: inherit; font-family: inherit; }
 select { font-size: inherit; font-family: inherit; }
 textarea { width:90%; font-size: inherit; font-family: inherit; }
+option { 	-webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: inherit; font-family: inherit; }
+
+input {	-webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: inherit; font-family: inherit; }
+
+input[type=submit] { padding:5px 15px;  background:#eeeeee; border: 1px solid #888888; cursor:pointer; border-radius: 5px; }
+input[type=submit]:hover { background:#dddddd; }
 
 p { margin-top: 4px; }
 
