@@ -100,9 +100,6 @@
 	// Nom de l'utilisateur
 	$tmpl_x->assign("nom_compte", $cptusr->Aff("prenom")." ".$cptusr->Aff("nom"));
 
-	// Calcul le solde du compte
-	$solde=$cptusr->CalcSolde();
-
 	// Définition des variables
 	$myColor[50]="F0F0F0";
 	$myColor[60]="F7F7F7";
@@ -111,28 +108,28 @@
 
 	// Entete du tableau d'affichage
 	$tabTitre=array();
-	$tabTitre["date"]["aff"]="Date";
-	$tabTitre["date"]["width"]=100;
+	$tabTitre["date_valeur"]["aff"]="Date";
+	$tabTitre["date_valeur"]["width"]=100;
 	if ($theme!="phone")
 	  {
-		$tabTitre["mvt"]["aff"]="Mouvement";
-		$tabTitre["mvt"]["width"]=350;
-		$tabTitre["rem"]["aff"]="Commentaire";
-		$tabTitre["rem"]["width"]=300;
+		$tabTitre["mouvement"]["aff"]="Mouvement";
+		$tabTitre["mouvement"]["width"]=350;
+		$tabTitre["commentaire"]["aff"]="Commentaire";
+		$tabTitre["commentaire"]["width"]=300;
 	  }
 	else
 	  {
-		$tabTitre["rem"]["aff"]="Commentaire";
-		$tabTitre["rem"]["width"]=250;
+		$tabTitre["commentaire"]["aff"]="Commentaire";
+		$tabTitre["commentaire"]["width"]=250;
 	  }
 	$tabTitre["line"]["aff"]="<line>";
 	$tabTitre["line"]["width"]=1;
-	$tabTitre["tot"]["aff"]="&nbsp;&nbsp;Montant";
-	$tabTitre["tot"]["width"]=80;
+	$tabTitre["montant"]["aff"]="&nbsp;&nbsp;Montant";
+	$tabTitre["montant"]["width"]=100;
 	if ($trie=="")
 	  {
 		$tabTitre["solde"]["aff"]="&nbsp;&nbsp;Solde Cpt";
-		$tabTitre["solde"]["width"]=80;
+		$tabTitre["solde"]["width"]=100;
 	  }
 	if ($theme!="phone")
 	  {
@@ -141,45 +138,58 @@
 	  }
 
 	$tabValeur=array();
+	$tl=50;
 
-	$query = "SELECT p67_compte.* FROM p67_compte WHERE p67_compte.uid=$id ORDER BY date_valeur DESC, id DESC";
+	// Affiche le solde du compte
+	$tmpl_x->assign("solde_compte", AffMontant($cptusr->CalcSolde()));
+	
+	
+	// Calcul le nombre ligne totale
+	$query = "SELECT COUNT(*) AS nb FROM p67_compte WHERE p67_compte.uid=$id";
+	$res=$sql->QueryRow($query);
+	$totligne=$res["nb"];
+
+	if ($order=="")
+	{ $order="date_valeur"; }
+
+	// Calcul le solde du compte au début de l'affichage
+	$query = "SELECT SUM(lignes.montant) AS solde FROM (SELECT montant FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid=$id ORDER BY $order ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT $ts,$totligne) AS lignes";
+	$res=$sql->QueryRow($query);
+	$solde=$res["solde"];
+	
+	$query = "SELECT ".$MyOpt["tbl"]."_compte.* FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid=$id ORDER BY $order ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT $ts,$tl";
 	$sql->Query($query);
-	$total=$solde;
 	$col=50;
 	for($i=0; $i<$sql->rows; $i++)
 	  { 
 		$sql->GetRow($i);
 
-		$afftotal=round($total,2);
-
-		$tabValeur[$i]["date"]["val"]=CompleteTxt($i,"20","0");
-		$tabValeur[$i]["date"]["aff"]=date("d/m/Y",strtotime($sql->data["date_valeur"]));
-		$tabValeur[$i]["mvt"]["val"]=$sql->data["mouvement"];
-		$tabValeur[$i]["rem"]["val"]=$sql->data["commentaire"];
+		$tabValeur[$i]["date_valeur"]["val"]=CompleteTxt($i,"20","0");
+		$tabValeur[$i]["date_valeur"]["aff"]=date("d/m/Y",strtotime($sql->data["date_valeur"]));
+		$tabValeur[$i]["mouvement"]["val"]=$sql->data["mouvement"];
+		$tabValeur[$i]["commentaire"]["val"]=$sql->data["commentaire"];
 		$tabValeur[$i]["line"]["val"]="<line>";
-		$tabValeur[$i]["tot"]["val"]=$sql->data["montant"];
-		$tabValeur[$i]["tot"]["align"]="right";
-		$tabValeur[$i]["tot"]["aff"]=AffMontant($sql->data["montant"])."&nbsp;&nbsp;";
+		$tabValeur[$i]["montant"]["val"]=$sql->data["montant"];
+		$tabValeur[$i]["montant"]["align"]="right";
+		$tabValeur[$i]["montant"]["aff"]=AffMontant($sql->data["montant"])."&nbsp;&nbsp;";
 
 		if ($trie=="")
 		  {
+			$afftotal=round($solde,2);
 			$tabValeur[$i]["solde"]["val"]=(($afftotal==0) ? "0" : $afftotal);
 			$tabValeur[$i]["solde"]["align"]="right";
 			$tabValeur[$i]["solde"]["aff"]=(($afftotal==0) ? "0,00 ".$MyOpt["devise"] : AffMontant($afftotal))."&nbsp;&nbsp;";
+			$solde=$solde-$sql->data["montant"];
 		  }
 		$tabValeur[$i]["releve"]["val"]=$sql->data["pointe"];
 
-		$total=$total-$sql->data["montant"];
 	  }
 
 	if ($order=="") { $order="date"; }
 //		if ($trie=="") { $trie="i"; }
-	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,50));
+	$tmpl_x->assign("aff_tableau",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,$tl,$totligne));
 
 
-	$query = "SELECT SUM(p67_compte.montant) AS total FROM p67_compte WHERE p67_compte.uid=$id";
-	$res=$sql->QueryRow($query);
-	$tmpl_x->assign("tot_montant", ($res["total"]=="") ? "0" : $res["total"]);
 
 	// Total d'heures
 	$tmpl_x->assign("nb_heure", $cptusr->AffNbHeuresVol());
@@ -202,4 +212,7 @@
 	$tmpl_x->parse("corps");
 	$corps=$tmpl_x->text("corps");
 
+	
+
+	
 ?>

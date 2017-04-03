@@ -560,6 +560,145 @@ function TrieValInv ($a, $b)
   }
 
 
+/* **** Fonction d'affichage d'un tableau avec filtre ****
+
+*/
+
+function AfficheTableauFiltre($tabValeur,$tabTitre="",$order="",$trie="",$url="",$start=0,$limit="",$nbline=0)
+  {global $mod,$rub;
+	$myColor[50]="E7E7E7";
+	$myColor[55]="FFB1B1";
+	$myColor[60]="F7F7F7";
+	$myColor[65]="FFB1B1";
+	$col=50;
+
+	$ret ="\n<table class='tableauAff'>\n";
+
+	$ret.="<tr>";
+	$ret.="<th width=20>&nbsp;</th>";
+	$nb=1;
+	
+	$page=$_SERVER["SCRIPT_NAME"]."?mod=$mod&rub=$rub";
+
+	if (!is_array($tabTitre))
+	  {
+	  	$tabTitre=array();
+	  	foreach($tabValeur[0] as $name=>$t)
+	  	  {
+	  	  	$tabTitre[$name]["aff"]=$name;
+	  	  }
+	  }
+  	foreach($tabTitre as $name=>$v)
+	  {
+		if ($name==$order)
+		  {
+			$ret.="<th width='".$v["width"]."'".(($v["align"]!="") ? " align='".$v["align"]."'" : "").">";
+			$ret.="<b><a href='$page&order=$name&trie=".(($trie=="d") ? "i" : "d").(($url!="") ? "&$url" : "")."&ts=$i'>".$v["aff"]."</a></b>";
+		  	$ret.=" <img src='images/sens_$trie.gif' border=0>";
+		  }
+		else if ($v["aff"]=="<line>")
+		  {
+			$ret.="<th style='width:".$v["width"]."px; background-color:black;'>";
+		  }
+		else
+		  {
+			$ret.="<th width='".$v["width"]."'".(($v["align"]!="") ? " align='".$v["align"]."'" : "").">";
+			$ret.="<b><a href='$page&order=$name&trie=d".(($url!="") ? "&$url" : "")."&ts=$i'>".$v["aff"]."</a></b>";
+		  }
+		$ret.="</th>";
+		$nb++;
+	  }
+
+	
+	$ret.="</tr>\n";
+/*
+	$ret.="<tr bgcolor='black'>";
+	$ret.="<td height='1' colspan='$nb'><img src='images/rien.gif' height=1 alt=''></td>";
+	$ret.="</tr>\n";
+*/
+
+	if (is_array($tabValeur))
+	  {
+
+/*
+		if ($trie=="d")
+		  { usort($tabValeur,"TrieVal"); }
+		else if ($trie=="i")
+		  { usort($tabValeur,"TrieValInv"); }
+*/
+	  $ii=0;
+	
+		if ($limit=="")
+		  { $limit=count($tabValeur); }
+
+		foreach($tabValeur as $i=>$val)
+		  { 
+//			if (($ii>=$start) && ($ii<$start+$limit))
+//			  {
+				$col = abs($col-110);
+				$ret.="<tr onmouseover=\"setPointer(this, 'over', '#".$myColor[$col]."', '#".$myColor[$col+5]."', '#FF0000')\" onmouseout=\"setPointer(this, 'out', '#".$myColor[$col]."', '#".$myColor[$col+5]."', '#FF0000')\">";
+				$ret.="<td bgcolor=\"#".$myColor[$col]."\">&nbsp;</td>";
+		
+				foreach($tabTitre as $name=>$v)
+				  {
+					if ($val[$name]["val"]=="<line>")
+					  {
+						$ret.="<td style='background-color:black;'></td>";
+					  }
+					else
+					  {
+						$ret.="<td bgcolor=\"#".$myColor[$col]."\"".(($val[$name]["align"]!="") ? " align='".$val[$name]["align"]."'" : "").">".(($val[$name]["aff"]=="") ? $val[$name]["val"] : $val[$name]["aff"])."</td>";
+					  }
+				  }
+				$ret.="</tr>\n";
+			  }
+			$ii=$ii+1;
+//		  }
+	  }
+	
+	$ret.="<tr>";
+	$ret.="<td colspan='$nb' class='tableauEnd'></td>";
+	$ret.="</tr>\n";
+	$ret.="</table>\n";
+
+	// Affiche la liste des pages
+	$nbtot=($nbline>0) ? $nbline : count($tabValeur);
+	if ($nbtot>$limit)
+	  {
+		$lstpage="";
+		$ii=1;
+  	  	$t=0;
+		$nbp=10;
+
+		for($i=0; $i<$nbtot; $i=$i+$limit)
+		  {
+		  	if (($i<=$start) && ($i>$start-$limit))
+		  	  {
+		  	  	$lstpage.="<a href='$page&order=$order".(($trie!="") ? "&trie=$trie" : "").(($url!="") ? "&$url" : "")."&ts=$i'>[$ii]</a> ";
+		  	  	$t=0;
+		  	  }
+			else if ( (($i>$start-$nbp*$limit/2) && ($i<$start+$nbp*$limit/2)) || ($i>$nbtot-$limit) || ($i==0))
+		  	  {
+		  	  	$lstpage.="<a href='$page&order=$order".(($trie!="") ? "&trie=$trie" : "").(($url!="") ? "&$url" : "")."&ts=$i'>$ii</a> ";
+		  	  	$t=0;
+		  	  }
+		  	else if ($t==0)
+		  	  {
+		  	  	$lstpage.=" ... ";
+				$t=1;
+		  	  }
+		  	$ii=$ii+1;
+		  }
+
+		$ret.="Pages : $lstpage<br />\n";
+	  }
+
+
+	return $ret;
+  }	
+  
+  
+
 function TrieProduit ($a, $b)
   {
 	$a["nom_produit"]=preg_replace("/<[^>]*>/i","",$a["nom_produit"]);

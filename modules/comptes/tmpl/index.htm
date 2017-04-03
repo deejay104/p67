@@ -20,14 +20,17 @@
 
 <!-- BEGIN: compte -->
 	
-			<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='comptes.php?id='+id;">
-			<!-- BEGIN: lst_compte -->
-			<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
-			<!-- END: lst_compte -->
-			</select>
+	<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='comptes.php?id='+id;">
+	<!-- BEGIN: lst_compte -->
+	<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
+	<!-- END: lst_compte -->
+	</select>
 
-	<br /><br />
+	&nbsp;-&nbsp;
 <!-- END: compte -->
+	<div style="padding-top: 5px; border: 1px solid #000000; border-radius: 4px; display: inline-block; position:relative; width:350px; height: 30px; text-align: center; ">Solde du compte : {solde_compte}</div>
+	<br /><br />
+
 
 {aff_tableau}
 <br/>
