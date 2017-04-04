@@ -16,7 +16,8 @@ a, a:hover, a:focus { text-decoration: none; -webkit-transition: all 150ms ease-
 a:link { color: black; }
 a:visited { color: black; }
 a:hover { color: #FF6600; }
-	
+
+
 h1, h2, h3, h4, h5, h6 { font-family: inherit; }
 h1 { font-size:200%; }
 h2 { font-size:170%; }
@@ -36,10 +37,9 @@ select { font-size: inherit; font-family: inherit; }
 textarea { width:90%; font-size: inherit; font-family: inherit; }
 option { 	-webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: inherit; font-family: inherit; }
 
-input {	-webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: inherit; font-family: inherit; }
-
 input[type=submit] { padding:5px 15px;  background:#eeeeee; border: 1px solid #888888; cursor:pointer; border-radius: 5px; }
 input[type=submit]:hover { background:#dddddd; }
+input[type=radio] {-webkit-appearance: radio; }
 
 p { margin-top: 4px; }
 

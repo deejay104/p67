@@ -23,6 +23,9 @@
 ?>
 
 <?php
+	// Charset
+	header('Content-type: text/html; charset=ISO-8859-1');
+
 	error_reporting(E_ALL & ~E_NOTICE);
 	set_time_limit (0);
 
@@ -801,6 +804,34 @@
 		UpdateDB($sql,$nver);
 	}
 
+	
+// ----
+	$nver=464;
+	if ($ver<$nver)
+	{
+	  	$sql=array();
+		$query="SELECT value FROM ".$MyOpt["tbl"]."_config WHERE param='mvtid'";
+		$res=$mysql->QueryRow($query);
+		$mvtid=$res["value"];
+
+		$sql[]= "SELECT value FROM ".$MyOpt["tbl"]."_config WHERE param='mvtid'";
+		if ($mvtid=="")
+		{
+			$query="SELECT MAX(id) AS mvtid FROM ".$MyOpt["tbl"]."_compte";
+			$res=$mysql->QueryRow($query);
+			$mvtid=$res["mvtid"]+1;
+
+			$sql[]= "INSERT INTO ".$MyOpt["tbl"]."_config (param,value) VALUES ('mvtid','$mvtid')";
+		}
+		UpdateDB($sql,$nver);
+	}
+
+
+	
+// *********************************************************************************************************
+
+	echo "<a href='".$MyOpt["host"]."'>-Retour au site-</a>";
+	
 // *********************************************************************************************************
 
 function UpdateDB($sql,$setver)

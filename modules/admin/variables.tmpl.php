@@ -188,6 +188,10 @@ $MyOptHelp["restrict"]["facturation"]="Restreint l'affichage de la liste des mem
 $MyOptTmpl["restrict"]["comptes"]="";
 $MyOptHelp["restrict"]["comptes"]="Restreint l'affichage de la liste des membres pour la page des famille. Saisir les types séparés par des virgules (pilote,eleve)";
 
+// Saisir les vols en facturation
+$MyOptTmpl["facturevol"]="";
+$MyOptHelp["facturevol"]="Saisi les vols en facturation (on=Activé)";
+
 
 // Couleurs du calendrier
 $MyOptTmpl["tabcolresa"]["own"]="A0E2AF";

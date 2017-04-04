@@ -1098,4 +1098,54 @@ function now()
 	return date("Y-m-d H:i:s");
 }
 
+
+// Obtiens un IP unique pour la création d'un mouvement
+function GetMouvementID($sql)
+{ global $MyOpt;
+	$query="LOCK TABLES ".$MyOpt["tbl"]."_config WRITE";
+	$res=$sql->QueryRow($query);
+
+	$query="SELECT value FROM ".$MyOpt["tbl"]."_config WHERE param='mvtid'";
+	$res=$sql->QueryRow($query);
+	$mvtid=$res["value"];
+
+	if ($mvtid=="")
+	  {
+	  	$mvtid="0";
+		$query="INSERT INTO ".$MyOpt["tbl"]."_config (param,value) VALUES ('mvtid','$mvtid')";
+		$sql->Insert($query);
+	  }
+
+ 	$mid=$mvtid+1;
+
+	$query="UPDATE ".$MyOpt["tbl"]."_config SET value='".$mid."' WHERE param='mvtid'";
+	$sql->Update($query);
+
+	$query="UNLOCK TABLES";
+	$res=$sql->QueryRow($query);
+
+	return $mid;
+}
+
+// Affiche le détail de toutes les lignes d'un mouvement
+function AfficheDetailMouvement($id,$mid,$sql)
+{ global $MyOpt;
+	$txt="Mouvement : ".$mid."\n";
+	$query = "SELECT ".$MyOpt["tbl"]."_compte.* FROM ".$MyOpt["tbl"]."_compte WHERE mid=$mid AND mid>0 ORDER BY uid";
+	$sql->Query($query);
+	$t=array();
+	for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+		$t[$i]=$sql->data;
+	}
+	foreach ($t as $i=>$d)
+	{
+		$usrc = new user_class($d["uid"],$sql);
+		$usrd = new user_class($d["tiers"],$sql);
+
+		$txt.=(($d["uid"]==$id) ? "* " : "").$usrc->fullname." (".$usrd->fullname.") : ".$d["mouvement"]." (".AffMontant($d["montant"]).")\n";
+	}
+	return $txt;
+}
 ?>

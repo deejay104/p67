@@ -41,7 +41,7 @@
 	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	  {
 		foreach($tarif_pilote as $i=>$t)
-		  {
+		{
 			if ($i==0)
 			  {
 				if ($tarif_code[$i]!="")
@@ -85,24 +85,31 @@
 					$sql->Delete($query);
 				  }  	
 			  }
-		  }
+		}
 
-		foreach($tarif_defaut_pil as $i=>$t)
-		  {
-			$query="UPDATE ".$MyOpt["tbl"]."_tarifs SET ";
-			$query.="defaut_pil='oui' ";
-			$query.="WHERE id=$t";
-			$sql->Update($query);
-		  }
-		foreach($tarif_defaut_ins as $i=>$t)
-		  {
-			$query="UPDATE ".$MyOpt["tbl"]."_tarifs SET ";
-			$query.="defaut_ins='oui' ";
-			$query.="WHERE id=$t";
-			$sql->Update($query);
+		if (is_array($tarif_defaut_pil))
+		{
+			foreach($tarif_defaut_pil as $i=>$t)
+			  {
+				$query="UPDATE ".$MyOpt["tbl"]."_tarifs SET ";
+				$query.="defaut_pil='oui' ";
+				$query.="WHERE id=$t";
+				$sql->Update($query);
+			  }
+		}
 
-		  }
-	  }
+		if (is_array($tarif_defaut_ins))
+		{
+			foreach($tarif_defaut_ins as $i=>$t)
+			{
+				$query="UPDATE ".$MyOpt["tbl"]."_tarifs SET ";
+				$query.="defaut_ins='oui' ";
+				$query.="WHERE id=$t";
+				$sql->Update($query);
+
+			}
+		}
+	}
 // ---- Supprime un tarif
 	if (($fonc=="delete") && ($id>0))
 	  {

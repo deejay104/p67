@@ -99,10 +99,14 @@
 					// Vérifie le montant
 					preg_match("/^(-?[0-9]*)\.?,?([0-9]*)?$/",$form_mvtmontant,$t);
 					$form_mvtmontant=$t[1].".".$t[2];
-			
+
+					$mid=GetMouvementID($sql);
+ 					
 					// Récupère les infos du débiteur
 					$query = "SELECT * FROM ".$MyOpt["tbl"]."_utilisateurs WHERE id=$d";
 					$res_usr=$sql->QueryRow($query);
+
+					$tmpl_x->assign("enr_mid", $mid);
 					$tmpl_x->assign("enr_commentaire", $form_commentaire);
 					$tmpl_x->assign("enr_facture", $form_facture);
 					$tmpl_x->assign("enr_date", sql2date($dte));
@@ -158,6 +162,7 @@
 					$query = "SELECT * FROM ".$MyOpt["tbl"]."_utilisateurs WHERE id=$c";
 					$res_usr=$sql->QueryRow($query);
 
+					$tmpl_x->assign("enr_mid", $mid);
 					$tmpl_x->assign("enr_commentaire", $form_commentaire);
 					$tmpl_x->assign("enr_facture", $form_facture);
 					$tmpl_x->assign("enr_date", sql2date($dte));
@@ -235,25 +240,22 @@
 		$totmnt=0;
 		if (is_array($form_id))
 		{
-			$query="SELECT MAX(mid) AS mid FROM ".$MyOpt["tbl"]."_compte";
-			$res=$sql->QueryRow($query);
-			$mid=$res["mid"]+1;
-	  
+ 
 			foreach ($form_id as $k=>$idcal)
 			  {
-		  		$query ="INSERT ".$MyOpt["tbl"]."_compte SET ";
-		  		$query.="mid='".$mid."', ";
+				$query ="INSERT ".$MyOpt["tbl"]."_compte SET ";
+		  		$query.="mid='".$form_mid[$k]."', ";
 		  		$query.="uid='".$form_uid[$k]."', ";
 		  		$query.="tiers='".$form_uidt[$k]."', ";
 		  		$query.="montant='".$form_montant[$k]."', ";
 		  		$query.="mouvement='".addslashes($form_mouvement[$k])."', ";
 		  		$query.="commentaire='".addslashes($form_commentaire[$k])."', ";
-		  		$query.="facture='".(($form_facture[$k]=="off") ? "NOFAC" : "")."', ";
+		  		$query.="facture='".(($form_facture[$k]=="") ? "NOFAC" : "")."', ";
 		  		$query.="date_valeur='".date2sql($form_date[$k])."', ";
 		  		$query.="dte='".date("Ym",strtotime(date2sql($form_date[$k])))."', ";
 		  		$query.="compte='".$form_compte[$k]."', ";
 		  		$query.="uid_creat=$uid, date_creat='".now()."'";
-		  		//echo "$query<BR>";
+		  		echo "$query<BR>";
 		  		$sql->Insert($query);
 				$nbmvt++;
 				$totmnt=$totmnt+$form_montant[$k];

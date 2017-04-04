@@ -168,9 +168,12 @@
 			foreach ($form_id as $k=>$idcal)
 			  {
 		  		$query ="INSERT ".$MyOpt["tbl"]."_compte SET ";
+		  		$query.="mid='".$mid."', ";
 		  		$query.="uid='".$form_uid[$k]."', ";
 		  		$query.="tiers='".$form_uidt[$k]."', ";
 		  		$query.="montant='".$form_montant[$k]."', ";
+				if ($MyOptTmpl["facturevol"]!="on")
+				{ $query.="facture='NOFAC', "; }
 		  		$query.="mouvement='".$form_mouvement[$k]."', ";
 		  		$query.="commentaire='".addslashes($form_commentaire[$k])."', ";
 		  		$query.="date_valeur='".date2sql($form_date[$k])."', ";
@@ -379,13 +382,16 @@ function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p
 		$ress = new ress_class($idavion,$sql);
 		$pilote = new user_class($uid_pilote,$sql);
 
-		$tmpl_x->assign("enr_mouvement", "Vol");
+		$mid=GetMouvementID($sql);
 
 		$tmpl_x->assign("enr_id", $idvol);
 		$tmpl_x->assign("enr_idcal", $idvol);
 		$tmpl_x->assign("enr_uid_deb", $uid_pilote);
 		$tmpl_x->assign("enr_uid_cre", $MyOpt["uid_club"]);
+		$tmpl_x->assign("enr_mid", $mid);
 		$tmpl_x->assign("enr_date", $dte);
+		$tmpl_x->assign("enr_mouvement_deb", substr($ress->Aff("immatriculation","val"),-2)."/Vol");
+		$tmpl_x->assign("enr_mouvement_cre", substr($ress->Aff("immatriculation","val"),-2)."/Vol");
 		$tmpl_x->assign("enr_commentaire", "Vol de $temps min (".$ress->Aff("immatriculation","val")."/$tarif)");
 		$tmpl_x->assign("enr_tiers_deb", $pilote->Aff("fullname","val"));
 		$tmpl_x->assign("enr_affmontant_deb", AffMontant(-$p));
@@ -405,7 +411,10 @@ function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p
 			$tmpl_x->assign("enr_idcal", "");
 			$tmpl_x->assign("enr_uid_deb", $MyOpt["uid_club"]);
 			$tmpl_x->assign("enr_uid_cre", $uid_instructeur);
+			$tmpl_x->assign("enr_mid", $mid);
 			$tmpl_x->assign("enr_date", $dte);
+			$tmpl_x->assign("enr_mouvement_deb", "Instruction");
+			$tmpl_x->assign("enr_mouvement_cre", substr($ress->Aff("immatriculation","val"),-2)."/Vol");
 			$tmpl_x->assign("enr_commentaire", "Remb. vol d'instruction de $temps min (".$ress->Aff("immatriculation","val")."/$tarif)");
 			$tmpl_x->assign("enr_tiers_cre", $inst->Aff("fullname","val"));
 			$tmpl_x->assign("enr_affmontant_cre", AffMontant($pi));

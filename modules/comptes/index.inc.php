@@ -166,6 +166,8 @@
 
 		$tabValeur[$i]["date_valeur"]["val"]=CompleteTxt($i,"20","0");
 		$tabValeur[$i]["date_valeur"]["aff"]=date("d/m/Y",strtotime($sql->data["date_valeur"]));
+		$tabValeur[$i]["mid"]["val"]=$sql->data["mid"];
+		$tabValeur[$i]["date_creat"]["val"]=$sql->data["date_creat"];
 		$tabValeur[$i]["mouvement"]["val"]=$sql->data["mouvement"];
 		$tabValeur[$i]["commentaire"]["val"]=$sql->data["commentaire"];
 		$tabValeur[$i]["line"]["val"]="<line>";
@@ -185,11 +187,17 @@
 
 	  }
 
+	if (GetDroit("AfficheDetailMouvement"))
+	{
+		foreach($tabValeur as $i=>$d)
+		{
+			$tabValeur[$i]["date_valeur"]["aff"]="<a href='#' title='Créé le ".sql2date($tabValeur[$i]["date_creat"]["val"])."'>".$tabValeur[$i]["date_valeur"]["aff"]."</a>";
+			$tabValeur[$i]["mouvement"]["aff"]="<a href='#' title='".AfficheDetailMouvement($id,$d["mid"]["val"],$sql)."'>".$tabValeur[$i]["mouvement"]["val"]."</a>";
+		}
+	}
+	  
 	if ($order=="") { $order="date"; }
-//		if ($trie=="") { $trie="i"; }
 	$tmpl_x->assign("aff_tableau",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,$tl,$totligne));
-
-
 
 	// Total d'heures
 	$tmpl_x->assign("nb_heure", $cptusr->AffNbHeuresVol());
@@ -213,6 +221,7 @@
 	$corps=$tmpl_x->text("corps");
 
 	
+
 
 	
 ?>
