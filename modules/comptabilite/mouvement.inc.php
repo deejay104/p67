@@ -106,6 +106,8 @@
 					$query = "SELECT * FROM ".$MyOpt["tbl"]."_utilisateurs WHERE id=$d";
 					$res_usr=$sql->QueryRow($query);
 
+
+					$tmpl_x->assign("enr_posteid", $form_mouvement);
 					$tmpl_x->assign("enr_mid", $mid);
 					$tmpl_x->assign("enr_commentaire", $form_commentaire);
 					$tmpl_x->assign("enr_facture", $form_facture);
@@ -162,6 +164,7 @@
 					$query = "SELECT * FROM ".$MyOpt["tbl"]."_utilisateurs WHERE id=$c";
 					$res_usr=$sql->QueryRow($query);
 
+					$tmpl_x->assign("enr_posteid", $form_mouvement);
 					$tmpl_x->assign("enr_mid", $mid);
 					$tmpl_x->assign("enr_commentaire", $form_commentaire);
 					$tmpl_x->assign("enr_facture", $form_facture);
@@ -290,7 +293,10 @@
 // ---- Affiche la page demandée
 	if ($fonc!="Enregistrer")
 	  {
-		if (!is_array($form_mouvement))
+		if (!is_array($form_id))
+		  { $form_id=array(); }
+
+	  if (!is_array($form_mouvement))
 		  { $form_mouvement=array(); }
 
 		if (!is_array($form_uid))
@@ -306,6 +312,7 @@
 		  { $form_commentaire=array(); }
 
 
+		reset($form_id);
 		reset($form_mouvement);
 		reset($form_uid);
 		reset($form_date);
@@ -324,10 +331,10 @@
 			
 				$tmpl_x->assign("id_mouvement", $sql->data["id"]);
 				$tmpl_x->assign("nom_mouvement", $sql->data["description"].((($sql->data["debiteur"]=="0") || ($sql->data["crediteur"]=="0")) ? "" : " (sans tiers)"));
-				$tmpl_x->assign("chk_mouvement", ((current($form_mouvement)==$sql->data["description"]) || ($form_mvt==$sql->data["id"])) ? "selected" : "");
+				$tmpl_x->assign("chk_mouvement", ((current($form_id)==$sql->data["id"]) || ($form_mvt==$sql->data["id"])) ? "selected" : "");
 				$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_mouvement");
 				$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_ventilation.lst_mouvement");
-				if ((current($form_mouvement)==$sql->data["description"]) || ($form_mvt==$sql->data["id"]))
+				if ((current($form_id)==$sql->data["id"]) || ($form_mvt==$sql->data["id"]))
 				  { $montant=$sql->data["montant"]; }
 			  }
 	
