@@ -604,7 +604,7 @@ class user_class{
 		else if ($typeaff=="val")
 		  {
 				if ($key=="commentaire")
-			  	  { $ret=nl2br(htmlentities($ret)); }
+			  	  { $ret=nl2br(htmlentities($ret,ENT_HTML5,"ISO-8859-1")); }
 	
 /*				else if ( ($key=="prenom") && ($this->data["actif"]=="off"))
 			  	  { $ret="<s>".$ret."</s>"; }

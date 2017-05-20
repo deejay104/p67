@@ -244,7 +244,7 @@
 // ---- Affiche les infos
 	$tmpl_x->assign("aff_id_manip",$res["id"]);
 	$tmpl_x->assign("aff_nom_manip",$res["titre"]);
-	$tmpl_x->assign("aff_detail_manip",nl2br(htmlentities($res["comment"])));
+	$tmpl_x->assign("aff_detail_manip",nl2br(htmlentities($res["comment"],ENT_HTML5,"ISO-8859-1")));
 	$tmpl_x->assign("aff_dte_manip",sql2date($res["dte_manip"]));
 	$tmpl_x->assign("aff_dte",$res["dte_manip"]);
 	
@@ -253,7 +253,7 @@
 	  {
 		$tmpl_x->assign("aff_detail_manip","");
 		$tmpl_x->assign("form_titre",$res["titre"]);
-		$tmpl_x->assign("form_detail",nl2br(htmlentities($res["comment"])));
+		$tmpl_x->assign("form_comment",nl2br(htmlentities($res["comment"],ENT_HTML5,"ISO-8859-1")));
 		$tmpl_x->assign("form_date",sql2date($res["dte_manip"]));
 		$tmpl_x->assign("form_date_limite",sql2date($res["dte_limite"]));
 		$tmpl_x->assign("form_cout",$res["cout"]);
