@@ -182,6 +182,20 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 	border-radius: 5px;
 }
 
+.msgaff {
+	width: 680px;
+	padding: 4px 4px 4px 40px;
+	margin-left: 50px;
+	margin-bottom: 10px;
+	font-size: 14px; 
+	color: #000000; 
+	font-weight: normal;
+	text-decoration: none;
+	background-color: #FFBBAA;
+	border: 1px solid #000000;
+	border-radius: 5px;
+}
+
 /* **** Actualités **** */
 .cadreinfos { left:60%; width:40%; float:right; }
 .encadreInfos { min-width: 300px; border: 1px solid #013366; border-radius: 5px; padding: 0px 0px 10px 0px; margin-bottom:10px; }

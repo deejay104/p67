@@ -49,7 +49,7 @@ class user_class{
 		$this->sql=$sql;
 		$this->me=$me;
 
-	  $this->data["nom"]="";
+		$this->data["nom"]="";
 		$this->data["prenom"]="";
 		$this->data["fullname"]="";
 		$this->data["initiales"]="";
