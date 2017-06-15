@@ -155,6 +155,20 @@ input[type=submit] { -webkit-appearance: none; -moz-appearance: none; appearance
 	text-align: center;
 }
 
+.msgaff {
+	width: 420px;
+	padding: 4px 4px 4px 4px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	font-size: 14px; 
+	color: #000000; 
+	font-weight: normal;
+	text-decoration: none;
+	background-color: #FFBBAA;
+	border: 1px solid #000000;
+	border-radius: 5px;
+	text-align: center;
+}
 
 /* **** Actualités **** */
 .cadreinfos { margin-left:2%; width:96%; }
