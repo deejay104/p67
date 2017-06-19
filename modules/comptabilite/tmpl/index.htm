@@ -177,12 +177,18 @@ function AffVentilation()
 			<div id="aff_ventilation" style="visibility: hidden; height:0px;">
 				<!-- BEGIN: lst_ventilation -->
 				<div>
-				<SELECT id="form_mouvement_ventil[{ventilid}]" name="form_mouvement_ventil[{ventilid}]" >
-				<!-- BEGIN: lst_mouvement -->
-				<OPTION value="{id_mouvement}" {chk_mouvement}>{nom_mouvement}</OPTION>
-				<!-- END: lst_mouvement -->
-				</SELECT>
-				<INPUT name="form_mvtmontant_ventil[{ventilid}]" value="0" size=10>
+					<SELECT id="form_mouvement_ventil[{ventilid}]" name="form_mouvement_ventil[{ventilid}]" >
+					<!-- BEGIN: lst_mouvement -->
+					<OPTION value="{id_mouvement}" {chk_tiers}>{nom_mouvement}</OPTION>
+					<!-- END: lst_mouvement -->
+					</SELECT>
+					<SELECT id="form_tiers_ventil[{ventilid}]" name="form_tiers_ventil[{ventilid}]" >
+					<OPTION value="0">Aucun</OPTION>
+					<!-- BEGIN: lst_tiers -->
+					<OPTION value="{id_tiers}" {chk_tiers_ventil}>{nom_tiers}</OPTION>
+					<!-- END: lst_tiers -->
+					</SELECT>
+					<INPUT name="form_mvtmontant_ventil[{ventilid}]" value="0" size=10>
 				</div>
 				<!-- END: lst_ventilation -->
 			</div>

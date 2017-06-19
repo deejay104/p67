@@ -103,19 +103,13 @@
 					$mid=GetMouvementID($sql);
  					
 					// Récupère les infos du débiteur
-					$query = "SELECT * FROM ".$MyOpt["tbl"]."_utilisateurs WHERE id=$d";
-					$res_usr=$sql->QueryRow($query);
-
-
-					$tmpl_x->assign("enr_posteid", $form_mouvement);
+					$res_usr = new user_class($d,$sql);
+					
+					// Affiche les champs commun
 					$tmpl_x->assign("enr_mid", $mid);
 					$tmpl_x->assign("enr_commentaire", $form_commentaire);
 					$tmpl_x->assign("enr_facture", $form_facture);
 					$tmpl_x->assign("enr_date", sql2date($dte));
-					$tmpl_x->assign("enr_compte", $res["compte"]);
-					$tmpl_x->assign("enr_uid_deb", $d);
-					$tmpl_x->assign("enr_uid_cre", $c);
-					$tmpl_x->assign("enr_tiers", AffInfo($res_usr["prenom"],"prenom")." ".AffInfo($res_usr["nom"],"nom"));
 
 					$ventil_totmontant=0;
 					if ($form_ventilation=="debiteur")
@@ -131,9 +125,17 @@
 
 								$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE id=$v";
 								$resv=$sql->QueryRow($query);
+
+								$dv=(($form_tiers_ventil[$i]>0) ? $form_tiers_ventil[$i] : $d);
+								$res_user_vent = new user_class($dv,$sql);
 								
 								$tmpl_x->assign("enr_id", $enrid);
+								$tmpl_x->assign("enr_compte", $resv["compte"]);
+								$tmpl_x->assign("enr_uid_deb", $dv);
+								$tmpl_x->assign("enr_uid_cre", $c);
+								$tmpl_x->assign("enr_posteid", $resv["id"]);
 								$tmpl_x->assign("enr_mouvement", $resv["description"]);
+								$tmpl_x->assign("enr_tiers",$res_user_vent->fullname);
 								$tmpl_x->assign("enr_montant", -$ventil_montant);
 								$tmpl_x->assign("enr_affmontant", AffMontant(-$ventil_montant));
 								$tmpl_x->parse("corps.enregistre.lst_enregistre");
@@ -143,7 +145,12 @@
 						if ($ventil_totmontant<>$form_mvtmontant)
 						{
 							$tmpl_x->assign("enr_id", $enrid);
+							$tmpl_x->assign("enr_compte", $res["compte"]);
+							$tmpl_x->assign("enr_uid_deb", $d);
+							$tmpl_x->assign("enr_uid_cre", $c);
+							$tmpl_x->assign("enr_posteid", $res["id"]);
 							$tmpl_x->assign("enr_mouvement", $res["description"]);
+							$tmpl_x->assign("enr_tiers",$res_usr->fullname);
 							$tmpl_x->assign("enr_montant", -$form_mvtmontant+$ventil_totmontant);
 							$tmpl_x->assign("enr_affmontant", AffMontant(-$form_mvtmontant+$ventil_totmontant));
 							$tmpl_x->parse("corps.enregistre.lst_enregistre");
@@ -153,7 +160,12 @@
 					else
 					{
 						$tmpl_x->assign("enr_id", $enrid);
+						$tmpl_x->assign("enr_compte", $res["compte"]);
+						$tmpl_x->assign("enr_uid_deb", $d);
+						$tmpl_x->assign("enr_uid_cre", $c);
+						$tmpl_x->assign("enr_posteid", $res["id"]);
 						$tmpl_x->assign("enr_mouvement", $res["description"]);
+						$tmpl_x->assign("enr_tiers",$res_usr->fullname);
 						$tmpl_x->assign("enr_montant", -$form_mvtmontant);
 						$tmpl_x->assign("enr_affmontant", AffMontant(-$form_mvtmontant));
 						$tmpl_x->parse("corps.enregistre.lst_enregistre");
@@ -161,18 +173,14 @@
 					}
 					
 					// Récupère les infos du créditeur
-					$query = "SELECT * FROM ".$MyOpt["tbl"]."_utilisateurs WHERE id=$c";
-					$res_usr=$sql->QueryRow($query);
+					$res_usr = new user_class($c,$sql);
 
+					// Affiche les champs commun
 					$tmpl_x->assign("enr_posteid", $form_mouvement);
 					$tmpl_x->assign("enr_mid", $mid);
 					$tmpl_x->assign("enr_commentaire", $form_commentaire);
 					$tmpl_x->assign("enr_facture", $form_facture);
 					$tmpl_x->assign("enr_date", sql2date($dte));
-					$tmpl_x->assign("enr_compte", $res["compte"]);
-					$tmpl_x->assign("enr_uid_deb", $c);
-					$tmpl_x->assign("enr_uid_cre", $d);
-					$tmpl_x->assign("enr_tiers", AffInfo($res_usr["prenom"],"prenom")." ".AffInfo($res_usr["nom"],"nom"));
 
 
 					$ventil_totmontant=0;
@@ -190,8 +198,16 @@
 								$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE id=$v";
 								$resv=$sql->QueryRow($query);
 								
+								$cv=(($form_tiers_ventil[$i]>0) ? $form_tiers_ventil[$i] : $c);
+								$res_user_vent = new user_class($cv,$sql);
+
 								$tmpl_x->assign("enr_id", $enrid);
+								$tmpl_x->assign("enr_compte", $resv["compte"]);
+								$tmpl_x->assign("enr_uid_deb", $cv);
+								$tmpl_x->assign("enr_uid_cre", $d);
+								$tmpl_x->assign("enr_posteid", $resv["id"]);
 								$tmpl_x->assign("enr_mouvement", $resv["description"]);
+								$tmpl_x->assign("enr_tiers",$res_user_vent->fullname);
 								$tmpl_x->assign("enr_montant", $ventil_montant);
 								$tmpl_x->assign("enr_affmontant", AffMontant($ventil_montant));
 								$tmpl_x->parse("corps.enregistre.lst_enregistre");
@@ -201,7 +217,12 @@
 						if ($ventil_totmontant<>$form_mvtmontant)
 						{
 							$tmpl_x->assign("enr_id", $enrid);
+							$tmpl_x->assign("enr_compte", $res["compte"]);
+							$tmpl_x->assign("enr_uid_deb", $c);
+							$tmpl_x->assign("enr_uid_cre", $d);
+							$tmpl_x->assign("enr_posteid", $res["id"]);
 							$tmpl_x->assign("enr_mouvement", $res["description"]);
+							$tmpl_x->assign("enr_tiers",$res_usr->fullname);
 							$tmpl_x->assign("enr_montant", $form_mvtmontant-$ventil_totmontant);
 							$tmpl_x->assign("enr_affmontant", AffMontant($form_mvtmontant-$ventil_totmontant));
 							$tmpl_x->parse("corps.enregistre.lst_enregistre");
@@ -211,7 +232,12 @@
 					else
 					{
 						$tmpl_x->assign("enr_id", $enrid);
+						$tmpl_x->assign("enr_compte", $res["compte"]);
+						$tmpl_x->assign("enr_uid_deb", $c);
+						$tmpl_x->assign("enr_uid_cre", $d);
+						$tmpl_x->assign("enr_posteid", $res["id"]);
 						$tmpl_x->assign("enr_mouvement", $res["description"]);
+						$tmpl_x->assign("enr_tiers", $res_usr->fullname);
 						$tmpl_x->assign("enr_montant", $form_mvtmontant);
 						$tmpl_x->assign("enr_affmontant", AffMontant($form_mvtmontant));
 						$tmpl_x->parse("corps.enregistre.lst_enregistre");
@@ -262,13 +288,6 @@
 		  		$sql->Insert($query);
 				$nbmvt++;
 				$totmnt=$totmnt+$form_montant[$k];
-				
-				if (is_numeric($idcal))
-				  {
-				  	$query="UPDATE ".$MyOpt["tbl"]."_calendrier SET prix='".(-$form_montant[$k])."' WHERE id=$idcal";
-				  	//echo "$query<BR>";
-				  	$sql->Update($query);
-  				  }
 			  }
 		  }
 
@@ -349,6 +368,7 @@
 				$tmpl_x->assign("nom_tiers", $resusr->fullname);
 				$tmpl_x->assign("chk_tiers", ($form_tiers==$tmpuid) ? "selected" : "");
 				$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_tiers");
+				$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_ventilation.lst_tiers");
 			  }
 
 			$dte=sql2date(current($form_date));
