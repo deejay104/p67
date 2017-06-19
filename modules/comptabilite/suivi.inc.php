@@ -111,11 +111,11 @@
 
 	$query = "SELECT SUM(montant) AS nb FROM p67_compte WHERE uid='".$MyOpt["uid_banque"]."'";
 	$res=$sql->QueryRow($query);
-	$tmpl_x->assign("nouveau_solde", (is_numeric($res["nb"])) ? -$res["nb"] : "0");
+	$tmpl_x->assign("nouveau_solde", (is_numeric($res["nb"])) ? AffMontant(-$res["nb"]) : "-");
 
 	$query = "SELECT SUM(montant) AS nb FROM p67_compte WHERE (pointe='R' OR pointe='P') AND uid='".$MyOpt["uid_banque"]."'";
 	$res=$sql->QueryRow($query);
-	$tmpl_x->assign("pointe_solde", (is_numeric($res["nb"])) ? -$res["nb"] : "0");
+	$tmpl_x->assign("pointe_solde", (is_numeric($res["nb"])) ? AffMontant(-$res["nb"]) : "-");
 
 	$tmpl_x->assign("form_page", "suivi");
  	$tmpl_x->parse("corps.aff_suivi");
