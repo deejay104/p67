@@ -356,6 +356,9 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 /* **** Tableau **** */
 .tableauAff th { background-color: #cccccc; }
 
+/* **** Comptes **** */
+.soldeCompte { padding-top: 5px; border: 1px solid #000000; border-radius: 4px; display: inline-block; position:relative; width:350px; height: 30px; text-align: center;}
+
 /* **** FullCalendar **** */
 	#script-warning {
 		display: none;

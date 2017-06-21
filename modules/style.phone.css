@@ -222,6 +222,18 @@ input[type=submit] { -webkit-appearance: none; -moz-appearance: none; appearance
 
 #actualitesMail { display: none; width: 100%; border: 1px solid #013366; margin-bottom:10px; border-radius: 4px; padding-left:5px; }
 
+/* **** MEMBRES **** */
+
+.membreLigne { border-bottom: 1px solid #75b7e5; margin:2px 10px 0px 10px; clear: both; min-height:72px; }
+.membrePhoto { float: left; margin-left:10px; margin-top:10px; }
+.membrePhoto img { border-radius: 32px; width:64px; height:64px; }
+.membreInfos { display: inline-block; margin-left: 20px; }
+.membreInfos p { margin:0px; padding:8px 0px 12px 30px; line-height:16px; font-size:24px; color:#aaaaaa; }
+.membreInfos a { color:#aaaaaa; }
+.membreFullname { font-size:24px; font-weight: bold; }
+.membreFullname a { color:#000000; }
+
+
 /* **** FORUMS **** */
 
 #forum_Index_Liste { border-top:1px solid #013366; border-bottom:1px solid #013366; background-color: #75b7e5; margin: 5px 0px 0px 0px; padding: 5px 0px 0px 15px; }
@@ -290,6 +302,8 @@ input[type=submit] { -webkit-appearance: none; -moz-appearance: none; appearance
 
 .formulaireTextarea { padding: 0px 20px 5px 20px; }
 
+/* **** Comptes **** */
+.soldeCompte { margin: 5px; border: 1px solid #000000; border-radius: 4px; display: inline-block; position:relative; width:98%; height: 30px; text-align: center;}
 
 /* **** FullCalendar **** */
 	#script-warning {

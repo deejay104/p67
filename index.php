@@ -101,27 +101,31 @@
 // Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; XBLWP7; ZuneWP7)
 // Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J3 Safari/6533.18.5
 
-
 	$theme="";
 	if ($_REQUEST["settheme"]!="")
-	  {	
-	  	$theme=$themes[$_REQUEST["settheme"]];
+	{	
+		$themes["default"]="";
+		$themes["phone"]="phone";
+		
+		$theme=$themes[$_REQUEST["settheme"]];
 		$_SESSION['mytheme']=$theme;
-	  }
+	}
 	else if (isset($_SESSION['mytheme']))
-	  {	$theme=$_SESSION['mytheme']; }
+	{
+		$theme=$_SESSION['mytheme'];
+	}
 	else if ($_SESSION['mytheme']="")
-	  {
+	{
 		if ((preg_match("/CPU iPhone OS/",$_SERVER["HTTP_USER_AGENT"])) ||
 			(preg_match("/Linux; U; Android/",$_SERVER["HTTP_USER_AGENT"])) ||
 			(preg_match("/iPad; U; CPU OS/",$_SERVER["HTTP_USER_AGENT"]))
 		   )
-		  {
+		{
 			$theme="phone";
 			$_SESSION['mytheme']=$theme;
-		  }
+		}
 		
-	  }
+	}
 
 // ---- Charge les variables et fonctions
 	$module="modules".(($default_profile!="") ? ".$default_profile" : "");

@@ -37,7 +37,7 @@
 	$doc = new document_class($id,$sql);
 
 // ---- Delete document
-	if ($_REQUEST["fonc"]=="delete")
+	if ( (isset($_REQUEST["fonc"])) && ($_REQUEST["fonc"]=="delete") )
 	{
 		$doc->delete();
 		echo "<script>opener.location.reload(); window.close();</script>";
@@ -49,6 +49,14 @@
 //	header('Content-Disposition: inline; filename="'.substr($name,strrpos($name,"/")+1,strlen($name)-strrpos($name,"/")).'";');
 
 // ---- Renvoie le contenu du fichier
-	$doc->Download($_REQUEST["GET"]["mode"]);
+
+	if ( (isset($_REQUEST["type"])) && ($_REQUEST["type"]=="image") )
+	{
+		$doc->ShowImage($_REQUEST["width"],$_REQUEST["height"]);
+	}
+	else
+	{
+		$doc->Download($_REQUEST["mode"]);
+	}
 
 ?>

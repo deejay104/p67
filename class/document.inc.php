@@ -261,35 +261,35 @@ class document_class{
 
 		$fname=$this->filepath."/".$this->filename;
 		if (!file_exists($fname))
-		  {
+		{
 		  	$fname="images/icn32_erreur.png";
 		  	$myext="png";
-			}
+		}
 
 		if ($fd = fopen ($fname, "r"))
+		{
+			$fsize = filesize($fname);
+		
+			if ($myext=="jpg")
+			  { header("Content-Type: image/jpeg"); }
+			else if ($myext=="png")
+			  { header("Content-Type: image/png"); }
+			else if ($myext=="pdf")
+			  { header("Content-type: application/pdf"); }
+			else
+			  { header("Content-type: application/octet-stream"); }
+
+			header("Content-Disposition: ".$mode." filename=\"".$this->name."\";");
+			header("Content-length: $fsize");
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header('Pragma: public');
+		
+			while(!feof($fd))
 			{
-		 		$fsize = filesize($fname);
-		    
-				if ($myext=="jpg")
-				  { header("Content-Type: image/jpeg"); }
-				else if ($myext=="png")
-				  { header("Content-Type: image/png"); }
-				else if ($myext=="pdf")
-				  { header("Content-type: application/pdf"); }
-				else
-				  { header("Content-type: application/octet-stream"); }
-	
-				header("Content-Disposition: ".$mode." filename=\"".$this->name."\";");
-				header("Content-length: $fsize");
-				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-				header('Pragma: public');
-	   		
-				while(!feof($fd))
-					{
-						$buffer = fread($fd, 2048);
-						echo $buffer;
-					}
+				$buffer = fread($fd, 2048);
+				echo $buffer;
 			}
+		}
 	}
 
 	function Resize($newwidth,$newheight)
@@ -300,7 +300,7 @@ class document_class{
 	  	list($width, $height) = getimagesize($file);
 		$source = imagecreatefromjpeg($file);
 
-		imageantialias($thumb, true);
+		//imageantialias($thumb, true);
 
 		if ($width<$height)
 		  {
@@ -317,7 +317,64 @@ class document_class{
 
 		imagejpeg($thumb,$file,95);
 		//unlink($file.".tmp");
+	}
 
+	function ShowImage($newwidth,$newheight)
+	{
+		$file=$this->filepath."/".$this->filename;
+
+		if (!file_exists($file))
+		{
+		  	$file="images/icn32_erreur.png";
+		}
+
+		$thumb = imagecreatetruecolor($newwidth, $newheight);
+		$colourBlack = imagecolorallocate($thumb, 0, 0, 0);
+		imagecolortransparent($thumb, $colourBlack);
+
+		if (exif_imagetype($file)==IMAGETYPE_JPEG)
+		{
+			$source = imagecreatefromjpeg($file);
+		}
+/*
+		else if (exif_imagetype($file)==IMAGETYPE_PNG)
+		{
+			$source = imagecreatefrompng($file);
+		}
+
+		else if (exif_imagetype($file)==IMAGETYPE_GIF)
+		{
+			$source = imagecreatefromgif($file);
+		}
+*/
+		else
+		{
+
+			$file="images/icn64_membre.png";
+			$source = imagecreatefrompng($file);
+		}
+
+		list($width, $height) = getimagesize($file);
+		
+		if (($width<$height) && ($newwidth>0))
+		  {
+			$w = $newwidth;
+			$h = floor(($height/$width) * $newwidth );
+			imagecopyresampled($thumb, $source, 0, ($newheight-$h)/2, 0, 0, $w, $h, $width, $height);
+		  }
+		else if (($width>$height) && ($newheight>0))
+		  {
+			$w = floor(($width/$height) * $newheight);
+			$h = $newheight;
+			imagecopyresampled($thumb, $source, 0, 0, 0, 0, $w, $h, $width, $height);
+		  }
+		else
+		  {
+			imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newwidth, $width, $height);
+		  }
+
+		header('Content-Type: image/png');
+		imagepng($source);
 	}
 }
 

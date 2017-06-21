@@ -83,50 +83,69 @@
 	  {
 		if (GetDroit("CreeUser"))
 		  { $tmpl_x->parse("infos.ajout"); }
-		
 
-		$tabTitre=array();
-		$tabTitre["prenom"]["aff"]="Prénom";
-		$tabTitre["prenom"]["width"]=($theme!="phone") ? 150 : 120;
-		$tabTitre["nom"]["aff"]="Nom";
-		$tabTitre["nom"]["width"]=($theme!="phone") ? 200 : 180;
-		if ($theme!="phone")
-		  {
+		$lstusr=ListActiveUsers($sql,"std");
+
+		if ($theme=="phone")
+		{
+			foreach($lstusr as $i=>$id)
+			{
+				$usr = new user_class($id,$sql);
+
+				$tmpl_x->assign("id_membre",$id);
+				$tmpl_x->assign("aff_membre",$usr->aff("fullname"));
+				$tmpl_x->assign("tel_membre",$usr->AffTel());
+				$tmpl_x->assign("mail_membre",$usr->aff("mail"));
+
+				$lstdoc=ListDocument($sql,$id,"avatar");
+				if (count($lstdoc)>0)
+				  {
+					$doc = new document_class($lstdoc[0],$sql);
+					$tmpl_x->assign("id_photo",$lstdoc[0]);
+				  }
+				else
+				  {
+					$tmpl_x->assign("id_photo","0");
+				  }				
+				$tmpl_x->parse("corps.lst_ligne");
+			}
+		}
+		else
+		{
+			$tabTitre=array();
+			$tabTitre["prenom"]["aff"]="Prénom";
+			$tabTitre["prenom"]["width"]=($theme!="phone") ? 150 : 120;
+			$tabTitre["nom"]["aff"]="Nom";
+			$tabTitre["nom"]["width"]=($theme!="phone") ? 200 : 180;
 			$tabTitre["mail"]["aff"]="Mail";
 			$tabTitre["mail"]["width"]=280;
-		  }
-		$tabTitre["telephone"]["aff"]="Téléphone";
-		$tabTitre["telephone"]["width"]=140;
-		if ($theme!="phone")
-		  {
+			$tabTitre["telephone"]["aff"]="Téléphone";
+			$tabTitre["telephone"]["width"]=140;
 			$tabTitre["type"]["aff"]="Type";
 			$tabTitre["type"]["width"]=120;
+
+			$tabValeur=array();
+			foreach($lstusr as $i=>$id)
+			  {
+				$usr = new user_class($id,$sql);
+				$tabValeur[$i]["prenom"]["val"]=$usr->prenom;
+				$tabValeur[$i]["prenom"]["aff"]=$usr->aff("prenom");
+				$tabValeur[$i]["nom"]["val"]=$usr->nom;
+				$tabValeur[$i]["nom"]["aff"]=$usr->aff("nom");
+				$tabValeur[$i]["mail"]["val"]=$usr->mail;
+				$tabValeur[$i]["mail"]["aff"]=$usr->aff("mail");
+				$tabValeur[$i]["telephone"]["val"]=$usr->AffTel();
+				$tabValeur[$i]["telephone"]["aff"]=$usr->AffTel();
+				$tabValeur[$i]["type"]["val"]=$usr->type;
+				$tabValeur[$i]["type"]["aff"]=$usr->aff("type");
+			  }
+
+			if ($order=="") { $order="nom"; }
+			if ($trie=="") { $trie="d"; }
+
+			$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 		  }
-
-
-		$lstusr=ListActiveUsers($sql);
-
-		$tabValeur=array();
-		foreach($lstusr as $i=>$id)
-		  {
-			$usr = new user_class($id,$sql);
-			$tabValeur[$i]["prenom"]["val"]=$usr->prenom;
-			$tabValeur[$i]["prenom"]["aff"]=$usr->aff("prenom");
-			$tabValeur[$i]["nom"]["val"]=$usr->nom;
-			$tabValeur[$i]["nom"]["aff"]=$usr->aff("nom");
-			$tabValeur[$i]["mail"]["val"]=$usr->mail;
-			$tabValeur[$i]["mail"]["aff"]=$usr->aff("mail");
-			$tabValeur[$i]["telephone"]["val"]=$usr->AffTel();
-			$tabValeur[$i]["telephone"]["aff"]=$usr->AffTel();
-			$tabValeur[$i]["type"]["val"]=$usr->type;
-			$tabValeur[$i]["type"]["aff"]=$usr->aff("type");
-		  }
-
-		if ($order=="") { $order="nom"; }
-		if ($trie=="") { $trie="d"; }
-
-		$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
-	  }
+	}
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

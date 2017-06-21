@@ -49,8 +49,8 @@
 	else if ($ok!=3)
 	  {
 		$id="";
-  	if ($heure=="") { $heure="8"; }
-  	if ($jour=="") { $jour=date("Y-m-d"); }
+		if ($heure=="") { $heure="8"; }
+		if ($jour=="") { $jour=date("Y-m-d"); }
 
 		$dte_deb=$jour." ".$heure.":00:00";
 		$dte_fin=$jour." ".($heure+1).":00:00";
@@ -75,7 +75,7 @@
 		$resa["resa"]->uid_ressource=$ress;
 		$resa["resa"]->type=$res_user["type"];
 		$resa["resa"]->uid_maj=$uid;
-	  $resa["resa"]->dte_maj=date("Y-m-d H:i:s");
+		$resa["resa"]->dte_maj=date("Y-m-d H:i:s");
 
 		$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql);
 		$resa["instructeur"]=new user_class($resa["resa"]->uid_instructeur,$sql);
@@ -140,7 +140,7 @@
 	if (date_diff_txt($resa["resa"]->pilote_data["dte_medicale"],date("Y-m-d"))>0)
 	  {
   		$tmpl_x->assign("color_date", "red");
-  		$tmpl_x->assign("texte_date", "La date de renouvellement de votre visite médicale est dépassée. La présence d'un instructeur est obligatoire.");
+  		$tmpl_x->assign("texte_date", "La date de renouvellement de votre visite médicale est dépassée.<br /> La présence d'un instructeur est obligatoire.");
   		$tmpl_x->assign("nom_date", "nouveau certificat médical");
   		$tmpl_x->assign("type_date", "medicale");
   		$tmpl_x->assign("form_date", sql2date($resa["resa"]->pilote_data["dte_medicale"]));
@@ -161,7 +161,7 @@
 	if ( (date_diff_txt($resa["resa"]->pilote_data["dte_licence"],date("Y-m-d"))>0) )
 	  {
   		$tmpl_x->assign("color_date", "red");
-  		$tmpl_x->assign("texte_date", "La date de prorogation de votre licence est dépassée. La présence d'un instructeur est obligatoire.");
+  		$tmpl_x->assign("texte_date", "La date de prorogation de votre licence est dépassée.<br /> La présence d'un instructeur est obligatoire.");
   		$tmpl_x->assign("nom_date", "prorogation");
   		$tmpl_x->assign("type_date", "licence");
   		$tmpl_x->assign("form_date", sql2date($resa["resa"]->pilote_data["dte_licence"]));

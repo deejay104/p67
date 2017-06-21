@@ -1,0 +1,27 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	<a href="membres.php"><IMG src="{path_module}/img/icn32_liste.png" alt="Liste">Liste</a>
+<!-- BEGIN: ajout -->
+<A href="membres.php?rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" alt="Ajouter">Ajouter</A>
+<!-- END: ajout -->
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+
+	<!-- BEGIN: lst_ligne -->
+	<div class="membreLigne">
+		<div class="membrePhoto"><a href="membres.php?rub=detail&id={id_membre}"><img src="doc.php?id={id_photo}&type=image&width=64&height=64" alt=""></a></div>
+		<div class="membreInfos">
+			<div class="membreFullname">{aff_membre}</div>
+			<p>{tel_membre}</p>
+			<p>{mail_membre}</p>
+		</div>
+	</div>
+	<!-- END: lst_ligne -->
+
+<!-- END: corps -->

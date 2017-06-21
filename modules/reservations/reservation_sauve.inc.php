@@ -66,15 +66,15 @@
 		$s=$resa["pilote"]->CalcSolde();
 
 //		if (date_diff_txt($resa["pilote"]->data["dte_medicale"],date("Y-m-d"))>0)
-		if (date_diff_txt($resa["pilote"]->data["dte_medicale"],date("Y-m-d"))>0)
-		if (($resa["pilote"]->data["type"]!="eleve") && (date_diff_txt($resa["pilote"]->data["dte_medicale"],date("Y-m-d"))>0) && ($form_uid_instructeur==0))
+//		if (date_diff_txt($resa["pilote"]->data["dte_medicale"],date("Y-m-d"))>0)
+		if ( (date_diff_txt($resa["pilote"]->data["dte_medicale"],date("Y-m-d"))>0) && ($form_uid_instructeur==0) )
 		  {
 		  	$msg_err.="<u>La date de renouvellement de votre visite médicale est dépassée.</u><br />";
 		  	$msg_err.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Envoyez une photocopie du certificat médicale au président.<br />";
 			$ok=4;
 		  }
 
-		if (($resa["pilote"]->data["type"]!="eleve") && (date_diff_txt($resa["pilote"]->data["dte_licence"],date("Y-m-d"))>0))
+		if ( (date_diff_txt($resa["pilote"]->data["dte_licence"],date("Y-m-d"))>0) && ($form_uid_instructeur==0) )
 		  {
 		  	$msg_err.="<u>La date de prorogation de votre licence est dépassée.</u><br />";
 		  	$msg_err.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Envoyez une photocopie de votre prorogation au président.<br />";
