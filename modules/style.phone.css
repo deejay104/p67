@@ -232,7 +232,8 @@ input[type=submit] { -webkit-appearance: none; -moz-appearance: none; appearance
 .membreInfos a { color:#aaaaaa; }
 .membreFullname { font-size:24px; font-weight: bold; }
 .membreFullname a { color:#000000; }
-
+.membreTel  { font-size:24px; font-weight: bold; padding-left: 20px; }
+.membreMail { font-size:20px;  padding-left: 20px; }
 
 /* **** FORUMS **** */
 
