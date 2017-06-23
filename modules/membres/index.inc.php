@@ -105,7 +105,7 @@
 				  }
 				else
 				  {
-					$tmpl_x->assign("id_photo","0");
+					$tmpl_x->assign("id_photo","-1");
 				  }				
 				$tmpl_x->parse("corps.lst_ligne");
 			}

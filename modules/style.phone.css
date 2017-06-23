@@ -204,9 +204,14 @@ input[type=submit] { -webkit-appearance: none; -moz-appearance: none; appearance
 
 #actualitesMessage { width: 100%; border: 1px solid #013366; min-width: 300px;  margin-bottom:10px; border-radius: 4px;  }
 
-.actualitesTitre { background-color: #75b7e5; color: #013366; font-size:18px; border-radius: 4px 4px 0px 0px;  }
-.actualitesTitre p { width:60%;margin:0px; padding:0px 0px; line-height:16px; padding-left:10px; padding-top:10px; font-size:16px; }
-.actualitesTitre span { margin:0px; padding:0px; font-size:10px; padding-left:30px; }
+.actualitesTitre { display: inline-block; background-color: #75b7e5; color: #013366; font-size:18px; border-radius: 4px 4px 0px 0px; width: 100%; }
+
+.actualitesPhoto { float: left; margin-left:10px; margin-top:5px; }
+.actualitesPhoto img { border-radius: 32px; width:64px; height:64px; }
+
+.actualitesTitreMsg { display: inline-block; float: left; }
+.actualitesTitreMsg p { margin:0px; padding:0px 0px; line-height:16px; padding-left:10px; padding-top:10px; font-size:16px; }
+.actualitesTitreMsg span { margin:0px; padding:0px; font-size:10px; padding-left:30px; }
 
 .actualitesIcones { display: inline-block; position:relative; top:15px; float:right;  }
 .actualitesIcones a { height:28px; padding: 6px; border-radius: 4px; margin: 0px; }

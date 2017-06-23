@@ -49,9 +49,13 @@ class document_class{
 		$this->filepath="documents";
 
 		if ($id>0)
-		  {
+		{
 			$this->load($id);
-		  }
+		}
+		else if ($id==-1)
+		{
+			$this->filename="../images/icn64_membre.png";
+		}
 	}
 
 	# Load document
@@ -329,28 +333,22 @@ class document_class{
 		}
 
 		$thumb = imagecreatetruecolor($newwidth, $newheight);
-		$colourBlack = imagecolorallocate($thumb, 0, 0, 0);
-		imagecolortransparent($thumb, $colourBlack);
 
 		if (exif_imagetype($file)==IMAGETYPE_JPEG)
 		{
 			$source = imagecreatefromjpeg($file);
 		}
-/*
 		else if (exif_imagetype($file)==IMAGETYPE_PNG)
 		{
 			$source = imagecreatefrompng($file);
 		}
-
 		else if (exif_imagetype($file)==IMAGETYPE_GIF)
 		{
 			$source = imagecreatefromgif($file);
 		}
-*/
 		else
 		{
-
-			$file="images/icn64_membre.png";
+			$file="images/icn32_erreur.png";
 			$source = imagecreatefrompng($file);
 		}
 
@@ -374,7 +372,7 @@ class document_class{
 		  }
 
 		header('Content-Type: image/png');
-		imagepng($source);
+		imagepng($thumb);
 	}
 }
 

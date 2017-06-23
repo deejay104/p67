@@ -30,6 +30,8 @@
 ?>
 
 <?
+	require_once ("class/document.inc.php");
+
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("index.htm"));
 
@@ -185,32 +187,43 @@
 
 	$idprev=0;
 	foreach($news as $id=>$d)
-	  {
-	  	$resusr=new user_class($d["uid_creat"],$sql,false,false);
+	{
+		$resusr=new user_class($d["uid_creat"],$sql,false,false);
 
-			$txt=nl2br(htmlentities($d["message"],ENT_HTML5,"ISO-8859-1"));
-			$txt=preg_replace("/((http|https|ftp):\/\/[^ |<]*)/si","<a href='$1' target='_blank'>$1</a>",$txt);
-			$txt=preg_replace("/ (www\.[^ |\/]*)/si","<a href='http://$1' target='_blank'>$1</a>",$txt);
+		$txt=nl2br(htmlentities($d["message"],ENT_HTML5,"ISO-8859-1"));
+		$txt=preg_replace("/((http|https|ftp):\/\/[^ |<]*)/si","<a href='$1' target='_blank'>$1</a>",$txt);
+		$txt=preg_replace("/ (www\.[^ |\/]*)/si","<a href='http://$1' target='_blank'>$1</a>",$txt);
 
-			$tmpl_x->assign("msg_id", $d["id"]);	
-			$tmpl_x->assign("msg_titre", $d["titre"]);	
-			$tmpl_x->assign("msg_message", $txt);	
-			$tmpl_x->assign("msg_autheur", $resusr->Aff("fullname"));	
-			$tmpl_x->assign("msg_date", DisplayDate($d["dte_creat"]));	
+		$tmpl_x->assign("msg_id", $d["id"]);	
+		$tmpl_x->assign("msg_titre", $d["titre"]);	
+		$tmpl_x->assign("msg_message", $txt);	
+		$tmpl_x->assign("msg_autheur", $resusr->Aff("fullname"));	
+		$tmpl_x->assign("msg_date", DisplayDate($d["dte_creat"]));	
 
-			$tmpl_x->assign("msg_idprev", $idprev);	
-			$idprev=$d["id"];
-
-			if (GetDroit("SupprimeActualite"))
-			  {
-						$tmpl_x->parse("corps.aff_message.icn_supprimer");
-				}
-			if ( (($uid==$d["uid_creat"]) && (time()-strtotime($d["dte_creat"])<3600)) || (GetDroit("ModifActualite")) )
-			  {
-						$tmpl_x->parse("corps.aff_message.icn_modifier");
-				}
-			$tmpl_x->parse("corps.aff_message");
+		$lstdoc=ListDocument($sql,$d["uid_creat"],"avatar");
+		if (count($lstdoc)>0)
+		{
+			$doc = new document_class($lstdoc[0],$sql);
+			$tmpl_x->assign("msg_imgusr",$lstdoc[0]);
 		}
+		else
+		{
+			$tmpl_x->assign("msg_imgusr","-1");
+		}				
+
+		$tmpl_x->assign("msg_idprev", $idprev);	
+		$idprev=$d["id"];
+
+		if (GetDroit("SupprimeActualite"))
+		{
+			$tmpl_x->parse("corps.aff_message.icn_supprimer");
+		}
+		if ( (($uid==$d["uid_creat"]) && (time()-strtotime($d["dte_creat"])<3600)) || (GetDroit("ModifActualite")) )
+		{
+			$tmpl_x->parse("corps.aff_message.icn_modifier");
+		}
+		$tmpl_x->parse("corps.aff_message");
+	}
 
   	
 
