@@ -136,8 +136,10 @@
 	  { $ts = 0; }
 	if ($order=="") { $order="date"; }
 	if ($trie=="") { $trie="i"; }
+	$totligne=count($lstresa);
+	$tl=50;
 
-	$tmpl_x->assign("tab_liste",AfficheTableau($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,50));
+	$tmpl_x->assign("tab_liste",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,$tl,$totligne));
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");
