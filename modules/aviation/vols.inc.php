@@ -137,8 +137,7 @@
 		  { $tabValeur[$i]["instructeur"]["val"]="<a href='vols.php?id=".$resa->uid_instructeur."'>".$usrinst->Aff("prenom")." ".$usrinst->Aff("nom")."</a>"; }
 
 	}
-//ini_set('display_errors', 'On');
-echo "'".$totligne;
+
 // ---- Affiche le tableau
 	$tmpl_x->assign("tab_liste",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,$tl,$totligne));
 
