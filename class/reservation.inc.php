@@ -452,25 +452,34 @@ function ListReservationPaye($sql,$id)
 	$res=array();
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
-	  {
+	{
 		$sql->GetRow($i);
 		$res[$i]=$sql->data["id"];
-	  }
+	}
 
 	return $res;
 }	
 
-function ListReservationVols($sql,$id)
+function ListReservationVols($sql,$id,$order="dte_deb",$trie="i",$ts=0,$tl=0)
 { global $MyOpt;
-	$query="SELECT ".$MyOpt["tbl"]."_calendrier.id FROM ".$MyOpt["tbl"]."_calendrier WHERE (".$MyOpt["tbl"]."_calendrier.uid_pilote='$id' OR ".$MyOpt["tbl"]."_calendrier.uid_instructeur='$id') AND ".$MyOpt["tbl"]."_calendrier.tpsreel>0 AND actif='oui' ORDER BY dte_deb DESC";
+	$query="SELECT ".$MyOpt["tbl"]."_calendrier.id FROM ".$MyOpt["tbl"]."_calendrier WHERE (".$MyOpt["tbl"]."_calendrier.uid_pilote='$id' OR ".$MyOpt["tbl"]."_calendrier.uid_instructeur='$id') AND ".$MyOpt["tbl"]."_calendrier.tpsreel>0 AND actif='oui' ".(($order=="dte_deb") ? "ORDER BY ".$order." ".((($trie=="i") || ($trie=="")) ? "DESC" : "") : "")." ".(($tl>0) ? "LIMIT $ts,$tl" : "");
+
 	$res=array();
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
-	  {
+	{
 		$sql->GetRow($i);
 		$res[$i]=$sql->data["id"];
-	  }
+	}
 
 	return $res;
 }	
+
+function ListReservationNbLignes($sql,$id)
+{ global $MyOpt;
+	$query="SELECT COUNT(*) AS nb FROM ".$MyOpt["tbl"]."_calendrier WHERE (".$MyOpt["tbl"]."_calendrier.uid_pilote='$id' OR ".$MyOpt["tbl"]."_calendrier.uid_instructeur='$id') AND ".$MyOpt["tbl"]."_calendrier.tpsreel>0 AND actif='oui'";
+	$res=$sql->QueryRow($query);
+	return $res["nb"];
+}
+
 ?>

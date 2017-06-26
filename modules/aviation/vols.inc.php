@@ -69,10 +69,9 @@
 		$tmpl_x->parse("infos.suiviVols");
 	}
 
-// ---- Création de la table
 	$tabTitre=array();
-	$tabTitre["date"]["aff"]="Date";
-	$tabTitre["date"]["width"]=($theme=="phone") ? 120 : 220 ;
+	$tabTitre["dte_deb"]["aff"]="Date";
+	$tabTitre["dte_deb"]["width"]=($theme=="phone") ? 120 : 220 ;
 	$tabTitre["immat"]["aff"]="Immat";
 	$tabTitre["immat"]["width"]=75;
 	$tabTitre["tpsreel"]["aff"]="Bloc";
@@ -87,10 +86,17 @@
 		$tabTitre["instructeur"]["width"]=270;
 	  }
 
-	$lstresa=ListReservationVols($sql,$id);
-
+// ---- Chargement des données
+	if ($order=="") { $order="dte_deb"; }
+	if ($trie=="") { $trie="i"; }
+	if (!is_numeric($ts))
+	  { $ts = 0; }
+	$tl=40;
+	$lstresa=ListReservationVols($sql,$id,$order,$trie,$ts,$tl);
 	$usr=new user_class($id,$sql);
 	$tmpl_x->assign("username",$usr->Aff("prenom")." ".$usr->Aff("nom"));
+
+	$totligne=ListReservationNbLignes($sql,$id);
 	
 	$tabresa=array();
 	foreach($lstresa as $i=>$rid)
@@ -111,8 +117,8 @@
 		else
 		  { $dte=$t1; }
 
-		$tabValeur[$i]["date"]["val"]=strtotime($resa->dte_deb);
-		$tabValeur[$i]["date"]["aff"]="<a href='reservations.php?rub=reservation&id=$rid'>".$dte."</a>";
+		$tabValeur[$i]["dte_deb"]["val"]=strtotime($resa->dte_deb);
+		$tabValeur[$i]["dte_deb"]["aff"]="<a href='reservations.php?rub=reservation&id=$rid'>".$dte."</a>";
 		$tabValeur[$i]["immat"]["val"]=$ress->nom;
 		$tabValeur[$i]["immat"]["aff"]="<a href='reservations.php?rub=reservation&id=$rid'>".$ress->immatriculation."</a>";
 		$tabValeur[$i]["tpsreel"]["val"]=$resa->tpsreel;
@@ -131,15 +137,11 @@
 		  { $tabValeur[$i]["instructeur"]["val"]="<a href='vols.php?id=".$resa->uid_instructeur."'>".$usrinst->Aff("prenom")." ".$usrinst->Aff("nom")."</a>"; }
 
 	}
-
-	if (!is_numeric($ts))
-	  { $ts = 0; }
-	if ($order=="") { $order="date"; }
-	if ($trie=="") { $trie="i"; }
-	$totligne=count($lstresa);
-	$tl=50;
-
+//ini_set('display_errors', 'On');
+echo "'".$totligne;
+// ---- Affiche le tableau
 	$tmpl_x->assign("tab_liste",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,$tl,$totligne));
+
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

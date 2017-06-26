@@ -564,7 +564,7 @@ function TrieValInv ($a, $b)
 
 */
 
-function AfficheTableauFiltre($tabValeur,$tabTitre="",$order="",$trie="",$url="",$start=0,$limit="",$nbline=0)
+function AfficheTableauFiltre($tabValeur,$tabTitre="",$order="",$trie="",$url="",$start=0,$limit=0,$nbline=0)
   {global $mod,$rub;
 	$myColor[50]="E7E7E7";
 	$myColor[55]="FFB1B1";
