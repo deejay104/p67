@@ -31,6 +31,7 @@
 
 <?
 	require_once ("class/document.inc.php");
+	require_once ("class/echeance.inc.php");
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("index.htm"));
@@ -105,13 +106,26 @@
 		$tmpl_x->parse("corps.mod_aviation_detail");		
 	}
 
+// ---- Affiche les échéances
+		$lstdte=ListEcheance($sql,$gl_uid);
+		  	
+		if (is_array($lstdte))
+		{
+			foreach($lstdte as $i=>$did)
+			  {
+				$dte = new echeance_class($did,$sql,$gl_uid);
+				$dte->editmode=($typeaff=="form") ? "edit" : "html";
+				$tmpl_x->assign("form_echeance",$dte->Affiche());
+				$tmpl_x->parse("corps.lst_echeance");
+			  }
+		}
 
 
 // ---- Derniers message des forums
 
   $query = "SELECT COUNT(forums.id) AS nb FROM ".$MyOpt["tbl"]."_forums AS forums LEFT JOIN ".$MyOpt["tbl"]."_forums_lus AS forums_nonlus ON forums_nonlus.forum_usr=$uid AND forums.id=forums_nonlus.forum_msg WHERE forums_nonlus.forum_msg IS NULL";
 	$res=$sql->QueryRow($query);
-	$tmpl_x->assign("nb_nonlus",(($res["nb"]>1) ? $res["nb"]." messages" : (($res["nb"]==1) ? $res["nb"]." message" : "Pas de nouveau message")));
+	$tmpl_x->assign("nb_nonlus",(($res["nb"]>1) ? $res["nb"]." messages" : (($res["nb"]==1) ? $res["nb"]." message" : "Aucun")));
 	$tmpl_x->assign("color_nonlus",($res["nb"]>0) ? "red" : "black");
 
 

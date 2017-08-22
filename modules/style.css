@@ -161,7 +161,7 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 	margin-bottom: 10px;
 	font-size: 14px; 
 	color: #000000; 
-	font-weight: bold;
+	font-weight: normal;
 	text-decoration: none;
 	background-color: #BBFFAA;
 	border: 1px solid #000000;
@@ -175,9 +175,22 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 	margin-bottom: 10px;
 	font-size: 14px; 
 	color: #000000; 
-	font-weight: bold;
+	font-weight: normal;
 	text-decoration: none;
 	background-color: #FFBBAA;
+	border: 1px solid #000000;
+	border-radius: 5px;
+}
+.msgwarning {
+	width: 680px;
+	padding: 4px 4px 4px 40px;
+	margin-left: 50px;
+	margin-bottom: 10px;
+	font-size: 14px; 
+	color: #000000; 
+	font-weight: normal;
+	text-decoration: none;
+	background-color: #ffe49c;
 	border: 1px solid #000000;
 	border-radius: 5px;
 }
@@ -199,7 +212,7 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 /* **** Actualités **** */
 .cadreinfos { left:60%; width:40%; float:right; }
 .encadreInfos { min-width: 300px; border: 1px solid #013366; border-radius: 5px; padding: 0px 0px 10px 0px; margin-bottom:10px; }
-.encadreInfos label { display: inline-block; width: 60%; text-align: left; vertical-align: top; }
+.encadreInfos label { display: inline-block; width: 60%; text-align: left; vertical-align: top; padding-left: 20px; }
 .encadreInfos span { display: inline-block; width: 40%; text-align: left; vertical-align: top; }
 .encadreInfos p { line-height: 16px; margin: 5px 10px 0px 10px;  }
 .encadreTitre { background-color: #dddddd; padding: 10px 10px 30px 10px; font-size:18px; height:26px; margin-bottom: 10px; border-radius: 5px 5px 0px 0px; }

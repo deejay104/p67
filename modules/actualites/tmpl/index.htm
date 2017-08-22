@@ -57,13 +57,15 @@
 	<div class="encadreInfos">
 		<div class="encadreTitre">Informations Personnelles</div>
   
-<!-- BEGIN: mod_aviation_detail -->
-	  <p><label>Solde du compte pilote</label>{solde}</p>
-	  <p><label>Expiration de la licence</label>{dte_licence}</p>
-	  <p><label>Expiration de la visite médicale</label>{dte_medicale}</p>
-	  <p><label>Nombre de vols dans les 3 derniers mois</label>{nb_vols} vols</p>
-<!-- END: mod_aviation_detail -->
-	  <p><label><A href="forums.php">Nombre de documents non lus</A></label><span><A href="forums.php" class="{color_nonlus}">{nb_nonlus}</A></span></p>
+		<!-- BEGIN: mod_aviation_detail -->
+		<p><label>Solde du compte pilote</label>{solde}</p>
+		<p><label>Nombre de vols dans les 3 derniers mois</label>{nb_vols} vols</p>
+		<!-- END: mod_aviation_detail -->
+		<p><label><A href="forums.php">Nombre de documents non lus</A></label><span><A href="forums.php" class="{color_nonlus}">{nb_nonlus}</A></span></p>
+		<div style="height: 4px;"></div>
+		<!-- BEGIN: lst_echeance -->
+		<p>{form_echeance}</p>
+		<!-- END: lst_echeance -->
 	</div>
 
 <!-- BEGIN: aff_manips -->

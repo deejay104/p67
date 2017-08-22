@@ -663,18 +663,13 @@ class user_class{
 			{ $ret="<A href=\"mailto:".strtolower($ret)."\">".strtolower($ret)."</A>"; }
 			else if (($key=="dte_licence") || ($key=="dte_medicale"))
 			{
-				$ret=sql2date($ret);
-				if ($txt!="0000-00-00")
-				  {
-					if (date_diff_txt($txt,date("Y-m-d"))>0)
-					  { $ret="<B><font color=\"red\">$ret</font></B>"; }
-					else if (date_diff_txt($txt,date("Y-m-d"))>-30*24*3600)
-					  { $ret="<B><font color=\"orange\">$ret</font></B>"; }
-				  }
-				else
-				  {	$ret="-"; }
+				$ret=AffDate($ret);
 			}
-			else if (($key=="dte_naissance") || ($key=="dte_inscription"))
+			else if ($key=="dte_naissance")
+			{
+				$ret=sql2date($ret)." (".(date("Y")-date("Y",strtotime($ret))-1)." ans)";
+			}
+			else if ($key=="dte_inscription")
 			{
 				$ret=sql2date($ret);
 			}
@@ -1064,7 +1059,7 @@ class user_class{
 			  }
 
 			$sql=$this->sql;
-			$query = "SELECT COUNT(*) AS nb FROM ".$this->tbl."_utilisateurs WHERE initiales='".$vv."' AND id<>'$this->uid' AND actif='oui'";
+			$query = "SELECT COUNT(*) AS nb FROM ".$this->tbl."_utilisateurs WHERE initiales='".$vv."' AND id<>'".$this->uid."' AND actif='oui'";
 			$res = $sql->QueryRow($query);
 			if (($res["nb"]>0) && ($ret==false) && ($v!=""))
 			  {

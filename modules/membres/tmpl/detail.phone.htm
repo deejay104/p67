@@ -29,12 +29,13 @@
 <INPUT type="hidden" name="id" value="{id}">
 <INPUT type="hidden" name="checktime" value="{form_checktime}">
 
-<br />
 <p class="lastupdate">Dernière mise à jour : {info_maj}</p>
 <!-- BEGIN: mod_aviation_detail -->
+<div class="formulaire">
 <p>Solde du compte pilote : {solde}<br />
 Nombre d'heure de vol : {nbheurevol}<br />
 (dont {nbheuresan} depuis le début de l'année et {nbheuresderan} dans les 12 derniers mois précédant la prorogation).</p>
+</div>
 <!-- END: mod_aviation_detail -->
 
 
@@ -96,10 +97,6 @@ Nombre d'heure de vol : {nbheurevol}<br />
 		<label for="ville">Ville :</label>
 		{form_ville}
 	</p>
-	<p>
-		<label for="zone">Zone :</label>
-		{form_zone}
-	</p>
 </div>
 
 <div class="formulaireTitre">Photos</div>
@@ -116,10 +113,18 @@ Nombre d'heure de vol : {nbheurevol}<br />
 
 <div class="formulaireTitre">Documents</div>
 
-<div class="formulaire">
+<div class="formulaire" style="padding-left: 20px;">
 	<!-- BEGIN: lst_document -->
 	<p>{form_document}</p>
 	<!-- END: lst_document -->
+</div>
+
+<div class="formulaireTitre">Echéances</div>
+
+<div class="formulaire" style="padding-left: 20px;">
+	<!-- BEGIN: lst_echeance -->
+	<p>{form_echeance}</p>
+	<!-- END: lst_echeance -->
 </div>
 
 
@@ -132,6 +137,12 @@ Nombre d'heure de vol : {nbheurevol}<br />
 		{form_type}
 	</p>
 	<!-- END: type -->
+	<!-- BEGIN: mod_creche_zone -->
+	<p>
+	<label for="zone">Zone :</label>
+	{form_zone}
+	</p>
+	<!-- END: mod_creche_zone -->
 	<!-- BEGIN: mod_creche_enfant -->
 	<p>
 		<label for="pere">Père</label>

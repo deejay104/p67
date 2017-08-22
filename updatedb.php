@@ -826,8 +826,47 @@
 		UpdateDB($sql,$nver);
 	}
 
+// ----
+	$nver=466;
+	if ($ver<$nver)
+	{
+	  	$sql=array();
+		$sql[]="CREATE TABLE `".$MyOpt["tbl"]."_echeance` (`id` bigint(20) UNSIGNED NOT NULL,`typeid` int(10) UNSIGNED NOT NULL,`uid` int(10) UNSIGNED NOT NULL,`dte_echeance` date NOT NULL,`paye` ENUM('oui','non') NOT NULL DEFAULT 'non', `actif` ENUM('oui','non') NOT NULL DEFAULT 'oui',`dte_create` datetime NOT NULL,`uid_create` int(10) UNSIGNED NOT NULL,`dte_maj` datetime NOT NULL,`uid_maj` int(10) UNSIGNED NOT NULL) ENGINE=InnoDB";
+		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_echeance` ADD INDEX ( `typeid` ) ;";
+		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_echeance` ADD INDEX ( `uid` ) ;";
 
-	
+		$sql[]="CREATE TABLE `".$MyOpt["tbl"]."_echeancetype` ( `id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `description` VARCHAR(100) NOT NULL , `poste` INT NOT NULL , `cout` DECIMAL(10,2) NOT NULL DEFAULT '0', `resa` ENUM('obligatoire','instructeur','facultatif') NOT NULL, `droit` VARCHAR(3) NOT NULL , `multi` ENUM('oui','non') NOT NULL DEFAULT 'non' , PRIMARY KEY (`id`)) ENGINE = InnoDB;";
+		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_echeance` ADD INDEX ( `poste` ) ;";
+		
+		// Convertir toutes les dates actuelles en échéances
+		// Créé le type d'échéances
+		// - Médicale
+		// - PPL
+		$sql[]="INSERT INTO ".$MyOpt["tbl"]."_echeancetype SET description='SEP', resa='instructeur',multi='non';";
+		$sql[]="INSERT INTO ".$MyOpt["tbl"]."_echeancetype SET description='Certificat Médical', resa='instructeur',multi='non';";
+		UpdateDB($sql,$nver);		
+		
+		// Liste des users
+		//   Pour chacun ajouter les 2 dates si la date éxiste
+		$query="SELECT id,dte_licence,dte_medicale FROM `".$MyOpt["tbl"]."_utilisateurs";
+		$mysql->Query($query);
+		$tabEcheance=array();
+		for($i=0; $i<$mysql->rows; $i++)
+		  { 
+				$mysql->GetRow($i);
+				$tabEcheance[$mysql->data["id"]][1]=$mysql->data["dte_licence"];
+				$tabEcheance[$mysql->data["id"]][2]=$mysql->data["dte_medicale"];
+		  }
+		foreach ($tabEcheance as $uid=>$d)
+		{
+			$q="INSERT INTO ".$MyOpt["tbl"]."_echeance SET typeid='1',uid='".$uid."',dte_echeance='".$d[1]."';";
+			$mysql->Insert($q);
+			$q="INSERT INTO ".$MyOpt["tbl"]."_echeance SET typeid='2',uid='".$uid."',dte_echeance='".$d[2]."';";
+			$mysql->Insert($q);
+		}
+		
+	}
+
 // *********************************************************************************************************
 
 	echo "<a href='".$MyOpt["host"]."'>-Retour au site-</a>";

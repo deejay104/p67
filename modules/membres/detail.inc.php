@@ -35,6 +35,8 @@
 	  { FatalError("Accès non autorisé (AccesMembre)"); }
 
 	require_once ("class/document.inc.php");
+	require_once ("class/echeance.inc.php");
+
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("detail.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
@@ -53,61 +55,84 @@
 
 // ---- Sauvegarde les infos
 	if (($fonc=="Enregistrer") && (($id=="") || ($id==0)) && ((GetDroit("CreeUser"))) && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
+	{
 		$usr->Create();
 		$id=$usr->uid;
-	  }
+	}
 	else if (($fonc=="Enregistrer") && ($id=="") && (isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
+	{
 		$mod="membres";
 		$affrub="index";
-	  }
+	}
 
 	if (($fonc=="Enregistrer") && ((GetMyId($id)) || (GetDroit("ModifUserSauve"))) && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
+	{
 		// Sauvegarde les données
 		if (count($form_info)>0)
-		  {
+		{
 			foreach($form_info as $k=>$v)
 		  	  {
 		  		$msg_erreur.=$usr->Valid($k,$v);
 		  	  }
-		  }
+		}
 
-		$usr->Save($uid);
+		$usr->Save();
 		$msg_confirmation.="Vos données ont été enregistrées.<BR>";
 
 		// Sauvegarde la photo
 		$form_photo=$_FILES["form_photo"];
 		if ($form_photo["name"]!="")
-		  {
+		{
 			$lstdoc=ListDocument($sql,$id,"avatar");
 		  	
 			if (count($lstdoc)>0)
-			  {
+			{
 				foreach($lstdoc as $i=>$did)
-				  {
+				{
 					$doc = new document_class($did,$sql);
 					$doc->Delete();
-				  }
-			  }
+				}
+			}
 		  	$doc = new document_class(0,$sql,"avatar");
 		  	$doc->droit="ALL";
 		  	$doc->Save($id,$_FILES["form_photo"]);
-				$doc->Resize(200,240);
+			$doc->Resize(200,240);
 
 			//$msg_erreur.=$usr->SavePicture($form_photo["name"],$form_photo["tmp_name"],$form_photo["type"]);
-		  }
+		}
 
 		// Sauvegarde un document
 		if ($_FILES["form_adddocument"]["name"]!="")
-		  {
+		{
 		  	$doc = new document_class(0,$sql);
 		  	$doc->Save($id,$_FILES["form_adddocument"]);
-		  }
+		}
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
-	  }
+		
+		// Sauvegarde des échéances
+		if (is_array($form_echeance))
+		{
+			foreach($form_echeance as $i=>$d)
+			{
+				$dte = new echeance_class($i,$sql);
+				if ($i==0)
+				{
+					$dte->typeid=$form_echeance_type;
+					$dte->uid=$id;
+				}
+				if ($d!='')
+				{
+					$dte->dte_echeance=$d;
+					$dte->Save();
+				}
+				else
+				{
+					$dte->Delete();
+				}
+			}
+		}
+	}
 
 	// Sauvegarde le lache
 	if (($fonc=="Enregistrer") && ($id>0) && (GetDroit("ModifUserLache")))
@@ -296,7 +321,30 @@
 				$tmpl_x->parse("corps.lst_document");
 			  }
 		  }
-	  }
+
+		// ---- Affiche les échéances
+		$lstdte=ListEcheance($sql,$id);
+
+		if ($typeaff=="form")
+		{
+			$dte = new echeance_class(0,$sql,$id);
+			$dte->editmode="form";
+			$tmpl_x->assign("form_echeance",$dte->Affiche());
+			$tmpl_x->parse("corps.lst_echeance");
+		}
+		  	
+		if (is_array($lstdte))
+		  {
+			foreach($lstdte as $i=>$did)
+			  {
+				$dte = new echeance_class($did,$sql,$id);
+				$dte->editmode=($typeaff=="form") ? "edit" : "html";
+				$tmpl_x->assign("form_echeance",$dte->Affiche());
+				$tmpl_x->parse("corps.lst_echeance");
+			  }
+		  }
+
+	}
 
 // ---- Messages
 	if ($msg_erreur!="")

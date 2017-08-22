@@ -76,7 +76,7 @@
 	$ok=0;
 	$errmsg="";
 	
-	if ($fonc == "Login")
+	if ($fonc == "Connecter")
 //	if ($username!="")
 	  {
 		if ($password=="") { $password="nok"; }

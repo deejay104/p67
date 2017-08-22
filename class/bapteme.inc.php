@@ -113,7 +113,7 @@ class bapteme_class{
 		$query="UPDATE ".$this->tbl."_bapteme SET actif='non', uid_maj='$uid', dte_maj='".now()."' WHERE id='$this->id'";
 		$this->id=$sql->Update($query);
 
-		$query="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', '".$this->tbl."_bapteme', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete bapteme')";
+		$query="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'bapteme', '".$this->tbl."_bapteme', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete bapteme')";
 		$sql->Insert($query);
 	}
 
@@ -298,7 +298,7 @@ class bapteme_class{
 
 		$sql->Update($query);
 
-		$query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', '".$this->tbl."_bapteme', '".$this->id."', '$uid', '".now()."', 'MOD', 'Modify bapteme')";
+		$query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'bapteme', '".$this->tbl."_bapteme', '".$this->id."', '$uid', '".now()."', 'MOD', 'Modify bapteme')";
 		$sql->Insert($query);
 	}
 

@@ -30,15 +30,15 @@
 <?
 
 	if (GetDroit("AccesPageMouvements"))
-	  {
+	{
 	  	$affrub="mouvement";
-	  }
+	}
 	else if (GetDroit("AccesPageSuivi"))
-	  {
+	{
 	  	$affrub="suivi";
-	  }
+	}
 	else if (GetDroit("AccesPageTableauBord"))
-	  {
+	{
 	  	$affrub="tableaubord";
-	  }
+	}
 ?>

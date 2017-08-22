@@ -11,7 +11,6 @@ $tabRoles["AccesExport"]="Accès à la page des exports";
 $tabRoles["AccesFactures"]="Accès à la liste des factures";
 $tabRoles["AccesComptes"]="Accès au module de comptabilité";
 $tabRoles["AccesPageMouvements"]="Accès à la page de saisi d'un mouvement";
-$tabRoles["AccesPagePostes"]="Accès à la page de modification des postes";
 $tabRoles["AccesPageVols"]="Accès à la page des vols (saisi des vols)";
 $tabRoles["AccesPageSuivi"]="Accès à la page de suivi des comptes";
 $tabRoles["AccesPageListeComptes"]="Accès à la page de la liste des comptes";
@@ -30,6 +29,8 @@ $tabRoles["AccesPlage"]="Accès à la page de configuration des plages horaires";
 $tabRoles["AccesConfigGroupes"]="Accès à la page de configuration des groupes";
 $tabRoles["AccesConfiguration"]="Accès à la page de configuration des variables";
 $tabRoles["AccesSuiviVols"]="Accès au suivi des vols des membres";
+$tabRoles["AccesConfigEcheances"]="Accès à la gestion des échéances";
+$tabRoles["AccesConfigPostes"]="Accès à la page de modification des postes";
 
 $tabRoles["ModifUser"]="Ouvre la modification des informations des membres";
 $tabRoles["ModifUserSauve"]="Sauvegarder la fiche d'un membre";

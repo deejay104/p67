@@ -1,0 +1,94 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	<A href="index.php?mod=admin"><IMG src="{path_module}/img/icn32_config.png" border=0 alt="Fichier de configuration">Configuration</A>
+	<A href="index.php?mod=admin&rub=groupes"><IMG src="{path_module}/img/icn32_groupes.png" border=0 alt="Gestion des groupes">Groupes</A>
+	<A href="index.php?mod=admin&rub=echeances"><IMG src="{path_module}/img/icn32_groupes.png" border=0 alt="Gestion des échéances"><u>Echéances</u></A>
+	<A href="index.php?mod=admin&rub=postes"><IMG src="{path_module}/img/icn32_param.png" border=0 alt="Gestion des postes de mouvement comptable">Postes</A>
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+<form name="echeance" method="post" action="index.php" enctype="multipart/form-data">
+	<input type="hidden" name="checktime" value="{form_checktime}">
+	<input type="hidden" name="mod" value="admin">
+	<input type="hidden" name="rub" value="echeances">
+
+	<table>
+	  <TR height="20">
+		<TD width="20">&nbsp;</TD>
+		<TD width="260"><B>Description</B></TD>
+		<TD width="120"><B>Réservation</B></TD>
+		<TD width="410"><B>Poste</B></TD>
+		<TD width="90"><B>Cout</B></TD>
+		<TD width="90"><B>Droit</B></TD>
+		<TD width="90"><B>Multi</B></TD>
+	  </TR>
+	<!-- BEGIN: lst_echeance -->
+	<tr>
+		<td width=20>&nbsp;</TD>
+		<td>
+			<INPUT type="text" name="form_description[{form_id}]" style="width:250px;" value="{form_description}">
+		</td>
+		<td>
+			<select name="form_resa[{form_id}]">
+			<option value="facultatif" {select_resa_facultatif}>Facultatif</option>
+			<option value="instructeur" {select_resa_instructeur}>Instructeur</option>
+			<option value="obligatoire" {select_resa_obligatoire}>Obligatoire</option>
+			</select>
+		</td>
+		<td>
+			<INPUT type="text" name="form_poste[{form_id}]" style="width:400px;" value="{ordre_poste}">
+		</td>
+		<td>
+			<INPUT type="text" name="form_cout[{form_id}]" style="width:80px;" value="{form_cout}">
+		</td>
+		<td>
+			<INPUT type="text" name="form_droit[{form_id}]" style="width:50px;" value="{form_droit}" maxlength="3">
+		</td>
+		<td>
+			<select name="form_multi[{form_id}]">
+			<option value="non" {select_multi_non}>Non</option>
+			<option value="oui" {select_multi_oui}>Oui</option>
+			</select>
+		</td>
+	</tr>
+	<!-- END: lst_echeance -->
+	<tr>
+		<td width=20>&nbsp;</TD>
+		<td>
+			<INPUT type="text" name="form_description[0]" style="width:250px;" value="">
+		</td>
+		<td>
+			<select name="form_resa[0]">
+			<option value="facultatif">Facultatif</option>
+			<option value="instructeur">Instructeur</option>
+			<option value="obligatoire">Obligatoire</option>
+			</select>
+		</td>
+		<td>
+			<INPUT type="text" name="form_poste[0]" style="width:400px;" value="">
+		</td>
+		<td>
+			<INPUT type="text" name="form_cout[0]" style="width:80px;" value="">
+		</td>
+		<td>
+			<INPUT type="text" name="form_droit[0]" style="width:50px;" value="" maxlength="3">
+		</td>
+		<td>
+			<select name="form_multi[0]">
+			<option value="non">Non</option>
+			<option value="oui">Oui</option>
+			</select>
+		</td>
+	</tr>
+
+	<tr>
+		<TD width="20">&nbsp;</TD>
+		<TD colspan="6"><br /><INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler"></TD>
+	  </tr>
+	</table>
+</form>
+<!-- END: corps -->

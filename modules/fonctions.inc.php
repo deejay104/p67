@@ -138,118 +138,16 @@ function AffInitiales($res)
 
 function AffInfo($txt,$key,$typeaff="html",$cond=true)
   {
-	if ($key=="prenom")
-	  { $ret=ucwords($txt); }
-	else if ($key=="nom")
-	  { $ret=strtoupper($txt); }
-	else if ($key=="fullname")
-	  { $ret=strtoupper($txt); }
-	else if ($key=="mail")
-	  { $ret=strtolower($txt); }
-	else if ($key=="initiales")
-	  { $ret=strtoupper($txt); }
-	else if ($key=="ville")
-	  { $ret=strtoupper($txt); }
-	else if (($key=="tel_fixe") || ($key=="tel_portable") || ($key=="tel_bureau"))
-	  { $ret=AffTelephone($txt); }
-	else if ($key=="type")
-	  { $ret=ucwords($txt); }
-	else if ($key=="aff_rapide")
-	  { $ret=($txt=="n") ? "Normal" : "Rapide"; }
-	else if (($key=="dte_licence") || ($key=="dte_medicale") || ($key=="dte_naissance"))
-	  { $ret=sql2date($txt); }
-	else
-	  { $ret=$txt; }
-
-	// Défini les droits de modification des utilisateurs
-	$mycond=$cond;				// Le user a le droit de modifier toutes ses données
-	$tabdef["INS"]=false;			// TRE n'a le droit de modifier aucun champs
-	$tabdef["TRE"]=false;			// TRE n'a le droit de modifier aucun champs
-	$tabdef["PRE"]=false;			// TRE n'a le droit de modifier aucun champs
-	$tabdef["USR"]=true;			// USR a le droit de modifier tous les champs
-
-	$tabcond["_ME"]["decouvert"]=-1;
-	$tabcond["_ME"]["dte_licence"]=-1;
-	$tabcond["_ME"]["dte_medicale"]=-1;
-	$tabcond["USR"]["decouvert"]=-1;
-	$tabcond["USR"]["dte_licence"]=-1;
-	$tabcond["USR"]["dte_medicale"]=-1;
-	$tabcond["TRE"]["decouvert"]=1;
-	$tabcond["PRE"]["decouvert"]=1;
-	$tabcond["PRE"]["dte_licence"]=1;
-	$tabcond["PRE"]["dte_medicale"]=1;
-
-	// Prend les droits par défaut
-	foreach($tabdef as $d=>$t)
-	  {
-		if ((GetDroit($d)) && (!$cond))
-		  { $mycond=$t; }
-	  }
-
-	// Surclasse les droits par défaut par les droits du user
-	foreach($tabcond as $d=>$t)
-	  {
-		if (($t[$key]==-1) && ( (($d=="_ME") && ($cond)) || (GetDroit($d)) ) )
-		  { $mycond=false; }
-
-		if (($t[$key]==1) && ( (($d=="_ME") && ($cond)) || (GetDroit($d)) ) )
-		  { $mycond=true; }
-	  }
-
-	if ($typeaff=="html")
-	  {
-		if ($key=="commentaire")
-	  	  { $ret=nl2br(htmlentities($ret)); }
-		else if ($key=="mail")
-	  	  { $ret="<A href=\"mailto:".strtolower($ret)."\">".strtolower($ret)."</A>"; }
-		else if (($key=="dte_licence") || ($key=="dte_medicale"))
-	  	  {
-	  	  	if ($txt!="0000-00-00")
-	  	  	  {
-		  	  	if (date_diff($txt,date("Y-m-d"))>0)
-		  	  	  { $ret="<B><FONT color=\"red\">$ret</A></B>"; }
-		  	  	else if (date_diff($txt,date("Y-m-d"))>-30*24*3600)
-		  	  	  { $ret="<B><FONT color=\"orange\">$ret</A></B>"; }
-			  }
-			else
-			  {	$ret="-"; }
-	  	  }
-	  }
-	else if (($typeaff=="form") && ($mycond))
-	  {
-		if ($key=="commentaire")
-	  	  { $ret="<TEXTAREA name=\"form_info[$key]\" cols=60 rows=5>$ret</TEXTAREA>"; }
-		else if ($key=="type")
-	  	  {
-	  	  	$ret ="<SELECT name=\"form_info[$key]\">";
-	  	  	$ret.="<OPTION value=\"pilote\" ".(($txt=="pilote")?"selected":"").">Pilote</OPTION>";
-	  	  	$ret.="<OPTION value=\"eleve\" ".(($txt=="eleve")?"selected":"").">Elève</OPTION>";
-	  	  	$ret.="<OPTION value=\"instructeur\" ".(($txt=="instructeur")?"selected":"").">Instructeur</OPTION>";
-	  	  	$ret.="<OPTION value=\"membre\" ".(($txt=="membre")?"selected":"").">Membre</OPTION>";
-	  	  	$ret.="<OPTION value=\"invite\" ".(($txt=="invite")?"selected":"").">Invité</OPTION>";
-	  	  	$ret.="</SELECT>";
-	  	  }
-		else if ($key=="aff_rapide")
-	  	  {
-	  	  	$ret ="<SELECT name=\"form_info[$key]\">";
-	  	  	$ret.="<OPTION value=\"n\" ".(($txt=="n")?"selected":"").">Normal</OPTION>";
-	  	  	$ret.="<OPTION value=\"y\" ".(($txt=="y")?"selected":"").">Rapide</OPTION>";
-	  	  	$ret.="</SELECT>";
-	  	  }
-		else
-		  { $ret="<INPUT name=\"form_info[$key]\" value=\"$ret\">"; }
-	  }
-
-	return $ret;
+	return "*Fonction AffInfo supprimée*";
   }
 
 function MyMail($from,$to,$tabcc,$subject,$message,$headers="",$files="")
 { global $MyOpt;
 
 	if (is_array($from))
-  {
-	 	$me=$from["name"];
-	  $fromadd=$from["mail"];
+	{
+		$me=$from["name"];
+		$fromadd=$from["mail"];
 	}
 	else
 	{
@@ -267,18 +165,28 @@ function MyMail($from,$to,$tabcc,$subject,$message,$headers="",$files="")
 	//Create a new PHPMailer instance
 	$mail = new PHPMailer;
 
-
 	if ($MyOpt["mail"]["smtp"]==1)
 	{
 		// Set PHPMailer to use SMTP transport
 		$mail->isSMTP();
+
+		$mail->SMTPOptions = array(
+			'ssl' => array(
+				'verify_peer' => false,
+				'verify_peer_name' => false,
+				'allow_self_signed' => true
+			)
+		);
+
 		//Set the hostname of the mail server
 		$mail->Host = $MyOpt["mail"]["host"];
 		//Set the SMTP port number - likely to be 25, 465 or 587
 		$mail->Port = $MyOpt["mail"]["port"];
+		echo $MyOpt["mail"]["port"];
 		// Do not close connection to SMTP
 		$mail->SMTPKeepAlive = true;
 		//Whether to use SMTP authentication
+		$mail->SMTPAuth = false;
 		if ($MyOpt["mail"]["username"]!="")
 		{
 			$mail->SMTPAuth = true;
@@ -1006,6 +914,40 @@ function DisplayDate($dte)
 
 
   }
+
+// Affiche une date SQL avec une couleur
+function AffDate($dte)
+{
+	if ($dte!="0000-00-00")
+	{
+		$ret=sql2date($dte);
+		if (date_diff_txt($dte,date("Y-m-d"))>0)
+		{
+			$ret="<B><font color=\"red\">$ret</font></B>";
+		}
+		else if (date_diff_txt($dte,date("Y-m-d"))>-30*24*3600)
+		{
+			$ret="<B><font color=\"orange\">$ret</font></B>";
+		}
+	}
+	else
+	{	$ret="-"; }
+	return $ret;
+}
+
+function EcheanceDate($dte)
+{
+	$ret="ok";
+	if (date_diff_txt($dte,date("Y-m-d"))>0)
+	{
+		$ret="nok";
+	}
+	else if (date_diff_txt($dte,date("Y-m-d"))>-30*24*3600)
+	{
+		$ret="ok";
+	}
+	return $ret;
+}
 
 
 // Affiche un temps en minute en heure:minute

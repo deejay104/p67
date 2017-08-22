@@ -107,10 +107,7 @@
 					<label for="ville">Ville :</label>
 					{form_ville}
 				</p>
-				<p>
-					<label for="zone">Zone :</label>
-					{form_zone}
-				</p>
+
 			</div>
 		</td>
 	</tr>
@@ -124,14 +121,27 @@
   </p>
 <!-- END: photos -->
 
-<div class="formulaireTitre">Documents</div>
+<div style='width:100%; display: inline-block;'>
+  <div style='width:50%; display: inline-block; padding-bottom: 0px; '>
+	<div class="formulaireTitre">Documents</div>
 
-<div class="formulaire">
-	<!-- BEGIN: lst_document -->
-	<p>{form_document}</p>
-	<!-- END: lst_document -->
+	<div class="formulaire" style="padding-left: 20px;">
+		<!-- BEGIN: lst_document -->
+		<p>{form_document}</p>
+		<!-- END: lst_document -->
+	</div>
+  </div>
+
+  <div style='width:50%; display: inline-block; float:right; padding-bottom: 0px; '>
+	<div class="formulaireTitre">Echéances</div>
+
+	<div class="formulaire"  style="padding-left: 20px;">
+		<!-- BEGIN: lst_echeance -->
+		<p>{form_echeance}</p>
+		<!-- END: lst_echeance -->
+	</div>
+  </div>
 </div>
-
 
 <div class="formulaireTitre">Options</div>
 
@@ -142,6 +152,12 @@
 		{form_type}
 	</p>
 	<!-- END: type -->
+	<!-- BEGIN: mod_creche_zone -->
+	<p>
+	<label for="zone">Zone :</label>
+	{form_zone}
+	</p>
+	<!-- END: mod_creche_zone -->
 	<!-- BEGIN: mod_creche_enfant -->
 	<p>
 		<label for="pere">Père</label>

@@ -227,7 +227,7 @@ class document_class{
 				  }
 				else
 				  {
-						$txt.="<img src='".$MyOpt["host"]."/images/icn16_".$icon.".png' width=16 height=16 border=0> <s>".$this->name."</s>";
+						$txt.="<img src='".$MyOpt["host"]."/images/icn16_".$icon.".png' style='vertical-align:middle; border: 0px; height: 16px; width: 16px;'> <s>".$this->name."</s>";
 					}
 
 				// Si mode édition

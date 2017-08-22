@@ -8,41 +8,11 @@
 
 <!-- BEGIN: corps -->
 
-<style>
-	select {
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		appearance: none;
-		font: 20px "Trebuchet MS", arial, sans-serif;
-		width: 287px;
-	}
-
-	.myinput {
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		appearance: none;
-		font: 20px "Trebuchet MS", arial, sans-serif;
-		width: 265px;
-	}
-
-	textarea {
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		appearance: none;
-		font: 20px "Trebuchet MS", arial, sans-serif;
-	}
-
-
-
-}
-</style>
 
 <FORM name="reservation" method="post" action="reservations.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="rub" value="reservation_sauve">
 	<INPUT type="hidden" name="id" value="{id}">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
-
-	<br />
 
 	<p class="lastupdate">Dernière mise à jour : {info_maj}</p>
 
@@ -53,9 +23,9 @@
 	</p>
 	<!-- END: date_depassee -->
 
-	<!-- BEGIN: texte_erreur -->
-	<p class="msgerror">{texte_date}</p>
-	<!-- END: texte_erreur -->
+	<!-- BEGIN: msg_warning -->
+	<p class="msgwarning">{msg_warning}</p>
+	<!-- END: msg_warning -->
 
 	<!-- BEGIN: msg_error -->
 	<p class="msgerror">{msg_error}</p>
@@ -64,7 +34,7 @@
 	<!-- BEGIN: aff_reservation -->
 	<div class="formulaireTitre">
   	Réservation
-  </div>
+	</div>
 
 	<div class="formulaire">
 		<p>
@@ -74,42 +44,42 @@
 				<OPTION value="{uid_avion}" {chk_avion}>{nom_avion}</OPTION>
 			<!-- END: lst_avion -->
 			</SELECT>
-  	</p>
+		</p>
 	
-	  <p>
+		<p>
 			<label for="pilote">Pilote</label>
 			<SELECT id="pilote" name="form_uid_pilote" OnChange="reservation.submit();">
 			<!-- BEGIN: lst_pilote -->
 				<OPTION value="{uid_pilote}" {chk_pilote}>{nom_pilote}</OPTION>
 			<!-- END: lst_pilote -->
 			</SELECT>
-  	</p>
+		</p>
 
-	  <p>
+		<p>
 			<label for="debite">Débité</label>
 			<SELECT id="debite" name="form_uid_debite">
 			<OPTION value="0">Pilote</OPTION>
 			<!-- BEGIN: lst_debite -->
 				<OPTION value="{uid_debite}" {chk_debite}>{nom_debite}</OPTION>
 			<!-- END: lst_debite -->
-		  </SELECT>
+			</SELECT>
 	 	</p>
 <!-- BEGIN: aff_instructeur -->
-	  <p>
+		<p>
 			<label for="instructeur">Instructeur</label>
-		  <SELECT id="instructeur" name="form_uid_instructeur" OnChange="reservation.submit();">
+			<SELECT id="instructeur" name="form_uid_instructeur" OnChange="reservation.submit();">
 			<!-- BEGIN: lst_instructeur -->
 				<OPTION value="{uid_instructeur}" {chk_instructeur}>{nom_instructeur}</OPTION>
 			<!-- END: lst_instructeur -->
-		  </SELECT>
+			</SELECT>
 		</p>
 <!-- END: aff_instructeur -->
-	  <p>
+		<p>
 			<label for="destination">Destination</label>
-			<INPUT id="destionation" name="form_destination" value="{form_destination}" size=30 title="Préciser la destination ou LOCAL pour un vol local.">
-	  </p>
+			<INPUT id="destination" name="form_destination" value="{form_destination}" style="width: 287px;" title="Préciser la destination ou LOCAL pour un vol local.">
+		</p>
 
-	  <p>
+		<p>
 			<label for="pob">POB</label>
 			<SELECT id="pob" name="form_nbpersonne" title="Entrez le nombre de personne à bord, pilote compris (POB)">
 				<OPTION value="1" {chk_passager1}>1</OPTION>
@@ -125,13 +95,13 @@
 
 		<p>
   		<label>Du</label>
-  		<INPUT name="form_dte_deb" id="form_dte_deb" value="{form_dte_debsql}" type="date" class="myinput" style="width:140px;"> 
-  		à <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" type="time" class="myinput" style="width:70px;"> <FONT color=red>{msg_dtedeb}</FONT>
+  		<INPUT name="form_dte_deb" id="form_dte_deb" value="{form_dte_debsql}" type="date" style="width:160px;"> 
+  		à <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" type="time" style="width:80px;"> <FONT color=red>{msg_dtedeb}</FONT>
 		</p>
 		<p>
 			<label>Au</label>
-			<INPUT name="form_dte_fin" id="form_dte_fin" value="{form_dte_finsql}" type="date" class="myinput" style="width:140px;"> 
-			à <INPUT name="form_hor_fin" id="form_hor_fin" value="{form_hor_fin}" type="time" class="myinput" style="width:70px;"> <FONT color=red>{msg_dtefin}</FONT>
+			<INPUT name="form_dte_fin" id="form_dte_fin" value="{form_dte_finsql}" type="date" style="width:160px;"> 
+			à <INPUT name="form_hor_fin" id="form_hor_fin" value="{form_hor_fin}" type="time" style="width:80px;"> <FONT color=red>{msg_dtefin}</FONT>
 		</p>
 
 	<!-- BEGIN: aff_chkreservation -->

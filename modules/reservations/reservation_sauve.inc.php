@@ -32,6 +32,7 @@
 
 //	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 	require_once ("class/reservation.inc.php");
+	require_once ("class/echeance.inc.php");
 
   	$ok=1;
 	$msg_err="";
@@ -50,67 +51,55 @@
 		$ok=1;
 
 		if ($form_uid_pilote>0)
-		  {
+		{
 			$resa["pilote"]=new user_class($form_uid_pilote,$sql,false,true);
-		  } else {
+		}
+		else
+		{
 			$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql,false,true);
-		  }
+		}
 
 		if ($form_uid_instructeur>0)
-		  {
+		{
 			$resa["instructeur"]=new user_class($form_uid_instructeur,$sql,false,true);
-		  } else {
+		}
+		else
+		{
 			$resa["instructeur"]=new user_class($resa["resa"]->uid_instructeur,$sql,false,true);
-		  }
+		}
 
 		$s=$resa["pilote"]->CalcSolde();
 
-//		if (date_diff_txt($resa["pilote"]->data["dte_medicale"],date("Y-m-d"))>0)
-//		if (date_diff_txt($resa["pilote"]->data["dte_medicale"],date("Y-m-d"))>0)
-		if ( (date_diff_txt($resa["pilote"]->data["dte_medicale"],date("Y-m-d"))>0) && ($form_uid_instructeur==0) )
-		  {
-		  	$msg_err.="<u>La date de renouvellement de votre visite médicale est dépassée.</u><br />";
-		  	$msg_err.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Envoyez une photocopie du certificat médicale au président.<br />";
-			$ok=4;
-		  }
-
-		if ( (date_diff_txt($resa["pilote"]->data["dte_licence"],date("Y-m-d"))>0) && ($form_uid_instructeur==0) )
-		  {
-		  	$msg_err.="<u>La date de prorogation de votre licence est dépassée.</u><br />";
-		  	$msg_err.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Envoyez une photocopie de votre prorogation au président.<br />";
-			$ok=4;
-		  }
-
 		if ( $s < -$resa["pilote"]->data["decouvert"])
-		  {
+		{
 		  	$msg_err.="<u>Le compte du pilote est NEGATIF ($s €)</u>.<br />";
 		  	$msg_err.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Appeller le trésorier pour l'autorisation d'un découvert.<br />";
 			$ok=4;
-		  }
+		}
 
 		if ($resa["resa"]->edite=='non')
-		  {
+		{
 		  	$msg_err.="<u>Réservation déjà saisie en compta</u>.<br />";
 		  	$msg_err.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Il n'est plus possible de modifier cette réservation car elle a déjà été saisie en compta.<br />";
 			$ok=3;
-		  }
+		}
 
 		// Vérifie si le pilote est laché sur l'avion
 		if ((!$resa["pilote"]->CheckLache($form_uid_ress)) && ($form_uid_instructeur==0))
-		  {
+		{
 		  	$msg_err.="<u>Réservation impossible</u>.<br />";
 		  	$msg_err.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Le pilote sélectionné n'est pas laché sur cet avion.<br />";
 		  	$msg_err.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Il n'est pas possible de réserver sans instructeur.<br />";
 			$ok=3;
-		  }
+		}
 
 		// Vérifie si le pilote est autorisé
 		if (($resa["pilote"]->data["type"]=="invite") || ($resa["pilote"]->data["type"]=="membre"))
-		  { 
+		{ 
 		  	$msg_err.="<u>Réservation impossible</u>.<br />";
 			$msg_err.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Le pilote sélectionné n'a pas le droit d'effectuer de réservation d'avion<BR>";
 			$ok=3;
-		  }
+		}
 
 		if ($resa["resa"]->edite!='non')
 		  {
@@ -169,6 +158,7 @@
 // ---- Enregistre
 	$affrub="index";
 	$jour=$resa["resa"]->dte_deb;
+	$msg_err2="";
 	if (($ok==1) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	  {
 		$msg_err2.=$resa["resa"]->Save();

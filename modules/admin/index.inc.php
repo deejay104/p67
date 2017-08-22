@@ -1,13 +1,15 @@
 <?
 // ---------------------------------------------------------------------------------------------
-//   Administration - Variables
+//   Page de suivi des comptes
 //     ($Author: miniroot $)
+//     ($Date: 2013-02-05 20:35:03 +0100 (mar., 05 févr. 2013) $)
+//     ($Revision: 420 $)
 // ---------------------------------------------------------------------------------------------
 //   Variables  : 
 // ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.0
-    Copyright (C) 2016 Matthieu Isorez
+    SoceIt v2.2
+    Copyright (C) 2012 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,75 +28,21 @@
 ?>
 
 <?
-// ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("index.htm"));
-	$tmpl_x->assign("path_module","$module/$mod");
 
-// ---- Charge les variables par défault
-	require_once("$module/$mod/variables.tmpl.php");
-
-// ---- Vérifie le droit d'accès
-	if (!GetDroit("AccesConfiguration")) { FatalError("Accès non autorisé (AccesConfiguration)"); }
-
-// ---- Enregistre le fichier des variables
-	if ($fonc=="Enregistrer")
+	if (GetDroit("AccesConfiguration"))
+	  {
+	  	$affrub="config";
+	  }
+	else if (GetDroit("AccesConfigGroupes"))
+	  {
+	  	$affrub="groupes";
+	  }
+	else if (GetDroit("AccesConfigEcheances"))
+	  {
+	  	$affrub="echeances";
+	  }
+	else if (GetDroit("AccesConfigPostes"))
 	{
-		$MyOptTab=$_REQUEST["MyOptTab"];
-		$ret=GenereVariables($MyOptTab);
-		$tmpl_x->assign("msg_ret", $ret);
-		$tmpl_x->parse("corps.msgok");
-		$MyOpt=UpdateVariables($MyOptTab);
+		$affrub="postes";
 	}
-
-// ---- Charge les variables
-	foreach ($MyOptTmpl as $nom=>$d)
-	{
-		$tmpl_x->assign("param_nom", $nom);
-
-		if (is_array($d))
-		{
-			$tmpl_x->assign("param_class", "formulaireSep");
-			foreach($d as $var=>$dd)
-		  {
-
-				$tmpl_x->assign("param_var", $var);
-				$tmpl_x->assign("param_var1", $nom);
-				$tmpl_x->assign("param_var2", $var);
-				$tmpl_x->assign("param_txt", (isset($MyOpt[$nom][$var])) ? $MyOpt[$nom][$var] : $dd);
-				$tmpl_x->assign("param_default", ($dd=="") ? "<i>-vide-</i>" : $dd);
-				$tmpl_x->assign("param_help", $MyOptHelp[$nom][$var]);
-
-				$tmpl_x->parse("corps.lst_param");
-
-				$tmpl_x->assign("param_class", "");
-				$tmpl_x->assign("param_nom", "");
-			}
-		}
-		else
-		{
-			$tmpl_x->assign("param_class", "formulaireSep");
-
-			$tmpl_x->assign("param_var", "valeur");
-			$tmpl_x->assign("param_var1", $nom);
-			$tmpl_x->assign("param_var2", "valeur");
-			$tmpl_x->assign("param_txt", (isset($MyOpt[$nom])) ? $MyOpt[$nom] : $d);
-			$tmpl_x->assign("param_default", ($d=="") ? "<i>-vide-</i>" : $d);
-				$tmpl_x->assign("param_help", $MyOptHelp[$nom]);
-
-			$tmpl_x->parse("corps.lst_param");
-		}
-
-	}
-
-
-// ---- Affecte les variables d'affichage
-	$tmpl_x->parse("icone");
-	$icone=$tmpl_x->text("icone");
-	$tmpl_x->parse("infos");
-	$infos=$tmpl_x->text("infos");
-	$tmpl_x->parse("corps");
-	$corps=$tmpl_x->text("corps");
-
-
-
 ?>

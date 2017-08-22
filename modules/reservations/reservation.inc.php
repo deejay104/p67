@@ -29,6 +29,7 @@
 
 <?
 	require_once ("class/reservation.inc.php");
+	require_once ("class/echeance.inc.php");
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("reservation.htm"));
@@ -113,76 +114,79 @@
 
 
 	if ($resa["resa"]->edite=='non')
-	  {
-		  $tmpl_x = new XTemplate (MyRep("reservation-visu.htm"));
-	  	$tmpl_hora = new XTemplate (MyRep("horametre-visu.htm"));
-	  }
-	else
-	  {
-	  	$tmpl_hora = new XTemplate (MyRep("horametre.htm"));
-		  $tmpl_x->parse("corps.aff_reservation.aff_enregistrer");
-	  }
-
-// ---- Vérifie si la licence et la visite médicale sont à jour
-	$ok_aff=0;
-	$ok_date=0;
-
-	/*
- 	if (($res_user["type"]!="eleve") && (date_diff_txt($res_user["dte_licence"],date("Y-m-d"))>0))
 	{
-      $tmpl_x = new XTemplate (MyRep("reservation-visu.htm"));
-      $ok_date=1; 
-    }
-	*/
+		$tmpl_x = new XTemplate (MyRep("reservation-visu.htm"));
+	  	$tmpl_hora = new XTemplate (MyRep("horametre-visu.htm"));
+	}
+	else
+	{
+	  	$tmpl_hora = new XTemplate (MyRep("horametre.htm"));
+	}
+
+// ---- Initialise les variables
+	$ok_aff=0;
+	$ok_save=0;
+	$ok_inst=0;
+
 	$resusr=new user_class($resa["resa"]->uid_pilote,$sql,true);
 	$resa["resa"]->pilote_data=$resusr->data;
+
+// ---- Vérifie les échéances
+	$lstdte=VerifEcheance($sql,$resa["resa"]->uid_pilote);
+
+	if ( (is_array($lstdte)) && (count($lstdte)>0) )
+	{
+		foreach($lstdte as $i=>$d)
+		{
+			if ($d["dte_echeance"]!="")
+			{
+				$m ="<b><font color='red'>L'échéance ".$d["description"]." a été dépassée (".sql2date($d["dte_echeance"]).").</font></b><br />";
+			}
+			else
+			{
+				$m ="<b><font color='red'>Vous n'avez pas de date d'échéance pour ".$d["description"].".</font></b><br />";
+			}
+			
+			if ($d["resa"]=="instructeur")
+			{
+				$m.="La présence d'un instructeur est obligatoire.<br />";
+				$tmpl_x->assign("msg_warning", $m);
+				$tmpl_x->parse("corps.msg_warning");
+				$ok_inst=1;
+			}
+			else if ($d["resa"]=="obligatoire")
+			{
+				$m.="La réservation n'est pas possible.<br />";
+				$tmpl_x->assign("msg_error", $m);
+				$tmpl_x->parse("corps.msg_error");
+				$save=1;
+			}
+
+		}
+	}
+
+// ---- Vérifie si le compte est provisionné
+
+	$s=$resa["pilote"]->CalcSolde();
+	if ($s<-$resa["pilote"]->data["decouvert"])
+	{
+		$m ="<b><font color='red'>Le compte du pilote est NEGATIF ($s €).</font></b><br />";
+		$m.="Appeller le trésorier pour l'autorisation d'un découvert.<br />";
+  		$tmpl_x->assign("msg_error", $m);
+		$tmpl_x->parse("corps.msg_error");
+		
+		$ok_save=1;
+	}
+
+
+// ---- Vérifie si l'utilisateur est laché sur l'avion
+	if (!$resa["pilote"]->CheckLache($resa["resa"]->uid_ressource))
+	{
+		$tmpl_x->assign("msg_warning", "<b><font color='red'>Vous n'êtes pas laché sur cet avion.</font></b><br />La présence d'un instructeur est obligatoire.");
+		$tmpl_x->parse("corps.msg_warning");
+		$ok_inst=1;
+	}
 	
-	if (date_diff_txt($resa["resa"]->pilote_data["dte_medicale"],date("Y-m-d"))>0)
-	  {
-  		$tmpl_x->assign("color_date", "red");
-  		$tmpl_x->assign("texte_date", "La date de renouvellement de votre visite médicale est dépassée.<br /> La présence d'un instructeur est obligatoire.");
-  		$tmpl_x->assign("nom_date", "nouveau certificat médical");
-  		$tmpl_x->assign("type_date", "medicale");
-  		$tmpl_x->assign("form_date", sql2date($resa["resa"]->pilote_data["dte_medicale"]));
-  
-  		$tmpl_x->parse("corps.date_depassee");
-	  }
-	else if (date_diff_txt($resa["resa"]->pilote_data["dte_medicale"],date("Y-m-d"))>-30*24*3600)
-	  {
-  		$tmpl_x->assign("color_date", "orange");
-  		$tmpl_x->assign("texte_date", "Votre visite médicale expire dans moins d'un mois.");
-  		$tmpl_x->assign("nom_date", "nouveau certificat médical");
-  		$tmpl_x->assign("type_date", "medicale");
-  		$tmpl_x->assign("form_date", sql2date($resa["resa"]->pilote_data["dte_medicale"]));
-  
-  		$tmpl_x->parse("corps.date_depassee");
-	  }
-
-	if ( (date_diff_txt($resa["resa"]->pilote_data["dte_licence"],date("Y-m-d"))>0) )
-	  {
-  		$tmpl_x->assign("color_date", "red");
-  		$tmpl_x->assign("texte_date", "La date de prorogation de votre licence est dépassée.<br /> La présence d'un instructeur est obligatoire.");
-  		$tmpl_x->assign("nom_date", "prorogation");
-  		$tmpl_x->assign("type_date", "licence");
-  		$tmpl_x->assign("form_date", sql2date($resa["resa"]->pilote_data["dte_licence"]));
-  
-  		$tmpl_x->parse("corps.date_depassee");
-	  }
-	else if (($resa["resa"]->pilote_data["type"]!="eleve") && (date_diff_txt($resa["resa"]->pilote_data["dte_licence"],date("Y-m-d"))>-30*24*3600))
-	  {
-  		$tmpl_x->assign("color_date", "orange");
-  		$tmpl_x->assign("texte_date", "Votre licence expire dans moins d'un mois.");
-  		$tmpl_x->assign("nom_date", "prorogation");
-  		$tmpl_x->assign("type_date", "licence");
-  		$tmpl_x->assign("form_date", sql2date($resa["resa"]->pilote_data["dte_licence"]));
-  
-  		$tmpl_x->parse("corps.date_depassee");
-	  }
-
-	if (($id==0) && ($ok_date==1))
-	  { $ok_aff=1; }
-
-
 // ---- Initialisation des variables
 	$tmpl_x->assign("id", $id);
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
@@ -190,10 +194,10 @@
 
 // ---- Affiche les messages d'erreurs
 	if ($msg_err!="")
-	  { 
-			$tmpl_x->assign("msg_error",$msg_err);
-			$tmpl_x->parse("corps.msg_error");
-	  }
+	{ 
+		$tmpl_x->assign("msg_error",$msg_err);
+		$tmpl_x->parse("corps.msg_error");
+	}
 	
 
 // ---- Affiche les infos de la réservation
@@ -322,12 +326,8 @@
 	  }
 	$tmpl_x->assign("aff_nom_debite", $txt);
 
-	// Si le pilote n'est pas laché ou la date de visite médicale est dépassée il doit avoir un instructeur
-	if (
-		($resa["pilote"]->CheckLache($resa["resa"]->uid_ressource))
-		&& (date_diff_txt($resa["resa"]->pilote_data["dte_medicale"],date("Y-m-d"))<=0)
-		&& (date_diff_txt($resa["resa"]->pilote_data["dte_licence"],date("Y-m-d"))<=0)
-	)
+	
+	if ($ok_inst==0)
 	{
 		$tmpl_x->assign("uid_instructeur", "0");
 		$tmpl_x->assign("nom_instructeur", "Aucun");
@@ -335,13 +335,6 @@
 		$tmpl_x->parse("corps.aff_reservation.aff_instructeur.lst_instructeur");
 	}
 
-	// Le pilote n'est pas laché sur l'avion
-	if (!$resa["pilote"]->CheckLache($resa["resa"]->uid_ressource))
-	{
-		$tmpl_x->assign("color_date", "red");
-		$tmpl_x->assign("texte_date", "Vous n'êtes pas laché sur cet avion, la présence d'un instructeur est obligatoire.");
-		$tmpl_x->parse("corps.texte_erreur");
-	}
 
 	// Liste des instructeurs
 	$lst=ListActiveUsers($sql,"prenom,nom","instructeur");
@@ -429,6 +422,10 @@
 		    }
 	  }
 
+	if ( ($resa["resa"]->edite!='non') && ($ok_save==0) )
+	{
+		$tmpl_x->parse("corps.aff_reservation.aff_enregistrer");
+	}
 
 	// Affiche le boutton supprimer
 	$tmpl_x->parse("infos.supprimer");
