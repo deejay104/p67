@@ -155,36 +155,52 @@
 				$tmpl_x->assign("chk_pax", "selected");
 			  }
 
-			$query = "SELECT * FROM p67_utilisateurs WHERE actif='oui' AND virtuel='non' AND type<>'membre' AND type<>'invite' ORDER BY prenom,nom";
-			$sql->Query($query);
-			for($i=0; $i<$sql->rows; $i++)
-			  { 
-				$sql->GetRow($i);
-				
-				$tmpl_x->assign("uid_pilote", $sql->data["id"]);
-				$tmpl_x->assign("nom_pilote", AffInfo($sql->data["prenom"],"prenom")." ".AffInfo($sql->data["nom"],"nom"));
+			// $query = "SELECT * FROM p67_utilisateurs WHERE actif='oui' AND virtuel='non' AND type<>'membre' AND type<>'invite' ORDER BY prenom,nom";
+			// $sql->Query($query);
+			// for($i=0; $i<$sql->rows; $i++)
+			$lst=ListActiveUsers($sql,"prenom,nom","!membre,!invite");
 
-				if ( (($res["uid_pilote"]==$sql->data["id"]) && ($tv["type"]=="pilote"))
-				       || ($tv["idpilote"]==$sql->data["id"])
-				       || (($res["uid_instructeur"]==$sql->data["id"]) && ($tv["type"]=="copilote") && ($tv["idpilote"]==0))
-				       || ($form_passager_pilote[$k]==$sql->data["id"])
-				   )
-				  {
+			foreach($lst as $i=>$tmpuid)
+			{
+				// $sql->GetRow($i);
+				$resusr=new user_class($tmpuid,$sql,false,true);
+				$tmpl_x->assign("uid_pilote", $resusr->uid);
+				$tmpl_x->assign("nom_pilote", $resusr->Aff("fullname","val"));
+				
+				// $tmpl_x->assign("uid_pilote", $sql->data["id"]);
+				// $tmpl_x->assign("nom_pilote", AffInfo($sql->data["prenom"],"prenom")." ".AffInfo($sql->data["nom"],"nom"));
+
+				if ($form_passager_pilote[$k]==$resusr->uid)
+				{
 					$tmpl_x->assign("chk_pilote", "selected");
 					if ($tv["poids"]=="")
 					  {
-						$tabplace[$k]["poids"]=$sql->data["poids"];
-						//$tv["poids"];
+						$tabplace[$k]["poids"]=$resusr->data["poids"];
 					  }
-					$tabplace[$k]["idpilote"]=$sql->data["id"];
-				  }
+					$tabplace[$k]["idpilote"]=$resusr->uid;
+				}
+				else if ( ( (($res["uid_pilote"]==$resusr->uid) && ($tv["type"]=="pilote"))
+				       || ($tv["idpilote"]==$resusr->uid)
+				       || (($res["uid_instructeur"]==$resusr->uid) && ($tv["type"]=="copilote") && ($tv["idpilote"]==0)) )
+				       && ($form_passager_pilote[$k]=="")
+				   )
+				{
+					$tmpl_x->assign("chk_pilote", "selected");
+					if ($tv["poids"]=="")
+					  {
+						$tabplace[$k]["poids"]=$resusr->data["poids"];
+					  }
+					$tabplace[$k]["idpilote"]=$resusr->uid;
+				}
 				else
-				  { $tmpl_x->assign("chk_pilote", ""); }
+				{
+					$tmpl_x->assign("chk_pilote", "");
+				}
 
 
 				$tmpl_x->parse("corps.lst_passager.aff_pilote.lst_pilote");
 			  }
-			
+	
 			$tmpl_x->parse("corps.lst_passager.aff_pilote");
 		  }
 		else if ($tv["type"]=="essence")

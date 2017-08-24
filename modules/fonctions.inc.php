@@ -385,8 +385,10 @@ function AfficheTableau($tabValeur,$tabTitre="",$order="",$trie="",$url="",$star
 			if (($ii>=$start) && ($ii<$start+$limit))
 			  {
 				$col = abs($col-110);
-				$ret.="<tr onmouseover=\"setPointer(this, 'over', '#".$myColor[$col]."', '#".$myColor[$col+5]."', '#FF0000')\" onmouseout=\"setPointer(this, 'out', '#".$myColor[$col]."', '#".$myColor[$col+5]."', '#FF0000')\">";
-				$ret.="<td bgcolor=\"#".$myColor[$col]."\">&nbsp;</td>";
+				$ret.="<tr >";
+				// $ret.="<tr onmouseover=\"setPointer(this, 'over', '#".$myColor[$col]."', '#".$myColor[$col+5]."', '#FF0000')\" onmouseout=\"setPointer(this, 'out', '#".$myColor[$col]."', '#".$myColor[$col+5]."', '#FF0000')\">";
+				// $ret.="<td bgcolor=\"#".$myColor[$col]."\">&nbsp;</td>";
+				$ret.="<td>&nbsp;</td>";
 		
 				foreach($tabTitre as $name=>$v)
 				  {
@@ -396,7 +398,7 @@ function AfficheTableau($tabValeur,$tabTitre="",$order="",$trie="",$url="",$star
 					  }
 					else
 					  {
-						$ret.="<td bgcolor=\"#".$myColor[$col]."\"".(($val[$name]["align"]!="") ? " align='".$val[$name]["align"]."'" : "").">".(($val[$name]["aff"]=="") ? $val[$name]["val"] : $val[$name]["aff"])."</td>";
+						$ret.="<td ".(($val[$name]["align"]!="") ? "align='".$val[$name]["align"]."'" : "").">".(($val[$name]["aff"]=="") ? $val[$name]["val"] : $val[$name]["aff"])."</td>";
 					  }
 				  }
 				$ret.="</tr>\n";
@@ -405,9 +407,6 @@ function AfficheTableau($tabValeur,$tabTitre="",$order="",$trie="",$url="",$star
 		  }
 	  }
 	
-	$ret.="<tr>";
-	$ret.="<td colspan='$nb' class='tableauEnd'></td>";
-	$ret.="</tr>\n";
 	$ret.="</table>\n";
 
 	// Affiche la liste des pages
@@ -506,7 +505,7 @@ function AfficheTableauFiltre($tabValeur,$tabTitre="",$order="",$trie="",$url=""
 		  }
 		else if ($v["aff"]=="<line>")
 		  {
-			$ret.="<th style='width:".$v["width"]."px; background-color:black;'>";
+			$ret.="<th style='width:".$v["width"]."px; border-right: ".$v["width"]."px solid black; '>";
 		  }
 		else
 		  {
@@ -544,18 +543,20 @@ function AfficheTableauFiltre($tabValeur,$tabTitre="",$order="",$trie="",$url=""
 //			if (($ii>=$start) && ($ii<$start+$limit))
 //			  {
 				$col = abs($col-110);
-				$ret.="<tr onmouseover=\"setPointer(this, 'over', '#".$myColor[$col]."', '#".$myColor[$col+5]."', '#FF0000')\" onmouseout=\"setPointer(this, 'out', '#".$myColor[$col]."', '#".$myColor[$col+5]."', '#FF0000')\">";
-				$ret.="<td bgcolor=\"#".$myColor[$col]."\">&nbsp;</td>";
+				// $ret.="<tr onmouseover=\"setPointer(this, 'over', '#".$myColor[$col]."', '#".$myColor[$col+5]."', '#FF0000')\" onmouseout=\"setPointer(this, 'out', '#".$myColor[$col]."', '#".$myColor[$col+5]."', '#FF0000')\">";
+				$ret.="<tr>";
+				// $ret.="<td bgcolor=\"#".$myColor[$col]."\">&nbsp;</td>";
+				$ret.="<td>&nbsp;</td>";
 		
 				foreach($tabTitre as $name=>$v)
 				  {
 					if ($val[$name]["val"]=="<line>")
 					  {
-						$ret.="<td style='background-color:black;'></td>";
+						$ret.="<td style='border-right: ".$v["width"]."px solid black;'></td>";
 					  }
 					else
 					  {
-						$ret.="<td bgcolor=\"#".$myColor[$col]."\"".(($val[$name]["align"]!="") ? " align='".$val[$name]["align"]."'" : "").">".(($val[$name]["aff"]=="") ? $val[$name]["val"] : $val[$name]["aff"])."</td>";
+						$ret.="<td ".(($val[$name]["align"]!="") ? " align='".$val[$name]["align"]."'" : "").">".(($val[$name]["aff"]=="") ? $val[$name]["val"] : $val[$name]["aff"])."</td>";
 					  }
 				  }
 				$ret.="</tr>\n";
@@ -563,10 +564,7 @@ function AfficheTableauFiltre($tabValeur,$tabTitre="",$order="",$trie="",$url=""
 			$ii=$ii+1;
 //		  }
 	  }
-	
-	$ret.="<tr>";
-	$ret.="<td colspan='$nb' class='tableauEnd'></td>";
-	$ret.="</tr>\n";
+
 	$ret.="</table>\n";
 
 	// Affiche la liste des pages

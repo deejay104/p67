@@ -183,6 +183,21 @@ class bapteme_class{
 		  	  	$ret.="<option value='oui' ".(($this->paye=="oui") ? "selected" : "").">Oui</option>";
 		  	  	$ret.="</select>";
 		  	  }
+			else if ($key=="dte_j")
+		  	  { $ret="<INPUT name=\"form_info[$key]\" id=\"form_$key\" value=\"".date2sql($this->dte)."\" type=\"date\" OnChange=\"reloadImg();\">"; }
+			else if ($key=="dte_h")
+		  	{
+				  // $ret="<INPUT name=\"form_info[$key]\" id=\"form_$key\" value=\"$ret\" OnChange=\"reloadImg();\">";
+				$r=$ret;
+				$ret ="<select id=\"form_dte_h\" name=\"form_info[$key]\" OnChange=\"reloadImg();\">";
+				for($i=6;$i<20;$i++)
+				{ 
+					$ret.="<option value='".$i.":00' ".(($i.":00"==date("G:i",strtotime($this->dte))) ? "selected" : "").">".$i.":00</option>";
+					$ret.="<option value='".$i.":30' ".(($i.":30"==date("G:i",strtotime($this->dte))) ? "selected" : "").">".$i.":30</option>";
+				}
+				$ret.="</select>";
+				
+			}
 			else
 		  	  { $ret="<INPUT name=\"form_info[$key]\" id=\"form_$key\" value=\"$ret\">"; }
 		  }

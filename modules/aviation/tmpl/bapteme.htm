@@ -29,12 +29,9 @@
 
 <!-- BEGIN: corps -->
 
-<link rel="stylesheet" type="text/css" href="external/jquery/css/timePicker.css" />
-<script type="text/javascript" src="external/jquery/jquery.timePicker.min.js"></script>
-
 <script type="text/javascript">
 	$(function() {
-		$("#form_dte_j").datepicker({
+		$("#form_dte_j2").datepicker({
 			dateFormat: "dd/mm/yy",
 			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
 			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
@@ -42,8 +39,6 @@
 			prevText: "Précédent",
 			nextText: "Suivant"
 		});
-
-		$("#form_dte_h").timePicker();
 	});
 
 
@@ -51,6 +46,20 @@
 		$("#enregistrer").button();
 		$("#annuler").button();
 	});
+</script>
+
+<script type="text/javascript">
+function reloadImg() {
+var dte_j=document.getElementById("form_dte_j").value;
+var dte_h=document.getElementById("form_dte_h").value;
+var uid_avion=document.getElementById("form_info[id_avion]").value;
+console.log("dte_j="+dte_h);
+var d=new Date(dte_j+" "+dte_h);
+//var d=new Date("2017-08-28 14:30");
+document.getElementById("imgdispo").src="modules/aviation/disponibilite.php?id="+uid_avion+"&resa={id_resa}&deb="+Math.round(d.getTime()/1000)+"&fin="+Math.round(d.getTime()/1000+45*60);
+console.log("deb="+({deb}-Math.round(d.getTime()/1000)));
+}
+	
 </script>
 
 
@@ -128,7 +137,7 @@
 <!-- BEGIN: lst_dispo -->
 <p>
 	<label for="">{dispo_immat}</label>
-	<img src="modules/aviation/disponibilite.php?id={lst_uid_avion}&resa={id_resa}&deb={deb}&fin={fin}"><br/>
+	<img id="imgdispo" src="modules/aviation/disponibilite.php?id={lst_uid_avion}&resa={id_resa}&deb={deb}&fin={fin}"><br/>
 </p>
 <!-- END: lst_dispo -->
 </div>

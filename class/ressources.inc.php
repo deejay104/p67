@@ -335,7 +335,7 @@ function AffListeRessources($sql,$form_uid,$name,$actif=array("oui"))
 	$query = "SELECT id,immatriculation FROM ".$MyOpt["tbl"]."_ressources WHERE ($txt ".((GetDroit("SupprimeRessource")) ? "OR actif='off'" : "" ).") ORDER BY immatriculation";
 	$sql->Query($query);
 
-	$lstress ="<select name=\"$name\">";
+	$lstress ="<select id=\"$name\" name=\"$name\">";
 	$lstress.="<option value=\"0\">Aucun</option>";
 
 	for($i=0; $i<$sql->rows; $i++)

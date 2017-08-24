@@ -372,7 +372,11 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 .bouttonSupprime a:hover { background-color: #38a9e3; border-radius: 4px; }
 
 /* **** Tableau **** */
-.tableauAff th { background-color: #cccccc; }
+.tableauAff { border-bottom: 1px solid #cccccc; }
+.tableauAff th { background-color: #cccccc; height: 30px; border-bottom: 1px solid #cccccc; }
+.tableauAff tr { border-bottom: 1px dashed #cccccc; height: 25px; }
+.tableauAff tr:nth-child(even) { background-color: #f8f8f8; }
+.tableauAff tr:hover { background-color: #FFE1E1; }
 
 /* **** Comptes **** */
 .soldeCompte { padding-top: 5px; border: 1px solid #000000; border-radius: 4px; display: inline-block; position:relative; width:350px; height: 30px; text-align: center;}
