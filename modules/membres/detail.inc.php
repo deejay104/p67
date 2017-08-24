@@ -334,15 +334,15 @@
 		}
 		  	
 		if (is_array($lstdte))
-		  {
+		{
 			foreach($lstdte as $i=>$did)
-			  {
+			{
 				$dte = new echeance_class($did,$sql,$id);
 				$dte->editmode=($typeaff=="form") ? "edit" : "html";
 				$tmpl_x->assign("form_echeance",$dte->Affiche());
 				$tmpl_x->parse("corps.lst_echeance");
-			  }
-		  }
+			}
+		}
 
 	}
 
