@@ -827,15 +827,19 @@
 	}
 
 // ----
-	$nver=466;
+	$nver=467;
 	if ($ver<$nver)
 	{
 	  	$sql=array();
-		$sql[]="CREATE TABLE `".$MyOpt["tbl"]."_echeance` (`id` bigint(20) UNSIGNED NOT NULL,`typeid` int(10) UNSIGNED NOT NULL,`uid` int(10) UNSIGNED NOT NULL,`dte_echeance` date NOT NULL,`paye` ENUM('oui','non') NOT NULL DEFAULT 'non', `actif` ENUM('oui','non') NOT NULL DEFAULT 'oui',`dte_create` datetime NOT NULL,`uid_create` int(10) UNSIGNED NOT NULL,`dte_maj` datetime NOT NULL,`uid_maj` int(10) UNSIGNED NOT NULL) ENGINE=InnoDB";
+		$sql[]="CREATE TABLE `".$MyOpt["tbl"]."_echeance` (`id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,`typeid` int(10) UNSIGNED NOT NULL,`uid` int(10) UNSIGNED NOT NULL,`dte_echeance` date NOT NULL,`paye` ENUM('oui','non') NOT NULL DEFAULT 'non', `actif` ENUM('oui','non') NOT NULL DEFAULT 'oui',`dte_create` datetime NOT NULL,`uid_create` int(10) UNSIGNED NOT NULL,`dte_maj` datetime NOT NULL,`uid_maj` int(10) UNSIGNED NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB";
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_echeance` ADD INDEX ( `typeid` ) ;";
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_echeance` ADD INDEX ( `uid` ) ;";
 
+<<<<<<< HEAD
 		$sql[]="CREATE TABLE `".$MyOpt["tbl"]."_echeancetype` ( `id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `description` VARCHAR(100) NOT NULL , `poste` INT NOT NULL , `cout` DECIMAL(10,2) NOT NULL DEFAULT '0', `resa` ENUM('obligatoire','instructeur','facultatif') NOT NULL, `droit` VARCHAR(3) NOT NULL , `multi` ENUM('oui','non') NOT NULL DEFAULT 'non' , PRIMARY KEY (`id`)) ENGINE = InnoDB;";
+=======
+		$sql[]="CREATE TABLE `".$MyOpt["tbl"]."_echeancetype` ( `id` INT UNSIGNED NOT NULL AUTO_INCREMENT, `description` VARCHAR(100) NOT NULL , `poste` INT NOT NULL , `cout` DECIMAL(10,2) NOT NULL DEFAULT '0', `resa` ENUM('obligatoire','instructeur','facultatif') NOT NULL, `droit` VARCHAR(3) NOT NULL , `multi` ENUM('oui','non') NOT NULL DEFAULT 'non' , PRIMARY KEY (`id`)) ENGINE = InnoDB;";
+>>>>>>> 49499242cd45e24a6a0f104aa17a35fc9852dfd7
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_echeancetype` ADD INDEX ( `poste` ) ;";
 		
 		// Convertir toutes les dates actuelles en échéances
@@ -845,7 +849,11 @@
 		$sql[]="INSERT INTO ".$MyOpt["tbl"]."_echeancetype SET description='SEP', resa='instructeur',multi='non';";
 		$sql[]="INSERT INTO ".$MyOpt["tbl"]."_echeancetype SET description='Certificat Médical', resa='instructeur',multi='non';";
 		UpdateDB($sql,$nver);		
-		
+
+		echo "Copie des echeances...";		
+		$query="DELETE FROM p67_echeance";
+		$mysql->Delete($query);
+
 		// Liste des users
 		//   Pour chacun ajouter les 2 dates si la date éxiste
 		$query="SELECT id,dte_licence,dte_medicale FROM `".$MyOpt["tbl"]."_utilisateurs";

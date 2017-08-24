@@ -175,7 +175,10 @@
   		$tmpl_x->assign("msg_error", $m);
 		$tmpl_x->parse("corps.msg_error");
 		
-		$ok_save=1;
+		if ($id==0)
+		{
+			$ok_save=1;
+		}
 	}
 
 

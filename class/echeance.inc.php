@@ -33,7 +33,6 @@ class echeance_class
 		$sql=$this->sql;
 		$query = "SELECT echeance.*, echeancetype.description, echeancetype.droit, echeancetype.multi, echeancetype.resa FROM ".$this->tbl."_echeance AS echeance LEFT JOIN ".$this->tbl."_echeancetype AS echeancetype ON echeance.typeid=echeancetype.id WHERE echeance.id='$id'";
 		$res = $sql->QueryRow($query);
-
 		// Charge les variables
 		$this->typeid=$res["typeid"];
 		$this->uid=$res["uid"];
