@@ -182,7 +182,7 @@ function MyMail($from,$to,$tabcc,$subject,$message,$headers="",$files="")
 		$mail->Host = $MyOpt["mail"]["host"];
 		//Set the SMTP port number - likely to be 25, 465 or 587
 		$mail->Port = $MyOpt["mail"]["port"];
-		echo $MyOpt["mail"]["port"];
+
 		// Do not close connection to SMTP
 		$mail->SMTPKeepAlive = true;
 		//Whether to use SMTP authentication

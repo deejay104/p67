@@ -73,12 +73,12 @@ class abonnement_class{
 		  { return "La date est obligatoire"; }
 
 		// Vérifie la date/heure de début
-		if (!eregi("^[0-9]{1,2}/[0-9]{1,2}/[0-9]{2,4}$",$this->dte_deb))
-		  { return "La date de début n'a pas un format correct (jj/mm/aaaa).<br />"; }
+		// if (!preg_match("/^[0-9]{1,2}/[0-9]{1,2}/[0-9]{2,4}$/",$this->dte_deb))
+		  // { return "La date de début n'a pas un format correct (jj/mm/aaaa).<br />"; }
 
 		// Vérifie la date/heure de fin
-		if (!eregi("^[0-9]{1,2}/[0-9]{1,2}/[0-9]{2,4}$",$this->dte_fin))
-		  { return "La date de fin n'a pas un format correct (jj/mm/aaaa).<br />"; }
+		// if (!preg_match("/^[0-9]{1,2}/[0-9]{1,2}/[0-9]{2,4}$/",$this->dte_fin))
+		  // { return "La date de fin n'a pas un format correct (jj/mm/aaaa).<br />"; }
 
 /*
 		if (date_diff_txt($this->dte_deb,$this->dte_fin)<0) 

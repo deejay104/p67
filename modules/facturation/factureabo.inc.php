@@ -46,6 +46,7 @@
 	if ((time()-$t)<20*3600)
 	  {
 		myPrint("Ce script ne peut s'exécuter qu'une fois par jour.");
+		echo "Ce script ne peut s'exécuter qu'une fois par jour.";
 	  }
 	else
 	  {
@@ -65,7 +66,7 @@
 		$query.="LEFT JOIN p67_utilisateurs AS usr ON abo.uid=usr.id ";
 		$query.="WHERE abo.actif='oui' AND usr.actif='oui' AND abo.dtedeb<='$dte' AND abo.dtefin>='$dte'";
 		$sql->Query($query);
-	
+
 		$tabValeur=array();
 		for($i=0; $i<$sql->rows; $i++)
 		  {
@@ -108,5 +109,10 @@
 		  }
 	  }
 
-	$corps=$txt;
+
+	if ($aff=="oui")
+	{
+		$corps=$gl_myprint_txt;	
+	}
+
 ?>
