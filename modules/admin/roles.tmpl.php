@@ -32,6 +32,9 @@ $tabRoles["AccesSuiviVols"]="Accès au suivi des vols des membres";
 $tabRoles["AccesConfigEcheances"]="Accès à la gestion des échéances";
 $tabRoles["AccesConfigPostes"]="Accès à la page de modification des postes";
 
+$tabRoles["AffUserComptes"]="Afficher le solde du compte sur la fiche du membre";
+$tabRoles["AffUserHeures"]="Afficher les heure de vol sur la fiche du membre";
+
 $tabRoles["ModifUser"]="Ouvre la modification des informations des membres";
 $tabRoles["ModifUserSauve"]="Sauvegarder la fiche d'un membre";
 $tabRoles["ModifUserLache"]="Lacher des membres sur les ressources (avions)";
@@ -40,7 +43,6 @@ $tabRoles["ModifUserPassword"]="Modifier les mots de passe des membres";
 $tabRoles["ModifUserDecouvert"]="Modifier le découvert d'un membre";
 $tabRoles["ModifUserTarif"]="Modifier le taux de remboursement horaire d'un instructeur";
 $tabRoles["ModifUserDroits"]="Modifier les droits des utilisateurs";
-$tabRoles["ModifUserComptes"]="Afficher le solde du compte sur la fiche du membre";
 $tabRoles["ModifUserDteMedicale"]="Modifier la date de la visite médicale";
 $tabRoles["ModifUserDteLicence"]="Modifier la date de la licence";
 $tabRoles["ModifUserDteInscription"]="Modifier la date de l'inscription";

@@ -39,17 +39,14 @@ function AddPJ()
 </SCRIPT>
 
 
-<div>
-	    <BR>Titre :<BR>
-	    <INPUT type="text" name="form_titre" style="width:600px;"  value="{titre}"><BR>
-	    <BR>
-			<TEXTAREA id="mytxt" name="form_corps" style="width:600px;"  rows="20">{corps}</TEXTAREA>
-</div>
+<div class='formulaire'>
+	<p>Titre :</p>
+	<p><INPUT type="text" name="form_titre" style="width:600px;"  value="{titre}"></p>
+	<p><TEXTAREA name="form_corps" style="width:600px;"  rows="20">{corps}</TEXTAREA></p>
 
 	<!-- BEGIN: droits -->
-<div>
 		<p>
-		Droit en lecture :
+		<label>Droit en lecture :</label>
 		<select name="form_droit_r" >
 			<option value="ALL">ALL</option>
 	<!-- BEGIN: lst_droits_r -->
@@ -58,7 +55,7 @@ function AddPJ()
 		</select>
 	</p>
 	<p>
-		Droit en écriture :
+		<label>Droit en écriture :</label>
 		<select name="form_droit_w" >
 			<option value="ALL">ALL</option>
 	<!-- BEGIN: lst_droits_w -->
@@ -66,24 +63,23 @@ function AddPJ()
 	<!-- END: lst_droits_w -->
 		</select>
 	</p>
-</div>
 	<!-- END: droits -->
 
-<div>
-	<p>Pièce(s) jointe(s) :</p>
+	<p>Pièce(s) jointe(s) :<br />
 	<!-- BEGIN: lst_document -->
-	<p>{form_document}</p>
+	{form_document}<br />
 	<!-- END: lst_document -->
-</div>
+	</p>
 
-<div>
-		<p>Envoyer un mail aux personnes suivantes :</p>
+	<p>Envoyer un mail aux personnes suivantes :</p>
+	<p>
 <!-- BEGIN: lst_type -->
-		<p><INPUT type="checkbox" name="mailtype[{forum_type_id}]" {forum_type_check}> {forum_type_description}.</p>
+		<INPUT type="checkbox" name="mailtype[{forum_type_id}]" {forum_type_check}> {forum_type_description}.<br />
 <!-- END: lst_type -->
+	</p>
 
 <!-- BEGIN: maildiff -->
-		<p><INPUT type="checkbox" name="maildiff"> Liste de diffusion du forum {forum_listediff}.</p>
+		<p><INPUT type="checkbox" name="maildiff"> Liste de diffusion du dossier {forum_listediff}.</p>
 <!-- END: maildiff -->
 </div>
 

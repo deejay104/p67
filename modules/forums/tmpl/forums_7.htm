@@ -26,26 +26,32 @@
 
 	<div id="forum_Message_Message"><p>{msg}</p></div>
 
-	<!-- BEGIN: pieces_jointes -->
-	<div id="forum_Message_Description">
-		<p id="forum_Message_DescriptionTitre">Pièce(s) jointe(s) :</p>
+<!-- BEGIN: pieces_jointes -->
+	<div id="forum_Message_listePJ">
+		<div id="forum_Message_Description">
+			<p id="forum_Message_DescriptionTitre">Pièce(s) jointe(s) :</p>
+		</div>
+		<div id="forum_Message_PJ">
+		  <!-- BEGIN: lst_document -->
+			<p>{form_document}</p>
+		  <!-- END: lst_document -->
+		</div>
 	</div>
-	<div id="forum_Message_PJ">
-	  <!-- BEGIN: lst_document -->
-		<p>{form_document}</p>
-	  <!-- END: lst_document -->
-	</div>
-	<!-- END: pieces_jointes -->
+<!-- END: pieces_jointes -->
 
-	<br />
-
+	<div id="forum_Message_Reponses">
 <!-- BEGIN: lst_reponse -->
 	<div id="forum_Message_Reponse">
+		<div class="actualitesPhoto">
+			<img src="doc.php?id={rep_usrid}&type=image&width=64&height=64" alt="">
+		</div>
+
 		<p id="forum_Message_ReponseTitre"><a href="forums.php?rub=forums_7&fid={fid}&mid={rep_mid}">{rep_titre}</a></p>
 		<p id="forum_Message_ReponseModif">par {rep_usr_creat} {rep_dte_creat}</p>
 		<p>{rep_message}</p>
 	</div>
 <!-- END: lst_reponse -->
+	</div>
 	
 <!-- END: corps -->
 

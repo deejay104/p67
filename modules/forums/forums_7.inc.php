@@ -162,6 +162,17 @@
 	foreach($rep as $i=>$d)
 	{
 		$usr = new user_class($d["uid_creat"],$sql,false);
+
+		$lstdoc=ListDocument($sql,$d["uid_creat"],"avatar");
+		if (count($lstdoc)>0)
+		{
+			$doc = new document_class($lstdoc[0],$sql);
+			$tmpl_x->assign("rep_usrid",$lstdoc[0]);
+		}
+		else
+		{
+			$tmpl_x->assign("rep_usrid","-1");
+		}				
 		$tmpl_x->assign("rep_usr_creat", $usr->fullname);
 		$tmpl_x->assign("rep_titre", $d["titre"]);
 		$tmpl_x->assign("rep_dte_creat", DisplayDate($d["dte_creat"]));

@@ -181,6 +181,7 @@
 
 		$tmpl_x->assign("id", $id);
 		$tmpl_x->assign("info_maj", $usrmaj->prenom." ".$usrmaj->nom." le ".sql2date($usr->dtemaj));
+		$tmpl_x->assign("info_connect", sql2date($usr->data["dte_login"]));
 	
 	  }
 	else if (GetDroit("CreeUser"))
@@ -251,7 +252,6 @@
 
   	if (GetModule("aviation"))
 	  {
-	  	$tmpl_x->parse("corps.mod_aviation_validite");
 	  	$tmpl_x->parse("corps.mod_aviation_lache");
 	  }
 
@@ -297,7 +297,9 @@
 		  }
 
 		// ---- Affiche solde et nb heures de vol
-		if (((GetMyId($id)) || GetDroit("ModifUserComptes")) && (GetModule("aviation")))
+		if ((GetMyId($id)) || GetDroit("AffUserComptes"))
+		  { $tmpl_x->parse("corps.aff_soldecompte"); }
+		if (((GetMyId($id)) || GetDroit("AffUserHeures")) && (GetModule("aviation")))
 		  { $tmpl_x->parse("corps.mod_aviation_detail"); }
 
 		// ---- Affiche les documents

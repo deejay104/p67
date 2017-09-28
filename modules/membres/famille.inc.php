@@ -296,19 +296,19 @@
 
 	// Affiche les bouttons
 	if (($id==$uid) || (GetDroit("ModifUser")))
-	  { $tmpl_x->parse("corps.modification"); }
+	  { $tmpl_x->parse("infos.modification"); }
 
 	if (($id==$uid) || (GetDroit("ModifUserPassword")))
-	  { $tmpl_x->parse("corps.password"); }
+	  { $tmpl_x->parse("infos.password"); }
 
 	if (GetDroit("CreeUser"))
-	  { $tmpl_x->parse("corps.ajout"); }
+	  { $tmpl_x->parse("infos.ajout"); }
 
 	if ((GetDroit("DesactiveUser")) && ($usr->actif=="oui"))
-	  { $tmpl_x->parse("corps.desactive"); }
+	  { $tmpl_x->parse("infos.desactive"); }
 
 	if ((GetDroit("SupprimeUser")) && ($usr->actif=="off"))
-	  { $tmpl_x->parse("corps.suppression"); }
+	  { $tmpl_x->parse("infos.suppression"); }
 
 	if ($typeaff=="form")
 	  {

@@ -1,8 +1,25 @@
 <!-- BEGIN: icone -->
-	<img src="{path_module}/img/icn48_famille.png" alt="" border=0 />
+	<img src="{path_module}/img/icn48_detail.png" alt="" border=0 />
 <!-- END: icone -->
+
 <!-- BEGIN: infos -->
-	{titre}
+	<A href="familles.php"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt="">Liste</A>
+
+	<!-- BEGIN: ajout -->
+	<A href="membres.php?rub=famille&id="><IMG src="{path_module}/img/icn32_ajouter2.png" border=0 alt="">Ajouter</A>
+	<!-- END: ajout -->
+	<!-- BEGIN: modification -->
+	<A href="membres.php?rub=famille&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_editer2.png" border=0 alt="">Modifier</A>
+	<!-- END: modification -->
+	<!-- BEGIN: password -->
+	<A href="membres.php?rub=chgpwd&id={id}"><img src="{path_module}/img/icn32_password.png" border=0 alt="" width=32 height=32 />Changer son mot de passe</A>
+	<!-- END: password -->
+	<!-- BEGIN: desactive -->
+	<A href="#" OnClick="ConfirmeClick('membres.php?rub=famille&id={id}&fonc=desactive','Voulez-vous désactiver cette famille ?');"><IMG src="{path_module}/img/icn32_emptytrash.png" border=0 alt="">Désactiver</A>
+	<!-- END: desactive -->
+	<!-- BEGIN: suppression -->
+	<A href="#" OnClick="ConfirmeClick('membres.php?rub=famille&id={id}&fonc=delete','Voulez-vous supprimer cette famille ?');"><IMG src="{path_module}/img/icn32_edittrash.png" border=0 alt="">Supprimer</A>
+	<!-- END: suppression -->
 <!-- END: infos -->
 
 
@@ -20,29 +37,8 @@
 </div>
 
 
-<A href="familles.php"><IMG src="images/icn32_retour.png" border=0 alt="">Liste</A> &nbsp&nbsp;
-<!-- BEGIN: ajout -->
-<A href="membres.php?rub=famille&id="><IMG src="{path_module}/img/icn32_ajouter2.png" border=0 alt="">Ajouter</A> &nbsp&nbsp;
-<!-- END: ajout -->
-<!-- BEGIN: modification -->
-<A href="membres.php?rub=famille&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_editer2.png" border=0 alt="">Modifier</A> &nbsp&nbsp;
-<!-- END: modification -->
-<!-- BEGIN: password -->
-<A href="membres.php?rub=chgpwd&id={id}"><img src="{path_module}/img/icn32_password.png" border=0 alt="" width=32 height=32 />Changer son mot de passe</A> &nbsp&nbsp;
-<!-- END: password -->
-<!-- BEGIN: desactive -->
-<A href="#" OnClick="ConfirmeClick('membres.php?rub=famille&id={id}&fonc=desactive','Voulez-vous désactiver cette famille ?');"><IMG src="{path_module}/img/icn32_emptytrash.png" border=0 alt="">Désactiver</A>
-<!-- END: desactive -->
-<!-- BEGIN: suppression -->
-<A href="#" OnClick="ConfirmeClick('membres.php?rub=famille&id={id}&fonc=delete','Voulez-vous supprimer cette famille ?');"><IMG src="{path_module}/img/icn32_edittrash.png" border=0 alt="">Supprimer</A>
-<!-- END: suppression -->
-<BR><BR>
-<TABLE border="0" cellspacing="0" cellpadding="0" background="" width=100%>
-<TR><TD height=1 width=30><IMG src="images/rien.gif" alt=""></TD><TD height=1 bgcolor="#013366"><IMG src="images/rien.gif" alt=""></TD></TR>
-<TR><TD width=30><IMG src="images/rien.gif" alt=""></TD><TD><I><FONT size=1>Dernière mise à jour : {info_maj}</FONT></I></TD></TR>
+<p class="lastupdate">Dernière mise à jour : {info_maj}</p>
 
-</TABLE>
-<BR>
 
 <!-- BEGIN: msgerror -->
 <div id="msgerror">{msg_erreur}</div>
@@ -90,10 +86,9 @@
 <br /><br />
 <!-- END: submit1 -->
 
+<div class="formulaireTitre">Documents</div>
+
 <TABLE border="0" cellspacing="0" cellpadding="0" background="" width="850" style="margin-left: 30px;">
-  <TR height=20 style="border-bottom: 1px #000000 solid;">
-	<TD bgcolor="#DDDDDD" colspan=2>&nbsp;&nbsp;<B>Fiche de renseignements de l'enfant</B></TD>
-  </TR>
   <TR>
     <TD width=300 align="center"><br /><IMG src="doc.php?id={id_photo}" alt="" width=200 height=240></TD>
     <TD>
@@ -158,10 +153,8 @@
 
 <br />
 
-<table border="0" cellspacing="0" cellpadding="0" background="" width=880>
-<tr height=20><td width=30><img src="images/rien.gif" alt=""></td><td bgcolor="#DDDDDD">&nbsp;&nbsp;<b>Documents</b></td></tr>
-<tr><td height=1 width=30><img src="images/rien.gif" alt=""></td><td height=1 bgcolor="#013366"><img src="images/rien.gif" alt=""></td></tr>
-</table>
+<div class="formulaireTitre">Documents</div>
+
 <table border=0 cellpadding=0 cellspacing=0 width=600>
  <tr height=5>
 	<td colspan=3><img src="images/rien.gif" alt="" /></td>
@@ -176,9 +169,9 @@
 </table>
 <br />
 
+<div class="formulaireTitre">Fiche de renseignements des responsables</div>
+
 <TABLE border="0" cellspacing="0" cellpadding="0" background="" width=880>
-<TR height=20><TD width=30><IMG src="images/rien.gif" alt=""></TD><TD bgcolor="#DDDDDD" colspan=2>&nbsp;&nbsp;<B>Fiche de renseignements des responsables</B></TD></TR>
-<TR><TD height=1 width=30><IMG src="images/rien.gif" alt=""></TD><TD colspan=2 height=1 bgcolor="#013366"><IMG src="images/rien.gif" alt=""></TD></TR>
   <tr>
     <td width=30><IMG src="images/rien.gif" alt=""></td>
     <td align=center><b>Père</b> {lst_pere}</td>
@@ -297,9 +290,9 @@
 <BR>
 
 
+<div class="formulaireTitre">Fiche sanitaire</div>
+
 <TABLE border="0" cellspacing="0" cellpadding="0" background="" width=880>
-<TR height=20><TD width=30><IMG src="images/rien.gif" alt=""></TD><TD bgcolor="#DDDDDD">&nbsp;&nbsp;<B>Fiche sanitaire</B></TD></TR>
-<TR><TD height=1 width=30><IMG src="images/rien.gif" alt=""></TD><TD height=1 bgcolor="#013366"><IMG src="images/rien.gif" alt=""></TD></TR>
   <TR>
     <TD width=30><IMG src="images/rien.gif" alt=""></TD>
     <TD>
@@ -335,9 +328,9 @@
 </TABLE>
 <br />
 
+<div class="formulaireTitre">Allergies</div>
+
 <table border="0" cellspacing="0" cellpadding="0" background="" width=880>
-<tr height=20><TD width=30><IMG src="images/rien.gif" alt=""></TD><TD bgcolor="#DDDDDD">&nbsp;&nbsp;<B>Allergies</B></TD></TR>
-<tr><td height=1 width=30><IMG src="images/rien.gif" alt=""></TD><TD height=1 bgcolor="#013366"><IMG src="images/rien.gif" alt=""></TD></TR>
   <tr>
     <td width=30><IMG src="images/rien.gif" alt=""></TD>
     <td>
@@ -373,12 +366,8 @@
 
 <!-- BEGIN: abonnement -->
 <br />
+<div class="formulaireTitre">Abonnements</div>
 <table border="0" cellspacing="0" cellpadding="0" background="" width=880>
-  <tr height=20>
-	<td width=30><img src="images/rien.gif" alt=""></td>
-	<td colspan=4 bgcolor="#DDDDDD">&nbsp;&nbsp;<b>Abonnement(s)</b> <a href="index.php?mod=facturation&rub=abonnement&id=&form_uid={id}&mode=copy">-Ajouter-</a></td>
-  </tr>
-  <tr><td height=1 width=30><img src="images/rien.gif" alt=""></td><td height=1 bgcolor="#013366" colspan=4><img src="images/rien.gif" alt=""></td></tr>
 
 <!-- BEGIN: lst_abonnement -->
   <tr>
@@ -403,12 +392,9 @@
 
 <br />
 
+<div class="formulaireTitre">Commentaires</div>
+
 <TABLE border="0" cellspacing="0" cellpadding="0" background="" width=880>
-  <TR height=20>
-	<TD width=30><IMG src="images/rien.gif" alt=""></TD>
-	<TD bgcolor="#DDDDDD">&nbsp;&nbsp;<B>Commentaires</B></td>
-  </TR>
-  <TR><TD height=1 width=30><IMG src="images/rien.gif" alt=""></TD><TD height=1 bgcolor="#013366"><IMG src="images/rien.gif" alt=""></TD></TR>
   <TR>
 	<TD width=30><IMG src="images/rien.gif" alt=""></TD>
 	<TD>{form_commentaire}</td>

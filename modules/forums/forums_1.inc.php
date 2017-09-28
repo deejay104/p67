@@ -81,19 +81,19 @@
 	$tmpl_x->assign("fid",$fid);
 
 	if ($fid>0)
-	  {
-			$query="SELECT titre, message as corps, droit_w AS droit FROM ".$MyOpt["tbl"]."_forums WHERE id=$fid";
-			$res=$sql->QueryRow($query);
-		
-			// Affiche la description du forum
-			$tmpl_x->assign("infos",$res["titre"]);
-			$tmpl_x->assign("description",$res["corps"]);
-		}
+	{
+		$query="SELECT titre, message as corps, droit_w AS droit FROM ".$MyOpt["tbl"]."_forums WHERE id=$fid";
+		$res=$sql->QueryRow($query);
+	
+		// Affiche la description du forum
+		$tmpl_x->assign("infos",$res["titre"]);
+		$tmpl_x->assign("description",nl2br($res["corps"]));
+	}
 	else if ($critere!="")
-	  {
-			$tmpl_x->assign("infos","Résultat de la recherche");		
-			$tmpl_x->assign("description","Terme(s) recherché(s) : ".$critere);
-		}
+	{
+		$tmpl_x->assign("infos","Résultat de la recherche");		
+		$tmpl_x->assign("description","Terme(s) recherché(s) : ".$critere);
+	}
 
 	// Boutons de réponse à un message
 	if ((GetDroit($res["droit"])) && ($critere==""))
@@ -153,10 +153,12 @@
 			if ($msg["nbrep"]==1)
 			  {
 					$tmpl_x->assign("msg_reponse","(1 réponse)");
+					$tmpl_x->parse("corps.lst_msg.aff_reponse");
 			  }
 			else if ($msg["nbrep"]>1)
 			  {
 					$tmpl_x->assign("msg_reponse","(".$msg["nbrep"]." réponses)");
+					$tmpl_x->parse("corps.lst_msg.aff_reponse");
 			  }
 			else
 			  {
@@ -177,18 +179,28 @@
 	
 			// Affiche les pièces jointes au message
 			$lstdoc=ListDocument($sql,$msg["id"],"forum");
-			  	
+	  	
 			if ((is_array($lstdoc)) && (count($lstdoc)>0))
-			  {	$tmpl_x->assign("img_piecejointe","icn16_pj.png"); }
+			{
+				$tmpl_x->assign("img_piecejointe","icn16_pj.png");
+				foreach($lstdoc as $i=>$did)
+				{
+					$doc = new document_class($did,$sql);
+					$tmpl_x->assign("form_document",$doc->Affiche());
+					$tmpl_x->parse("corps.lst_msg.aff_piecejointe.lst_document");
+				}
+				$tmpl_x->parse("corps.lst_msg.aff_piecejointe");
+			}
 			else
 			  {	$tmpl_x->assign("img_piecejointe","icn16_vide.png"); }
 
 
 			// Mets en relief les critères de recherche
-			$txt=GetFirstLine(strip_tags($msg["message"], "<br>"));
+//			$txt=GetFirstLine(nl2br(strip_tags($msg["message"], "<br>")));
+			$txt=nl2br($msg["message"]);
 
 			$critere = trim($critere);
-		if ($critere!="")
+			if ($critere!="")
 			  {
 					$tabcrit=explode(" ",$critere);
 					foreach($tabcrit as $crit)
@@ -199,7 +211,8 @@
 			$usr = new user_class($msg["usr_id"],$sql,false);
 			$tmpl_x->assign("id_msg",$msg["id"]);
 			$tmpl_x->assign("id_forum",$msg["fid"]);
-			$tmpl_x->assign("msg_titre",$usr->fullname." : ".htmlentities(($msg["titre"]!="") ? $msg["titre"] : " - ",ENT_HTML5,"ISO-8859-1"));
+			$tmpl_x->assign("msg_titre",htmlentities(($msg["titre"]!="") ? $msg["titre"] : " - ",ENT_HTML5,"ISO-8859-1"));
+			$tmpl_x->assign("msg_auteur",$usr->fullname);
 			$tmpl_x->assign("msg_texte",$txt);
 			$tmpl_x->assign("msg_dte",DisplayDate($msg["date_maj"]));
 			$tmpl_x->assign("crit",$critere);

@@ -32,12 +32,17 @@
 <INPUT type="hidden" name="id" value="{id}">
 <INPUT type="hidden" name="checktime" value="{form_checktime}">
 
+<p class="lastupdate">Dernière mise à jour : {info_maj}<br />Dernière connexion : {info_connect}</p>
+
+<!-- BEGIN: aff_soldecompte -->
+<p>Solde du compte pilote : {solde}</p>
+<!-- END: aff_soldecompte -->
 <!-- BEGIN: mod_aviation_detail -->
-<p>Solde du compte pilote : {solde}<br />Nombre d'heure de vol : {nbheurevol}<br />
+<p>Nombre d'heure de vol : {nbheurevol}<br />
   (dont {nbheuresan} depuis le début de l'année et {nbheuresderan} dans les 12 derniers mois précédant la prorogation).
 </p>
 <!-- END: mod_aviation_detail -->
-<p class="lastupdate">Dernière mise à jour : {info_maj}</p>
+
 
 <!-- BEGIN: msgerror -->
 <div class="msgerror">{msg_erreur}</div>
@@ -192,17 +197,6 @@
 		<label for="dte_inscription">Date d'inscription</label>
 		{form_dte_inscription}
 	</p>
-
-	<!-- BEGIN: mod_aviation_validite -->
-	<p>
-		<label for="dte_licence">Validité de la licence</label>
-		{form_dte_licence}
-	</p>
-	<p>
-		<label for="dte_medicale">Validité visite médicale</label>
-		{form_dte_medicale}
-	</p>
-	<!-- END: mod_aviation_validite -->
 	
 	<p>
 		<label for="poids">Poids (en {unitPoids})</label>

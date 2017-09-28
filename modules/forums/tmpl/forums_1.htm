@@ -12,31 +12,36 @@
 
 
 <!-- BEGIN: corps -->
-<script type="text/javascript">
-
-
-    
-</script>
-
-	<div id="forum_Liste_Description">
-		<p id="forum_Liste_DescriptionTitre">{infos}</p>
+	<div class="forum_Liste_Description">
+		<p class="forum_Liste_DescriptionTitre">{infos}</p>
 		<p>{description}</p>
 	</div>
 
 	
 <!-- BEGIN: lst_msg -->
-	<div id="forum_Liste">
-		<div id="forum_Liste_Titre">
-			<div id="forum_Liste_Indent"><img src="{path_module}/img/{img_nonlu}"></div>
+	<div class="forum_Liste">
+		<div class="forum_Liste_Titre">
+			<p class="{msg_class}"><A href="forums.php?rub=forums_7&fid={id_forum}&mid={id_msg}&critere={crit}">{msg_titre}</A></p>
+			<span>par {msg_auteur}, {msg_dte}</span>
 <!-- BEGIN: aff_supprimer -->
-			<div id="forum_Liste_Icones"><a href="forums.php?rub=forums_1&fid={id_forum}&opt={id_msg}&anc=visu"><img src="{path_module}/img/icn24_supprimer.png"></a></div>
+			<div class="forum_Liste_Icones">
+				<a href="forums.php?rub=forums_1&fid={id_forum}&opt={id_msg}&anc=visu"><img src="{path_module}/img/icn24_supprimer.png"></a>
+			</div>
 <!-- END: aff_supprimer -->
-			<p id="{msg_class}"><A href="forums.php?rub=forums_7&fid={id_forum}&mid={id_msg}&critere={crit}">{msg_titre}</A></p>
-			<span>{msg_dte}</span>
+<!-- BEGIN: aff_reponse -->
+			<div class="forum_Liste_Reponse">{msg_reponse}</div>
+<!-- END: aff_reponse -->
 		</div>
-		<p id="forum_Liste_Texte">{msg_texte}</p>
-		<div id="forum_Liste_Reponse">{msg_reponse} <img src="{path_module}/img/{img_piecejointe}" /></div>
+		<p class="forum_Liste_Texte">{msg_texte}</p>
+
 		
+<!-- BEGIN: aff_piecejointe -->
+		<div class="forum_Liste_PieceJointe">
+		<!-- BEGIN: lst_document -->
+		{form_document}<br />
+		<!-- END: lst_document -->
+		</div>
+<!-- END: aff_piecejointe -->
 	</div>
 <!-- END: lst_msg -->
  

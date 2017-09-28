@@ -32,7 +32,7 @@ h6 { font-size:100%; }
 .visible-xs,.visible-sm,.visible-md,.visible-lg {display:none!important}
 
 
-input {	height: 24px; -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: inherit; font-family: inherit; }
+input {	border: 1px solid #888888; padding: 2px 2px 2px 2px; height: 24px; -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: inherit; font-family: inherit; }
 select { height: 24px; font-size: inherit; font-family: inherit; }
 textarea { width:90%; font-size: inherit; font-family: inherit; }
 option { -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: inherit; font-family: inherit; }
@@ -45,6 +45,8 @@ input[type=date] { border: 1px solid #888888; line-height: 16px; padding: 2px 5p
 input[type=submit] { height: 36px; padding:5px 15px 5px 15px;  background:#eeeeee; border: 1px solid #888888; cursor:pointer; border-radius: 5px; }
 input[type=submit]:hover { background:#dddddd; }
 input[type=radio] {-webkit-appearance: radio; }
+input[type=file] { height:30px; background-color: #ffffff; border: 0px; }
+input[type=checkbox] { border: 0px; line-height: 16px; padding: 0px; }
 
 p { margin-top: 4px; }
 
@@ -102,7 +104,7 @@ input[type=checkbox]:checked:after { content: "x"; }
 .pagetitle { padding-left:10px; display: inline-block; text-transform: uppercase; font-size: 25px; color: white; }
 .pagetitle img { vertical-align:middle; margin-right: 5px; }
 .pagetitle a { height:36px; background-color: #1799c3; font-size: 14px; text-transform: none; padding: 10px; border-radius: 5px; margin: 0px; }
-.pagetitle a:hover { background-color: #585e61; }
+.pagetitle a:hover { background-color: #585e61; border-radius: 8px;  }
 
 
 /* **** Corps de la page **** */
@@ -270,45 +272,51 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 
 /* **** FORUMS **** */
 
-#forum_Index_Liste { border-top:1px solid #013366; border-bottom:1px solid #013366; background-color: #75b7e5; margin: 5px 20px 0px 20px; padding: 5px 0px 0px 15px; }
-#forum_Index_Nom { font-size: 20px; height: 30px; float: left; }
-#forum_Index_Nom a { color:#ffffff; }
+#forum_Index_Liste { border-top:1px solid #013366; border-bottom:1px solid #013366; background-color: #dddddd; margin: 5px 20px 0px 20px; padding: 5px 0px 0px 15px; }
+#forum_Index_Nom { font-size: 20px; }
+#forum_Index_Nom a {  }
 #forum_Index_Nom a:hover { color:#FF6600; }
-#forum_Index_Nombre { float: right; margin-top: 5px; margin-right: 20px; font-size: 10px; }
-#forum_Index_Nombre a { display: inline-block; height:28px; padding: 2px; border-radius: 4px; margin: 0px; }
-#forum_Index_Nombre a:hover { background-color: #1799c3; }
-#forum_Index_Intitule { clear: both; }
+#forum_Index_Nombre {  font-size: 10px; margin-left: 20px; }
+#forum_Index_Intitule { color: #777777; margin-bottom: 10px;}
+#forum_Index_Edite { display: inline-block; float: right; margin-top: -70px; margin-right: 20px; font-size: 10px;  }
+#forum_Index_Edite a { display: inline-block; height:34px; padding: 4px; border-radius: 4px; margin: 0px; background-color: #75b7e5; border-radius: 5px; border: 1px solid #013366; }
+#forum_Index_Edite a:hover { background-color: #1799c3; height:34px; }
 .forum_Index_Message { margin-left: 20px; padding-left: 15px; }
 .forum_Index_NouveauMessage { font-weight: bold; margin-left: 20px; padding-left: 15px; }
 
 
 
-#forum_Liste { padding-top: 5px; margin: 5px 20px 5px 20px; border-radius: 5px;	 border:1px solid #013366; }
-#forum_Liste_Description { border-top:1px solid #013366; border-bottom:1px solid #013366; background-color: #F5F5F5; margin: 5px 20px 20px 20px ; padding-left: 15px; }
-#forum_Liste_DescriptionTitre { background-color: #DDDDDD; font-weight: bold; 	margin: 0px 0px 0px -15px; padding: 5px 15px 5px 15px; }
-#forum_Liste_Titre { background-color: #75b7e5; font-weight: bold; margin-left: 0px; margin-top: -5px; padding: 5px 15px 5px 5px; border-radius: 5px 5px 0px 0px;	}
-#forum_Liste_Titre p { margin: 0px 0px 0px 30px; }
-#forum_Liste_Titre span { font-size: 10px; font-weight: normal; padding-left:20px;  }
-#forum_Liste_Titre a:hover { color:#FF6600; }
-#forum_Liste_TitreLu a { color:#013366; }
-#forum_Liste_TitreNonlu a { color:#ffffff; }
-#forum_Liste_Indent { float: left; width: 24px; }
-#forum_Liste_Icones { display: inline-block; position:relative; float:right; }
-#forum_Liste_Icones a { display: inline-block; height:28px; padding: 2px; border-radius: 4px; margin: 0px; }
-#forum_Liste_Icones a:hover { background-color: #1799c3; }
-#forum_Liste_Texte { padding: 0px 20px 0px 35px; }
-#forum_Liste_Reponse { position: relative; float:left; text-align: right; top:-25px; width:100%; padding-right: 20px; }
+.forum_Liste_Description { color: #777777; border-top:1px solid #013366; border-bottom:1px solid #013366; background-color: #dddddd; margin: 5px 20px 20px 20px ; padding-left: 15px; }
+.forum_Liste_DescriptionTitre { color: #000000; font-weight: bold; }
 
+.forum_Liste { margin: 5px 20px 20px 20px; }
+.forum_Liste_Titre { background-color: #dddddd; padding-left: 15px;  border-top:1px solid #013366;  border-bottom:1px solid #013366; }
+.forum_Liste_Titre p { margin: 0px 0px 0px 0px; }
+.forum_Liste_Titre span { font-size: 10px; font-weight: normal; padding-left:20px;  }
+.forum_Liste_Titre a:hover { color:#FF6600; }
+.forum_Liste_TitreLu { }
+.forum_Liste_TitreLu a { }
+.forum_Liste_TitreNonlu a { color:#ffffff; }
+.forum_Liste_Indent { float: left; width: 24px; }
+.forum_Liste_Reponse { display: inline-block;  float: right; margin-right: 10px; }
+.forum_Liste_Icones { display: inline-block; height:30px; position:relative; margin-right: 10px; float:right; background-color: #75b7e5; border: 1px solid #013366; border-radius: 4px; }
+.forum_Liste_Icones a { display: inline-block; height:30px; padding: 2px; border-radius: 4px; margin: 0px; }
+.forum_Liste_Icones a:hover { background-color: #1799c3; }
+.forum_Liste_Texte { padding: 0px 5px 0px 35px; margin-bottom:0px; max-height: 78px; overflow:hidden; }
+.forum_Liste_PieceJointe { margin-left: 35px; margin-top: 10px; padding-top:4px; padding-bottom: 5px; border-top: 1px dashed #888888; }
 
+#forum_Message_Reponses { width: 50%; float: right; }
 #forum_Message_Reponse { border:1px solid #013366; border-radius: 5px; margin: 5px 20px 20px 20px; }
-#forum_Message_ReponseTitre { background-color: #DDDDDD; font-weight: bold; margin: 0px; border-radius: 5px 5px 0px 0px; padding: 5px 15px 5px 15px;}
-#forum_Message_ReponseModif { font-size: 10px; margin:0px; padding: 5px 15px 5px 15px; }
-#forum_Message_Reponse p {padding: 5px 15px 5px 15px; }
+#forum_Message_Reponse p {padding: 5px 15px 5px 90px; }
+#forum_Message_ReponseTitre { background-color: #DDDDDD; font-weight: bold; margin: 0px; border-radius: 5px 5px 0px 0px; padding: 5px 15px 5px 150px;}
+#forum_Message_ReponseModif { font-size: 10px; margin:0px; margin-left: 20px; margin-top: -8px; }
 #forum_Message_Modif { font-size: 10px; }
 #forum_Message_Message { margin: 5px 20px 20px 20px; padding-left: 15px; }
 #forum_Message_PJ { margin: 5px 20px 20px 20px; padding: 0px 0px 15px 15px; border-bottom: 1px solid #013366; }
 #forum_Message_PJ p { margin: 0px; }
 .forum_Message_Selection { background-color: #95d7f5; border: 1px dashed #013366; border-radius: 3px; padding: 2px; }
+
+#forum_Message_listePJ { width: 50%; position: relative; float: left; }
 
 #forum_Message_Description { border-top:1px solid #013366; border-bottom:1px solid #013366; background-color: #F5F5F5; margin: 5px 20px 20px 20px ; padding-left: 15px; }
 #forum_Message_DescriptionTitre { background-color: #DDDDDD; font-weight: bold; 	margin: 0px 0px 0px -15px; padding: 5px 15px 5px 15px; }
