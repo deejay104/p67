@@ -835,11 +835,7 @@
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_echeance` ADD INDEX ( `typeid` ) ;";
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_echeance` ADD INDEX ( `uid` ) ;";
 
-<<<<<<< HEAD
-		$sql[]="CREATE TABLE `".$MyOpt["tbl"]."_echeancetype` ( `id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `description` VARCHAR(100) NOT NULL , `poste` INT NOT NULL , `cout` DECIMAL(10,2) NOT NULL DEFAULT '0', `resa` ENUM('obligatoire','instructeur','facultatif') NOT NULL, `droit` VARCHAR(3) NOT NULL , `multi` ENUM('oui','non') NOT NULL DEFAULT 'non' , PRIMARY KEY (`id`)) ENGINE = InnoDB;";
-=======
 		$sql[]="CREATE TABLE `".$MyOpt["tbl"]."_echeancetype` ( `id` INT UNSIGNED NOT NULL AUTO_INCREMENT, `description` VARCHAR(100) NOT NULL , `poste` INT NOT NULL , `cout` DECIMAL(10,2) NOT NULL DEFAULT '0', `resa` ENUM('obligatoire','instructeur','facultatif') NOT NULL, `droit` VARCHAR(3) NOT NULL , `multi` ENUM('oui','non') NOT NULL DEFAULT 'non' , PRIMARY KEY (`id`)) ENGINE = InnoDB;";
->>>>>>> 49499242cd45e24a6a0f104aa17a35fc9852dfd7
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_echeancetype` ADD INDEX ( `poste` ) ;";
 		
 		// Convertir toutes les dates actuelles en échéances
