@@ -881,10 +881,10 @@
 
 		$sql[]="CREATE TABLE `".$MyOpt["tbl"]."_utildonnees` (`id` int(10) UNSIGNED NOT NULL,`did` int(10) UNSIGNED NOT NULL,`uid` int(11) NOT NULL,`valeur` varchar(255) COLLATE latin1_general_ci NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;";
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_utildonnees` ADD PRIMARY KEY (`id`), ADD KEY `uid` (`uid`), ADD KEY `dataid` (`did`);";
-  
+
 		UpdateDB($sql,$nver);
 	}
-	
+
 // *********************************************************************************************************
 
 	echo "<a href='".$MyOpt["host"]."'>-Retour au site-</a>";
