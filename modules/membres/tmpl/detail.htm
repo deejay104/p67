@@ -148,96 +148,113 @@
   </div>
 </div>
 
-<div class="formulaireTitre">Options</div>
+<div style='width:100%; display: inline-block;'>
+  <div style='width:50%; display: inline-block; padding-bottom: 0px; '>
 
-<div class="formulaire">
-	<!-- BEGIN: type -->
-	<p>
-		<label for="type">Type</label>
-		{form_type}
-	</p>
-	<!-- END: type -->
-	<!-- BEGIN: mod_creche_zone -->
-	<p>
-	<label for="zone">Zone :</label>
-	{form_zone}
-	</p>
-	<!-- END: mod_creche_zone -->
-	<!-- BEGIN: mod_creche_enfant -->
-	<p>
-		<label for="pere">Père</label>
-		{form_pere}
-	</p>
-	<p>
-		<label for="mere">Mère</label>
+	<div class="formulaireTitre">Options</div>
+	<div class="formulaire">
+		<!-- BEGIN: type -->
+		<p>
+			<label for="type">Type</label>
+			{form_type}
+		</p>
+		<!-- END: type -->
+		<!-- BEGIN: mod_creche_zone -->
+		<p>
+		<label for="zone">Zone :</label>
+		{form_zone}
+		</p>
+		<!-- END: mod_creche_zone -->
+		<!-- BEGIN: aff_parents -->
+		<p>
+			<label for="pere">Père</label>
+			{form_pere}
+		</p>
+		<p>
+			<label for="mere">Mère</label>
+			
+			{form_mere}
+		</p>
+		<!-- END: aff_parents -->
+		<!-- BEGIN: aff_enfants -->
+		<p>
+			<label for="enfant">Enfant(s)</label>
+			{form_enfant}
+		</p>
+		<!-- END: aff_enfants -->
+		<p>
+			<label for="idcpt">Compte de saisie</label>
+			{form_idcpt}
+		</p>
 		
-		{form_mere}
-	</p>
-	<!-- END: mod_creche_enfant -->
-	<!-- BEGIN: mod_creche_parent -->
-	<p>
-		<label for="enfant">Enfant(s)</label>
-		{form_enfant}
-	</p>
-	<!-- END: mod_creche_parent -->
-	<p>
-		<label for="idcpt">Compte de saisie</label>
-		{form_idcpt}
-	</p>
-	
-	<p>
-		<label>Notifications par mail</label>
-		{form_notification}
-	</p>
-	<p>
-		<label for="dte_naissance">Date de naissance</label>
-		{form_dte_naissance}
-	</p>
-	<p>
-		<label for="dte_inscription">Date d'inscription</label>
-		{form_dte_inscription}
-	</p>
-	
-	<p>
-		<label for="poids">Poids (en {unitPoids})</label>
-		{form_poids}
-	</p>
+		<p>
+			<label>Notifications par mail</label>
+			{form_notification}
+		</p>
+		<p>
+			<label for="dte_naissance">Date de naissance</label>
+			{form_dte_naissance}
+		</p>
+		<p>
+			<label for="dte_inscription">Date d'inscription</label>
+			{form_dte_inscription}
+		</p>
+		
+		<p>
+			<label for="poids">Poids (en {unitPoids})</label>
+			{form_poids}
+		</p>
 
-	<!-- BEGIN: mod_aviation_lache -->
-	<p>
-		<label for="lache">Laché avions</label>
-		<span>{form_lache}</span>
-	</p>
-	<!-- END: mod_aviation_lache -->
-	
-	<!-- BEGIN: decouvert -->
-	<p>
-		<label for="decouvert">Découvert autorisé</label>
-		{form_decouvert}
-	</p>
-	<!-- END: decouvert -->
+		<!-- BEGIN: mod_aviation_lache -->
+		<p>
+			<label for="lache">Laché avions</label>
+			<span>{form_lache}</span>
+		</p>
+		<!-- END: mod_aviation_lache -->
+		
+		<!-- BEGIN: decouvert -->
+		<p>
+			<label for="decouvert">Découvert autorisé</label>
+			{form_decouvert}
+		</p>
+		<!-- END: decouvert -->
 
-	<!-- BEGIN: tarif -->
-	<p>
-		<label for="tarif">Tarif instructeur</label>
-		{form_tarif}
-	</p>
-	<!-- END: tarif -->
+		<!-- BEGIN: tarif -->
+		<p>
+			<label for="tarif">Tarif instructeur</label>
+			{form_tarif}
+		</p>
+		<!-- END: tarif -->
 
-	<!-- BEGIN: droits -->
-	<p>
-		<label for="droits">Droits</label>
-		<span>{form_droits}</span>
-	</p>
-	<!-- END: droits -->
-</div>
+		<!-- BEGIN: droits -->
+		<p>
+			<label for="droits">Droits</label>
+			<span>{form_droits}</span>
+		</p>
+		<!-- END: droits -->
+	</div>
 
-<div class="formulaireTitre">Commentaires</div>
-<div class="formulaire">
-  <p>
+  </div>
+
+  <div style='width:50%; display: inline-block; float:right; padding-bottom: 0px; '>
+
+	<div class="formulaireTitre">Commentaires</div>
+	<div class="formulaire">
+	  <p>
 			{form_commentaire}
-  </p>
+	  </p>
+	</div>
+  </div>
 </div>
+
+<!-- BEGIN: aff_donnees -->
+<div class="formulaireTitre">Données complémentaires</div>
+<div class="formulaire">
+	<p>
+		{form_donnees}
+	</p>
+</div>
+<!-- END: aff_donnees -->
 
 
 <!-- BEGIN: submit -->

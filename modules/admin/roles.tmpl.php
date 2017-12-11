@@ -38,6 +38,7 @@ $tabRoles["AffUserHeures"]="Afficher les heure de vol sur la fiche du membre";
 $tabRoles["ModifUser"]="Ouvre la modification des informations des membres";
 $tabRoles["ModifUserSauve"]="Sauvegarder la fiche d'un membre";
 $tabRoles["ModifUserLache"]="Lacher des membres sur les ressources (avions)";
+$tabRoles["ModifUserDonnees"]="Modification des données complémentaires des utilisateurs";
 $tabRoles["ModifUserAll"]="Modification de toutes les entrées d'un membre";
 $tabRoles["ModifUserPassword"]="Modifier les mots de passe des membres";
 $tabRoles["ModifUserDecouvert"]="Modifier le découvert d'un membre";

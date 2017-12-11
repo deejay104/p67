@@ -136,8 +136,15 @@
 
 	// Sauvegarde le lache
 	if (($fonc=="Enregistrer") && ($id>0) && (GetDroit("ModifUserLache")))
-	  {
+	{
 		$msg_erreur.=$usr->SaveLache($form_lache,$uid);
+
+	}
+
+	// Sauvegarde le lache
+	if (($fonc=="Enregistrer") && ($id>0) && (GetDroit("ModifUserDonnees")))
+	  {
+		$msg_erreur.=$usr->SaveDonnees($form_donnees,$uid);
 
 	  }
 
@@ -175,8 +182,11 @@
 		$usr = new user_class($id,$sql,((GetMyId($id)) ? true : false));
 		if (GetModule("aviation"))
 		  { $usr->LoadLache(); }
-		if (GetModule("creche"))
-		  { $usr->LoadEnfants(); }
+		// if (GetModule("creche"))
+		  // { $usr->LoadEnfants(); }
+		$usr->LoadEnfants();
+		$usr->LoadDonneesComp();
+
 		$usrmaj = new user_class($usr->uidmaj,$sql);
 
 		$tmpl_x->assign("id", $id);
@@ -191,6 +201,8 @@
 		$usr = new user_class("0",$sql,false);
 		$usrmaj = new user_class($usr->uidmaj,$sql);
 
+		$usr->LoadDonneesComp();
+
 		$tmpl_x->assign("id", $id);
 		$tmpl_x->assign("info_maj", $usrmaj->prenom." ".$usrmaj->nom." le ".sql2date($usr->dtemaj));
 
@@ -203,9 +215,7 @@
 
 	$tmpl_x->assign("unitPoids", $MyOpt["unitPoids"]);
 
-	foreach($usr->data as $k=>$v)
-	  { $tmpl_x->assign("form_$k", $usr->aff($k,$typeaff)); }
-
+// ---- Affiche les menus
 	if ((GetMyId($id)) || (GetDroit("ModifUser")))
 	  { $tmpl_x->parse("infos.modification"); }
 
@@ -223,6 +233,10 @@
 
 	if ((GetDroit("SupprimeUser")) && ($usr->actif=="off"))
 	  { $tmpl_x->parse("infos.suppression"); }
+
+  // ---- Affiche toutes les donnees
+	foreach($usr->data as $k=>$v)
+	  { $tmpl_x->assign("form_$k", $usr->aff($k,$typeaff)); }
 
 	if ($typeaff=="form")
 	  {
@@ -255,14 +269,14 @@
 	  	$tmpl_x->parse("corps.mod_aviation_lache");
 	  }
 
-  	if ((GetModule("creche")) && ($usr->type=="enfant"))
-	  {
-	  	$tmpl_x->parse("corps.mod_creche_enfant");
-	  }
-  	else if (GetModule("creche"))
-	  {
-	  	$tmpl_x->parse("corps.mod_creche_parent");
-	  }
+  	if (count($usr->data["enfant"])>0)
+	{
+	  	$tmpl_x->parse("corps.aff_enfants");
+	}
+  	if ( (count($usr->data["pere"])>0) || (count($usr->data["mere"])>0) )
+	{
+	  	$tmpl_x->parse("corps.aff_parents");
+	}
 
   	if ((is_numeric($id)) && ($id>0))
 	  { 
@@ -346,6 +360,11 @@
 			}
 		}
 
+		
+		if (count($usr->data["donnees"])>0)
+		{
+			$tmpl_x->parse("corps.aff_donnees");
+		}
 	}
 
 // ---- Messages
