@@ -13,9 +13,9 @@
 
 	<input type="hidden" name="checktime" value="{form_checktime}">
 
+	<br />
 	<table border="0" cellspacing="0" cellpadding="0" background="">
 	  <tr height=40 valign=top>
-		<td width=20><IMG src="images/rien.gif" height=1 width=20 alt=""></TD>
 <!-- BEGIN: aff_compte -->
 		<td>
 			<select id="form_id" name="form_id" OnChange="document.location='factures.php?usr='+document.getElementById('form_id').value;">
@@ -27,6 +27,7 @@
 <!-- END: aff_compte -->
 
 		<td>
+			&nbsp;
 			<select name="form_dte" OnChange="document.location='factures.php?usr='+document.facture.form_id.value+'&dte='+document.facture.form_dte.value;">
 			<option value="">-</option>
 			<!-- BEGIN: lst_dte -->

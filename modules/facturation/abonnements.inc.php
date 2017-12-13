@@ -58,7 +58,7 @@
 	$tabTitre["nom"]["aff"]="Nom";
 	$tabTitre["nom"]["width"]=150;
 	$tabTitre["dte"]["aff"]="Période";
-	$tabTitre["dte"]["width"]=200;
+	$tabTitre["dte"]["width"]=300;
 	$tabTitre["actif"]["aff"]="Actif";
 	$tabTitre["actif"]["width"]=50;
 	$tabTitre["total"]["aff"]="Prix";

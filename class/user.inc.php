@@ -569,7 +569,7 @@ class user_class{
 				  	  	  {
 				  	  		if ($enfant["id"]>0)
 				  	  		  {
-				  	  		  	$ret.="<a href=\"membres.php?rub=detail&id=".$enfant["id"]."\">".$enfant["usr"]->fullname."</a><br />";
+				  	  		  	// $ret.="<a href=\"membres.php?rub=detail&id=".$enfant["id"]."\">".$enfant["usr"]->fullname."</a><br />";
 						  	  	$ret.="<option value=\"".$enfant["id"]."\" ".(($txt==$enfant["id"])?"selected":"").">".$enfant["usr"]->fullname."</option>";
 				  	  		  }
 				  	  	  }

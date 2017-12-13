@@ -28,8 +28,8 @@
 ?>
 
 <?
-        if (!is_numeric($id))
-          { $id=0; }
+	if (!is_numeric($id))
+      { $id=0; }
 
 	if ( (!GetDroit("AccesMembre")) && (!GetMyId($id)) )
 	  { FatalError("Accès non autorisé (AccesMembre)"); }

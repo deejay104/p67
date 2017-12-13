@@ -2,6 +2,7 @@
 	<img src="{path_module}/img/icn48_titre.png" alt="" />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
+	<IMG src="images/rien.gif" height=1 width=20 alt=""><a href="factures.php?usr={id_user}"><img src="images/icn32_retour.png"></a>
 	Facture {id_facture}
 <!-- END: infos -->
 
@@ -14,7 +15,7 @@
 	<input type="hidden" name="rub" value="detail">
 	<input type="hidden" name="usr" value="{id_user}">
 
-	<IMG src="images/rien.gif" height=1 width=20 alt=""><a href="factures.php?usr={id_user}"><img src="images/icn16_retour.png"></a></TD>
+	<br />
 <!-- BEGIN: aff_compte -->
 			<select id="form_id" name="form_id" OnChange="document.location='factures.php?rub=detail&usr='+document.getElementById('form_id').value;">
 			<option value="0">-</OPTION>
@@ -24,12 +25,16 @@
 			</select>
 <!-- END: aff_compte -->
 
+
 <!-- BEGIN: msgok -->
 <div id="msgok">Un mail de relance a été envoyé.</div>
 <!-- END: msgok -->
 
 <table>
-<tr height="50"><td>&nbsp;</td><td colspan=2 align=center><h1>{titre_facture}</h1></td>
+
+
+<tr height="30">
+  <td>&nbsp;</td><td colspan=2 align=center><h1>{titre_facture}</h1></td>
 	<td>
 <!-- BEGIN: aff_pdf -->
 	<a href="factures.php?rub=facture&usr={id_user}&facid={id_facture}&export=pdf" target="_blank"><img src="images/icn32_pdf.png" border="0" /></a>
@@ -37,8 +42,10 @@
 <!-- BEGIN: aff_relance -->
 	<a href="factures.php?rub=detail&usr={id_user}&facid={id_facture}&fonc=relance"><img src="{path_module}/img/icn32_mail.png" border="0" title="Relancer sur cette facture"/></a>
 <!-- END: aff_relance -->
-	</td>
+  </td>
 </tr>
+<tr><td>&nbsp;</td><td colspan=2 align=center></td>
+
 <tr class="tableauTitre">
 	<td width="80">&nbsp;</td>
 	<td width="400">D&eacute;signation</td>

@@ -157,7 +157,7 @@
 		  	  {
 		  		$msg_erreur.=$usr_mere->Valid($k,$v);
 
-				if ($v=="")
+				if (($v=="") && ($k!="mail"))
 				  {
 				  	$usr_mere->data[$k]=$usr_pere->data[$k];
 				  }
@@ -180,7 +180,7 @@
 		  	  }
 		  }
 
-		$usr->data["mail"]=(($usr->data["mail"]=="") ? (($usr_mere->data["mail"]=="") ? $usr_pere->data["mail"] : $usr_mere->data["mail"]) : $usr->data["mail"]) ;
+		// $usr->data["mail"]=(($usr->data["mail"]=="") ? (($usr_mere->data["mail"]=="") ? $usr_pere->data["mail"] : $usr_mere->data["mail"]) : $usr->data["mail"]) ;
 		$usr->data["tel_fixe"]=$usr_pere->data["tel_fixe"];
 		$usr->data["tel_portable"]=$usr_pere->data["tel_portable"];
 		$usr->data["tel_bureau"]=$usr_pere->data["tel_bureau"];

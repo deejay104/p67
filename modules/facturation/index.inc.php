@@ -149,9 +149,9 @@
 	// Entete du tableau d'affichage
 	$tabTitre=array();
 	$tabTitre["num"]["aff"]="Numéro";
-	$tabTitre["num"]["width"]=85;
+	$tabTitre["num"]["width"]=110;
 	$tabTitre["date"]["aff"]="Date";
-	$tabTitre["date"]["width"]=85;
+	$tabTitre["date"]["width"]=110;
 	$tabTitre["usr"]["aff"]="Membres";
 	$tabTitre["usr"]["width"]=250;
 	$tabTitre["rem"]["aff"]="Commentaire";

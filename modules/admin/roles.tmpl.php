@@ -49,6 +49,7 @@ $tabRoles["ModifUserDteLicence"]="Modifier la date de la licence";
 $tabRoles["ModifUserDteInscription"]="Modifier la date de l'inscription";
 $tabRoles["ModifUserIdCpt"]="Modifier le compte de saisie";
 $tabRoles["ModifUserType"]="Modifier le type du membre";
+
 $tabRoles["ModifParents"]="Modifier les parents";
 $tabRoles["ModifRessourceSauve"]="Sauvegarde une ressource (avion)";
 $tabRoles["ModifRessource"]="Modifier les ressources (avion)";
@@ -57,6 +58,7 @@ $tabRoles["ModifMessage"]="Modification d'un message dans le module document";
 $tabRoles["ModifClasseur"]="Modification d'un classeur dans le module document";
 $tabRoles["ModifGroupe"]="Modification d'un groupe (roles et informations)";
 
+$tabRoles["ModifFamilleCree"]="Créer une famille";
 
 $tabRoles["ModifManifestation"]="Modification des manifestations";
 $tabRoles["ModifParticipant"]="Ajout/Suppression de participants à une manifestation";

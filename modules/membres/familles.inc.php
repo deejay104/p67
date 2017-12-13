@@ -35,10 +35,10 @@
 	$tmpl_x->assign("path_module","$module/$mod");
 
 	if (GetDroit("ModifFamilleCree"))
-	  { $tmpl_x->parse("corps.ajout"); }
+	  { $tmpl_x->parse("infos.ajout"); }
 	
 	if (GetDroit("AccesAbonnements"))
-	  { $tmpl_x->parse("corps.abonnements"); }
+	  { $tmpl_x->parse("infos.abonnements"); }
 	
 	$tabTitre=array();
 	$tabTitre["prenom"]["aff"]="Prénom";
@@ -82,7 +82,7 @@
 	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 
 	if (GetDroit("AccesFamille"))
-	  { $tmpl_x->parse("corps.exporter"); }
+	  { $tmpl_x->parse("infos.exporter"); }
 	
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

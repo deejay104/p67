@@ -35,7 +35,7 @@
 <p class="lastupdate">Dernière mise à jour : {info_maj}<br />Dernière connexion : {info_connect}</p>
 
 <!-- BEGIN: aff_soldecompte -->
-<p>Solde du compte pilote : {solde}</p>
+<p>Solde du compte membre : {solde}</p>
 <!-- END: aff_soldecompte -->
 <!-- BEGIN: mod_aviation_detail -->
 <p>Nombre d'heure de vol : {nbheurevol}<br />
@@ -172,14 +172,13 @@
 		</p>
 		<p>
 			<label for="mere">Mère</label>
-			
 			{form_mere}
 		</p>
 		<!-- END: aff_parents -->
 		<!-- BEGIN: aff_enfants -->
 		<p>
 			<label for="enfant">Enfant(s)</label>
-			{form_enfant}
+			<span>{form_enfant}</span>
 		</p>
 		<!-- END: aff_enfants -->
 		<p>

@@ -6,10 +6,10 @@
 	<A href="familles.php"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt="">Liste</A>
 
 	<!-- BEGIN: ajout -->
-	<A href="membres.php?rub=famille&id="><IMG src="{path_module}/img/icn32_ajouter2.png" border=0 alt="">Ajouter</A>
+	<A href="membres.php?rub=famille&id="><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt="">Ajouter</A>
 	<!-- END: ajout -->
 	<!-- BEGIN: modification -->
-	<A href="membres.php?rub=famille&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_editer2.png" border=0 alt="">Modifier</A>
+	<A href="membres.php?rub=famille&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_editer.png" border=0 alt="">Modifier</A>
 	<!-- END: modification -->
 	<!-- BEGIN: password -->
 	<A href="membres.php?rub=chgpwd&id={id}"><img src="{path_module}/img/icn32_password.png" border=0 alt="" width=32 height=32 />Changer son mot de passe</A>
@@ -41,10 +41,10 @@
 
 
 <!-- BEGIN: msgerror -->
-<div id="msgerror">{msg_erreur}</div>
+<div class="msgerror">{msg_erreur}</div>
 <!-- END: msgerror -->
 <!-- BEGIN: msgok -->
-<div id="msgok">{msg_confirmation}</div>
+<div class="msgok">{msg_confirmation}</div>
 <!-- END: msgok -->
 
 
@@ -72,12 +72,6 @@
 		});
 	});
 
-	$(function() {
-		$("#enregistrer1").button();
-		$("#annuler1").button();
-		$("#enregistrer2").button();
-		$("#annuler2").button();
-	});
 
 </script>
 
@@ -86,321 +80,102 @@
 <br /><br />
 <!-- END: submit1 -->
 
-<div class="formulaireTitre">Documents</div>
+<div class="formulaireTitre">Etat Civil</div>
 
-<TABLE border="0" cellspacing="0" cellpadding="0" background="" width="850" style="margin-left: 30px;">
-  <TR>
+<table>
+  <tr>
     <TD width=300 align="center"><br /><IMG src="doc.php?id={id_photo}" alt="" width=200 height=240></TD>
-    <TD>
-	<table border=0 cellpadding=0 cellspacing=0>
-	 <tr height=17>
-	  <td height=17 width=200 align=right><B>Prénom :</B>&nbsp;</td>
-	  <td width=300>{form_prenom}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Nom :</B>&nbsp;</td>
-	  <td>{form_nom}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Initiales :</B>&nbsp;</td>
-	  <td>{form_initiales}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Sexe :</B>&nbsp;</td>
-	  <td>{form_sexe}</td>
-	 </tr>
-	 <tr height=17>
-		<td align=right><B>Date de naissance :</b>&nbsp;</td>
-		<td>{form_dte_naissance}&nbsp;</td>
-	 </tr>
-	 <tr height=17>
-		<td align=right><B>Date d'inscription :</b>&nbsp;</td>
-		<td>{form_dte_inscription}&nbsp;</td>
-	 </tr>
-	 <tr height=17>
-		<td align=right><B>Mail :</b>&nbsp;</td>
-		<td>{form_mail}&nbsp;</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>N° allocataire CAF :</B>&nbsp;</td>
-	  <td>{form_num_caf}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Zone :</B>&nbsp;</td>
-	  <td>{form_zone}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Régime :</B>&nbsp;</td>
-	  <td>{form_regime}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Autorisation prélèvement :</B>&nbsp;</td>
-	  <td>{form_aut_prelevement}</td>
-	 </tr>
+    <td>
+		<div class="formulaire">
+			<p><label>Prénom :</label>{form_prenom}</p>
+			<p><label>Nom :</label>{form_nom}</p>
+			<p><label>Initiales :</label>{form_initiales}</p>
+			<p><label>Sexe :</label>{form_sexe}</p>
+			<p><label>Date de naissance :</label>{form_dte_naissance}</p>
+			<p><label>Date d'inscription :</label>{form_dte_inscription}</p>
+			<p><label>Mail :</label>{form_mail}</p>
+			<p><label>Zone :</label>{form_zone}</p>
 
-<!-- BEGIN: aff_photo -->
-	 <tr height=17>
-	  <td align=right><B>Photo :</B>&nbsp;</td>
-	  <td><input name="form_photo" type="file" size=40 /></td>
-	 </tr>
-<!-- END: aff_photo -->
+			<!-- BEGIN: aff_photo -->
+			<p><label>Photo :</label><input name="form_photo" type="file" size=40 /></p>
+			<!-- END: aff_photo -->
 
-	</table>
-    </TD>
-  </TR>
+		</div>
+	</td>
+  </tr>
 
-</TABLE>
+</table>
 
 <br />
 
 <div class="formulaireTitre">Documents</div>
 
-<table border=0 cellpadding=0 cellspacing=0 width=600>
- <tr height=5>
-	<td colspan=3><img src="images/rien.gif" alt="" /></td>
- </tr>
-<!-- BEGIN: lst_document -->
- <tr height=17>
-	<td width=30><img src="images/rien.gif" alt="" /></td>
-	<td height=17>&nbsp;</td>
-	<td>{form_document}</td>
- </tr>
-<!-- END: lst_document -->
-</table>
+<div class="formulaire" style="padding-left: 20px;">
+	<!-- BEGIN: lst_document -->
+	<p>{form_document}</p>
+	<!-- END: lst_document -->
+</div>
 <br />
 
-<div class="formulaireTitre">Fiche de renseignements des responsables</div>
 
-<TABLE border="0" cellspacing="0" cellpadding="0" background="" width=880>
-  <tr>
-    <td width=30><IMG src="images/rien.gif" alt=""></td>
-    <td align=center><b>Père</b> {lst_pere}</td>
-    <td align=center><b>Mère</b> {lst_mere}</td>
-  </tr>
-  <TR>
-    <TD width=30><IMG src="images/rien.gif" alt=""></TD>
-    <TD>
-	<table border=0 cellpadding=0 cellspacing=0>
-	 <tr height=17>
-	  <td height=17 width=150 align=right><B>Prénom:</B>&nbsp;</td>
-	  <td width=300>{form_pere_prenom}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Nom :</B>&nbsp;</td>
-	  <td>{form_pere_nom}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Tel domicile :</B>&nbsp;</td>
-	  <td>{form_pere_tel_fixe}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Tel portable :</B>&nbsp;</td>
-	  <td>{form_pere_tel_portable}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Tel bureau :</B>&nbsp;</td>
-	  <td>{form_pere_tel_bureau}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Mail :</B>&nbsp;</td>
-	  <td>{form_pere_mail}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Adresse :</B>&nbsp;</td>
-	  <td>{form_pere_adresse1}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right></td>
-	  <td>{form_pere_adresse2}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Code Postal :</B>&nbsp;</td>
-	  <td>{form_pere_codepostal}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Ville :</B>&nbsp;</td>
-	  <td>{form_pere_ville}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Profession :</B>&nbsp;</td>
-	  <td>{form_pere_profession}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Employeur :</B>&nbsp;</td>
-	  <td>{form_pere_employeur}</td>
-	 </tr>
-	</table>
-    </TD>
-    <td>
-	<table border=0 cellpadding=0 cellspacing=0>
-	 <tr height=17>
-	  <td height=17 width=150 align=right><B>Prénom :</B>&nbsp;</td>
-	  <td width=250>{form_mere_prenom}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Nom :</B>&nbsp;</td>
-	  <td>{form_mere_nom}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Tel domicile :</B>&nbsp;</td>
-	  <td>{form_mere_tel_fixe}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Tel portable :</B>&nbsp;</td>
-	  <td>{form_mere_tel_portable}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Tel bureau :</B>&nbsp;</td>
-	  <td>{form_mere_tel_bureau}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Mail :</B>&nbsp;</td>
-	  <td>{form_mere_mail}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Adresse :</B>&nbsp;</td>
-	  <td>{form_mere_adresse1}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right></td>
-	  <td>{form_mere_adresse2}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Code Postal :</B>&nbsp;</td>
-	  <td>{form_mere_codepostal}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Ville :</B>&nbsp;</td>
-	  <td>{form_mere_ville}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Profession :</B>&nbsp;</td>
-	  <td>{form_mere_profession}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Employeur :</B>&nbsp;</td>
-	  <td>{form_mere_employeur}</td>
-	 </tr>
-	</table>
-    </td>    	
-  </TR>
+<div style='width:100%; display: inline-block;'>
+  <div style='width:50%; display: inline-block; padding-bottom: 0px; '>
+	<div class="formulaireTitre">Père {lst_pere}</div>
+	<div class="formulaire">
+		<p><label>Prénom :</label>{form_pere_prenom}</p>
+		<p><label>Nom :</label>{form_pere_nom}</p>
+		<p><label>Tel domicile :</label>{form_pere_tel_fixe}</p>
+		<p><label>Tel portable :</label>{form_pere_tel_portable}</p>
+		<p><label>Tel bureau :</label>{form_pere_tel_bureau}</p>
+		<p><label>Mail :</label>{form_pere_mail}</p>
+		<p><label>Adresse :</label><span>{form_pere_adresse1}<br/>{form_pere_adresse2}</p>
+		<p><label>Code Postal :</label>{form_pere_codepostal}</p>
+		<p><label>Ville :</label>{form_pere_ville}</p>
+	</div>
+  </div>
 
-</TABLE>
-
-<BR>
-
-
-<div class="formulaireTitre">Fiche sanitaire</div>
-
-<TABLE border="0" cellspacing="0" cellpadding="0" background="" width=880>
-  <TR>
-    <TD width=30><IMG src="images/rien.gif" alt=""></TD>
-    <TD>
-	<table border=0 cellpadding=0 cellspacing=0>
-	 <tr height=17>
-	  <td height=17 width=150 align=right><B>Médecin :</B>&nbsp;</td>
-	  <td width=250>{form_nom_medecin}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Tel médecin :</B>&nbsp;</td>
-	  <td>{form_tel_medecin}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Adresse médecin :</B>&nbsp;</td>
-	  <td>{form_adr_medecin}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Type repas :</B>&nbsp;</td>
-	  <td>{form_type_repas}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Handicap :</B>&nbsp;</td>
-	  <td>{form_handicap}</td>
-	 </tr>
-	 <tr valign="top">
-	  <td align=right><B>Compléments :</B>&nbsp;</td>
-	  <td>{form_remarque_sante}</td>
-	 </tr>
-	</table>
-    </TD>
-  </TR>
-
-</TABLE>
-<br />
-
-<div class="formulaireTitre">Allergies</div>
-
-<table border="0" cellspacing="0" cellpadding="0" background="" width=880>
-  <tr>
-    <td width=30><IMG src="images/rien.gif" alt=""></TD>
-    <td>
-	<table border=0 cellpadding=0 cellspacing=0>
-	 <tr height=17>
-	  <td align=right width=150><B>Asthme :</B>&nbsp;</td>
-	  <td width=100>{form_allergie_asthme}</td>
-	  <td align=right><B>Compléments :</B>&nbsp;</td>
-	  <td rowspan=4>{form_allergie_commentaire}</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Médicamenteuse :</B>&nbsp;</td>
-	  <td>{form_allergie_medicament}</td>
-	  <td>&nbsp;</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right><B>Alimentaire :</B>&nbsp;</td>
-	  <td>{form_allergie_alimentaire}</td>
-	  <td>&nbsp;</td>
-	 </tr>
-	 <tr height=17>
-	  <td align=right>&nbsp;</td>
-	  <td>&nbsp;</td>
-	  <td>&nbsp;</td>
-	 </tr>
-	</table>
-    </td>
-  </tr>
-
-</table>
-<br />
+  <div style='width:50%; display: inline-block; float:right; padding-bottom: 0px; '>
+	<div class="formulaireTitre">Mère {lst_mere}</div>
+	<div class="formulaire">
+		<p><label>Prénom :</label>{form_mere_prenom}</p>
+		<p><label>Nom :</label>{form_mere_nom}</p>
+		<p><label>Tel domicile :</label>{form_mere_tel_fixe}</p>
+		<p><label>Tel portable :</label>{form_mere_tel_portable}</p>
+		<p><label>Tel bureau :</label>{form_mere_tel_bureau}</p>
+		<p><label>Mail :</label>{form_mere_mail}</p>
+		<p><label>Adresse :</label><span>{form_mere_adresse1}<br/>{form_mere_adresse2}</p>
+		<p><label>Code Postal :</label>{form_mere_codepostal}</p>
+		<p><label>Ville :</label>{form_mere_ville}</p>
+	</div>
+  </div>
+</div>
 
 
 <!-- BEGIN: abonnement -->
 <br />
 <div class="formulaireTitre">Abonnements</div>
-<table border="0" cellspacing="0" cellpadding="0" background="" width=880>
 
 <!-- BEGIN: lst_abonnement -->
-  <tr>
-	<td width=30>&nbsp;</td>
-	<td width=30>&nbsp;</td>
-	<td colspan=2><b>* <a href="index.php?mod=facturation&rub=abonnement&id={abonnement_id}">{abonnement_titre}</a></b></td>
-	<td width=250><b>{abonnement_total}</b></td>
-  </tr>
-
+<div style="background-color:#cccccc; width:800px; margin-left:15px; padding-left:40px; height: 30px; line-height: 30px; ">
+	<div style="display: inline-block;">* <a href="index.php?mod=facturation&rub=abonnement&id={abonnement_id}">{abonnement_titre}</a></div>
+	<div style="float:right; padding-right:40px;">{abonnement_total}</div>
+</div>
 <!-- BEGIN: lst_abo_ligne -->
-  <tr>
-	<td width=30>&nbsp;</td>
-	<td width=30>&nbsp;</td>
-	<td width=30>&nbsp;</td>
-	<td>{abonnement_ligne}</td>
-	<td>{abonnement_montant}</td>
-  </tr>
+<div style="width:800px; margin-left:15px; padding-left:40px">
+	<div style="padding-left:30px; display: inline-block;">{abonnement_ligne}</div>
+	<div style="float:right; padding-right:40px;">{abonnement_montant}</div>
+</div>
 <!-- END: lst_abo_ligne -->
 <!-- END: lst_abonnement -->
-</table>
+
 <!-- END: abonnement -->
 
 <br />
 
 <div class="formulaireTitre">Commentaires</div>
-
-<TABLE border="0" cellspacing="0" cellpadding="0" background="" width=880>
-  <TR>
-	<TD width=30><IMG src="images/rien.gif" alt=""></TD>
-	<TD>{form_commentaire}</td>
-  </TR>
-</TABLE>
-
+<div class="formulaire">
+	<p>{form_commentaire}</p>
+</div>
 <BR>
 <!-- BEGIN: submit -->
 	<br />

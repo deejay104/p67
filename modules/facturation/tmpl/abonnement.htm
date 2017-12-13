@@ -2,7 +2,11 @@
 	<img src="{path_module}/img/icn48_titre.png" alt="" />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-	Abonnement {id_facture}
+<a href="factures.php?rub=abonnements">Retour</a>
+<a href="factures.php?rub=abonnement&id={form_id}&mode=edit">Modifier</a> 
+<a href="factures.php?rub=abonnement&id={form_id}&mode=copy">Copier</a> 
+<a href="factures.php?rub=abonnement&id={form_id}&fonc=desactive">Désactiver</a> 
+<a href="#" OnClick="ConfirmeClick('factures.php?rub=abonnement&id={form_id}&fonc=facturer','Souhaitez-vous imputer les lignes de cet abonnement au compte ?');">Facturer</a> 
 <!-- END: infos -->
 
 
@@ -40,16 +44,9 @@
 
 <table bgcolor='#FFFFFF' border='0' cellspacing='0' cellpadding='0' background='' >
 <tr style='height=50px;'><td>&nbsp;</td><td></td><td colspan=3 align=center><h1>{abonnement_titre}</h1></td></tr>
-<tr style='border-bottom: 1px solid #000000; border-top: 1px solid #000000;'><td>&nbsp;</td><td colspan=5>
-	<a href="factures.php?rub=abonnements">-Retour-</a>
-	<a href="factures.php?rub=abonnement&id={form_id}&mode=edit">-Modifier-</a> 
-	<a href="factures.php?rub=abonnement&id={form_id}&mode=copy">-Copier-</a> 
-	<a href="factures.php?rub=abonnement&id={form_id}&fonc=desactive">-Désactiver-</a> 
-	<a href="#" OnClick="ConfirmeClick('factures.php?rub=abonnement&id={form_id}&fonc=facturer','Souhaitez-vous imputer les lignes de cet abonnement au compte ?');">-Facturer-</a> 
-</td></tr>
 
 <!-- BEGIN: msgok -->
-<tr><td>&nbsp;</td><td colspan=2><br /><div id="{msg_type}" style="width:500px;">{msg_confirmation}</div></td></tr>
+<tr><td>&nbsp;</td><td colspan=2><div class="msgok">{msg_confirmation}</div></td></tr>
 <!-- END: msgok -->
 
 	
