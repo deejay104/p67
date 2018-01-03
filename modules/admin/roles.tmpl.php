@@ -11,6 +11,7 @@ $tabRoles["AccesExport"]="Accès à la page des exports";
 $tabRoles["AccesFactures"]="Accès à la liste des factures";
 $tabRoles["AccesComptes"]="Accès au module de comptabilité";
 $tabRoles["AccesPageMouvements"]="Accès à la page de saisi d'un mouvement";
+$tabRoles["AccesPageEcheances"]="Accès à la page de suivi des échéances";
 $tabRoles["AccesPageVols"]="Accès à la page des vols (saisi des vols)";
 $tabRoles["AccesPageSuivi"]="Accès à la page de suivi des comptes";
 $tabRoles["AccesPageListeComptes"]="Accès à la page de la liste des comptes";

@@ -91,7 +91,7 @@
 // ---- Affiche la page demandée
 
 	// Liste des mouvements
-	$query = "SELECT * FROM p67_mouvement WHERE actif='oui' ORDER BY ordre,description";
+	$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE actif='oui' ORDER BY ordre,description";
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
 	  { 

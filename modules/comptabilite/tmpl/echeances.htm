@@ -1,0 +1,45 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	<A href="compta.php"><IMG src="{path_module}/img/icn32_mouvement.png" border=0>Mouvement</A>
+	<A href="compta.php?rub=echeances"><IMG src="{path_module}/img/icn32_echeances.png" border=0><u>Echéances</u></A>
+<!-- BEGIN: vols -->
+	<A href="compta.php?rub=vols"><IMG src="{path_module}/img/icn32_vols.png" border=0>Vols</A>
+	<A href="compta.php?rub=tarifs"><IMG src="{path_module}/img/icn32_tarifs.png" border=0>Tarifs</A>
+<!-- END: vols -->
+	<A href="compta.php?rub=suivi"><IMG src="{path_module}/img/icn32_suivi.png" border=0>Suivi</A>
+	<A href="suivicomptes.php"><IMG src="{path_module}/img/icn32_comptes.png" border=0>Liste des comptes</A>
+	<A href="tableaubord.php"><IMG src="{path_module}/img/icn32_tabbord.png" border=0>Tableau de bord</A>
+<!-- END: infos -->
+
+<!-- BEGIN: corps -->
+<script language="JavaScript">
+function Recharge()
+{
+ 	document.location='compta.php?rub=echeances&form_id='+document.getElementById('form_id').value;
+}
+
+</script>
+
+<FORM name="reservation" method="post" action="compta.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="rub" value="suivi">
+
+	<BR>
+	<select id="form_id" OnChange="Recharge();">
+		<option value="0">Choisissez l'échéance</option>
+	<!-- BEGIN: lst_echeance -->
+		<option value="{form_echeanceid}" {select_echeance}>{form_echeance}</option>
+	<!-- END: lst_echeance -->
+	</select>
+
+	<br /><br />
+	
+	{aff_tableau}
+
+</FORM>
+
+
+
+<!-- END: corps -->

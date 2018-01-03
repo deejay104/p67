@@ -27,11 +27,28 @@ class echeance_class
 		}
 	}
 
-	# Load document
+	# Charge une échéance par son id
 	function load($id){
 		$this->id=$id;
 		$sql=$this->sql;
 		$query = "SELECT echeance.*, echeancetype.description, echeancetype.droit, echeancetype.multi, echeancetype.resa FROM ".$this->tbl."_echeance AS echeance LEFT JOIN ".$this->tbl."_echeancetype AS echeancetype ON echeance.typeid=echeancetype.id WHERE echeance.id='$id'";
+		$res = $sql->QueryRow($query);
+		// Charge les variables
+		$this->typeid=$res["typeid"];
+		$this->uid=$res["uid"];
+		$this->dte_echeance=$res["dte_echeance"];
+		$this->paye=$res["paye"];
+		$this->description=$res["description"];
+		$this->droit=$res["droit"];
+		$this->multi=$res["multi"];
+		$this->resa=$res["resa"];
+	}
+
+	# Charge une échéance par son type
+	function loadtype($tid){
+		$this->id=$id;
+		$sql=$this->sql;
+		$query = "SELECT echeance.*, echeancetype.description, echeancetype.droit, echeancetype.multi, echeancetype.resa FROM ".$this->tbl."_echeance AS echeance LEFT JOIN ".$this->tbl."_echeancetype AS echeancetype ON echeance.typeid=echeancetype.id WHERE echeance.typeid='$tid' AND echeance.uid='".$this->uid."'";
 		$res = $sql->QueryRow($query);
 		// Charge les variables
 		$this->typeid=$res["typeid"];
@@ -181,6 +198,13 @@ class echeance_class
 		}
 		return $ret;
 	}
+
+	function Val() 
+	{ global $MyOpt;
+		
+		return $this->dte_echeance;
+	}
+
 }
 
 
@@ -219,5 +243,19 @@ function VerifEcheance($sql,$id)
 
 	return $lstdte;
   }
+
+function ListeMembresEcheance($sql,$id) 
+{ global $MyOpt;
+	$query="SELECT uid FROM ".$MyOpt["tbl"]."_echeance WHERE actif='oui' AND typeid='".$id."'";
+	$sql->Query($query);
+	$lstdte=array();
+	for($i=0; $i<$sql->rows; $i++)
+	{
+		$sql->GetRow($i);
+		$lstdte[$i]=$sql->data["uid"];
+	}
+
+	return $lstdte;		
+}
 
 ?>

@@ -13,18 +13,28 @@
 		{
 			if ($id>0)
 			{
-				$query="UPDATE ".$MyOpt["tbl"]."_echeancetype SET description='".$d."',droit='".$form_droit[$id]."',resa='".$form_resa[$id]."',multi='".$form_multi[$id]."',cout='".$form_cout[$id]."' WHERE id='".$id."'";
+				$query="UPDATE ".$MyOpt["tbl"]."_echeancetype SET description='".$d."',poste='".$form_poste[$id]."', droit='".$form_droit[$id]."',resa='".$form_resa[$id]."',multi='".$form_multi[$id]."',cout='".$form_cout[$id]."' WHERE id='".$id."'";
 				$sql->Update($query);
 			}
 			else
 			{
 				if (trim($d)!="")
 				{
-					$query="INSERT INTO ".$MyOpt["tbl"]."_echeancetype SET description='".$d."',droit='".$form_droit[$id]."',resa='".$form_resa[$id]."',multi='".$form_multi[$id]."',cout='".$form_cout[$id]."'";
+					$query="INSERT INTO ".$MyOpt["tbl"]."_echeancetype SET description='".$d."',poste='".$form_poste[$id]."',droit='".$form_droit[$id]."',resa='".$form_resa[$id]."',multi='".$form_multi[$id]."',cout='".$form_cout[$id]."'";
 					$sql->Insert($query);
 				}
 			}
 		}
+	}
+
+// List des postes
+	$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE actif='oui' ORDER BY ordre,description";
+	$sql->Query($query);
+	$tabposte=array();
+	for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+		$tabposte[$sql->data["id"]]=$sql->data;
 	}
 	
 // ---- Affiche les types d'échéance
@@ -48,7 +58,25 @@
 		$tmpl_x->assign("select_resa_".$sql->data["resa"],"selected");
 		$tmpl_x->assign("select_multi_".$sql->data["multi"],"selected");
 
+		foreach($tabposte as $id=>$d)
+		{
+			$tmpl_x->assign("form_poste",$d["description"]);
+			$tmpl_x->assign("form_posteid",$id);
+			$tmpl_x->assign("select_poste",($sql->data["poste"]==$id) ? "selected" : "");
+			
+			$tmpl_x->parse("corps.lst_echeance.lst_poste");
+		}
+		
 		$tmpl_x->parse("corps.lst_echeance");
+	}
+
+	foreach($tabposte as $id=>$d)
+	{
+		$tmpl_x->assign("form_poste",$d["description"]);
+		$tmpl_x->assign("form_posteid",$id);
+		$tmpl_x->assign("select_poste",($sql->data["poste"]==$id) ? "selected" : "");
+		
+		$tmpl_x->parse("corps.lst_poste");
 	}
 	
 // ---- Affecte les variables d'affichage

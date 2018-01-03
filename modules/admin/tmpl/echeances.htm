@@ -40,7 +40,12 @@
 			</select>
 		</td>
 		<td>
-			<INPUT type="text" name="form_poste[{form_id}]" style="width:400px;" value="{ordre_poste}">
+			<select name="form_poste[{form_id}]">
+			<option value="0">Aucun</option>
+	<!-- BEGIN: lst_poste -->
+			<option value="{form_posteid}" {select_poste}>{form_poste}</option>
+	<!-- END: lst_poste -->
+			</select>
 		</td>
 		<td>
 			<INPUT type="text" name="form_cout[{form_id}]" style="width:80px;" value="{form_cout}">
@@ -69,7 +74,12 @@
 			</select>
 		</td>
 		<td>
-			<INPUT type="text" name="form_poste[0]" style="width:400px;" value="">
+			<select name="form_poste[0]">
+			<option value="0">Aucun</option>
+	<!-- BEGIN: lst_poste -->
+			<option value="{form_posteid}" {select_poste}>{form_poste}</option>
+	<!-- END: lst_poste -->
+			</select>
 		</td>
 		<td>
 			<INPUT type="text" name="form_cout[0]" style="width:80px;" value="">
