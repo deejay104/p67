@@ -14,6 +14,7 @@ class echeance_class
 
 		$this->id=0;
 		$this->typeid="";
+		$this->poste=0;
 		$this->description="";
 		$this->uid=$uid;
 		$this->dte_echeance="";
@@ -31,10 +32,11 @@ class echeance_class
 	function load($id){
 		$this->id=$id;
 		$sql=$this->sql;
-		$query = "SELECT echeance.*, echeancetype.description, echeancetype.droit, echeancetype.multi, echeancetype.resa FROM ".$this->tbl."_echeance AS echeance LEFT JOIN ".$this->tbl."_echeancetype AS echeancetype ON echeance.typeid=echeancetype.id WHERE echeance.id='$id'";
+		$query = "SELECT echeance.*, echeancetype.poste, echeancetype.description, echeancetype.droit, echeancetype.multi, echeancetype.resa FROM ".$this->tbl."_echeance AS echeance LEFT JOIN ".$this->tbl."_echeancetype AS echeancetype ON echeance.typeid=echeancetype.id WHERE echeance.id='$id'";
 		$res = $sql->QueryRow($query);
 		// Charge les variables
 		$this->typeid=$res["typeid"];
+		$this->poste=$res["poste"];
 		$this->uid=$res["uid"];
 		$this->dte_echeance=$res["dte_echeance"];
 		$this->paye=$res["paye"];
@@ -48,10 +50,11 @@ class echeance_class
 	function loadtype($tid){
 		$this->id=$id;
 		$sql=$this->sql;
-		$query = "SELECT echeance.*, echeancetype.description, echeancetype.droit, echeancetype.multi, echeancetype.resa FROM ".$this->tbl."_echeance AS echeance LEFT JOIN ".$this->tbl."_echeancetype AS echeancetype ON echeance.typeid=echeancetype.id WHERE echeance.typeid='$tid' AND echeance.uid='".$this->uid."'";
+		$query = "SELECT echeance.*, echeancetype.poste, echeancetype.description, echeancetype.droit, echeancetype.multi, echeancetype.resa FROM ".$this->tbl."_echeance AS echeance LEFT JOIN ".$this->tbl."_echeancetype AS echeancetype ON echeance.typeid=echeancetype.id WHERE echeance.typeid='$tid' AND echeance.uid='".$this->uid."'";
 		$res = $sql->QueryRow($query);
 		// Charge les variables
 		$this->typeid=$res["typeid"];
+		$this->poste=$res["poste"];
 		$this->uid=$res["uid"];
 		$this->dte_echeance=$res["dte_echeance"];
 		$this->paye=$res["paye"];
@@ -188,7 +191,7 @@ class echeance_class
 			$ret ="<div id='aff_echeance".$this->id."'>";
 			$ret.="<img src='".$MyOpt["host"]."/images/icn16_vide.png' style='vertical-align:middle; border: 0px;  height: 16px; width: 16px;'>&nbsp;";
 			$ret.="Echéance ".$this->description." le <input name='form_echeance[".$this->id."]' id='form_echeance".$this->id."' value='".$this->dte_echeance."' type='date' style='width: 165px;'>&nbsp;";
-			$ret.="<a href=\"#\" OnClick=\"document.getElementById('form_echeance".$this->id."').value=''; document.getElementById('aff_echeance".$this->id."').style.display='none';\"><img src='".$MyOpt["host"]."/images/icn16_supprimer.png' style='vertical-align:middle; border: 0px;  height: 16px; width: 16px;'></a>";
+			$ret.="<a href=\"#\" OnClick=\"document.getElementById('form_echeance".$this->id."').value=''; document.getElementById('aff_echeance".$this->id."').style.display='none';\" class='imgDelete'><img src='".$MyOpt["host"]."/images/icn16_supprimer.png'></a>";
 			$ret.="</div>";
 		}
 		else
@@ -246,7 +249,7 @@ function VerifEcheance($sql,$id)
 
 function ListeMembresEcheance($sql,$id) 
 { global $MyOpt;
-	$query="SELECT uid FROM ".$MyOpt["tbl"]."_echeance WHERE actif='oui' AND typeid='".$id."'";
+	$query="SELECT uid FROM ".$MyOpt["tbl"]."_echeance AS echeance LEFT JOIN ".$MyOpt["tbl"]."_utilisateurs AS usr ON echeance.uid=usr.id WHERE echeance.actif='oui' AND echeance.typeid='".$id."' AND usr.actif='oui' GROUP BY echeance.uid";
 	$sql->Query($query);
 	$lstdte=array();
 	for($i=0; $i<$sql->rows; $i++)

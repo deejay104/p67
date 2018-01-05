@@ -2,29 +2,40 @@
 	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-	<A href="compta.php"><IMG src="{path_module}/img/icn32_mouvement.png" border=0>Mouvement</A>
-	<A href="compta.php?rub=echeances"><IMG src="{path_module}/img/icn32_echeances.png" border=0><u>Echéances</u></A>
+	<A href="suiviclub.php"><IMG src="{path_module}/img/icn32_mouvement.png" border=0>Mouvement</A>
+	<A href="suiviclub.php?rub=echeances"><IMG src="{path_module}/img/icn32_echeances.png" border=0><u>Echéances</u></A>
 <!-- BEGIN: vols -->
-	<A href="compta.php?rub=vols"><IMG src="{path_module}/img/icn32_vols.png" border=0>Vols</A>
-	<A href="compta.php?rub=tarifs"><IMG src="{path_module}/img/icn32_tarifs.png" border=0>Tarifs</A>
+	<A href="suiviclub.php?rub=vols"><IMG src="{path_module}/img/icn32_vols.png" border=0>Vols</A>
+	<A href="suiviclub.php?rub=tarifs"><IMG src="{path_module}/img/icn32_tarifs.png" border=0>Tarifs</A>
 <!-- END: vols -->
-	<A href="compta.php?rub=suivi"><IMG src="{path_module}/img/icn32_suivi.png" border=0>Suivi</A>
-	<A href="suivicomptes.php"><IMG src="{path_module}/img/icn32_comptes.png" border=0>Liste des comptes</A>
-	<A href="tableaubord.php"><IMG src="{path_module}/img/icn32_tabbord.png" border=0>Tableau de bord</A>
+	<A href="suiviclub.php?rub=suivi"><IMG src="{path_module}/img/icn32_suivi.png" border=0>Suivi</A>
+	<A href="suiviclub.php?rub=liste"><IMG src="{path_module}/img/icn32_comptes.png" border=0>Liste des comptes</A>
+	<A href="suiviclub.php?rub=tableaubord"><IMG src="{path_module}/img/icn32_tabbord.png" border=0>Tableau de bord</A>
 <!-- END: infos -->
 
 <!-- BEGIN: corps -->
 <script language="JavaScript">
 function Recharge()
 {
- 	document.location='compta.php?rub=echeances&form_id='+document.getElementById('form_id').value;
+ 	document.location='suiviclub.php?rub=echeances&form_id='+document.getElementById('form_id').value;
 }
-
+function selectAll()
+{
+	var t=false;
+	if (document.getElementById('form_debite').checked==true)
+	{
+		t=true;
+	}
+	<!-- BEGIN: lst_checkbox -->
+	document.getElementById('form_debite_{form_uid}').checked=t;
+	<!-- END: lst_checkbox -->
+}
 </script>
 
-<FORM name="reservation" method="post" action="compta.php" enctype="multipart/form-data">
+<FORM name="reservation" method="post" action="suiviclub.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
-	<INPUT type="hidden" name="rub" value="suivi">
+	<INPUT type="hidden" name="rub" value="echeances">
+	<INPUT type="hidden" name="form_id" value="{form_id}">
 
 	<BR>
 	<select id="form_id" OnChange="Recharge();">
@@ -34,7 +45,38 @@ function Recharge()
 	<!-- END: lst_echeance -->
 	</select>
 
-	<br /><br />
+	<!-- BEGIN: aff_debite -->
+	Nouvelle échéance : <input type="date" name="form_date"> Cout : <input type="text" name="form_cout" value="{form_cout}">
+	<input type="submit" name="fonc" value="Débiter">
+	<!-- END: aff_debite -->
+	
+	<br />
+	<br />
+
+	<!-- BEGIN: aff_visualisation -->
+	<input type="hidden" name="form_date" value="{form_date}">
+	<input type="hidden" name="form_cout" value="{form_cout}">
+	<table>
+	<tr style="height:30px; border-bottom:1px solid black; background-color:#cccccc;">
+		<th width=120><B>Date</B></th>
+		<th width=350><B>Poste</B></th>
+		<th width=350><B>Commentaire</B></th>
+		<th width=200><B>Membre</B></th>
+		<th width=100 style="border-left:1px solid black; text-align:right;"><B>Montant</B></th>
+	</tr>
+	<!-- BEGIN: lst_visualisation -->
+	<tr style="border-bottom:1px dashed #cccccc; height:25px;">
+		<td>{enr_date}<input type="hidden" name="form_debite[{enr_uid}]" value="on"></td>
+		<td>{enr_poste}</td>
+		<td>{enr_commentaire}</td>
+		<td>{enr_membre}</td>
+		<td style="border-left:1px solid black; text-align:right;margin:0px;">{enr_cout}</td>
+	</tr>
+	<!-- END: lst_visualisation -->
+	</table>
+	<input type="submit" name="fonc" value="Valider">
+	<input type="submit" name="fonc" value="Annuler">
+	<!-- END: aff_visualisation -->
 	
 	{aff_tableau}
 

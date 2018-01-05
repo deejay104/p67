@@ -737,7 +737,7 @@ function FatalError($txt,$msg="")
 function AffMontant($val)
   {
   	global $MyOpt;
-  	preg_match("/([\-0-9]*)\.?([0-9]*)/i",$val,$m);
+  	preg_match("/([\-0-9]*)\.?([0-9]*)/i",round($val,2),$m);
 	$ret=$m[1].",".$m[2].substr("00",0,2-strlen($m[2]));
 	
 	$ret=$ret." ".$MyOpt["devise"];

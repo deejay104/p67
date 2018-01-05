@@ -40,9 +40,9 @@
 
 	$tabTitre=array();
 	$tabTitre["prenom"]["aff"]="Prénom";
-	$tabTitre["prenom"]["width"]=120;
+	$tabTitre["prenom"]["width"]=150;
 	$tabTitre["nom"]["aff"]="Nom";
-	$tabTitre["nom"]["width"]=120;
+	$tabTitre["nom"]["width"]=250;
 	$tabTitre["type"]["aff"]="Type";
 	$tabTitre["type"]["width"]=90;
 	$tabTitre["total"]["aff"]="Total";

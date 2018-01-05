@@ -233,7 +233,7 @@ class document_class{
 				// Si mode édition
 				if ($this->editmode=="edit")
 				  {
-		  			$txt.=" <a href=\"#\" OnClick=\"var win=window.open('doc.php?id=".$this->id."&fonc=delete','scrollbars=no,resizable=no,width=10'); return false;\"><img src='images/icn16_supprimer.png' width=12 height=12></a>";
+		  			$txt.=" <a href=\"#\" OnClick=\"var win=window.open('doc.php?id=".$this->id."&fonc=delete','scrollbars=no,resizable=no,width=10'); return false;\" class='imgDelete'><img src='images/icn16_supprimer.png'></a>";
 		  		}
 		  }
 

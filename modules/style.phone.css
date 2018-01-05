@@ -184,6 +184,9 @@ input[type=submit] { -webkit-appearance: none; -moz-appearance: none; appearance
 	text-align: center;
 }
 
+.imgDelete img { width: 16px; height: 16px;  }
+.imgDelete img:hover { background-color: #1799c3; background-color: #dddddd; border-radius: 2px; }
+
 /* **** Actualités **** */
 .cadreinfos { width:100%; }
 .encadreInfos { min-width: 300px; padding: 0px 0px 10px 0px; margin-bottom:10px; }

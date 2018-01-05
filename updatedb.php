@@ -876,11 +876,9 @@
 	if ($ver<$nver)
 	{
 	  	$sql=array();
-		$sql[]="CREATE TABLE `".$MyOpt["tbl"]."_utildonneesdef` (`id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,`ordre` tinyint(3) UNSIGNED NOT NULL,`nom` varchar(20) COLLATE latin1_general_ci NOT NULL,`type` varchar(10) COLLATE latin1_general_ci NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;";
-		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_utildonneesdef` ADD PRIMARY KEY (`id`);";
-
-		$sql[]="CREATE TABLE `".$MyOpt["tbl"]."_utildonnees` (`id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,`did` int(10) UNSIGNED NOT NULL,`uid` int(11) NOT NULL,`valeur` varchar(255) COLLATE latin1_general_ci NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;";
-		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_utildonnees` ADD PRIMARY KEY (`id`), ADD KEY `uid` (`uid`), ADD KEY `dataid` (`did`);";
+		$sql[]="CREATE TABLE `".$MyOpt["tbl"]."_utildonneesdef` (`id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,`ordre` tinyint(3) UNSIGNED NOT NULL,`nom` varchar(20) COLLATE latin1_general_ci NOT NULL,`type` varchar(10) COLLATE latin1_general_ci NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;";
+		
+		$sql[]="CREATE TABLE `".$MyOpt["tbl"]."_utildonnees` (`id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,`did` int(10) UNSIGNED NOT NULL,`uid` int(11) NOT NULL,`valeur` varchar(255) COLLATE latin1_general_ci NOT NULL, PRIMARY KEY (`id`), KEY `uid` (`uid`), KEY `dataid` (`did`)) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;";
   
 		UpdateDB($sql,$nver);
 	}

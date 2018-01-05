@@ -216,6 +216,9 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 	border-radius: 5px;
 }
 
+.imgDelete img { width: 16px; height: 16px; vertical-align:middle; }
+.imgDelete img:hover { background-color: #1799c3; background-color: #dddddd; border-radius: 2px; border: 1px solid #013366; }
+
 /* **** Actualités **** */
 .cadreinfos { left:60%; width:40%; float:right; }
 .encadreInfos { min-width: 300px; border: 1px solid #013366; border-radius: 5px; padding: 0px 0px 10px 0px; margin-bottom:10px; }
@@ -255,9 +258,9 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 .actualitesTitreMsg p { margin:0px; padding:0px 0px; line-height:16px; padding-left:10px; padding-top:10px; font-size:16px; }
 .actualitesTitreMsg span { margin:0px; padding:0px; font-size:10px; padding-left:30px; }
 
-.actualitesIcones { display: inline-block; position:relative; top:15px; float:right;  }
-.actualitesIcones a { height:28px; padding: 6px; border-radius: 4px; margin: 0px; }
-.actualitesIcones a:hover { background-color: #1799c3; }
+.actualitesIcones { display: inline-block; position:relative; top:10px; float:right; padding-right:5px; }
+.actualitesIcones a { display: inline-block; height:34px; width:34px; padding: 4px; border-radius: 4px; margin: 0px; border: 1px solid #75b7e5; }
+.actualitesIcones a:hover { background-color: #1799c3; border: 1px solid #013366; }
 .actualitesIcones img { vertical-align:middle; }
 
 .actualitesTexte p { padding:10px; font-size:14px; }
@@ -375,7 +378,7 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 .formulaireMulti { list-style-type: none; vertical-align:top; }
 .formulaireMulti li { padding: 4px; 0px 4px 0px;  }
 .formulaireMulti label { width:150px; }
-.formulaireMulti span { width:200px;  vertical-align:top; }
+.formulaireMulti span { width:200px; vertical-align:top; margin-left: 5px; }
 
 .formulaireSep { border-top: 1px dashed #999999; }
 
@@ -383,7 +386,6 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 /* **** Boutton de suppression */
 .bouttonSupprime { margin-left:5px; }
 .bouttonSupprime a { display: inline-block; width:20px; text-align:center; }
-.bouttonSupprime a:hover { background-color: #38a9e3; border-radius: 4px; }
 
 /* **** Tableau **** */
 .tableauAff { border-bottom: 1px solid #cccccc; }
