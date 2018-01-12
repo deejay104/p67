@@ -21,7 +21,11 @@
     ($Date: 2012-10-22 22:22:55 +0200 (lun., 22 oct. 2012) $)
     ($Revision: 407 $)
 */
+// ---- Refuse l'accès en direct
+	if ((!isset($token)) || ($token==""))
+	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
+  
 // ---- Header de la page
 
 	// Date du passé
@@ -39,17 +43,6 @@
 	// Image PNG
 	header('Content-type: image/png');
 
-// ---- Gestion des droits
-	session_start();
-
-	if ((isset($_SESSION['uid'])) && ($_SESSION['uid']>0))
-	  { $uid = $_SESSION['uid']; }
-	else
-	  {
-		erreur("La session n'est pas authentifiée.");
-		exit;
-	  }
-
 
 // ---- Récupère les paramètres
 	$id=(is_numeric($_REQUEST["id"]) ? $_REQUEST["id"] : 0);
@@ -58,15 +51,6 @@
 
 //	$deb=strtotime("2013-08-07 17:00");
 //	$fin=strtotime("2013-08-07 18:00");
-
-// ---- Charge la config  
-  	require ("../../config/config.inc.php");
-	require ("../../config/variables.inc.php");
-	require ("../fonctions.inc.php");
-
-// ---- Se connecte à la base MySQL
-	require ("../../class/mysql.inc.php");
-	$sql = new mysql_class($mysqluser, $mysqlpassword, $hostname, $db, $port);
 
 // ---- Charge les informations sur le chargement
 	if (($id>0) && ($deb>0) && ($fin>0))
@@ -113,8 +97,8 @@
 	$textcolor = imagecolorallocate($img, 0, 0, 0);
 	imagefill($img,0,0,$white); 
 
-	$logo = imagecreatefrompng("img/icn16_$ok.png");
-	list($width, $height) = getimagesize("img/icn16_$ok.png");
+	$logo = imagecreatefrompng($module."/".$mod."/img/icn16_$ok.png");
+	list($width, $height) = getimagesize($module."/".$mod."/img/icn16_".$ok.".png");
 	imagecopy($img,$logo,2,2,0,0,$width,$height);
 
 	imagestring($img, 2, 20, 2, $txt, $textcolor);
@@ -123,20 +107,13 @@
 	imagepng($img);
 
 
-// ---- Ferme la connexion à la base de données	  
-    	$sql->closedb();
-
-// ---- Décharge les variables postées
-	eval ("foreach( \$_".$_SERVER["REQUEST_METHOD"]." as \$key=>\$value) { unset (\$_".$_SERVER['REQUEST_METHOD']."[\$key]); eval(\"session_unregister('\$key');\"); }");
-
-
 // ---- Fonctions
 
 function erreur($txt)
   {
 	$error = imagecreate(320, 16);
-	$logo = imagecreatefrompng("img/icn16_erreur.png");
-	list($width, $height) = getimagesize("img/icn16_erreur.png");
+	$logo = imagecreatefrompng($module."/".$mod."/img/icn16_erreur.png");
+	list($width, $height) = getimagesize($module."/".$mod."/img/icn16_erreur.png");
 	$white = imagecolorallocate ($error, 255, 255, 255);
 	$textcolor = imagecolorallocate($error, 255, 0, 0);
 

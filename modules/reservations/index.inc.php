@@ -63,9 +63,10 @@
 	  }
 
 	if (!is_numeric($ress))
-	  {
-	  	$ress=$tress[1]->id;
-	  }
+	{
+	  	// $ress=$tress[1]->id;
+	  	$ress=0;
+	}
 
 
 
@@ -102,21 +103,14 @@
 			if (($myuser->data["aff_jour"]=="") || ($myuser->data["aff_jour"]=="0000-00-00"))
 			  { $myuser->Valid("aff_jour",date("Y-m-d")); }
 		
-		
 			$jour=$myuser->data["aff_jour"];
 
-			$tmpl_x->assign("defaultView","agendaFourWeeks");
-			$tmpl_x->assign("headerListe","month,agendaFourWeeks,agendaWeek,agendaDay");
+			$tmpl_x->assign("defaultView","agendaTwoWeeks");
+			$tmpl_x->assign("headerListe","month,agendaFourWeeks,agendaTwoWeeks,agendaWeek,agendaDay");
 			$tmpl_x->assign("TexteTitre","Calendrier pour");
 			$tmpl_x->parse("corps.aff_tooltips");
 
 	  }
-
-/*
-	$tmpl_x->assign("haut_ligne",$h);
-	for($i=$debjour;$i<$debjour+$durjour;$i++)
-          { $tmpl_x->assign("heure","$i:00"); $tmpl_x->parse("corps.heure_calendrier"); }
-*/
 
 	$tmpl_x->assign("maintconf",$MyOpt["tabcolresa"]["maintconf"]);
 	$tmpl_x->assign("maintplan",$MyOpt["tabcolresa"]["maintplan"]);

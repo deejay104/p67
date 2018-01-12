@@ -30,6 +30,11 @@
 ?>
 
 <?
+// ---- Refuse l'accès en direct
+	if ((!isset($token)) || ($token==""))
+	  { header("HTTP/1.0 401 Unauthorized"); exit; }
+
+// ---- Charge les dépendances
 	require_once ("class/document.inc.php");
 	require_once ("class/echeance.inc.php");
 
@@ -71,7 +76,7 @@
 							$id=$sql->Insert($query);
 						}
 					$tmpl_x->assign("aff_id", $id);
-					$tmpl_x->parse("corps.aff_sendmail");		
+					$tmpl_x->parse("corps.aff_sendmail");
 					$id=0;
 				}
 		}
@@ -151,7 +156,19 @@
 			$tmpl_x->parse("corps.aff_manips");
 	}
 
+// ---- Prochaine réservation
+	if ( ($MyOpt["menu"]["reservations"]=="x") || ($MyOpt["menu"]["reservations"]==""))
+	{
+		$debjour=($MyOpt["debjour"]!="") ? $MyOpt["debjour"] : "6";
+		$finjour=($MyOpt["finjour"]!="") ? $MyOpt["finjour"] : "22";
 
+		$tmpl_x->assign("form_jour",date("Y-m-d"));
+		$tmpl_x->assign("defaultView","agendaDay");
+		$tmpl_x->assign("form_debjour",$debjour);
+		$tmpl_x->assign("form_finjour",$finjour);
+
+		$tmpl_x->parse("corps.aff_reservation");
+	}
 
 // ---- Derniers documents
 

@@ -26,6 +26,7 @@
 
 <?
 	require_once ("class/reservation.inc.php");
+	require_once ("class/compte.inc.php");
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("vols.htm"));
@@ -42,7 +43,7 @@
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_tarifs";		
 	$sql->Query($query);		
 	for($i=0; $i<$sql->rows; $i++)
-	  { 
+	{ 
 		$sql->GetRow($i);
 		$tabTarif[$sql->data["ress_id"]][$sql->data["code"]]["pilote"]=$sql->data["pilote"];
 		$tabTarif[$sql->data["ress_id"]][$sql->data["code"]]["instructeur"]=$sql->data["instructeur"];
@@ -50,18 +51,22 @@
 		$tabTarif[$sql->data["ress_id"]][$sql->data["code"]]["defaut_pil"]=$sql->data["defaut_pil"];
 		$tabTarif[$sql->data["ress_id"]][$sql->data["code"]]["defaut_ins"]=$sql->data["defaut_ins"];
 		$tabTarif[$sql->data["ress_id"]][$sql->data["code"]]["nom"]=$sql->data["nom"];
-	  }
+	}
 
 
 // ---- Valide les vols à enregistrer
-	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
+	if ((($fonc=="Enregistrer") || ($fonc=="Débiter")) && (!isset($_SESSION['tab_checkpost'][$checktime])))
+	{
+		$mvt = new compte_class(0,$sql);
+		$tmpl_x->assign("enr_mouvement",$mvt->AfficheEntete());
+		$tmpl_x->parse("corps.enregistre.lst_enregistre");
+
 		if (is_array($form_tempsresa))
-		  {
+		{
 			foreach ($form_tempsresa as $k=>$tps)
-			  {
+			{
 				if ($tps!="")
-				  {
+				{
 				  	$query="SELECT * FROM ".$MyOpt["tbl"]."_calendrier WHERE id=$k";
 					$res=$sql->QueryRow($query);
 
@@ -72,42 +77,47 @@
 					// Si tarif instructeur mis dans la fiche prendre celui là à la place de l'avion
 					$pi=0;
 					if ($res["uid_instructeur"]>0)
-					  {
+					{
 						$pi=round($tabTarif[$res["uid_avion"]][$form_tarif[$k]]["instructeur"]*$tps/60,2);
 
 					  	$resinst=new user_class($res["uid_instructeur"],$sql,false,true);
 						if ($resinst->data["tarif"]>0)
-					  	  { $pi=round($resinst->data["tarif"]*$tps/60,2); }
-					  }
+					  	{
+							$pi=round($resinst->data["tarif"]*$tps/60,2);
+						}
+					}
 
 					// S'il y a une réduction de temps on l'a soustrait au temps pilote
 					if ($tabTarif[$res["uid_avion"]][$form_tarif[$k]]["reduction"]>0)
-					  {
+					{
 						$p=round($tabTarif[$res["uid_avion"]][$form_tarif[$k]]["pilote"]*($tps-$tabTarif[$res["uid_avion"]][$form_tarif[$k]]["reduction"])/60,2);
-					  }
+					}
 			
 					$dte=sql2date(preg_replace("/^([0-9]*-[0-9]*-[0-9]*)[^$]*$/","\\1",$res["dte_deb"]));
 				  	$query="UPDATE ".$MyOpt["tbl"]."_calendrier SET temps='$tps', tpsreel='".$form_blocresa[$k]."', tarif='".$form_tarif[$k]."' WHERE id=$k";
 				  	$sql->Update($query);
 
-					DebiteVol($k,$tps,$res["uid_avion"],($res["uid_debite"]>0) ? $res["uid_debite"] : $res["uid_pilote"],$res["uid_instructeur"],$form_tarif[$k],$p,$pi,$dte);
-				  }
-			  }
-		  }
+					if ($fonc=="Débiter")
+					{
+						DebiteVol($k,$tps,$res["uid_avion"],($res["uid_debite"]>0) ? $res["uid_debite"] : $res["uid_pilote"],$res["uid_instructeur"],$form_tarif[$k],$p,$pi,$dte);
+					}
+				}
+			}
+		}
 
 		if (is_array($form_temps))
-		  {
+		{
 			foreach ($form_temps as $k=>$tps)
-			  {
+			{
 				if ($tps!="")
-				  {
+				{
 					$dte=date2sql($form_date[$k]);
 					if (($dte=="nok") || ($form_date[$k]==""))
-					  {
+					{
 					  	$msg_result="DATE INVALIDE !!!";
-					  }
+					}
 					else
-					  {
+					{
 						$uid_p=$form_pilote[$k];
 						$uid_i=$form_instructeur[$k];
 						$uid_a=$idavion;
@@ -119,115 +129,138 @@
 						$p=round($tabTarif[$uid_a][$form_tarif[$k]]["pilote"]*$tps/60,2);
 
 						// Calcul du tarif instructeur
-						// Si tarif instructeur mis dans la fiche prendre celui là à la place de l'avion
 						$pi=0;
 						if ($uid_i>0)
-						  {
+						{
 							$pi=round($tabTarif[$uid_a][$form_tarif[$k]]["instructeur"]*$tps/60,2);
 	
 						  	$resinst=new user_class($uid_i,$sql,false,true);
 							if ($resinst->data["tarif"]>0)
-						  	  { $pi=round($resinst->data["tarif"]*$tps/60,2);; }
-						  }
+						  	{
+								$pi=round($resinst->data["tarif"]*$tps/60,2);
+							}
+						}
 
 						// S'il y a une réduction de temps on l'a soustrait au temps pilote
 						if ($tabTarif[$uid_a][$form_tarif[$k]]["reduction"]>0)
-						  {
+						{
 							$p=round($tabTarif[$uid_a][$form_tarif[$k]]["pilote"]*($tps-$tabTarif[$uid_a][$form_tarif[$k]]["reduction"])/60,2);
-						  }
+						}
 
 					  	if (!isset($_SESSION['tab_checkpost'][$checktime]))
-						  {
-// A rajouter la période de facture ,dte='".date("Ym",strtotime($dte))."'" -> A tester
-								$query="INSERT INTO ".$MyOpt["tbl"]."_calendrier SET dte_deb='$dte', dte_fin='$dte', uid_pilote='$uid_p', uid_instructeur='$uid_i', uid_avion='$uid_a', tarif='$tarif', temps='$tps', reel='non', horadeb='$horadeb', horafin='$horafin', dte_maj='".now()."', uid_maj=$uid, actif='oui'";
+						{
+							$query="INSERT INTO ".$MyOpt["tbl"]."_calendrier SET dte_deb='$dte', dte_fin='$dte', uid_pilote='$uid_p', uid_instructeur='$uid_i', uid_avion='$uid_a', tarif='$tarif', temps='$tps', reel='non', horadeb='$horadeb', horafin='$horafin', dte_maj='".now()."', uid_maj=$uid, actif='oui'";
 						  	$id=$sql->Insert($query);
-						  }
+						}
 
-						DebiteVol($id,$tps,$uid_a,$uid_p,$uid_i,$tarif,$p,$pi,sql2date($dte));
-					  }
-				  }
-			  }
-		  }
+						if ($fonc=="Débiter")
+						{
+							DebiteVol($id,$tps,$uid_a,$uid_p,$uid_i,$tarif,$p,$pi,sql2date($dte));
+						}
+					}
+				}
+			}
+		}
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 
 		if ($msg_result!="")
-		  { $tmpl_x->assign("msg_resultat", "<FONT color=red>$msg_result</FONT>"); }
-		else
-		  { $tmpl_x->assign("msg_resultat", ""); }
-
-		$tmpl_x->assign("form_page", "vols");
-		$tmpl_x->parse("corps.enregistre");
-	  }
+		{
+			$tmpl_x->assign("msg_confirmation", $msg_result);
+			$tmpl_x->assign("msg_confirmation_class", "msgerror");
+			$tmpl_x->parse("corps.msg_enregistre");
+		}
+	  
+		if ($fonc=="Débiter")
+		{
+			$tmpl_x->assign("form_page", "vols");
+			$tmpl_x->parse("corps.enregistre");
+		}
+	}
 
 // ---- Enregistre les opérations
 	else if (($fonc=="Valider") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	  {
-		if (is_array($form_id))
-		  {
-			foreach ($form_id as $k=>$idcal)
-			  {
-		  		$query ="INSERT ".$MyOpt["tbl"]."_compte SET ";
-		  		$query.="mid='".$mid."', ";
-		  		$query.="uid='".$form_uid[$k]."', ";
-		  		$query.="tiers='".$form_uidt[$k]."', ";
-		  		$query.="montant='".$form_montant[$k]."', ";
-				if ($MyOptTmpl["facturevol"]!="on")
-				{ $query.="facture='NOFAC', "; }
-		  		$query.="mouvement='".$form_mouvement[$k]."', ";
-		  		$query.="commentaire='".addslashes($form_commentaire[$k])."', ";
-		  		$query.="date_valeur='".date2sql($form_date[$k])."', ";
-		  		$query.="uid_creat=$uid, date_creat='".now()."'";
-		  		//echo "$query<BR>";
-		  		$sql->Insert($query);
+		if (is_array($form_mid))
+		{
+			$ret="";
+			$nbmvt=0;
+			$ok=0;
 
-				if (is_numeric($idcal))
-				  {
-				  	$query="UPDATE ".$MyOpt["tbl"]."_calendrier SET prix='".(-$form_montant[$k])."', edite='non' WHERE id=$idcal";
-				  	//echo "$query<BR>";
+			foreach ($form_mid as $id=>$d)
+			{			
+				$mvt = new compte_class($id,$sql);
+				$nbmvt=$nbmvt+$mvt->Debite();
+				
+				if ($mvt->erreur!="")
+				{
+					$ret.=$mvt->erreur;
+					$ok=1;
+				}
+				
+				if ($form_calid[$id]>0)
+				{
+				  	$query="UPDATE ".$MyOpt["tbl"]."_calendrier SET prix='".$mvt->montant."', edite='non' WHERE id=".$form_calid[$id];
+				  	// echo "$query<BR>";
 				  	$sql->Update($query);
-  				  }
-			  }
-		  }
+  				}
+			}
 
+			$tmpl_x->assign("msg_confirmation", $nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret);
+			$tmpl_x->assign("msg_confirmation_class", ($ret!="") ? "msgerror" : "msgok");
+			
+			$tmpl_x->parse("corps.msg_enregistre");
+
+		}
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 
-		$tmpl_x->assign("msg_resultat", "<FONT color=green>Mouvement(s) enregistré(s)</FONT>");
-
 		$tmpl_x->assign("form_page", "vols");
-		$tmpl_x->parse("corps.msg_enregistre");
-	  }
+	}
 
-
+// ---- Enregistre les opérations
+	else if ($fonc=="Annuler")
+	{
+		if (is_array($form_mid))
+		{
+			foreach ($form_mid as $id=>$d)
+			{			
+				$mvt = new compte_class($id,$sql);
+				$mvt->Annule();
+			}
+		}
+	}
 
 // ---- Affiche la page demandée
-	if ($fonc!="Enregistrer")
-	  {
+	if ($fonc!="Débiter")
+	{
 		// Liste les ressources
 		$lst=ListeRessources($sql,array("oui","off"));
 	
 		foreach($lst as $i=>$id)
-		  {
+		{
 			$ress=new ress_class($id,$sql);
 
 			$tab_avions[$id]=$ress->data;
 			$tmpl_x->assign("id_avion", $id);
 			if ($id==$idavion)
-			  {
+			{
 				$tmpl_x->assign("sel_avion", "selected");
 				$tmpl_x->assign("nom_avion", $ress->Aff("immatriculation","val")." *");
-			  }
+			}
 			else
-			  {
+			{
 			  	$tmpl_x->assign("sel_avion", "");
 				$tmpl_x->assign("nom_avion", $ress->Aff("immatriculation","val"));
-			  }
+			}
 			$tmpl_x->parse("corps.aff_vols.lst_avion");
-		  }
+		}
 		
 		if ((!isset($idavion)) || (!is_numeric($idavion)))
-		  { $t=current($tab_avions); $idavion=$t["id"]; }
+		{
+			$t=current($tab_avions); 
+			$idavion=$t["id"];
+		}
 
 		$tmpl_x->assign("nom_avion_edt",$tab_avions[$idavion]["immatriculation"]);
 
@@ -243,13 +276,13 @@
 		$sql->Query($query);
 		$tvols=array();
 		for($i=0; $i<$sql->rows; $i++)
-		  { 
+		{ 
 			$sql->GetRow($i);
 			$tvols[$i]=$sql->data["id"];
-		  }
+		}
 
 		foreach ($tvols as $i=>$id)
-		  {
+		{
 			$resa["resa"]=new resa_class($id,$sql);
 			$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql);
 			$resa["instructeur"]=new user_class($resa["resa"]->uid_instructeur,$sql);
@@ -257,14 +290,16 @@
 			$tmpl_x->assign("date_vols", sql2date(preg_replace("/^([0-9]*-[0-9]*-[0-9]*)[^$]*$/","\\1",$resa["resa"]->dte_deb)));
 
 			if ($resa["resa"]->uid_debite>0)
-			  {
+			{
 				$resa["debite"]=new user_class($resa["resa"]->uid_debite,$sql);
 
 				$p = $resa["debite"]->Aff("fullname");
 				$p.=" (".$resa["pilote"]->Aff("fullname").")";
-			  }
+			}
 			else
-			  { $p=$resa["pilote"]->Aff("fullname"); }
+			{
+				$p=$resa["pilote"]->Aff("fullname");
+			}
 
 			$tmpl_x->assign("pilote_vols", $p);
 			$tmpl_x->assign("instructeur_vols", $resa["instructeur"]->Aff("fullname"));
@@ -272,7 +307,7 @@
 			$tmpl_x->assign("id_ligne", $id);
 
 			foreach ($tabTarif[$idavion] as $c=>$t)
-			  { 
+			{ 
 				$tmpl_x->assign("tarif_code", $c);
 				$tmpl_x->assign("tarif_nom", $t["nom"]);
 
@@ -293,24 +328,32 @@
 					$tmpl_x->assign("tarif_selected", "");
 				  }
 				$tmpl_x->parse("corps.aff_vols.lst_vols.lst_tarifs");	
-			  }
+			}
 
 
 	
 			if ($resa["resa"]->temps>0)
-			  { $tps=$resa["resa"]->temps; }
+			{
+				$tps=$resa["resa"]->temps;
+			}
 			else if (($resa["resa"]->horadeb>0) && ($resa["resa"]->horafin>0))
-			  {
+			{
 				$resr=new ress_class($resa["resa"]->uid_ressource,$sql);
 				$tps=$resr->CalcHorametre($resa["resa"]->horadeb,$resa["resa"]->horafin);
-			  }
+			}
 			else
-			  { $tps=""; }
+			{
+				$tps="";
+			}
 
 			if ($resa["resa"]->tpsreel==0)
-			  { $tbl=$tps; }
+			{
+				$tbl=$tps;
+			}
 			else
-			  { $tbl=$resa["resa"]->tpsreel; }
+			{
+				$tbl=$resa["resa"]->tpsreel;
+			}
 			  
 			$tmpl_x->assign("idresa", $id);
 			$tmpl_x->assign("horadeb", $resa["resa"]->horadeb);
@@ -319,117 +362,65 @@
 			$tmpl_x->assign("bloc_vols", " <INPUT type=\"text\" name=\"form_blocresa[".$id."]\" size=5 value=\"".$tbl."\">");
 
 			$tmpl_x->parse("corps.aff_vols.lst_vols");
-		  }
+		}
 
 
 
 		// Liste vierge
 		for($ii=0; $ii<5; $ii++)
-		  { 
+		{ 
 			// Liste des pilotes
 			$lst=ListActiveUsers($sql,"prenom,nom","!membre,!invite","");
 		
 			foreach($lst as $i=>$id)
-			  {
+			{
 			  	$resusr=new user_class($id,$sql);
 
 				$tmpl_x->assign("id_pilote", $resusr->idcpt);
 				$tmpl_x->assign("nom_pilote",  $resusr->Aff("fullname","val"));
 				$tmpl_x->parse("corps.aff_vols.lst2_vols.lst_pilote");
-			  }
+			}
 
 			// Liste des instructeurs
 			$lst=ListActiveUsers($sql,"prenom,nom","instructeur");
 			foreach($lst as $i=>$id)
-			  { 
+			{ 
 				$resusr=new user_class($id,$sql);
 				$tmpl_x->assign("id_instructeur", $resusr->idcpt);
 				$tmpl_x->assign("nom_instructeur", $resusr->Aff("fullname","val"));
 				$tmpl_x->parse("corps.aff_vols.lst2_vols.lst_instructeur");
-			  }
+			}
 
 			foreach ($tabTarif[$idavion] as $c=>$t)
-			  { 
+			{ 
 				$tmpl_x->assign("tarif_code", $c);
 				$tmpl_x->assign("tarif_nom", $t["nom"]);
 
 				if ( ($t["defaut_pil"]=="oui") && ($resa["resa"]->tarif=="") )
-				  {
+				{
 					$tmpl_x->assign("tarif_selected", "selected");
-				  }
+				}
 				else
-				  {
+				{
 					$tmpl_x->assign("tarif_selected", "");
-				  }
+				}
 				$tmpl_x->parse("corps.aff_vols.lst2_vols.lst_tarifs");	
-			  }
+			}
 
 			$tmpl_x->assign("id_new", "N$ii");
 			$tmpl_x->parse("corps.aff_vols.lst2_vols");
-		  }
+		}
 
 
 		$tmpl_x->assign("form_page", "vols");
 	  	$tmpl_x->parse("corps.aff_vols");
-	  }
-
-
-// ---- FONCTIONS
-
-function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p,$pi,$dte)
-	{ global $MyOpt, $uid,$tmpl_x,$sql;
-
-		$ress = new ress_class($idavion,$sql);
-		$pilote = new user_class($uid_pilote,$sql);
-
-		$mid=GetMouvementID($sql);
-
-		$tmpl_x->assign("enr_id", $idvol);
-		$tmpl_x->assign("enr_idcal", $idvol);
-		$tmpl_x->assign("enr_uid_deb", $uid_pilote);
-		$tmpl_x->assign("enr_uid_cre", $MyOpt["uid_club"]);
-		$tmpl_x->assign("enr_mid", $mid);
-		$tmpl_x->assign("enr_date", $dte);
-		$tmpl_x->assign("enr_mouvement_deb", substr($ress->Aff("immatriculation","val"),-2)."/Vol");
-		$tmpl_x->assign("enr_mouvement_cre", substr($ress->Aff("immatriculation","val"),-2)."/Vol");
-		$tmpl_x->assign("enr_commentaire", "Vol de $temps min (".$ress->Aff("immatriculation","val")."/$tarif)");
-		$tmpl_x->assign("enr_tiers_deb", $pilote->Aff("fullname","val"));
-		$tmpl_x->assign("enr_affmontant_deb", AffMontant(-$p));
-		$tmpl_x->assign("enr_montant_deb", -$p);
-		$tmpl_x->assign("enr_tiers_cre", "Club");
-		$tmpl_x->assign("enr_affmontant_cre", AffMontant($p));
-		$tmpl_x->assign("enr_montant_cre", $p);
-
-		$tmpl_x->parse("corps.enregistre.lst_enregistre");
-
-
-		if ($pi<>0)
-		  {
-			$inst = new user_class($uid_instructeur,$sql);
-
-			$tmpl_x->assign("enr_id", $idvol."i");
-			$tmpl_x->assign("enr_idcal", "");
-			$tmpl_x->assign("enr_uid_deb", $MyOpt["uid_club"]);
-			$tmpl_x->assign("enr_uid_cre", $uid_instructeur);
-			$tmpl_x->assign("enr_mid", $mid);
-			$tmpl_x->assign("enr_date", $dte);
-			$tmpl_x->assign("enr_mouvement_deb", "Instruction");
-			$tmpl_x->assign("enr_mouvement_cre", substr($ress->Aff("immatriculation","val"),-2)."/Vol");
-			$tmpl_x->assign("enr_commentaire", "Remb. vol d'instruction de $temps min (".$ress->Aff("immatriculation","val")."/$tarif)");
-			$tmpl_x->assign("enr_tiers_cre", $inst->Aff("fullname","val"));
-			$tmpl_x->assign("enr_affmontant_cre", AffMontant($pi));
-			$tmpl_x->assign("enr_montant_cre", $pi);
-			$tmpl_x->assign("enr_tiers_deb", "Club");
-			$tmpl_x->assign("enr_affmontant_deb", AffMontant(-$pi));
-			$tmpl_x->assign("enr_montant_deb", -$pi);
-
-			$tmpl_x->parse("corps.enregistre.lst_enregistre");
-		  }
 	}
 
 // ---- Affecte les variables d'affichage
 	if (GetModule("aviation"))
-	  {  	$tmpl_x->parse("infos.vols"); }
+	{
+		$tmpl_x->parse("infos.vols");
+	}
 
 	$tmpl_x->parse("icone");
 	$icone=$tmpl_x->text("icone");
@@ -437,5 +428,40 @@ function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p
 	$infos=$tmpl_x->text("infos");
 	$tmpl_x->parse("corps");
 	$corps=$tmpl_x->text("corps");
+
+
+// ---- FONCTIONS
+
+
+function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p,$pi,$dte)
+{
+	global $MyOpt, $uid,$tmpl_x,$sql;
+
+	$ress = new ress_class($idavion,$sql);
+	$pilote = new user_class($uid_pilote,$sql);
+
+	$mvt = new compte_class(0,$sql);
+	$mvt->Generate($pilote->idcpt,$ress->poste,"Vol de $temps min (".$ress->Aff("immatriculation","val")."/$tarif)",date("Y-m-d"),$p,array());
+	$mvt->Save();
+	$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
+
+	$tmpl_x->assign("form_mvtid",$mvt->id);
+	$tmpl_x->assign("form_calid",$idvol);
+	$tmpl_x->parse("corps.enregistre.lst_enregistre");
+
+	if ($pi<>0)
+	{
+		$inst = new user_class($uid_instructeur,$sql);
+	
+		$mvt = new compte_class(0,$sql);
+		$mvt->Generate($inst->idcpt,$ress->poste,"Remb. vol d'instruction de $temps min (".$ress->Aff("immatriculation","val")."/$tarif)",date("Y-m-d"),-$pi,array());
+		$mvt->Save();
+		$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
+
+		$tmpl_x->assign("form_mvtid",$mvt->id);
+		$tmpl_x->assign("form_calid","0");
+		$tmpl_x->parse("corps.enregistre.lst_enregistre");
+	}
+}
 
 ?>

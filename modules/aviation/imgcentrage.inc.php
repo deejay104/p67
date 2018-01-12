@@ -21,7 +21,11 @@
     ($Date: 2016-04-19 22:13:22 +0200 (mar., 19 avr. 2016) $)
     ($Revision: 454 $)
 */
+// ---- Refuse l'accès en direct
+	if ((!isset($token)) || ($token==""))
+	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
+  
 // ---- Header de la page
 	// Date du passé
 	header("Expires: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -42,30 +46,9 @@
 	$l = 600;
 	$h = 400;
 
-// ---- Gestion des droits
-	session_start();
-
-	if ((isset($_SESSION['uid'])) && ($_SESSION['uid']>0))
-	  { $uid = $_SESSION['uid']; }
-	else
-	  {
-		erreur("La session n'est pas authentifiée.");
-		exit;
-	  }
-
 
 // ---- Récupère les paramètres
 	$id=(is_numeric($_REQUEST["id"]) ? $_REQUEST["id"] : 0);
-
-
-// ---- Charge la config  
-  	require ("../../config/config.inc.php");
-	require ("../../config/variables.inc.php");
-	require ("../fonctions.inc.php");
-
-// ---- Se connecte à la base MySQL
-	require ("../../class/mysql.inc.php");
-	$sql = new mysql_class($mysqluser, $mysqlpassword, $hostname, $db,$port);
 
 // ---- Charge les informations sur le chargement
 	if ($id>0)
@@ -223,7 +206,7 @@
 
 
 // ---- Ferme la connexion à la base de données	  
-    	$sql->closedb();
+   	$sql->closedb();
 
 // ---- Décharge les variables postées
 	eval ("foreach( \$_".$_SERVER["REQUEST_METHOD"]." as \$key=>\$value) { unset (\$_".$_SERVER['REQUEST_METHOD']."[\$key]); }");

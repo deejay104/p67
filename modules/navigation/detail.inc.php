@@ -36,39 +36,39 @@
 	  { $id=0; }
 	  
 	if (($form_route!="") && ($id>0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
+	{
 
 	  	$q="SELECT MAX(ordre) AS max FROM ".$MyOpt["tbl"]."_navroute WHERE idnav='".$id."' LIMIT 1";
 	  	$res=$sql->QueryRow($q);
 			
-			$query="INSERT INTO ".$MyOpt["tbl"]."_navroute SET idnav='".$id."', nom='".strtoupper($form_route)."', ordre='".($res["max"]+1)."'";
-			$sql->Insert($query);
+		$query="INSERT INTO ".$MyOpt["tbl"]."_navroute SET idnav='".$id."', nom='".strtoupper($form_route)."', ordre='".($res["max"]+1)."'";
+		$sql->Insert($query);
 
-			$_SESSION['tab_checkpost'][$checktime]=$checktime;
+		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
 
 	if (($fonc=="Mettre à jour") && ($id>0) )
-	  {
+	{
 	  	$q="SELECT uid_creat FROM ".$MyOpt["tbl"]."_navigation WHERE id='".$id."' LIMIT 1";
 	  	$res=$sql->QueryRow($q);
   	
 	  	if (($res["uid_creat"]==$uid) || (GetDroit("ModifNavigation")))
-	  	  {
-			  	$q="UPDATE ".$MyOpt["tbl"]."_navigation SET titre='".$form_titre."',vitesse='".$form_vitesse."',vitvent='".$form_vitvent."',dirvent='".$form_dirvent."',uid_modif='".$uid."',dte_modif='".now()."' WHERE id='".$id."'";
-			  	$sql->Update($q);
-				}
-	  }
+	  	{
+		  	$q="UPDATE ".$MyOpt["tbl"]."_navigation SET titre='".$form_titre."',vitesse='".$form_vitesse."',vitvent='".$form_vitvent."',dirvent='".$form_dirvent."',uid_modif='".$uid."',dte_modif='".now()."' WHERE id='".$id."'";
+		  	$sql->Update($q);
+		}
+	}
 	else if (($fonc=="Créer") && ($id==0) && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
+	{
 			$q="INSERT INTO ".$MyOpt["tbl"]."_navigation SET titre='".$form_titre."',vitesse='".$form_vitesse."',vitvent='".$form_vitvent."',dirvent='".$form_dirvent."',uid_creat='".$uid."',dte_creat='".now()."',uid_modif='".$uid."',dte_modif='".now()."'";
 			$id=$sql->Insert($q);
 			$_SESSION['tab_checkpost'][$checktime]=$checktime;
-		}
+	}
 	else if (($fonc=="supprimer") && ($idpoint>0))
-	  {
+	{
 	  	$q="DELETE FROM ".$MyOpt["tbl"]."_navroute WHERE id='".$idpoint."'";
 	  	$sql->Delete($q);
-	  }
+	}
 
 echo $q."'".$fonc."' '".$id."'";
 

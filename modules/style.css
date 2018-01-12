@@ -424,6 +424,10 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 
 	.calendarDesc { width: 150px; background-color:#dddddd; border: 1px solid black; border-radius: 4px; line-height: 16px; font-size:12px; padding:5px;}
 	
+/* **** Comptes **** */
+.tableauCompte { border-bottom:1px solid #cccccc; }
+.tableauCompte tr { border-bottom:1px dashed #cccccc; height:25px; }
+
 /* **** ToolTip **** */
 	.ui-tooltip-content { padding: 0px;font-size: 12px; line-height:16px; }
 

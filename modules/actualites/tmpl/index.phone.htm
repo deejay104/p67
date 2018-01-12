@@ -164,29 +164,36 @@
 
 <!-- BEGIN: aff_sendmail -->
 <script type="text/javascript">
-			$(function() {     
-			    $.ajax({
-			        url:'index.php?mod=actualites&rub=sendmail&id={aff_id}',
-			        type: 'html',
-			        success: function(content,code) {
-			        	if (content.charAt(0)=="O")
-			        	  {
-										document.getElementById("actualitesMail").style.backgroundColor = "#BBFFAA";
-									}
-								else
-			        	  {
-										document.getElementById("actualitesMail").style.backgroundColor = "#FFBBAA";
-									}
+	document.getElementById("actualitesMail").innerHTML = "Envoie des emails...";
+	document.getElementById("actualitesMail").style.display = 'block';
+	$(function() {     
+		$.ajax({
+			url:'api.php?mod=actualites&rub=sendmail&id={aff_id}',
+			type: 'html',
+			success: function(content,code) {
+				if (content.charAt(0)=="O")
+				{
+					document.getElementById("actualitesMail").style.backgroundColor = "#BBFFAA";
+				}
+				else
+				{
+					document.getElementById("actualitesMail").style.backgroundColor = "#FFBBAA";
+				}
 
-								document.getElementById("actualitesMail").innerHTML =content;
+				document.getElementById("actualitesMail").innerHTML =content;
 
-			        	if (content.charAt(0)!="*")
-			        	  {
-										document.getElementById("actualitesMail").style.display = 'block';
-									}
-			        }
-			    });        
-			});
+				if (content.charAt(0)!="*")
+				{
+					document.getElementById("actualitesMail").style.display = 'block';
+				}
+			}
+			error: function(content,code) {
+				document.getElementById("actualitesMail").style.backgroundColor = "#FFBBAA";
+				document.getElementById("actualitesMail").innerHTML = "Impossible d'ouvrir la page d'envoie du mail";
+				document.getElementById("actualitesMail").style.display = 'block';
+			}
+		});        
+	});
 </script>
 <!-- END: aff_sendmail -->
 

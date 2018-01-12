@@ -1,4 +1,9 @@
 <?php
+// ---- Refuse l'accès en direct
+	if ((!isset($token)) || ($token==""))
+	  { header("HTTP/1.0 401 Unauthorized"); exit; }
+
+// ---- Vérifie les paramètres
 	require_once ("class/manifestation.inc.php");
 
 
@@ -33,7 +38,5 @@
 
 	// Send JSON to the client.
 	echo json_encode($input_arrays);
-
-exit;
 
 ?>

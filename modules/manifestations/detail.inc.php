@@ -35,6 +35,7 @@
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
+	require_once ("class/compte.inc.php");
 // ---- Année
 
 	$tabmois=array();
@@ -126,7 +127,7 @@
 		$query.="FROM p67_utilisateurs AS usr ";
 		$query.="LEFT JOIN p67_participants AS participants ON usr.id=participants.idusr AND participants.idmanip=$id ";
 		$query.="WHERE usr.actif='oui' AND usr.virtuel='non' AND participants.participe='Y'";
-	     	$sql->Query($query);
+	 	$sql->Query($query);
 
 		$tabParticipant=array();
 		for($i=0; $i<$sql->rows; $i++)
@@ -136,37 +137,68 @@
 			$tabParticipant[]=$sql->data;
 		  }
 
+		$ret="";
+		$nbmvt="";
+		$ok=0;
 		foreach ($tabParticipant as $i=>$v)
-		  {
-				$val=$res["cout"]*$v["nb"];
-				$dte=date("Y-m-d");
-	  		$query ="INSERT p67_compte SET ";
-	  		$query.="uid='".$v["idcpt"]."', ";
-	  		$query.="tiers='".$MyOpt["uid_club"]."', ";
-	  		$query.="montant='".(-$val)."', ";
-	  		$query.="mouvement='Participation manifestation', ";
-	  		$query.="commentaire='".addslashes($res["titre"])." du ".sql2date($res["dte_manip"])." (".$v["nb"]."x".$res["cout"]."€)', ";
-	  		$query.="date_valeur='".$dte."', ";
-	  		$query.="facture='NOFAC', ";
-	  		$query.="uid_creat=0, date_creat='".now()."'";
-	  		$sql->Insert($query);
+		{
+			$val=$res["cout"]*$v["nb"];
+			$dte=date("Y-m-d");
+
+	  		// $query ="INSERT p67_compte SET ";
+	  		// $query.="uid='".$v["idcpt"]."', ";
+	  		// $query.="tiers='".$MyOpt["uid_club"]."', ";
+	  		// $query.="montant='".(-$val)."', ";
+	  		// $query.="mouvement='Participation manifestation', ";
+	  		// $query.="commentaire='".addslashes($res["titre"])." du ".sql2date($res["dte_manip"])." (".$v["nb"]."x".$res["cout"]."€)', ";
+	  		// $query.="date_valeur='".$dte."', ";
+	  		// $query.="facture='NOFAC', ";
+	  		// $query.="uid_creat=0, date_creat='".now()."'";
+	  		// $sql->Insert($query);
 	
-	  		$query ="INSERT p67_compte SET ";
-	  		$query.="uid='".$MyOpt["uid_club"]."', ";
-	  		$query.="tiers='".$v["idcpt"]."', ";
-	  		$query.="montant='".$val."', ";
-	  		$query.="mouvement='Participation manifestation', ";
-	  		$query.="commentaire='".addslashes($res["titre"])." du ".sql2date($res["dte_manip"])." (".$v["nb"]."x".$res["cout"]."€)', ";
-	  		$query.="date_valeur='".$dte."', ";
-	  		$query.="facture='NOFAC', ";
-	  		$query.="uid_creat=0, date_creat='".now()."'";
-			$sql->Insert($query);
+	  		// $query ="INSERT p67_compte SET ";
+	  		// $query.="uid='".$MyOpt["uid_club"]."', ";
+	  		// $query.="tiers='".$v["idcpt"]."', ";
+	  		// $query.="montant='".$val."', ";
+	  		// $query.="mouvement='Participation manifestation', ";
+	  		// $query.="commentaire='".addslashes($res["titre"])." du ".sql2date($res["dte_manip"])." (".$v["nb"]."x".$res["cout"]."€)', ";
+	  		// $query.="date_valeur='".$dte."', ";
+	  		// $query.="facture='NOFAC', ";
+	  		// $query.="uid_creat=0, date_creat='".now()."'";
+			// $sql->Insert($query);
+			$form_commentaire=addslashes($res["titre"])." du ".sql2date($res["dte_manip"])." (".$v["nb"]."x".$res["cout"]."€)";
+			
+			$mvt = new compte_class(0,$sql);
+			$mvt->Generate($v["idcpt"],$MyOpt["id_PosteManip"],$form_commentaire,date("Y-m-d"),$val,array());
+			$mvt->Save();
+			$nbmvt=$nbmvt+$mvt->Debite();
 
-		  }
-		$query="UPDATE ".$MyOpt["tbl"]."_manips SET facture='oui' WHERE id='$id'";
-		$sql->Update($query);
+			// A voir si cette partie est nécessaire ?
+			$tmpl_x->assign("aff_mouvement_detail", $mvt->Affiche());
+			$tmpl_x->parse("corps.msg_enregistre.lst_enregistre");
+			
+			if ($mvt->erreur!="")
+			{
+				$ret.=$mvt->erreur;
+				$ok=1;
+			}
+		}
 
-		$tmpl_x->parse("corps.aff_msgok");
+		$tmpl_x->assign("msg_confirmation", $nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret);
+		
+		if ($ret!="")
+		{
+			$tmpl_x->assign("msg_confirmation_class", "msgerror");
+		}
+		else
+		{
+			$tmpl_x->assign("msg_confirmation_class", "msgok");
+
+			$query="UPDATE ".$MyOpt["tbl"]."_manips SET facture='oui' WHERE id='$id'";
+			$sql->Update($query);
+		}
+
+		$tmpl_x->parse("corps.msg_enregistre");
 	  }
 
 // ---- Suppression
@@ -286,7 +318,7 @@
 			$s="";
 			foreach($t as $i=>$v)
 			  {
-				$txt.=$s.$MyOpt["type"][$v];
+				$txt.=$s.$tabTypeNom[$v];
 			  	$s=", ";
 			  }
 	

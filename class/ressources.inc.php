@@ -24,13 +24,20 @@
 
 class ress_class{
 	# Constructor
-	function __construct($id=0,$sql){
+	function __construct($id=0,$sql)
+	{
+		global $MyOpt;
+		global $gl_uid;
+
 		$this->sql=$sql;
+		$this->tbl=$MyOpt["tbl"];
+		$this->myuid=$gl_uid;
 
 		$this->id="";
 		$this->nom="";
 		$this->immatriculation="";
 		$this->actif="oui";
+		$this->poste=0;
 		$this->marque="";
 		$this->modele="";
 		$this->couleur="A9D7FE";
@@ -55,6 +62,7 @@ class ress_class{
 		$this->data["nom"]="";
 		$this->data["immatriculation"]="";
 		$this->data["actif"]="oui";
+		$this->data["poste"]=0;
 		$this->data["marque"]="";
 		$this->data["modele"]="";
 		$this->data["couleur"]="A9D7FE";
@@ -87,13 +95,14 @@ class ress_class{
 	function load($id){
 		$this->id=$id;
 		$sql=$this->sql;
-		$query = "SELECT * FROM p67_ressources WHERE id='$id'";
+		$query = "SELECT * FROM ".$this->tbl."_ressources WHERE id='$id'";
 		$res = $sql->QueryRow($query);
 
 		// Charge les variables
 		$this->nom=$res["nom"];
 		$this->immatriculation=strtoupper($res["immatriculation"]);
 		$this->actif=$res["actif"];
+		$this->poste=$res["poste"];
 		$this->marque=$res["marque"];
 		$this->modele=$res["modele"];
 		$this->couleur=$res["couleur"];
@@ -122,36 +131,40 @@ class ress_class{
 	function Create(){
 		global $uid;
 		$sql=$this->sql;
-		$query="INSERT INTO p67_ressources SET uid_maj='$uid', dte_maj='".now()."'";
+		$query="INSERT INTO ".$this->tbl."_ressources SET uid_maj='$uid', dte_maj='".now()."'";
 		$this->id=$sql->Insert($query);
 
-		$query="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', 'p67_ressources', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create ressource')";
+		$query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', 'p67_ressources', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create ressource')";
 		$sql->Insert($query);
 	}
 
 	function Delete(){
 		global $uid;
 		$sql=$this->sql;
-		$query="UPDATE p67_ressources SET actif='non', uid_maj='$uid', dte_maj='".now()."' WHERE id='$this->id'";
+		$query="UPDATE ".$this->tbl."_ressources SET actif='non', uid_maj='$uid', dte_maj='".now()."' WHERE id='$this->id'";
 		$this->id=$sql->Update($query);
 
-		$query="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', 'p67_ressources', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete ressource')";
+		$query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', 'p67_ressources', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete ressource')";
 		$sql->Insert($query);
 	}
 
-	function Desactive(){
+	function Desactive()
+	{
 		global $uid;
 		$sql=$this->sql;
-		$query="UPDATE p67_ressources SET actif='off', uid_maj='$uid', dte_maj='".now()."' WHERE id='$this->id'";
+		$query="UPDATE ".$this->tbl."_ressources SET actif='off', uid_maj='$uid', dte_maj='".now()."' WHERE id='$this->id'";
 		$this->id=$sql->Update($query);
 
-		$query="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', 'p67_ressources', '".$this->id."', '$uid', '".now()."', 'DEL', 'Disable ressource')";
+		$query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'ressources', 'p67_ressources', '".$this->id."', '$uid', '".now()."', 'DEL', 'Disable ressource')";
 		$sql->Insert($query);
 	}
 
 	# Show user informations
-	function aff($key,$typeaff="html"){
+	function aff($key,$typeaff="html")
+	{
+		$sql=$this->sql;
 		$txt=$this->data[$key];
+
 		if ($key=="immatriculation")
 		  { $ret=strtoupper($txt); }
 		else if ($key=="modele")
@@ -186,6 +199,18 @@ class ress_class{
 		  	  	$ret.="<OPTION value=\"min\" ".(($txt=="min")?"selected":"").">Minute</OPTION>";
 		  	  	$ret.="</SELECT>";
 			  }
+			else if ($key=="poste")
+			{
+				$query = "SELECT id,description FROM ".$this->tbl."_mouvement WHERE actif='oui' ORDER BY ordre,description";
+				$sql->Query($query);
+		  	  	$ret ="<SELECT name=\"form_ress[$key]\">";
+				for($i=0; $i<$sql->rows; $i++)
+				{ 
+					$sql->GetRow($i);
+					$ret.="<OPTION value=\"".$sql->data["id"]."\" ".(($txt==$sql->data["id"])?"selected":"").">".$sql->data["description"]."</OPTION>";
+				}
+		  	  	$ret.="</SELECT>";
+			}
 			else
 		  	  { $ret="<INPUT name=\"form_ress[$key]\" value=\"$ret\">"; }
 		  }
@@ -199,6 +224,12 @@ class ress_class{
 			  { $ret=nl2br(htmlentities($ret)); }
 			else if ($key=="centrage")
 			  { $ret=nl2br(htmlentities($ret)); }
+			else if ($key=="poste")
+			{
+				$query = "SELECT id,description FROM ".$this->tbl."_mouvement WHERE id='".$ret."'";
+				$res=$sql->QueryRow($query);
+				$ret=$res["description"];
+			}
 			else
 		  	  { $ret="<a href=\"ressources.php?rub=detail&id=".$this->id."\">".$ret."</a>"; }
 		  }
@@ -238,7 +269,7 @@ class ress_class{
 		global $uid;
 		$sql=$this->sql;
 
-		$query ="UPDATE p67_ressources SET ";
+		$query ="UPDATE ".$this->tbl."_ressources SET ";
 		foreach($this->data as $k=>$v)
 		  { 
 			if (!is_numeric($k))
@@ -308,12 +339,14 @@ class ress_class{
 
 function ListeRessources($sql,$actif=array("oui"))
 {
+	global $MyOpt;
+
 	$txt="1=0";
 	foreach($actif as $a)
 	  {
 	  	$txt.=" OR actif='$a'";
 	  }
-	$query = "SELECT id FROM p67_ressources WHERE ($txt ".((GetDroit("SupprimeRessource")) ? "OR actif='off'" : "" ).") ";
+	$query = "SELECT id FROM ".$MyOpt["tbl"]."_ressources WHERE ($txt ".((GetDroit("SupprimeRessource")) ? "OR actif='off'" : "" ).") ";
 	$sql->Query($query);
 	$res=array();
 	for($i=0; $i<$sql->rows; $i++)

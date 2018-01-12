@@ -115,7 +115,7 @@
 		$tabTitre["mouvement"]["aff"]="Mouvement";
 		$tabTitre["mouvement"]["width"]=350;
 		$tabTitre["commentaire"]["aff"]="Commentaire";
-		$tabTitre["commentaire"]["width"]=300;
+		$tabTitre["commentaire"]["width"]=400;
 	  }
 	else
 	  {

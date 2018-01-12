@@ -34,7 +34,7 @@
 		});
 
     $("#destination").autocomplete({
-        source: "index.php?mod=navigation&rub=getwp&type=Airport",
+        source: "api.php?mod=navigation&rub=getwp&type=Airport",
         select: function(event, ui) { oFormObject = document.forms['reservation']; oFormObject.elements["destination"].value=ui.item.value; },
         delay: 0
     });

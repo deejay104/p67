@@ -1,13 +1,24 @@
 <?
+// ---- Refuse l'accès en direct
+	if ((!isset($token)) || ($token==""))
+	  { header("HTTP/1.0 401 Unauthorized"); exit; }
+
+// ---- Valide les paramètres
+	if (isset($_REQUEST["id"]))
+	{
+		$id=$_REQUEST["id"];
+	}
 	if (!is_numeric($id))
-	  {
+	{
 	  	$id=0;
-	  }
+	}
 	if ($id==0)
-	  {
-	  	echo "Erreur : l'id n'est pas défini.";
+	{
+		$res=array();
+		$res["result"]=utf8_encode("L'id n'est pas défini");
+	  	echo json_encode($res);
 	  	exit;
-	  }
+	}
 
 // ---- Récupère les informations du post
 	$query="SELECT * FROM `".$MyOpt["tbl"]."_actualites` WHERE id='$id'";
@@ -15,8 +26,8 @@
 
 	if ($res["mail"]=='oui')
 	  {
-	  	echo "*NONE";
-//	  	exit;
+	  	echo "*Le mail a déjà été envoyé";
+	  	exit;
 	  }
 
 	$auth = new user_class($res["uid_creat"],$sql,false);
@@ -40,16 +51,15 @@
 
 		
 			if ($usr->mail!="")
-			  {
+			{
 
 		  		if (!MyMail($from,$usr->mail,"",$res["titre"],$txt))
-		  		  {
-		  		  	$ret.="  ".$usr->mail."<br />";
-		  		  }
+		  		{
+					$ret.="  ".$usr->mail."<br />";
+		  		}
 
-					$dest.=$usr->mail.", ";
-
-			  }
+				$dest.=$usr->mail.", ";
+			}
 	  }
 
 	MyMail($from,"matthieu@les-mnms.net","",$res["titre"],"**".$dest);

@@ -247,15 +247,16 @@ function VerifEcheance($sql,$id)
 	return $lstdte;
   }
 
-function ListeMembresEcheance($sql,$id) 
+function ListeEcheanceType($sql,$id) 
 { global $MyOpt;
 	$query="SELECT uid FROM ".$MyOpt["tbl"]."_echeance AS echeance LEFT JOIN ".$MyOpt["tbl"]."_utilisateurs AS usr ON echeance.uid=usr.id WHERE echeance.actif='oui' AND echeance.typeid='".$id."' AND usr.actif='oui' GROUP BY echeance.uid";
+	$query="SELECT echeance.id FROM ".$MyOpt["tbl"]."_echeance AS echeance LEFT JOIN ".$MyOpt["tbl"]."_utilisateurs AS usr ON echeance.uid=usr.id WHERE echeance.actif='oui' AND echeance.typeid='".$id."' AND usr.actif='oui'";
 	$sql->Query($query);
 	$lstdte=array();
 	for($i=0; $i<$sql->rows; $i++)
 	{
 		$sql->GetRow($i);
-		$lstdte[$i]=$sql->data["uid"];
+		$lstdte[$i]=$sql->data["id"];
 	}
 
 	return $lstdte;		

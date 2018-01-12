@@ -51,20 +51,17 @@ $(function() {
     });
 
     $( "#DropEnable" ).sortable({
-      connectWith: "ul",
-      update: function (event, ui) {
+		connectWith: "ul",
+		update: function (event, ui) {
 	        var order = $(this).sortable('serialize');
 	
 	        // POST to server using $.post or $.ajax
 	        $.ajax({
-							data: order,
-	            type: 'POST',
-	            url: 'index.php?mod=admin&rub=updgrp&grp={form_grp}'
+				data: order,
+	            type: 'post',
+	            url: 'api.php?mod=admin&rub=updgrp&grp={form_grp}'
 	        });
-    		}
-
-
-
+		}
     });
 
  

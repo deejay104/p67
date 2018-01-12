@@ -5,7 +5,7 @@
 	if ((isset($_SESSION['uid'])) && ($_SESSION['uid']>0))
 	  { $uid = $_SESSION['uid']; }
 	else
-	  { echo "Access denied !"; exit; }
+	  { header("HTTP/1.0 401 Unauthorized"); exit; }
 
 // ---- Variables
 	if ($_REQUEST["id"]!="")

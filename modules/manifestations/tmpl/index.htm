@@ -37,42 +37,42 @@
 			},
 
 			businessHours:
-		       {
-					   start: '0:00', // a start time (10am in this example)
-					   end: '23:59', // an end time (12pm in this example)
-					   dow: [ 1,2,3,4,5 ]
-				   },
+		    {
+				start: '0:00', // a start time (10am in this example)
+				end: '23:59', // an end time (12pm in this example)
+				dow: [ 1,2,3,4,5 ]
+			},
 
 
-       views: {
-            agendaFourWeeks: {
-                type: 'agenda',
-                duration: {weeks: 4},
-                buttonText: 'Default',
-                columnFormat: 'DD'
-            }
-        },
+			views: {
+				agendaFourWeeks: {
+					type: 'agenda',
+					duration: {weeks: 4},
+					buttonText: 'Default',
+					columnFormat: 'DD'
+				}
+			},
 
 			select: function(start, end) {
-						document.location="manips.php?rub=detail&jstart="+start;
+				document.location="manips.php?rub=detail&jstart="+start;
 			},
 			eventClick: function(event, element) {
-						document.location="manips.php?rub=detail&id="+event.id;
-			    },
+				document.location="manips.php?rub=detail&id="+event.id;
+			},
 
 			eventResize: function(event, dayDelta, minuteDelta ) {
-           $.ajax({ url: 'manips.php?rub=updatecal&id='+event.id+'&jstart='+event.start });
+				$.ajax({ url: 'api.php?mod=manifestations&rub=updatecal&id='+event.id+'&jstart='+event.start });
 			},
 			eventDrop: function(event,dayDelta,minuteDelta) {
-           $.ajax({ url: 'manips.php?rub=updatecal&id='+event.id+'&jstart='+event.start });
+				$.ajax({ url: 'api.php?mod=manifestations&rub=updatecal&id='+event.id+'&jstart='+event.start });
 			},
 
 
 			events: {
-				url: 'manips.php?rub=getcal',
+				url: 'api.php?mod=manifestations&rub=getcal',
 				error: function() {
-					$('#script-warning').show();
-				}
+						$('#script-warning').show();
+					}
 			},
 			loading: function(bool) {
 				$('#loading').toggle(bool);

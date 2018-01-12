@@ -8,6 +8,52 @@
 
 <!-- BEGIN: corps -->
 
+<link href='external/fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='external/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+
+<script src='external/fullcalendar/lib/moment.min.js'></script>
+<script src='external/fullcalendar/fullcalendar.min.js'></script>
+<script src='external/fullcalendar/lang/fr.js'></script>
+
+<style>
+	#script-warning {
+		display: none;
+		background: #eee;
+		border-bottom: 1px solid #ddd;
+		padding: 0 10px;
+		line-height: 40px;
+		text-align: center;
+		font-weight: bold;
+		font-size: 12px;
+		color: red;
+	}
+
+	#loading {
+		display: none;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+
+	#calendar {
+		width: 100%;
+		padding: 0px;
+	}
+
+	.fc-time-grid .fc-slats td {
+		height: 1em;
+		font-size: 10px;
+	}
+
+.fc-time {	color: #000000; }
+.fc-title {	color: black; }
+.fc-end-resizer { color: #777777; }
+
+.fc-toolbar { display: none; }
+.fc-day-grid { display: none; }
+
+</style>
+
 <script type="text/javascript">
 	$(function() {
 
@@ -50,6 +96,79 @@
 		 	document.forms["recherche"].submit(); 
 	 	 }
 	}
+	
+	
+
+	$(document).ready(function() {
+	
+		$('#calendar').fullCalendar({
+			defaultDate: '{form_jour}',
+			defaultView: '{defaultView}',
+			defaultEventMinutes: 60,
+			slotDuration: '01:00:00',
+			timeFormat: 'H:mm',
+			lang: 'fr',
+			editable: true,
+			selectable: true,
+			selectHelper: true,
+			minTime: '{form_debjour}:00:00',
+			maxTime: '{form_finjour}:00:00',
+			scrollTime: '{form_debjour}:00:00',
+			axisFormat: 'HH:mm',
+			height: 400,
+			slotEventOverlap: false,
+
+			header: {
+				left: '',
+				center: '',
+				right: ''
+			},
+
+			businessHours:
+	       {
+			   start: '0:00', // a start time (10am in this example)
+			   end: '23:59', // an end time (12pm in this example)
+			   dow: [ 1,2,3,4,5 ]
+			},
+
+		   views: {
+				agendaFourWeeks: {
+					type: 'agenda',
+					duration: {weeks: 4},
+					buttonText: 'Default',
+					columnFormat: 'DD'
+				}
+			},
+
+			select: function(start, end) {
+				document.location="reservations.php?rub=reservation&ress={form_ress}"+"&jstart="+start+"&jend="+end;
+			},
+
+			eventClick: function(event, element) {
+				document.location="reservations.php?rub=reservation&id="+event.id;
+		    },
+
+			eventResize: function(event, dayDelta, minuteDelta ) {
+				$.ajax({ url: 'api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
+			},
+			eventDrop: function(event,dayDelta,minuteDelta) {
+				$.ajax({ url: 'api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
+			},
+
+			events: {
+				url: 'api.php?mod=reservations&rub=getcal&ress=0',
+				error: function() {
+					$('#script-warning').show();
+				}
+			},
+
+			loading: function(bool) {
+				$('#loading').toggle(bool);
+			}
+		});
+		
+	});
+	
 </script>
 
 <div class="cadreinfos">
@@ -82,6 +201,19 @@
 			<p><input type="text" name="search" OnClick="ClearText(event,'Termes à rechercher');" value="Termes à rechercher" OnKeyPress="CapturePost(event);" style="color:#bbbbbb;"></p>
 		</form>
 	</div>
+<!-- BEGIN: aff_reservation -->
+	<div class="encadreInfos">
+		<div class="encadreTitre">Réservation du jour</div>
+		
+		<div id='script-warning'>
+			Erreur : <code>api.php</code> doit être accessible.
+		</div>
+
+		<div id='loading'>loading...</div>
+
+		<div id='calendar'></div>
+	</div>
+<!-- END: aff_reservation -->
 </div>
 
 <div id="actualites">
@@ -142,29 +274,38 @@
 
 <!-- BEGIN: aff_sendmail -->
 <script type="text/javascript">
-			$(function() {     
-			    $.ajax({
-			        url:'index.php?mod=actualites&rub=sendmail&id={aff_id}',
-			        type: 'html',
-			        success: function(content,code) {
-			        	if (content.charAt(0)=="O")
-			        	  {
-										document.getElementById("actualitesMail").style.backgroundColor = "#BBFFAA";
-									}
-								else
-			        	  {
-										document.getElementById("actualitesMail").style.backgroundColor = "#FFBBAA";
-									}
+	document.getElementById("actualitesMail").innerHTML = "Envoie des emails...";
+	document.getElementById("actualitesMail").style.display = 'block';
+	$(function() {     
+		$.ajax({
+			url:'api.php?mod=actualites&rub=sendmail&id={aff_id}',
+			type: 'html',
+			success: function(content,code)
+			{
+				if (content.charAt(0)=="O")
+				{
+					document.getElementById("actualitesMail").style.backgroundColor = "#BBFFAA";
+				}
+				else
+				{
+					document.getElementById("actualitesMail").style.backgroundColor = "#FFBBAA";
+				}
 
-								document.getElementById("actualitesMail").innerHTML =content;
+				document.getElementById("actualitesMail").innerHTML =content;
 
-			        	if (content.charAt(0)!="*")
-			        	  {
-										document.getElementById("actualitesMail").style.display = 'block';
-									}
-			        }
-			    });        
-			});
+				if (content.charAt(0)!="*")
+				{
+					document.getElementById("actualitesMail").style.display = 'block';
+				}
+			},
+			error : function(content, code, error)
+			{
+				document.getElementById("actualitesMail").style.backgroundColor = "#FFBBAA";
+				document.getElementById("actualitesMail").innerHTML = "Erreur : "+error;
+				document.getElementById("actualitesMail").style.display = 'block';
+			}
+		});        
+	});
 </script>
 <!-- END: aff_sendmail -->
 

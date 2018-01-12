@@ -27,7 +27,7 @@
 <script type="text/javascript">
 $(function() {
     $("#form_point").autocomplete({
-        source: "index.php?mod=navigation&rub=getwp",
+        source: "api.php?mod=navigation&rub=getwp",
         select: function(event, ui) { oFormObject = document.forms['form_route']; oFormObject.elements["form_point"].value=ui.item.value; form_route.submit() },
         delay: 0
     });
@@ -60,7 +60,7 @@ $(function() {
 	        $.ajax({
 							data: order,
 	            type: 'POST',
-	            url: 'index.php?mod=navigation&rub=updwp&nid={form_id}'
+	            url: 'api.php?mod=navigation&rub=updwp&nid={form_id}'
 	        });
     		}
 
@@ -88,6 +88,9 @@ $(function() {
 		<!-- END: aff_update -->
 </div>
 <br />
+<table>
+<tr>
+<td>
 <ul class="waypoint waypointth">
 		<li>
 			<span style="width:100px;">Point</span>
@@ -136,7 +139,11 @@ $(function() {
 			<span>{tot_tps}</span>
 		</li>
 </ul>
-
+</td>
+<td>
+	<img src="api.php?mod=navigation&rub=map&nid={form_id}">
+</td>
+</table>
 </form>
 
 

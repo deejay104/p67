@@ -1,101 +1,131 @@
 <?php
+// ---- Refuse l'accès en direct
+	if ((!isset($token)) || ($token==""))
+	  { header("HTTP/1.0 401 Unauthorized"); exit; }
+
+// ---- Charge les dépendances
 	require_once ("class/reservation.inc.php");
 	require_once ("class/maintenance.inc.php");
 	require_once ("class/manifestation.inc.php");
+	require_once ("class/ressources.inc.php");
 
+// ---- Vérifie les paramètres
 
-// Short-circuit if the client did not give us a date range.
-if (!isset($_GET['start']) || !isset($_GET['end'])) {
-	die("Please provide a date range.");
-}
+	// Short-circuit if the client did not give us a date range.
+	if (!isset($_GET['start']) || !isset($_GET['end'])) {
+		die("Please provide a date range.");
+	}
 
-if (!isset($_GET['ress']) || !is_numeric($_GET['ress'])) {
-	die("Please provide a ressource id.");
-}
+	if (!isset($_GET['ress']) || !is_numeric($_GET['ress'])) {
+		die("Please provide a ressource id.");
+	}
 
 	$start=$_GET['start'];
 	$end=$_GET['end'];
+	$ress=$_GET['ress'];
 
 	$ii=0;
 
-	$tresa=GetReservation($sql,$start,$end,$ress);
+	$lstres=array();
+	
+	if ($ress==0)
+	{
+		$lstres=ListeRessources($sql);
+	}
+	else
+	{
+		$lstres[]=$ress;
+	}
+	
+	// Affichage des réservations	
+	foreach ($lstres as $i=>$r)
+	{
+		$tresa=GetReservation($sql,$start,$end,$r);
 
-	$d=floor(date_diff_txt($start,$end)/86400);
-	$affnom=($d<=7) ? "fullname" : "initiales";
+		$d=floor(date_diff_txt($start,$end)/86400);
+		$affnom=($d<=7) ? "fullname" : "initiales";
 
-	if (is_array($tresa))
-	  {
+		if (is_array($tresa))
+		{
 			foreach($tresa as $r)
-			  {
-					$resa["resa"]=new resa_class($r["id"],$sql);
-					$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql,false,true);
-					$resa["instructeur"]=new user_class($resa["resa"]->uid_instructeur,$sql,false,true);
-		
-					$col="";
-					if (($resa["instructeur"]->type=="instructeur") && ($resa["instructeur"]->uid==$res_user["id"]))
-				  	  { $col=$MyOpt["tabcolresa"]["own"]; }
-					else if ($resa["pilote"]->uid==$res_user["id"])
-				  	  { $col=$MyOpt["tabcolresa"]["own"]; }
-					else
-				  	  { $col=$MyOpt["tabcolresa"]["booked"]; }
-		
-					$input_arrays[$ii]["id"]=$resa["resa"]->id;
-					$input_arrays[$ii]["title"]=utf8_encode($resa["pilote"]->Aff($affnom,"val")).(($resa["instructeur"]->uid>0) ? " + ".utf8_encode($resa["instructeur"]->Aff($affnom,"val")) : "");
-					$input_arrays[$ii]["start"]=date("c",strtotime($resa["resa"]->dte_deb));
-					$input_arrays[$ii]["end"]=date("c",strtotime($resa["resa"]->dte_fin));
-					$input_arrays[$ii]["description"]=sql2time($resa["resa"]->dte_deb,"nosec").utf8_encode(" à ").sql2time($resa["resa"]->dte_fin,"nosec")."<br>".utf8_encode($resa["pilote"]->Aff("fullname","val")).(($resa["instructeur"]->uid>0) ? "<br/>+ ".utf8_encode($resa["instructeur"]->Aff("fullname","val")) : "").(($resa["resa"]->description!="") ? "<br>----<br>".utf8_encode($resa["resa"]->description) : "");
-					if ($col!="") { $input_arrays[$ii]["color"]='#'.$col; }
-					$ii=$ii+1;
-			  }
-		}
+			{
+				$resa["resa"]=new resa_class($r["id"],$sql);
+				$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql,false,true);
+				$resa["instructeur"]=new user_class($resa["resa"]->uid_instructeur,$sql,false,true);
 
+				if ($ress==0)
+				{
+					$resa["ress"]=new ress_class($resa["resa"]->uid_ressource,$sql);
+				}
+			
+				$col="";
+				if (($resa["instructeur"]->type=="instructeur") && ($resa["instructeur"]->uid==$myuser->uid))
+				{
+					$col=$MyOpt["tabcolresa"]["own"];
+				}
+				else if ($resa["pilote"]->uid==$myuser->uid)
+				{
+					$col=$MyOpt["tabcolresa"]["own"];
+				}
+				else if ($ress==0)
+				{
+					  $col=$resa["ress"]->couleur;
+				}
+				else
+				{
+					$col=$MyOpt["tabcolresa"]["booked"];
+				}
+	
+				$input_arrays[$ii]["id"]=$resa["resa"]->id;
+				$input_arrays[$ii]["title"]=utf8_encode((($d==1) ? $resa["ress"]->immatriculation." : \n" : "").$resa["pilote"]->Aff($affnom,"val").(($resa["instructeur"]->uid>0) ? " + ".($resa["instructeur"]->Aff($affnom,"val")) : ""));
+				$input_arrays[$ii]["start"]=date("c",strtotime($resa["resa"]->dte_deb));
+				$input_arrays[$ii]["end"]=date("c",strtotime($resa["resa"]->dte_fin));
+				$input_arrays[$ii]["description"]=utf8_encode($resa["ress"]->immatriculation." de ".sql2time($resa["resa"]->dte_deb,"nosec")." à ".sql2time($resa["resa"]->dte_fin,"nosec")."<br>".$resa["pilote"]->Aff("fullname","val").(($resa["instructeur"]->uid>0) ? "<br/>+ ".($resa["instructeur"]->Aff("fullname","val")) : "").(($resa["resa"]->description!="") ? "<br>----<br>".($resa["resa"]->description) : ""));
+				$input_arrays[$ii]["editable"]=($resa["resa"]->edite=='non') ? false : true;
+				if ($col!="") { $input_arrays[$ii]["color"]='#'.$col; }
+				$ii=$ii+1;
+			}
+		}
+	}
 	
 	// Affichage des manifestations
 	$tmanip=GetManifestation($sql,$start,$end);
 
 	if (is_array($tmanip))
-	  {
-			foreach($tmanip as $r)
-			  {
-					$m=new manip_class($r,$sql);
-		
-					$input_arrays[$ii]["id"]="M".$m->id;
-					$input_arrays[$ii]["title"]=utf8_encode($m->titre);
-					$input_arrays[$ii]["start"]=date("c",strtotime($m->dte_manip." 00:00:00"));
-					$input_arrays[$ii]["end"]=date("c",strtotime($m->dte_manip." 23:59:59"));
-					$input_arrays[$ii]["color"]='#'.$MyOpt["tabcolresa"]["meeting"];
-					$input_arrays[$ii]["rendering"]='background';
-					$ii=$ii+1;
-			  }
+	{
+		foreach($tmanip as $r)
+		{
+			$m=new manip_class($r,$sql);
+
+			$input_arrays[$ii]["id"]="M".$m->id;
+			$input_arrays[$ii]["title"]=utf8_encode($m->titre);
+			$input_arrays[$ii]["start"]=date("c",strtotime($m->dte_manip." 00:00:00"));
+			$input_arrays[$ii]["end"]=date("c",strtotime($m->dte_manip." 23:59:59"));
+			$input_arrays[$ii]["color"]='#'.$MyOpt["tabcolresa"]["meeting"];
+			$input_arrays[$ii]["rendering"]='background';
+			$ii=$ii+1;
 		}
+	}
 
 	// Affichage des maintenances
 	$tmaint=GetAllMaintenance($sql,$ress);
 
 	if (is_array($tmaint))
-	  {
-			foreach($tmaint as $r)
-			  {
-					$m=new maint_class($r,$sql);
+	{
+		foreach($tmaint as $r)
+		{
+			$m=new maint_class($r,$sql);
 
-					$input_arrays[$ii]["id"]="M".$m->id;
-					$input_arrays[$ii]["title"]=utf8_encode("Maintenance");
-					$input_arrays[$ii]["start"]=date("c",strtotime($m->dte_deb));
-					$input_arrays[$ii]["end"]=date("c",strtotime($m->dte_fin)+86400);
-					$input_arrays[$ii]["color"]='#'.(($m->status>1) ? $MyOpt["tabcolresa"]["maintconf"] : $MyOpt["tabcolresa"]["maintplan"]);
-					$input_arrays[$ii]["rendering"]='background';
+			$input_arrays[$ii]["id"]="M".$m->id;
+			$input_arrays[$ii]["title"]=utf8_encode("Maintenance");
+			$input_arrays[$ii]["start"]=date("c",strtotime($m->dte_deb));
+			$input_arrays[$ii]["end"]=date("c",strtotime($m->dte_fin)+86400);
+			$input_arrays[$ii]["color"]='#'.(($m->status>1) ? $MyOpt["tabcolresa"]["maintconf"] : $MyOpt["tabcolresa"]["maintplan"]);
+			$input_arrays[$ii]["rendering"]='background';
 
-/*
-				  { $tmpl_x->assign("aff_color",$MyOpt["tabcolresa"]["maintres"]); }
-				else if (GetActiveMaintenace($sql,$ress,$j)>1)
-	                          // Maintenance
-				  { $tmpl_x->assign("aff_color",$MyOpt["tabcolresa"]["maintok"]); }
-*/
-
-					$ii=$ii+1;
-			  }
+			$ii=$ii+1;
 		}
-
+	}
 
 	// Affichage du jour et de la nuit
 	for($i=floor(strtotime($start)/86400)*86400; $i<=floor(strtotime($end)/86400)*86400; $i=$i+86400)
@@ -118,8 +148,6 @@ if (!isset($_GET['ress']) || !is_numeric($_GET['ress'])) {
 
 	// Send JSON to the client.
 	echo json_encode($input_arrays);
-
-exit;
 
 
 // ---- Calcul du lever/coucher du soleil

@@ -4,11 +4,12 @@
 
 <!-- BEGIN: infos -->
 	{TexteTitre} 
-				<select id="ress" name="ress" OnChange="Recharge();" style="font-size:20px;">
-				<!-- BEGIN: lst_ress -->
-				<option value="{uid_ress}" {chk_ress}>{nom_ress}</option>
-				<!-- END: lst_ress -->
-        </select>
+	<select id="ress" name="ress" OnChange="Recharge();" style="font-size:20px;">
+		<option value="0">Tous</OPTION>
+		<!-- BEGIN: lst_ress -->
+		<option value="{uid_ress}" {chk_ress}>{nom_ress}</option>
+		<!-- END: lst_ress -->
+	</select>
 
 <!-- END: infos -->
 
@@ -66,31 +67,29 @@
 	}
 
 .fc-time-grid .fc-slats td {
-    height: 1em;
-    line-height:12px;
-    font-size: 12px;
+	height: 16px;
+    line-height: 16px;
+    font-size: 10px;
 	}
 
 .fc-time {	color: #000000; }
 .fc-title {	color: black; }
 .fc-end-resizer { color: #777777; }
+.fc-day-grid { display: none; }
 		
 </style>
 
 <script>
 
 	$(document).ready(function() {
-	
-
-	
 		$('#calendar').fullCalendar({
-			defaultDate: '{form_jour}',
+//			defaultDate: '{form_jour}',
 			defaultView: '{defaultView}',
 			defaultEventMinutes: 60,
 			timeFormat: 'H:mm',
 			lang: 'fr',
 			editable: true,
-			eventLimit: true, // allow "more" link when too many events
+			eventLimit: true,
 			selectable: true,
 			selectHelper: true,
 			minTime: '{form_debjour}:00:00',
@@ -99,7 +98,6 @@
 			axisFormat: 'HH:mm',
 			contentHeight: 'auto',
 			slotEventOverlap: false,
-			eventLimit: 3,
 
 			header: {
 				left: 'prev,next today',
@@ -108,40 +106,46 @@
 			},
 
 			businessHours:
-		       {
-					   start: '0:00', // a start time (10am in this example)
-					   end: '23:59', // an end time (12pm in this example)
-					   dow: [ 1,2,3,4,5 ]
-				   },
+		    {
+			   start: '0:00', // a start time (10am in this example)
+			   end: '23:59', // an end time (12pm in this example)
+			   dow: [ 1,2,3,4,5 ]
+			},
 
-
-       views: {
-            agendaFourWeeks: {
-                type: 'agenda',
-                duration: {weeks: 4},
-                buttonText: 'Default',
-                columnFormat: 'DD'
-            }
-        },
+			views: {
+				agendaTwoWeeks: {
+					type: 'agenda',
+					duration: {weeks: 2},
+					buttonText: '2 Semaines',
+					columnFormat: 'DD',
+					eventLimit: 5
+				},
+				agendaFourWeeks: {
+					type: 'agenda',
+					duration: {weeks: 4},
+					buttonText: '4 Semaines',
+					columnFormat: 'DD',
+					eventLimit: 3
+				}
+			},
 
 			select: function(start, end) {
-						document.location="reservations.php?rub=reservation&ress={form_ress}"+"&jstart="+start+"&jend="+end;
+				document.location="reservations.php?rub=reservation&ress={form_ress}"+"&jstart="+start+"&jend="+end;
 			},
 
 			eventClick: function(event, element) {
-						document.location="reservations.php?rub=reservation&id="+event.id;
-			    },
+				document.location="reservations.php?rub=reservation&id="+event.id;
+			},
 
 			eventResize: function(event, dayDelta, minuteDelta ) {
-           $.ajax({ url: 'reservations.php?rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
+				$.ajax({ url: 'api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
 			},
 			eventDrop: function(event,dayDelta,minuteDelta) {
-           $.ajax({ url: 'reservations.php?rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
+				$.ajax({ url: 'api.php?mod=reservations&rub=updatecal&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
 			},
 
-
 			events: {
-				url: 'reservations.php?rub=getcal&ress={form_ress}',
+				url: 'api.php?mod=reservations&rub=getcal&ress={form_ress}',
 				error: function() {
 					$('#script-warning').show();
 				}
@@ -166,8 +170,6 @@
 			    $('.calendarDesc').remove();
 			},
 	<!-- END: aff_tooltips -->
-		
-
 
 			loading: function(bool) {
 				$('#loading').toggle(bool);
@@ -181,7 +183,7 @@
 	<br />
 
 	<div id='script-warning'>
-		Erreur : <code>cal.php</code> doit être accessible.
+		Erreur : <code>api.php</code> doit être accessible.
 	</div>
 
 	<div id='loading'>loading...</div>

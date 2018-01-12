@@ -72,6 +72,10 @@ $MyOptHelp["uid_club"]="ID du compte club";
 $MyOptTmpl["uid_bapteme"]="53";
 $MyOptHelp["uid_bapteme"]="ID du compte bapteme";
 
+// ID poste pour facturation manifestation
+$MyOptTmpl["id_PosteManip"]=0;
+$MyOptHelp["id_PosteManip"]="ID du poste pour facturation manifestation";
+
 // Compte par défaut pour le tableau de bord
 $MyOptTmpl["uid_tableaubord"]=$MyOptTmpl["uid_club"];
 $MyOptHelp["uid_tableaubord"]="Compte par défaut pour le tableau de bord";

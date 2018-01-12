@@ -87,7 +87,7 @@
 	if (!file_exists("config/variables.inc.php"))
 	  { FatalError("Fichier des variables introuvable","Il manque le fichier de variables 'config/variables.inc.php'."); }
 
-  require ("config/config.inc.php");
+	require ("config/config.inc.php");
 	require ("config/variables.inc.php");
 	require ("modules/fonctions.inc.php");
 
@@ -145,11 +145,9 @@
 	$sql = new mysql_class($mysqluser, $mysqlpassword, $hostname, $db, $port);
 
 // ---- Fonction des informations de l'utilisateur
-	if ($uid>0)
-	  {
-			$myuser = new user_class($uid,$sql,true);
-			$res_user=$myuser->data;
-	  }
+	$myuser = new user_class($uid,$sql,true);
+	$res_user=$myuser->data;
+	$token=$uid;
 
 	if (($MyOpt["maintenance"]=="on") && (!GetDroit("ADM")))
 	  {
@@ -169,7 +167,7 @@
 	$tmpl_prg->assign("username", $myuser->aff("prenom")." ".$myuser->aff("nom"));
 	$tmpl_prg->assign("version", $version.(($default_profile!="") ? ".".preg_replace("/([a-z])[a-z]*_(.._)?([a-z])[a-z]*/i","\\1\\3",$default_profile) : "").(($MyOpt["maintenance"]=="on") ? " - MAINTENANCE ACTIVE" : ""));
 
-  $tmpl_prg->assign("site_logo", $MyOpt["site_logo"]);
+	$tmpl_prg->assign("site_logo", $MyOpt["site_logo"]);
 	$tmpl_prg->assign("site_title", $MyOpt["site_title"]);
 
 /*
@@ -210,7 +208,8 @@
 	//Mon, 22 Jul 2002 11:12:01 GMT
 	
 // ---- Affichages du menu
-	foreach($MyOpt["menu"] as $menu=>$droit) {
+	foreach($MyOpt["menu"] as $menu=>$droit)
+	{
 		if ( ( ($droit=="x") || (($droit=="") && ($myuser->data["type"]!="invite")) || ((GetDroit($droit)) && ($droit!="")) ) && ($droit!="-") )
 		  { 
 		  	$tmpl_prg->parse("main.menu_".$menu); 

@@ -23,59 +23,15 @@
 	<BR>
 
 	<!-- BEGIN: msg_enregistre -->
-	<div class="msgok">{msg_resultat}</div>
+	<div class="{msg_confirmation_class}">{msg_confirmation}</div>
 	<!-- END: msg_enregistre -->
 
 
 	<!-- BEGIN: enregistre -->
-	<TABLE>
-	  <TR style="height:20px; border-bottom: 1px solid black;">
-		<th width=20>&nbsp;</TD>
-		<th width=100><B>Date</B></TD>
-		<th width=100><B>Mouvement</B></TD>
-		<th width=350><B>Commentaire</B></TD>
-		<th width=200><B>Tiers</B></TD>
-		<th width=100 style="border-left: 1px solid black; text-align: right;" ><B>Montant</B></TD>
-	  </TR>
 	<!-- BEGIN: lst_enregistre -->
-		<TR style="border-bottom: 1px dashed #dddddd;">
-			<TD>
-				&nbsp;
-				<INPUT type="hidden" name="form_id[{enr_id}a]" value="{enr_idcal}">
-				<INPUT type="hidden" name="form_uid[{enr_id}a]" value="{enr_uid_deb}">
-				<INPUT type="hidden" name="form_uidt[{enr_id}a]" value="{enr_uid_cre}">
-				<INPUT type="hidden" name="form_mid[{enr_id}a]" value="{enr_mid}">
-				<INPUT type="hidden" name="form_montant[{enr_id}a]" value="{enr_montant_deb}">
-				<INPUT type="hidden" name="form_commentaire[{enr_id}a]" value="{enr_commentaire}">
-				<INPUT type="hidden" name="form_mouvement[{enr_id}a]" value="{enr_mouvement_cre}">
-				<INPUT type="hidden" name="form_date[{enr_id}a]" value="{enr_date}">
-			</td>
-			<TD>{enr_date}</TD>
-			<TD>{enr_mouvement_cre}</TD>
-			<TD>{enr_commentaire}</TD>
-			<TD>{enr_tiers_deb}</TD>
-			<TD style="border-left: 1px solid black; text-align: right;">{enr_affmontant_deb}</TD>
-		</tr>
-		<tr style="border-bottom: 1px solid black">
-			<td>
-				&nbsp;
-				<INPUT type="hidden" name="form_id[{enr_id}b]" value="">
-				<INPUT type="hidden" name="form_uid[{enr_id}b]" value="{enr_uid_cre}">
-				<INPUT type="hidden" name="form_uidt[{enr_id}b]" value="{enr_uid_deb}">
-				<INPUT type="hidden" name="form_mid[{enr_id}b]" value="{enr_mid}">
-				<INPUT type="hidden" name="form_montant[{enr_id}b]" value="{enr_montant_cre}">
-				<INPUT type="hidden" name="form_commentaire[{enr_id}b]" value="{enr_commentaire}">
-				<INPUT type="hidden" name="form_mouvement[{enr_id}b]" value="{enr_mouvement_deb}">
-				<INPUT type="hidden" name="form_date[{enr_id}b]" value="{enr_date}">
-			</td>
-			<TD>{enr_date}</TD>
-			<TD>{enr_mouvement_deb}</TD>
-			<TD>{enr_commentaire}</TD>
-			<TD>{enr_tiers_cre}</TD>
-			<TD style="border-left: 1px solid black; text-align: right;">{enr_affmontant_cre}</TD>
-		</TR>
+	<input type="hidden" name="form_calid[{form_mvtid}]" value="{form_calid}">
+	{enr_mouvement}
 	<!-- END: lst_enregistre -->
-	</TABLE>
 
 	<div class="formulaireSubmit">
 		<INPUT type="submit" name="fonc" value="Valider"> <INPUT type="submit" name="fonc" value="Annuler">
@@ -131,7 +87,7 @@
 		<!-- BEGIN: lst2_vols -->
 		  <TR>
 			<TD width=20>&nbsp;</TD>
-			<TD><INPUT type="text" name="form_date[{id_new}]" size=8></TD>
+			<TD><INPUT type="date" name="form_date[{id_new}]" size=8></TD>
 			<TD>
 				<SELECT name="form_pilote[{id_new}]">
 				<OPTION value="">...</OPTION>
@@ -163,7 +119,7 @@
 		<!-- END: lst2_vols -->
 		  <TR>
 			<TD width=20>&nbsp;</TD>
-			<TD colspan=4><BR><INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler"></TD>
+			<TD colspan=4><BR><INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Débiter"> <INPUT type="submit" name="fonc" value="Annuler"></TD>
 		  </TR>
 		</TABLE>
 	<!-- END: aff_vols -->

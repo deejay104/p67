@@ -25,6 +25,10 @@
 ?>
 
 <?
+// ---- Refuse l'accès en direct
+	if ((!isset($token)) || ($token==""))
+	  { header("HTTP/1.0 401 Unauthorized"); exit; }
+
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("echeances.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
@@ -37,6 +41,7 @@
 		$form_id=0;
 	}
 	require_once ("class/echeance.inc.php");
+	require_once ("class/compte.inc.php");
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
@@ -73,22 +78,27 @@
 
 	if ($fonc=="Débiter")
 	{
-		$tmpl_x->assign("form_cout",$form_cout);
 		$tmpl_x->assign("form_date",$form_date);
 
-			$query="SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE id='".$form_poste."'";
-		$res=$sql->QueryRow($query);
+		$mvt = new compte_class(0,$sql);
+		$tmpl_x->assign("enr_mouvement",$mvt->AfficheEntete());
+		$tmpl_x->parse("corps.aff_visualisation.lst_visualisation");
+		print_r($form_debite);
 		foreach ($form_debite as $id=>$d)
 		{
-			$usr = new user_class($id,$sql,false);
-			
-			$tmpl_x->assign("enr_uid",$id);
-			$tmpl_x->assign("enr_date",date("d/m/Y"));
-			$tmpl_x->assign("enr_poste",$res["description"]);
-			$tmpl_x->assign("enr_commentaire",$form_commentaire." jusqu'au ".sql2date($form_date));
-			$tmpl_x->assign("enr_membre",$usr->fullname);
-			$tmpl_x->assign("enr_cout",AffMontant(-$form_cout));
+			$dte = new echeance_class($id,$sql,0);
+			$usr = new user_class($dte->uid,$sql,false);
+			$mvt = new compte_class(0,$sql);
+
+			$mvt->Generate($usr->idcpt,$form_poste,$form_commentaire." jusqu'au ".sql2date($form_date),date("Y-m-d"),$form_cout,array());
+			$mvt->Save();
+
+			$tmpl_x->assign("form_mvtid",$mvt->id);
+			$tmpl_x->assign("form_dteid",$id);
+			$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
 			$tmpl_x->parse("corps.aff_visualisation.lst_visualisation");
+			
+
 		}
 		$tmpl_x->parse("corps.aff_visualisation");
 		$save=true;
@@ -97,13 +107,29 @@
 // ---- Enregistre le débit des échéances
 	if ($fonc=="Valider")
 	{
-		$query="SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE id='".$form_poste."'";
-		$res=$sql->QueryRow($query);
-		foreach ($form_debite as $id=>$d)
-		{
-			echo "Echeance ".$form_id." pour ".$id." jusqu'au ".$form_date."<br>";
-			echo "Débite ".$form_id." de ".$form_cout." poste ".$form_poste."<br>";
+		$ret="";
+		$nbmvt="";
+		$ok=0;
+		foreach ($form_mid as $id=>$d)
+		{			
+			$mvt = new compte_class($id,$sql);
+			$nbmvt=$nbmvt+$mvt->Debite();
+			
+			if ($mvt->erreur!="")
+			{
+				$ret.=$mvt->erreur;
+				$ok=1;
+			}
+			
+			$dte = new echeance_class($form_dteid[$id],$sql,0);
+			$dte->dte_echeance=$form_date;
+			$dte->Save();
 		}
+
+		$tmpl_x->assign("msg_confirmation", $nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret);
+		$tmpl_x->assign("msg_confirmation_class", ($ret!="") ? "msgerror" : "msgok");
+		
+		$tmpl_x->parse("corps.msg_enregistre");
 	}
 	
 // ---- Liste des échéances
@@ -119,17 +145,17 @@
 		$tabTitre["debiter"]["aff"]="<input type='checkbox' id='form_debite' OnClick='selectAll();'> Débiter";
 		$tabTitre["debiter"]["width"]=100;
 
+		$lstdte=array();
 		if ($form_id>0)
 		{
-			$lstusr=ListeMembresEcheance($sql,$form_id);
+			$lstdte=ListeEcheanceType($sql,$form_id);
 		}
 
 		$tabValeur=array();
-		foreach($lstusr as $i=>$id)
+		foreach($lstdte as $i=>$id)
 		{
-			$usr = new user_class($id,$sql,false);
-			$dte = new echeance_class(0,$sql,$id);
-			$dte->loadtype($form_id);
+			$dte = new echeance_class($id,$sql,0);
+			$usr = new user_class($dte->uid,$sql,false);
 
 			$tabValeur[$i]["prenom"]["val"]=$usr->prenom;
 			$tabValeur[$i]["prenom"]["aff"]=$usr->aff("prenom");
