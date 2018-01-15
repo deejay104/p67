@@ -234,7 +234,7 @@
 		$lstdoc=ListDocument($sql,$d["uid_creat"],"avatar");
 		if (count($lstdoc)>0)
 		{
-			$doc = new document_class($lstdoc[0],$sql);
+			// $doc = new document_class($lstdoc[0],$sql);
 			$tmpl_x->assign("msg_imgusr",$lstdoc[0]);
 		}
 		else

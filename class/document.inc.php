@@ -161,7 +161,6 @@ class document_class{
 
 		if ( ($this->uid==$gl_uid) || (GetDroit("ADM")) || ($myuser->role[$this->droit]) )
 		{
-			echo $this->filepath."/".$this->filename;
 			if (file_exists($this->filepath."/".$this->filename))
 			{
 				if (unlink($this->filepath."/".$this->filename))
@@ -387,7 +386,6 @@ function GetFilename($file)
 	$p=strrpos("/".$file,"/");
 	$myfile=substr("/".$file,$p+1,strlen($file)-$p-1);
 	$myfile=substr($myfile,0,strrpos($myfile,"."));
-	echo "'$myfile'";
 	return $myfile;
 }
 

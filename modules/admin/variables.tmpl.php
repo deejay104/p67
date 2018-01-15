@@ -76,9 +76,18 @@ $MyOptHelp["uid_bapteme"]="ID du compte bapteme";
 $MyOptTmpl["id_PosteManip"]=0;
 $MyOptHelp["id_PosteManip"]="ID du poste pour facturation manifestation";
 
+// ID poste pour factures
+$MyOptTmpl["id_PosteFacture"]=0;
+$MyOptHelp["id_PosteFacture"]="ID du poste pour le crédit des factures";
+
 // Compte par défaut pour le tableau de bord
 $MyOptTmpl["uid_tableaubord"]=$MyOptTmpl["uid_club"];
 $MyOptHelp["uid_tableaubord"]="Compte par défaut pour le tableau de bord";
+
+// Compense le compte CLUB lors du remboursement d'une facture
+$MyOptTmpl["CompenseClub"]=0;
+$MyOptHelp["CompenseClub"]="Compense le compte CLUB lors du remboursement d'une facture (1=on)";
+
 
 // Trie par Nom ou par Prénom
 $MyOptTmpl["globalTrie"]="prenom";

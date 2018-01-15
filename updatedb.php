@@ -37,9 +37,9 @@
 	require ("version.txt");
 	require ("config/config.inc.php");
 	if (file_exists("config/variables.inc.php"))
-  {
-  	require ("config/variables.inc.php");
-  }
+	{
+		require ("config/variables.inc.php");
+	}
 
 	require ("modules/admin/variables.tmpl.php");
 	require ("modules/fonctions.inc.php");
@@ -887,14 +887,35 @@
 	$nver=469;
 	if ($ver<$nver)
 	{
-	  	$sql=array();
-		$sql[]="CREATE TABLE `".$MyOpt["tbl"]."_comptetemp` (`id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,`deb` int(10) unsigned NOT NULL DEFAULT '0',`cre` int(10) unsigned NOT NULL DEFAULT '0',`ventilation` text COLLATE latin1_general_ci NOT NULL,`montant` decimal(10,2) NOT NULL DEFAULT '0.00',`poste` int(10) NOT NULL DEFAULT '0',`commentaire` tinytext COLLATE latin1_general_ci NOT NULL,`date_valeur` date NOT NULL DEFAULT '0000-00-00',`compte` varchar(10) COLLATE latin1_general_ci NOT NULL,`status` varchar(10) COLLATE latin1_general_ci NOT NULL DEFAULT '0',`uid_creat` int(10) unsigned NOT NULL DEFAULT '0',`date_creat` datetime NOT NULL DEFAULT '0000-00-00 00:00:00', PRIMARY KEY (`id`)) ENGINE=InnoDB  AUTO_INCREMENT=".$mvtid." DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;";
+		$query="SELECT MAX(id) AS mvtid FROM ".$MyOpt["tbl"]."_compte";
+		$res=$mysql->QueryRow($query);
+		$mvtid=$res["mvtid"]+1;
+
+		$sql=array();
+		$sql[]="CREATE TABLE `".$MyOpt["tbl"]."_comptetemp` (`id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,`deb` int(10) unsigned NOT NULL DEFAULT '0',`cre` int(10) unsigned NOT NULL DEFAULT '0',`ventilation` text COLLATE latin1_general_ci NOT NULL,`montant` decimal(10,2) NOT NULL DEFAULT '0.00',`poste` int(10) NOT NULL DEFAULT '0',`commentaire` tinytext COLLATE latin1_general_ci NOT NULL,`date_valeur` date NOT NULL DEFAULT '0000-00-00',`compte` varchar(10) COLLATE latin1_general_ci NOT NULL,,`facture` varchar(10) COLLATE latin1_general_ci NOT NULL,`status` varchar(10) COLLATE latin1_general_ci NOT NULL DEFAULT '0',`uid_creat` int(10) unsigned NOT NULL DEFAULT '0',`date_creat` datetime NOT NULL DEFAULT '0000-00-00 00:00:00', PRIMARY KEY (`id`)) ENGINE=InnoDB  AUTO_INCREMENT=".$mvtid." DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;";
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_ressources` ADD `poste` INT UNSIGNED NOT NULL AFTER `actif`;";
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_ressources` ADD INDEX(`poste`);";
  
 		UpdateDB($sql,$nver);
 	}
-	
+
+// ----
+	$nver=470;
+	if ($ver<$nver)
+	{
+		$sql=array();
+		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_compte` ADD `rembfact` VARCHAR(10) NOT NULL AFTER `facture`;";
+		$sql[]="UPDATE `".$MyOpt["tbl"]."_compte` SET rembfact=facture WHERE tiers=".$MyOpt["uid_banque"]." AND facture<>'NOFAC'";
+		$sql[]="UPDATE `".$MyOpt["tbl"]."_compte` SET facture='NOFAC' WHERE tiers=".$MyOpt["uid_banque"]." AND rembfact<>''";
+		$sql[]="UPDATE `".$MyOpt["tbl"]."_compte` SET facture='NOFAC' WHERE facture=''";
+
+		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_comptetemp` ADD `rembfact` VARCHAR(10) NOT NULL AFTER `facture`;";
+		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_compte` ADD INDEX(`facture`);";
+		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_compte` ADD INDEX(`rembfact`);";
+
+		UpdateDB($sql,$nver);
+	}
+		
 // *********************************************************************************************************
 
 	echo "<a href='".$MyOpt["host"]."'>-Retour au site-</a>";

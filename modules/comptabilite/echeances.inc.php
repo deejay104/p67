@@ -83,7 +83,7 @@
 		$mvt = new compte_class(0,$sql);
 		$tmpl_x->assign("enr_mouvement",$mvt->AfficheEntete());
 		$tmpl_x->parse("corps.aff_visualisation.lst_visualisation");
-		print_r($form_debite);
+
 		foreach ($form_debite as $id=>$d)
 		{
 			$dte = new echeance_class($id,$sql,0);

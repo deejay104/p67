@@ -131,9 +131,14 @@ class facture_class{
 
 	function Restant() {
 		global $MyOpt;
+
+		if ($this->id=="")
+		{
+			return 0;
+		}
 		
 		$sql=$this->sql;
-		$query = "SELECT SUM(".$this->tbl."_compte.montant) AS paye FROM ".$this->tbl."_compte WHERE ".$this->tbl."_compte.uid='".$this->uid."' AND ".$this->tbl."_compte.tiers=".$MyOpt["uid_banque"]." AND ".$this->tbl."_compte.facture='".$this->id."'";
+		$query = "SELECT SUM(".$this->tbl."_compte.montant) AS paye FROM ".$this->tbl."_compte WHERE uid='".$this->uid."' AND rembfact='".$this->id."'";
 		$res=$sql->QueryRow($query);
 
 		return round($this->total-$res["paye"],2);
@@ -164,6 +169,7 @@ class facture_class{
 		$sql=$this->sql;
 
 		$query = "SELECT ".$this->tbl."_compte.* FROM ".$this->tbl."_compte WHERE ".$this->tbl."_compte.uid='".$this->uid."' AND ".$this->tbl."_compte.tiers='".$MyOpt["uid_club"]."' AND ".$this->tbl."_compte.facture='".$this->id."' ORDER BY date_valeur, id";
+		$query = "SELECT ".$this->tbl."_compte.* FROM ".$this->tbl."_compte WHERE uid='".$this->uid."' AND facture='".$this->id."' ORDER BY date_valeur, id";
 		$sql->Query($query);
 		$total=0;
 		for($i=0; $i<$sql->rows; $i++)
@@ -181,7 +187,7 @@ class facture_class{
 		global $MyOpt;
 		
 		$sql=$this->sql;
-		$query = "SELECT * FROM ".$this->tbl."_compte WHERE ".$this->tbl."_compte.uid='".$this->uid."' AND ".$this->tbl."_compte.tiers=".$MyOpt["uid_banque"]." AND ".$this->tbl."_compte.facture='".$this->id."' ORDER BY date_valeur, id";
+		$query = "SELECT * FROM ".$this->tbl."_compte WHERE uid='".$this->uid."' AND rembfact='".$this->id."' ORDER BY date_valeur, id";
 		$sql->Query($query);
 		$total=0;
 		for($i=0; $i<$sql->rows; $i++)

@@ -143,10 +143,10 @@ class resa_class{
 		  { $this->dte_deb=$this->dte_fin; }
 
 		// Vérifie la date/heure de début
-		if ( (!preg_match("/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} [^$]*$/",$this->dte_deb)) && (!preg_match("/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [^$]*$/",$this->dte_deb)) )
-		  { return "La date de début n'a pas un format correct (jj/mm/aaaa).<br />"; }
+		if ( (!preg_match("/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} ?[^$]*$/",$this->dte_deb)) && (!preg_match("/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [^$]*$/",$this->dte_deb)) )
+		  { return "La date de début n'a pas un format correct (".$this->dte_deb."<>jj/mm/aaaa).<br />"; }
 		if (!preg_match("/^[^ ]* [0-9]{1,2}(:[0-9]{1,2}(:[0-9]{1,2})?)?$/",$this->dte_deb))
-		  { return "L'heure de début n'a pas un format correct (hh:mm:ss).<br />"; }
+		  { return "L'heure de début n'a pas un format correct (".$this->dte_deb."<>hh:mm:ss).<br />"; }
 
 		$hdeb=preg_replace('/^[^ ]* ([0-9]{1,2}):?([0-9]{1,2})?:?([0-9]{1,2})?$/','\\1', $this->dte_deb);
 		$mdeb=preg_replace('/^[^ ]* ([0-9]{1,2}):?([0-9]{1,2})?:?([0-9]{1,2})?$/','\\2', $this->dte_deb);
@@ -155,9 +155,9 @@ class resa_class{
 
 		// Vérifie la date/heure de fin
 		if ( (!preg_match("/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4} [^$]*$/",$this->dte_fin)) && (!preg_match("/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [^$]*$/",$this->dte_fin)) )
-		  { return "La date de fin n'a pas un format correct (jj/mm/aaaa).<br />"; }
+		  { return "La date de fin n'a pas un format correct (".$this->dte_fin."<>jj/mm/aaaa).<br />"; }
 		if (!preg_match("/^[^ ]* [0-9]{1,2}(:[0-9]{1,2}(:[0-9]{1,2})?)?$/",$this->dte_fin))
-		  { return "L'heure de fin n'a pas un format correct (hh:mm:ss).<br />"; }
+		  { return "L'heure de fin n'a pas un format correct (".$this->dte_fin."<>hh:mm:ss).<br />"; }
 
 		$hdeb=preg_replace('/^[^ ]* ([0-9]{1,2}):?([0-9]{1,2})?:?([0-9]{1,2})?$/','\\1', $this->dte_fin);
 		$mdeb=preg_replace('/^[^ ]* ([0-9]{1,2}):?([0-9]{1,2})?:?([0-9]{1,2})?$/','\\2', $this->dte_fin);
@@ -178,7 +178,7 @@ class resa_class{
 		  { return "Erreur avec l'id du debite"; }
 
 		if (!is_numeric($this->uid_instructeur))
-		  { return "Erreur avec l'id isntructeur"; }
+		  { return "Erreur avec l'id instructeur"; }
 
 		if (!is_numeric($this->uid_ressource))
 		  { return "Il faut sélectionner un avion.<br />"; }
@@ -318,6 +318,9 @@ class resa_class{
 		$query.="destination='$this->destination',";
 		$query.="nbpersonne='$this->nbpersonne',";
 		$query.="accept='$this->accept',";
+		$query.="reel='$this->reel',";
+		$query.="temps='$this->temps',";
+		$query.="tarif='$this->tarif',";
 		$query.="tpsestime='$this->tpsestime',";
 		$query.="tpsreel='$this->tpsreel',";
 		$query.="horadeb='$this->horadeb',";

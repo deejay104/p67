@@ -936,7 +936,7 @@ class user_class{
 
 	function CalcSoldeFacture(){
 		$sql=$this->sql;
-		$query = "SELECT SUM(".$this->tbl."_compte.montant) AS total FROM ".$this->tbl."_compte WHERE ".$this->tbl."_compte.uid='$this->idcpt' AND ".$this->tbl."_compte.facture='NOFAC'";
+		$query = "SELECT SUM(".$this->tbl."_compte.montant) AS total FROM ".$this->tbl."_compte WHERE uid='$this->idcpt' AND facture='NOFAC'";
 		$res=$sql->QueryRow($query);
 
 		$solde=((is_numeric($res["total"])) ? $res["total"] : "0");

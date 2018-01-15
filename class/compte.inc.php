@@ -23,6 +23,8 @@ class compte_class{
 		$this->commentaire="";
 		$this->date_valeur=date("Y-m-d H:i:s");
 		$this->compte="";
+		$this->facture="NOFAC";
+		$this->rembfact="";
 		$this->status="brouillon";
 		$this->uid_creat=$gl_uid;
 		$this->date_creat=now();
@@ -46,13 +48,16 @@ class compte_class{
 		$this->montant=$res["montant"];
 		$this->ventilation=$res["ventilation"];
 		$this->date_valeur=$res["date_valeur"];
+		$this->compte=$res["compte"];
+		$this->facture=$res["facture"];
+		$this->rembfact=$res["rembfact"];
 		$this->dte=date("Ym",strtotime($this->date_valeur));
 		$this->status=$res["status"];
 
 		$this->mvt=json_decode($this->ventilation,true);
 	}
 	
-	function generate($uid,$poste,$txt,$dte,$montant,$ventilation)
+	function generate($uid,$poste,$txt,$dte,$montant,$ventilation,$facture="NOFAC",$rembfact="")
 	{
 		global $MyOpt;
 
@@ -60,41 +65,107 @@ class compte_class{
 		$query="SELECT * FROM ".$this->tbl."_mouvement WHERE id='".$poste."'";
 		$res=$sql->QueryRow($query);
 
-		$deb=0;
+		$deb=array();
 		if ($res["debiteur"]=="B")
-		  { $deb=$MyOpt["uid_banque"]; }
+		  { $deb[0]=$MyOpt["uid_banque"]; }
 		else if ($res["debiteur"]=="C")
-		  { $deb=$MyOpt["uid_club"]; }
+		  { $deb[0]=$MyOpt["uid_club"]; }
 		else if ($res["debiteur"]>0)
-		  { $deb=$res["debiteur"]; }
+		  { $deb[0]=$res["debiteur"]; }
 		else if ($uid=="*")
-		  { $deb=0; }
+		{
+			$query = "SELECT id FROM ".$MyOpt["tbl"]."_utilisateurs WHERE actif='oui' AND virtuel='non'";
+			$sql->Query($query);
+			for($i=0; $i<$sql->rows; $i++)
+			{ 
+				$sql->GetRow($i);
+				$deb[$i]=$sql->data["id"];
+			}
+		}
 		else
-		  { $deb=$uid; }
-		$this->deb=$deb;
+		{
+			$deb[0]=$uid;
+		}
+		$this->deb=$deb[0];
 
-		$cre=0;
+		$cre=array();
 		if ($res["crediteur"]=="B")
-		  { $cre=$MyOpt["uid_banque"]; }
+		  { $cre[0]=$MyOpt["uid_banque"]; }
 		else if ($res["crediteur"]=="C")
-		  { $cre=$MyOpt["uid_club"]; }
+		  { $cre[0]=$MyOpt["uid_club"]; }
 		else if ($res["crediteur"]>0)
-		  { $cre=$res["crediteur"]; }
+		  { $cre[0]=$res["crediteur"]; }
 		else if ($uid=="*")
-		  { $cre=0; }
+		{
+			$query = "SELECT id FROM ".$MyOpt["tbl"]."_utilisateurs WHERE actif='oui' AND virtuel='non'";
+			$sql->Query($query);
+			for($i=0; $i<$sql->rows; $i++)
+			{ 
+				$sql->GetRow($i);
+				$cre[$i]=$sql->data["id"];
+			}
+		}
 		else
-		  { $cre=$uid; }
-		$this->cre=$cre;
+		{
+			$cre[0]=$uid;
+		}
+		$this->cre=$cre[0];
 
-		$this->mvt[1]["uid"]=$deb;
-		$this->mvt[1]["tiers"]=$cre;
-		$this->mvt[1]["montant"]=-$montant;
-		$this->mvt[1]["poste"]=$poste;
+		$i=1;
+		foreach ($deb as $d)
+		{
+		    foreach ($cre as $c)
+		    {
+				if (($c>0) && ($d>0) && ($dte!=""))
+				{
+					// Vérifie le montant
+					preg_match("/^(-?[0-9]*)\.?,?([0-9]*)?$/",$montant,$t);
+					$montant=$t[1].".".$t[2];
 
-		$this->mvt[2]["uid"]=$cre;
-		$this->mvt[2]["tiers"]=$deb;
-		$this->mvt[2]["montant"]=$montant;
-		$this->mvt[2]["poste"]=$poste;
+					// Parcours les ventilations
+					$tot["debiteur"]=$montant;
+					$tot["crediteur"]=$montant;
+					foreach ($ventilation["data"] as $i=>$v)
+					{
+						// Vérifie le montant
+						preg_match("/^(-?[0-9]*)\.?,?([0-9]*)?$/",$v["montant"],$t);
+						$m=$t[1].".".$t[2];
+						// Créé les lignes de mouvement
+						$this->mvt[$i]["uid"]=$v["tiers"];
+						$this->mvt[$i]["tiers"]=($ventilation["ventilation"]=="debiteur") ? $d : $c;
+						$this->mvt[$i]["montant"]=($ventilation["ventilation"]=="debiteur") ? -$m : $m;
+						$this->mvt[$i]["poste"]=$v["poste"];
+						$this->mvt[$i]["facture"]=$facture;
+						$this->mvt[$i]["rembfact"]=$rembfact;
+						$i=$i+1;
+						$tot[$ventilation["ventilation"]]=$tot[$ventilation["ventilation"]]-$m;
+					}
+					
+					// Complète s'il y a un reste
+					if ($tot["debiteur"]<>0)
+					{
+						$this->mvt[$i]["uid"]=$d;
+						$this->mvt[$i]["tiers"]=$c;
+						$this->mvt[$i]["montant"]=-$tot["debiteur"];
+						$this->mvt[$i]["poste"]=$poste;
+						$this->mvt[$i]["facture"]=$facture;
+						$this->mvt[$i]["rembfact"]=$rembfact;
+						$i=$i+1;
+					}
+
+					if ($tot["crediteur"]<>0)
+					{
+						$this->mvt[$i]["uid"]=$c;
+						$this->mvt[$i]["tiers"]=$d;
+						$this->mvt[$i]["montant"]=$tot["crediteur"];
+						$this->mvt[$i]["poste"]=$poste;
+						$this->mvt[$i]["facture"]=$facture;
+						$this->mvt[$i]["rembfact"]=$rembfact;
+						$i=$i+1;
+					}
+				}
+			}
+		}
 		
 		$this->poste=$poste;
 		$this->commentaire=$txt;
@@ -109,12 +180,12 @@ class compte_class{
 		$sql=$this->sql;
 		if ($this->id==0)
 		{
-			$query="INSERT INTO ".$this->tbl."_comptetemp SET deb='".$this->deb."', cre='".$this->cre."', ventilation='".$this->ventilation."',montant='".$this->montant."', poste='".$this->poste."', commentaire='".addslashes($this->commentaire)."', date_valeur='".$this->date_valeur."', compte='".$this->compte."', status='".$this->status."', uid_creat='".$this->myuid."',date_creat='".now()."'";
+			$query="INSERT INTO ".$this->tbl."_comptetemp SET deb='".$this->deb."', cre='".$this->cre."', ventilation='".$this->ventilation."',montant='".$this->montant."', poste='".$this->poste."', commentaire='".addslashes($this->commentaire)."', date_valeur='".$this->date_valeur."', compte='".$this->compte."', facture='".$this->facture."', rembfact='".$this->rembfact."', status='".$this->status."', uid_creat='".$this->myuid."',date_creat='".now()."'";
 			$this->id=$sql->Insert($query);
 		}
 		else
 		{
-			$query="UPDATE ".$this->tbl."_comptetemp SET deb='".$this->deb."', cre='".$this->cre."', ventilation='".$this->ventilation."',montant='".$this->montant."', poste='".$this->poste."', commentaire='".addslashes($this->commentaire)."', date_valeur='".$this->date_valeur."', compte='".$this->compte."', status='".$this->status."', uid_creat='".$this->myuid."',date_creat='".now()."' WHERE id='".$this->id."'";
+			$query="UPDATE ".$this->tbl."_comptetemp SET deb='".$this->deb."', cre='".$this->cre."', ventilation='".$this->ventilation."',montant='".$this->montant."', poste='".$this->poste."', commentaire='".addslashes($this->commentaire)."', date_valeur='".$this->date_valeur."', compte='".$this->compte."', facture='".$this->facture."', rembfact='".$this->rembfact."', status='".$this->status."', uid_creat='".$this->myuid."',date_creat='".now()."' WHERE id='".$this->id."'";
 			$sql->Update($query);
 		}
 	}
@@ -145,7 +216,8 @@ class compte_class{
 			$query.="montant='".$m["montant"]."', ";
 			$query.="mouvement='".addslashes($res["description"])."', ";
 			$query.="commentaire='".addslashes($this->commentaire)."', ";
-			$query.="facture='".(($this->facture=="") ? "NOFAC" : "")."', ";
+			$query.="facture='".$m["facture"]."', ";
+			$query.="rembfact='".$m["rembfact"]."', ";
 			$query.="date_valeur='".$this->date_valeur."', ";
 			$query.="dte='".date("Ym",strtotime($this->date_valeur))."', ";
 			$query.="compte='".$this->compte."', ";

@@ -95,7 +95,7 @@
 			}
 		  	$doc = new document_class(0,$sql,"avatar");
 		  	$doc->droit="ALL";
-		  	$doc->Save($id,$_FILES["form_photo"]);
+		  	$msg_erreur.= $doc->Save($id,$_FILES["form_photo"]);
 			$doc->Resize(200,240);
 
 			//$msg_erreur.=$usr->SavePicture($form_photo["name"],$form_photo["tmp_name"],$form_photo["type"]);
