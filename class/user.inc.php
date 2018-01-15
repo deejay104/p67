@@ -410,12 +410,12 @@ class user_class{
  		  	  { $mycond=false; }
  		  }
 		else if ($key=="donnees")
-		  {
-				if (GetDroit("ModifUserDonnees"))
+		{
+			if (GetDroit("ModifUserDonnees"))
  		  	  { $mycond=true; }
-				else
+			else
  		  	  { $mycond=false; }
- 		  }
+ 		}
 		else if ($key=="decouvert")
 		  {
 			if (GetDroit("ModifUserDecouvert"))
@@ -1292,7 +1292,7 @@ class user_class{
 	function LoadDonneesComp()
 	{
 		$sql=$this->sql;
-		$query = "SELECT def.id,def.nom,donnees.valeur FROM ".$this->tbl."_utildonneesdef AS def LEFT JOIN ".$this->tbl."_utildonnees AS donnees ON donnees.did=def.id WHERE donnees.uid='$this->uid' OR donnees.uid IS NULL ORDER BY ordre, nom";
+		$query = "SELECT def.id,def.nom,donnees.valeur FROM ".$this->tbl."_utildonneesdef AS def LEFT JOIN ".$this->tbl."_utildonnees AS donnees ON donnees.did=def.id WHERE def.actif='oui' AND (donnees.uid='$this->uid' OR donnees.uid IS NULL) ORDER BY ordre, nom";
 		$sql->Query($query);
 		for($i=0; $i<$sql->rows; $i++)
 		{ 

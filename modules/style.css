@@ -12,7 +12,7 @@ a:active,a:hover {outline:0}
 
 body { margin:0; font: 16px/1.85em Arial, Helvetice Neue, sans-serif; color: #000000; font-weight: 300; font-style: normal; -webkit-font-smoothing: antialiased; /* Fix for webkit rendering */ -webkit-text-size-adjust: 100%; }
 
-a, a:hover, a:focus { text-decoration: none; -webkit-transition: all 150ms ease-in; -moz-transition: all 150ms ease-in; -o-transition: all 150ms ease-in; transition: all 150ms ease-in; }
+a, a:hover, a:focus { text-decoration: none; -webkit-transition: all 50ms ease-in; -moz-transition: all 50ms ease-in; -o-transition: all 50ms ease-in; transition: all 50ms ease-in; }
 a:link { color: black; }
 a:visited { color: black; }
 a:hover { color: #FF6600; }
@@ -29,7 +29,7 @@ h6 { font-size:100%; }
 *, *:before, *:after { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
 .main-menu, .responsive-menu ul, .social-member, .progess-bars, .first-footer .social-footer ul { padding: 0; margin: 0; list-style: none; }
-.visible-xs,.visible-sm,.visible-md,.visible-lg {display:none!important}
+.visible-xs,.visible-sm,.visible-md,.visible-lg { display:none!important; }
 
 
 input {	border: 1px solid #888888; padding: 2px 2px 2px 2px; height: 24px; -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: inherit; font-family: inherit; }
@@ -103,9 +103,10 @@ input[type=checkbox]:checked:after { content: "x"; }
 .icone { padding-left:30px; display: inline-block; }
 .pagetitle { padding-left:10px; display: inline-block; text-transform: uppercase; font-size: 25px; color: white; }
 .pagetitle img { vertical-align:middle; margin-right: 5px; }
-.pagetitle a { height:36px; background-color: #1799c3; font-size: 14px; text-transform: none; padding: 10px; border-radius: 5px; margin: 0px; }
-.pagetitle a:hover { background-color: #585e61; border-radius: 8px;  }
+.pagetitle a { height:36px; border: 1px solid #1799c3; background-color: #1799c3; font-size: 14px; text-transform: none; padding: 10px; border-radius: 5px; margin: 0px; }
+.pagetitle a:hover { background-color: #38a9e3; border-radius: 8px; border: 1px solid #1799c3; color: #ffffff;  }
 
+.pageTitleSelected { background-color: #38a9e3!important; border: 1px solid #076983!important; color: #ffffff!important; box-shadow: 2px 2px #1799c3; }
 
 /* **** Corps de la page **** */
 .main { /* display of the text area */
@@ -220,7 +221,17 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 .imgDelete img:hover { background-color: #1799c3; background-color: #dddddd; border-radius: 2px; border: 1px solid #013366; }
 
 /* **** Actualités **** */
-.cadreinfos { left:60%; width:40%; float:right; }
+
+.cadreinfos { display: none; left:60%; width:40%; float:right; }
+#actualites { width: 100%; float:left;  }
+@media (min-width: 800px) and (min-device-width: 800px) {
+	/* **** Si width>800px */
+	.cadreinfos { display: block; }
+    #actualites { width: 60%; float:left;  }
+}
+@media print {
+}
+
 .encadreInfos { min-width: 300px; border: 1px solid #013366; border-radius: 5px; padding: 0px 0px 10px 0px; margin-bottom:10px; }
 .encadreInfos label { display: inline-block; width: 60%; text-align: left; vertical-align: top; padding-left: 20px; }
 .encadreInfos span { display: inline-block; width: 40%; text-align: left; vertical-align: top; }
@@ -229,13 +240,14 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 
 .encadreInfos input[type=text] { width: 100%; min-width: 150px; margin-top:4px; font-size:14px; }
 
-#actualites { width: 60%; float:left;  }
 
-#actualitesNouveau input[type=text] { width: 90%; min-width: 270px; margin-top:4px;  font-size:14px; }
+#actualitesNouveau { margin-left:72px;  margin-right:20px; width: 80%; }
+
+#actualitesNouveau input[type=text] { width: 100%; min-width: 270px; margin-top:4px;  font-size:14px; }
 
 #actualitesNouveau textarea {
     min-width: 270px;
-    width: 90%;
+    width: 100%;
     height: 20px;
     min-height: 16px;
     overflow-y: hidden; /* fixes scrollbar flash - kudos to @brettjonesdev */
@@ -244,22 +256,24 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
     font-size:14px;
 }
 
-#actualitesNouveau p { width: 90%; padding-left:5px; min-width: 100px;  text-align: right; }
+#actualitesNouveau p { width: 100%; padding-left:5px; text-align: right; }
 #actualitesNouveau input { height:30px; border: 1px solid #888888; line-height: 16px; padding: 4px 2px 4px 2px; }
 
-#actualitesMessage { width: 90%; border: 1px solid #013366; min-width: 300px;  margin-bottom:10px; border-radius: 4px;  }
+
+#actualitesBloc { display: inline-block; margin-right:20px; width: 100%; margin-bottom:5px; }
+#actualitesMessage { display: inline-block; float: left; width: 80%; border: 1px solid #013366; min-width: 350px; border-radius: 4px;  }
 
 .actualitesTitre { display: inline-block; background-color: #75b7e5; color: #013366; font-size:18px; border-radius: 4px 4px 0px 0px; width: 100%; }
 
-.actualitesPhoto { float: left; margin-left:10px; margin-top:5px; }
+.actualitesPhoto { width: 72px; float: left; }
 .actualitesPhoto img { border-radius: 32px; width:64px; height:64px; }
 
 .actualitesTitreMsg { display: inline-block; float: left; }
-.actualitesTitreMsg p { margin:0px; padding:0px 0px; line-height:16px; padding-left:10px; padding-top:10px; font-size:16px; }
+.actualitesTitreMsg p { font-weight: bold; margin:0px; padding:0px 0px; line-height:16px; padding-left:10px; padding-top:10px; font-size:16px; }
 .actualitesTitreMsg span { margin:0px; padding:0px; font-size:10px; padding-left:30px; }
 
 .actualitesIcones { display: inline-block; position:relative; top:10px; float:right; padding-right:5px; }
-.actualitesIcones a { display: inline-block; height:34px; width:34px; padding: 4px; border-radius: 4px; margin: 0px; border: 1px solid #75b7e5; }
+.actualitesIcones a { display: inline-block; height:34px; width:34px; padding: 4px; border-radius: 4px; margin: 0px; background-color: #75b7e5; border: 1px solid #75b7e5; }
 .actualitesIcones a:hover { background-color: #1799c3; border: 1px solid #013366; }
 .actualitesIcones img { vertical-align:middle; }
 

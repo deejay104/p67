@@ -476,7 +476,7 @@ function DebiteVol($idvol,$temps,$idavion,$uid_pilote,$uid_instructeur,$tarif,$p
 		$inst = new user_class($uid_instructeur,$sql);
 	
 		$mvt = new compte_class(0,$sql);
-		$mvt->Generate($inst->idcpt,$ress->poste,"Remb. vol d'instruction de $temps min (".$ress->Aff("immatriculation","val")."/$tarif)",date("Y-m-d"),-$pi,array());
+		$mvt->Generate($inst->idcpt,$ress->poste,"Remb. vol d'instruction de $temps min (".$ress->Aff("immatriculation","val")."/$tarif)",$dte,-$pi,array());
 		$mvt->Save();
 		$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
 
