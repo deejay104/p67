@@ -64,6 +64,7 @@ class compte_class{
 		$sql=$this->sql;
 		$query="SELECT * FROM ".$this->tbl."_mouvement WHERE id='".$poste."'";
 		$res=$sql->QueryRow($query);
+		$compte=$res["compte"];
 
 		$deb=array();
 		if ($res["debiteur"]=="B")
@@ -169,6 +170,7 @@ class compte_class{
 		
 		$this->poste=$poste;
 		$this->commentaire=$txt;
+		$this->compte=$compte;
 		$this->montant=$montant;
 		$this->date_valeur=$dte;
 		$this->dte=date("Ym",strtotime($dte));
