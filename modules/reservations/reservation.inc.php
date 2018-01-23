@@ -361,8 +361,23 @@
 		$tmpl_x->parse("corps.aff_reservation.aff_instructeur.lst_instructeur");
 	}
 	$tmpl_x->assign("aff_nom_instructeur", $txt);
+	$tmpl_x->assign("form_uid_instructeur", $resa["resa"]->uid_instructeur);
+
+	if ($ok==2)
+	{
+		$tmpl_x->assign("deb", strtotime(date2sql($form_dte_deb)));
+		$tmpl_x->assign("fin", strtotime(date2sql($form_dte_fin)));
+	}
+	else
+	{
+		$tmpl_x->assign("deb", strtotime(date2sql($resa["resa"]->dte_deb)));
+		$tmpl_x->assign("fin", strtotime(date2sql($resa["resa"]->dte_fin)));
+	}
+
 	$tmpl_x->parse("corps.aff_reservation.aff_instructeur");
 
+	
+	
 	// Horaires
 	if ($ok==2)
 	  {
@@ -372,6 +387,7 @@
 		$tmpl_x->assign("form_dte_fin", $form_dte_fin);
 		$tmpl_x->assign("form_dte_finsql", date2sql($form_dte_fin));
 		$tmpl_x->assign("form_hor_fin", $form_hor_fin);
+		
 	  }
 	else
 	  {

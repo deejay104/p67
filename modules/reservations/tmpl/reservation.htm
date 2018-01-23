@@ -21,7 +21,22 @@
 			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
 			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
 			prevText: "Précédent",
-			nextText: "Suivant"
+			nextText: "Suivant",
+			onSelect: function(dateText) {
+				var mid=document.getElementById("instructeur").value;
+				var deb_j=document.getElementById("form_dte_deb").value;
+				var deb_h=document.getElementById("form_hor_deb").value;
+				var tdeb=deb_j.split("/");
+				console.log("deb="+tdeb[2]+"-"+tdeb[1]+"-"+tdeb[0]+" "+deb_h);
+				var deb=new Date(tdeb[2]+"-"+tdeb[1]+"-"+tdeb[0]+" "+deb_h);
+				var fin_j=document.getElementById("form_dte_fin").value;
+				var fin_h=document.getElementById("form_hor_fin").value;
+				var tfin=fin_j.split("/");
+				console.log("fin="+tfin[2]+"-"+tfin[1]+"-"+tfin[0]+" "+fin_h);
+				var fin=new Date(tfin[2]+"-"+tfin[1]+"-"+tfin[0]+" "+fin_h);
+
+				document.getElementById("imgdispo").src="api.php?mod=membres&rub=checkdispo&mid="+mid+"&deb="+Math.round(deb.getTime()/1000)+"&fin="+Math.round(fin.getTime()/1000+45*60);
+			}
 		});
 
 		$("#form_dte_fin").datepicker({
@@ -55,8 +70,30 @@
     });
   });
 
-  </script>
+function reloadImg() {
+alert("ok");
+}
+  
+</script>
 
+<script type="text/javascript">
+
+function reloadImg2() {
+	var mid=document.getElementById("instructeur").value;
+	var deb_j=document.getElementById("form_dte_deb").value;
+	var deb_h=document.getElementById("form_hor_deb").value;
+	console.log("deb="+deb_j+" "+deb_h);
+	var deb=new Date(deb_j+" "+deb_h);
+
+	var fin_j=document.getElementById("form_dte_fin").value;
+	var fin_h=document.getElementById("form_hor_fin").value;
+	console.log("fin="+fin_j+" "+fin_h);
+	var fin=new Date(fin_j+" "+fin_h);
+
+	document.getElementById("imgdispo").src="api.php?mod=membres&rub=checkdispo&mid="+mid&deb="+Math.round(deb.getTime()/1000)+"&fin="+Math.round(fin.getTime()/1000+45*60);
+}
+	
+</script>
 
 
 <FORM name="reservation" method="post" action="reservations.php" enctype="multipart/form-data">
@@ -123,14 +160,15 @@
 		 	</p>
 
 	<!-- BEGIN: aff_instructeur -->
-		  <p>
-				<label for="instructeur">Instructeur</label>
-			  <SELECT id="instructeur" name="form_uid_instructeur" OnChange="reservation.submit();">
-				<!-- BEGIN: lst_instructeur -->
-				<OPTION value="{uid_instructeur}" {chk_instructeur}>{nom_instructeur}</OPTION>
-				<!-- END: lst_instructeur -->
-			  </SELECT>
-			</p>
+		<p>
+			<label for="instructeur">Instructeur</label>
+			<SELECT id="instructeur" name="form_uid_instructeur" OnChange="reservation.submit();">
+			<!-- BEGIN: lst_instructeur -->
+			<OPTION value="{uid_instructeur}" {chk_instructeur}>{nom_instructeur}</OPTION>
+			<!-- END: lst_instructeur -->
+			</SELECT>
+			<img id="imgdispo" src="api.php?mod=membres&rub=checkdispo&mid={form_uid_instructeur}&deb={deb}&fin={fin}">
+		</p>
 	<!-- END: aff_instructeur -->
 		  <p>
 				<label for="destination" title="Préciser la destination ou LOCAL pour un vol local.">Destination</label>
@@ -154,7 +192,7 @@
 			<p>&nbsp;</p>
 			<p>
 				<label for="form_dte_deb">Du</label>
-		  	<INPUT id="form_dte_deb" name="form_dte_deb" value="{form_dte_deb}" size="10"> à <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" size=8> <FONT color=red>{msg_dtedeb}</FONT>
+		  	<INPUT id="form_dte_deb" name="form_dte_deb" value="{form_dte_deb}" size="10" > à <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" size=8> <FONT color=red>{msg_dtedeb}</FONT>
 		  </p>
 		  <p>
 				<label for="form_dte_fin">Au</label>

@@ -259,8 +259,10 @@ class resa_class{
 
 
 		// Vérifie si l'instructeur est disponible
+		$msg_err_t="";
+		$okresa=0;
 		if ($this->uid_instructeur>0)
-		  {
+		{
 			$query ="SELECT cal.*,usr.nom AS nom ,usr.prenom AS prenom,usr.initiales,ins.nom AS insnom,ins.prenom AS insprenom,avion.immatriculation ";
 			$query.="FROM ".$this->tbl."_calendrier AS cal ";
 			$query.="LEFT JOIN ".$this->tbl."_utilisateurs AS usr ON cal.uid_pilote=usr.id ";
@@ -273,21 +275,33 @@ class resa_class{
 			$query.="AND cal.id<>'$this->id' ORDER BY dte_deb";
 
 			$sql->Query($query);
-			$msg_err_t="<U>L'instructeur a déjà une réservation à cette heure là</U> :<BR>";
-			$okresa=0;
 			for($i=0; $i<$sql->rows; $i++)
-			  { 
+			{ 
 				$sql->GetRow($i);
 				$msg_err_t.="&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;".$sql->data["immatriculation"]." - ".ucwords($sql->data["prenom"])." ".strtoupper($sql->data["nom"])." ";
 				if ($sql->data["insnom"]!="")
-					{
-						$msg_err_t.="avec ".ucwords($sql->data["insprenom"])." ".strtoupper($sql->data["insnom"])." ";
-					}
+				{
+					$msg_err_t.="avec ".ucwords($sql->data["insprenom"])." ".strtoupper($sql->data["insnom"])." ";
+				}
 				$msg_err_t.="de ".sql2date($sql->data["dte_deb"])." à ".sql2date($sql->data["dte_fin"]).".</ br>";
 	
 				$okresa=1;
-			  }
-		  }
+			}
+			if ($okresa==1)
+			{
+				$msg_err_t="<U>L'instructeur a déjà une réservation à cette heure là</U> :<BR>".$msg_err_t;
+			}
+		}
+			  
+		if ($this->uid_instructeur>0)
+		{
+			$usr_inst=new user_class($this->uid_instructeur,$sql,false,true);
+			if (!$usr_inst->CheckDisponibilite($this->dte_deb,$this->dte_fin))
+			{
+				$msg_err_t.="<U>L'instructeur n'est pas disponible</U><BR>";
+				$okresa=1;
+			}
+		}
 
 		// Traite les erreurs
 		

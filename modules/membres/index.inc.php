@@ -84,7 +84,7 @@
 		if (GetDroit("CreeUser"))
 		  { $tmpl_x->parse("infos.ajout"); }
 
-		$lstusr=ListActiveUsers($sql,"std");
+		$lstusr=ListActiveUsers($sql,"std","",($aff=="virtuel") ? "oui" : "non");
 
 		if ($theme=="phone")
 		{
@@ -146,6 +146,20 @@
 			$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 		  }
 	}
+	
+	if (GetDroit("ADM"))
+	{
+		if ($aff=="virtuel")
+		{
+			$tmpl_x->assign("aff_virtuel","class='pageTitleSelected'");
+		}
+		else
+		{
+			$tmpl_x->assign("aff_normal","class='pageTitleSelected'");
+		}
+		$tmpl_x->parse("infos.aff_virtuel");
+	}
+		
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

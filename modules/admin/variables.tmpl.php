@@ -68,9 +68,17 @@ $MyOptHelp["uid_banque"]="ID du compte Banque";
 $MyOptTmpl["uid_club"]=47;
 $MyOptHelp["uid_club"]="ID du compte club";
 
+// Uid Banque
+$MyOptTmpl["uid_system"]=211;
+$MyOptHelp["uid_system"]="ID du compte système";
+
 // UID Bapteme
-$MyOptTmpl["uid_bapteme"]="53";
+$MyOptTmpl["uid_bapteme"]=53;
 $MyOptHelp["uid_bapteme"]="ID du compte bapteme";
+
+// Compte par défaut pour le tableau de bord
+$MyOptTmpl["uid_tableaubord"]=$MyOptTmpl["uid_club"];
+$MyOptHelp["uid_tableaubord"]="Compte par défaut pour le tableau de bord";
 
 // ID poste pour facturation manifestation
 $MyOptTmpl["id_PosteManip"]=0;
@@ -79,10 +87,6 @@ $MyOptHelp["id_PosteManip"]="ID du poste pour facturation manifestation";
 // ID poste pour factures
 $MyOptTmpl["id_PosteFacture"]=0;
 $MyOptHelp["id_PosteFacture"]="ID du poste pour le crédit des factures";
-
-// Compte par défaut pour le tableau de bord
-$MyOptTmpl["uid_tableaubord"]=$MyOptTmpl["uid_club"];
-$MyOptHelp["uid_tableaubord"]="Compte par défaut pour le tableau de bord";
 
 // Compense le compte CLUB lors du remboursement d'une facture
 $MyOptTmpl["CompenseClub"]=0;

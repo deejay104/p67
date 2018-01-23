@@ -79,6 +79,7 @@ class user_class{
 		$this->data["dte_login"]="";
 		$this->data["poids"]="75";
 		$this->data["notification"]="oui";
+		$this->data["disponibilite"]="dispo";
 		$this->data["aff_rapide"]="n";
 		$this->data["aff_mois"]="";
 		$this->data["aff_jour"]="";
@@ -150,7 +151,13 @@ class user_class{
 	
 			if ($setdata)
 			{ 
-				$this->data=$res;
+				foreach($res as $k=>$v)
+				{
+					if (!is_numeric($k))
+					{
+						$this->data[$k]=$v;
+					}
+				}
 
 				// Charge les droits
 				$query = "SELECT groupe FROM ".$this->tbl."_droits WHERE uid='$uid'";
@@ -253,23 +260,22 @@ class user_class{
 
 
 		$query = "SELECT id FROM ".$this->tbl."_utilisateurs WHERE (pere='".$this->uid."' OR mere='".$this->uid."') AND actif='oui'";
-			$sql->Query($query);
+		$sql->Query($query);
 
-			$this->data["enfant"]=array();
-			for($i=0; $i<$sql->rows; $i++)
-			{ 
-				$sql->GetRow($i);
-				$this->data["enfant"][$i]["id"]=$sql->data["id"];
-			}
+		$this->data["enfant"]=array();
+		for($i=0; $i<$sql->rows; $i++)
+		{ 
+			$sql->GetRow($i);
+			$this->data["enfant"][$i]["id"]=$sql->data["id"];
+		}
 
-			if (is_array($this->data["enfant"]))
+		if (is_array($this->data["enfant"]))
+		{
+			foreach($this->data["enfant"] as $i=>$val)
 			{
-				foreach($this->data["enfant"] as $i=>$val)
-				{
-					$this->data["enfant"][$i]["usr"]=new user_class($val["id"],$sql,false,false);
-				}
+				$this->data["enfant"][$i]["usr"]=new user_class($val["id"],$sql,false,false);
 			}
-		  // }
+		}
 		  
 	}
 
@@ -285,7 +291,38 @@ class user_class{
 		return true;
 	}
 
+	function CheckDisponibilite($deb,$fin)
+	{
+		$this->load($this->uid,true,$this->me);
+		if ($this->data["disponibilite"]=="dispo")
+		{
+			$nb=false;
+			$zero=true;
+		}
+		else
+		{
+			$nb=true;
+			$zero=false;
+		}
+		
+		$query = "SELECT * FROM ".$this->tbl."_disponibilite AS dispo ";
+		$query.= "WHERE uid='".$this->uid."' ";
+		$query.= "AND dte_deb<='".$fin."' ";
+		$query.= "AND dte_fin>='".$deb."' ";
 
+		$sql=$this->sql;
+		$sql->Query($query);
+
+		if ($sql->rows>0)
+		{ 
+			return $nb;
+		}
+		else
+		{
+			return $zero;
+		}
+		
+	}
 
 	# Show user informations
 	function aff($key,$typeaff="html",$formname="form_info")
@@ -351,9 +388,7 @@ class user_class{
 	  	  { $ret=(($txt=="N") ? "Non" : "Oui" ); }
 		else if ($key=="password")
 		  { $ret="******"; }
-		else if ($key=="virtuel")
-		  { $ret="******"; }
-		else if ($key=="uid_maj")
+			else if ($key=="uid_maj")
 		  { $ret="******"; }
 		else
 		  { $ret=$txt; }
@@ -518,6 +553,20 @@ class user_class{
 		  	  	$ret ="<SELECT id='".$key."'  name=\"".$formname."[$key]\">";
 		  	  	$ret.="<OPTION value=\"oui\" ".(($txt=="oui")?"selected":"").">Oui</OPTION>";
 		  	  	$ret.="<OPTION value=\"non\" ".(($txt=="non")?"selected":"").">Non</OPTION>";
+		  	  	$ret.="</SELECT>";
+		  	  }
+			else if ($key=="virtuel")
+		  	  {
+		  	  	$ret ="<SELECT id='".$key."'  name=\"".$formname."[$key]\">";
+		  	  	$ret.="<OPTION value=\"oui\" ".(($txt=="oui")?"selected":"").">Oui</OPTION>";
+		  	  	$ret.="<OPTION value=\"non\" ".(($txt=="non")?"selected":"").">Non</OPTION>";
+		  	  	$ret.="</SELECT>";
+		  	  }
+			else if ($key=="disponibilite")
+		  	  {
+		  	  	$ret ="<SELECT id='".$key."'  name=\"".$formname."[$key]\">";
+		  	  	$ret.="<OPTION value=\"dispo\" ".(($txt=="dispo")?"selected":"").">Disponible</OPTION>";
+		  	  	$ret.="<OPTION value=\"occupe\" ".(($txt=="occupe")?"selected":"").">Occupé</OPTION>";
 		  	  	$ret.="</SELECT>";
 		  	  }
  			else if ($key=="lache")
@@ -1041,10 +1090,6 @@ class user_class{
 		  }
 		else if ($k=="prenom")
 		  {	
-		  	if ($v=="")
-		  	  {
-		  	  	return "Le prénom est vide.<br />";
-			  }
 			$vv=preg_replace("/ /","-",$v);
 			$vv=strtolower($vv);
 		  }

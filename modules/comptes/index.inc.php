@@ -33,6 +33,7 @@
 // ---- Initialise les variables
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
+	require_once ("class/compte.inc.php");
 
 // ---- Liste des comptes
 	if (!isset($id))
@@ -126,17 +127,24 @@
 	$tabTitre["line"]["width"]=1;
 	$tabTitre["montant"]["aff"]="&nbsp;&nbsp;Montant";
 	$tabTitre["montant"]["width"]=100;
+	if (GetDroit("AfficheSignatureCompte"))
+	{
+		$tabTitre["signature"]["aff"]="";
+		$tabTitre["signature"]["width"]=20;
+	}
 	if ($trie=="")
-	  {
+	{
 		$tabTitre["solde"]["aff"]="&nbsp;&nbsp;Solde Cpt";
 		$tabTitre["solde"]["width"]=100;
-	  }
+	}
 	if ($theme!="phone")
-	  {
+	{
 		$tabTitre["releve"]["aff"]="&nbsp;";
 		$tabTitre["releve"]["width"]=40;
-	  }
+	}
+	
 
+	
 	$tabValeur=array();
 	$tl=50;
 
@@ -145,7 +153,7 @@
 	
 	
 	// Calcul le nombre ligne totale
-	$query = "SELECT COUNT(*) AS nb FROM p67_compte WHERE p67_compte.uid=$id";
+	$query = "SELECT COUNT(*) AS nb FROM ".$MyOpt["tbl"]."_compte WHERE p67_compte.uid=$id";
 	$res=$sql->QueryRow($query);
 	$totligne=$res["nb"];
 
@@ -157,13 +165,15 @@
 	$res=$sql->QueryRow($query);
 	$solde=$res["solde"];
 	
-	$query = "SELECT ".$MyOpt["tbl"]."_compte.* FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid=$id ORDER BY $order ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT $ts,$tl";
+	// Affiche les lignes
+	$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid=$id ORDER BY $order ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT $ts,$tl";
 	$sql->Query($query);
 	$col=50;
 	for($i=0; $i<$sql->rows; $i++)
-	  { 
+	{ 
 		$sql->GetRow($i);
 
+		$tabValeur[$i]["lid"]["val"]=$sql->data["id"];
 		$tabValeur[$i]["date_valeur"]["val"]=CompleteTxt($i,"20","0");
 		$tabValeur[$i]["date_valeur"]["aff"]=date("d/m/Y",strtotime($sql->data["date_valeur"]));
 		$tabValeur[$i]["mid"]["val"]=$sql->data["mid"];
@@ -185,17 +195,26 @@
 		  }
 		$tabValeur[$i]["releve"]["val"]=$sql->data["pointe"];
 
-	  }
+	}
 
 	if (GetDroit("AfficheDetailMouvement"))
 	{
 		foreach($tabValeur as $i=>$d)
 		{
-			$tabValeur[$i]["date_valeur"]["aff"]="<a href='#' title='Créé le ".sql2date($tabValeur[$i]["date_creat"]["val"])."'>".$tabValeur[$i]["date_valeur"]["aff"]."</a>";
-			$tabValeur[$i]["mouvement"]["aff"]="<a href='#' title='".AfficheDetailMouvement($id,$d["mid"]["val"],$sql)."'>".$tabValeur[$i]["mouvement"]["val"]."</a>";
+			$tabValeur[$i]["date_valeur"]["aff"]="<a title='Créé le ".sql2date($tabValeur[$i]["date_creat"]["val"])."'>".$tabValeur[$i]["date_valeur"]["aff"]."</a>";
+			$tabValeur[$i]["mouvement"]["aff"]="<a title='".AfficheDetailMouvement($id,$d["mid"]["val"])."'>".$tabValeur[$i]["mouvement"]["val"]."</a>";
 		}
 	}
-	  
+
+	if (GetDroit("AfficheSignatureCompte"))
+	{
+		foreach($tabValeur as $i=>$d)
+		{
+			$tabValeur[$i]["signature"]["val"]=AfficheSignatureCompte($d[lid]["val"]);
+			$tabValeur[$i]["signature"]["aff"]=($tabValeur[$i]["signature"]["val"]=="ok") ? "<a title='Signature de la transaction confirmée'><img src='images/icn16_signed.png' /></a>" : "<a title='Transaction potentiellement altérée'><img src='images/icn16_warning.png' /></a>";
+		}
+	}
+	
 	if ($order=="") { $order="date"; }
 	$tmpl_x->assign("aff_tableau",AfficheTableauFiltre($tabValeur,$tabTitre,$order,$trie,$url="id=$id",$ts,$tl,$totligne));
 

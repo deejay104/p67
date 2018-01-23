@@ -1067,25 +1067,5 @@ function GetMouvementID($sql)
 	return $mid;
 }
 
-// Affiche le détail de toutes les lignes d'un mouvement
-function AfficheDetailMouvement($id,$mid,$sql)
-{ global $MyOpt;
-	$txt="Mouvement : ".$mid."\n";
-	$query = "SELECT ".$MyOpt["tbl"]."_compte.* FROM ".$MyOpt["tbl"]."_compte WHERE mid=$mid AND mid>0 ORDER BY uid";
-	$sql->Query($query);
-	$t=array();
-	for($i=0; $i<$sql->rows; $i++)
-	{ 
-		$sql->GetRow($i);
-		$t[$i]=$sql->data;
-	}
-	foreach ($t as $i=>$d)
-	{
-		$usrc = new user_class($d["uid"],$sql);
-		$usrd = new user_class($d["tiers"],$sql);
 
-		$txt.=(($d["uid"]==$id) ? "* " : "").$usrc->fullname." (".$usrd->fullname.") : ".$d["mouvement"]." (".AffMontant($d["montant"]).")\n";
-	}
-	return $txt;
-}
 ?>

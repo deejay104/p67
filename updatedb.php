@@ -35,9 +35,18 @@
 
 // ---- Charge les variables
 	require ("version.txt");
-	require ("config/config.inc.php");
 	if (file_exists("config/variables.inc.php"))
 	{
+		require ("config/config.inc.php");
+	}
+	else
+	{
+		echo "Le fichier de configuration doit être rempli";
+		exit;
+	}
+	if (file_exists("config/variables.inc.php"))
+	{
+		
 		require ("config/variables.inc.php");
 	}
 
@@ -97,19 +106,19 @@
 // ---- Connexion à la base de données
 	$mysql   = new mysql_class($mysqluser, $mysqlpassword, $hostname, $db, $port);
 
-	$query="CREATE TABLE IF NOT EXISTS `p67_config` (`param` VARCHAR( 20 ) NOT NULL ,`value` VARCHAR( 20 ) NOT NULL) ENGINE = MYISAM ";
+	$query="CREATE TABLE IF NOT EXISTS `".$MyOpt["tbl"]."_config` (`param` VARCHAR( 20 ) NOT NULL ,`value` VARCHAR( 20 ) NOT NULL) ENGINE = MYISAM ";
 	$res = $mysql->Update($query);
 
-	$query="SELECT value FROM p67_config WHERE param='dbversion'";
+	$query="SELECT value FROM ".$MyOpt["tbl"]."_config WHERE param='dbversion'";
 	$res=$mysql->QueryRow($query);
 	$ver=$res["value"];
 
 	if ($ver=="")
-	  {
+	{
 	  	$ver="000";
-		$query="INSERT INTO p67_config (param,value) VALUES ('dbversion','$ver')";
+		$query="INSERT INTO ".$MyOpt["tbl"]."_config (param,value) VALUES ('dbversion','$ver')";
 		$mysql->Insert($query);
-	  }
+	}
 
 	echo "Version actuelle de la base de données : $ver <br />";
 
@@ -909,6 +918,7 @@
 		$sql[]="UPDATE `".$MyOpt["tbl"]."_compte` SET facture='NOFAC' WHERE tiers=".$MyOpt["uid_banque"]." AND rembfact<>''";
 		$sql[]="UPDATE `".$MyOpt["tbl"]."_compte` SET facture='NOFAC' WHERE facture=''";
 
+		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_comptetemp` ADD `facture` VARCHAR(10) NOT NULL AFTER `compte`;";
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_comptetemp` ADD `rembfact` VARCHAR(10) NOT NULL AFTER `facture`;";
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_compte` ADD INDEX(`facture`);";
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_compte` ADD INDEX(`rembfact`);";
@@ -922,6 +932,50 @@
 		$sql=array();
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_utildonneesdef` ADD `actif` ENUM('oui','non') NOT NULL DEFAULT 'oui' AFTER `type`;";
 		UpdateDB($sql,$nver);
+	}
+	
+// ----
+	$nver=472;
+	if ($ver<$nver)
+	{
+		$sql=array();
+		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_utilisateurs` ADD `disponibilite` ENUM('dispo','occupe') NOT NULL DEFAULT 'dispo' AFTER `notification`;";
+		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_compte` ADD `signature` VARCHAR(64) NOT NULL AFTER `rembfact`, ADD `precedent` VARCHAR(64) NOT NULL AFTER `signature`;";
+
+		echo "Signe les transactions de la table de compte...";		
+
+		$mysql_gen = new mysql_class($mysqluser, $mysqlpassword, $hostname, $db, $port);
+
+		$query="SELECT * FROM `".$MyOpt["tbl"]."_compte";
+		$mysql->Query($query);
+
+		$lastid=0;
+		for($i=0; $i<$mysql->rows; $i++)
+		{ 
+			$mysql->GetRow($i);
+
+			$query="SELECT id,signature FROM ".$MyOpt["tbl"]."_compte WHERE id='".$lastid."'";
+			$res=$mysql_gen->QueryRow($query);
+			$lastid=$mysql->data["id"];
+
+			// Signe la transaction
+			$montant=number_format($mysql->data["montant"],2,'.','');
+			$signature=md5($mysql->data["id"]."_".$mysql->data["uid"]."_".$mysql->data["tiers"]."_".$montant."_".$mysql->data["date_valeur"]."_".$res["id"]."_".$res["signature"]);
+
+			$query="UPDATE ".$MyOpt["tbl"]."_compte SET ";
+			$query.="signature='".$signature."', ";
+			$query.="precedent='".$res["signature"]."' ";
+			$query.="WHERE id='".$mysql->data["id"]."'";
+			$mysql_gen->Update($query);
+
+		}
+		echo " [".$mysql->rows."]<br />";		
+
+		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_compte` ADD UNIQUE(`signature`);";
+		$sql[]="CREATE TABLE ".$MyOpt["tbl"]."_disponibilite` ( `id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `uid` INT UNSIGNED NOT NULL , `dte_deb` DATETIME NOT NULL , `dte_fin` DATETIME NOT NULL , `uid_maj` INT UNSIGNED NOT NULL , `dte_maj` DATETIME NOT NULL , PRIMARY KEY (`id`), INDEX `uid` (`uid`)) ENGINE = InnoDB;";
+		
+		UpdateDB($sql,$nver);
+
 	}
 		
 // *********************************************************************************************************

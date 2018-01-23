@@ -1,0 +1,176 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_detail.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+<A href="membres.php"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt="">Liste</A>
+<!-- BEGIN: ajout -->
+<A href="membres.php?rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" alt="Ajouter">Ajouter</A>
+<!-- END: ajout -->
+<!-- BEGIN: modification -->
+<A href="membres.php?rub=detail&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_editer.png" border=0 alt="">Modifier</A>
+<!-- END: modification -->
+<!-- BEGIN: password -->
+<A href="membres.php?rub=chgpwd&id={id}"><img src="{path_module}/img/icn32_password.png" border=0 alt="" width=32 height=32 />Changer son mot de passe</A>
+<!-- END: password -->
+<!-- BEGIN: desactive -->
+<A href="#" OnClick="ConfirmeClick('membres.php?rub=detail&id={id}&fonc=desactive','Voulez-vous désactiver cet utilisateur ?');"><IMG src="{path_module}/img/icn32_desactive.png" border=0 alt="">Désactiver</A>
+<!-- END: desactive -->
+<!-- BEGIN: active -->
+<A href="#" OnClick="ConfirmeClick('membres.php?rub=detail&id={id}&fonc=active','Voulez-vous re-activer cet utilisateur ?');"><IMG src="{path_module}/img/icn32_desactive.png" border=0 alt="">Activer</A>
+<!-- END: active -->
+<!-- BEGIN: suppression -->
+<A href="#" OnClick="ConfirmeClick('membres.php?rub=detail&id={id}&fonc=delete','Voulez-vous supprimer cet utilisateur ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0 alt="">Supprimer</A>
+<!-- END: suppression -->
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+<link href='external/fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='external/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+
+<script src='external/fullcalendar/lib/moment.min.js'></script>
+<script src='external/fullcalendar/fullcalendar.min.js'></script>
+<script src='external/fullcalendar/lang/fr.js'></script>
+
+<style>
+	#script-warning {
+		display: none;
+		background: #eee;
+		border-bottom: 1px solid #ddd;
+		padding: 0 10px;
+		line-height: 40px;
+		text-align: center;
+		font-weight: bold;
+		font-size: 12px;
+		color: red;
+	}
+
+	#loading {
+		display: none;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+
+	#calendar {
+		width: 90%;
+		padding: 0 10px;
+	}
+
+.fc-time-grid .fc-slats td {
+	height: 16px;
+    line-height: 16px;
+    font-size: 10px;
+	}
+
+.fc-time {	color: #000000; }
+.fc-title {	color: black; }
+.fc-end-resizer { color: #777777; }
+		
+</style>
+
+<script>
+
+	$(document).ready(function() {
+		$('#calendar').fullCalendar({
+			defaultView: '{defaultView}',
+			defaultDate: '{form_jour}',
+			defaultEventMinutes: 60,
+			timeFormat: 'H:mm',
+			lang: 'fr',
+			editable: true,
+			eventLimit: true,
+			selectable: true,
+			selectHelper: true,
+			minTime: '{form_debjour}:00:00',
+			maxTime: '{form_finjour}:00:00',
+			scrollTime: '{form_debjour}:00:00',
+			axisFormat: 'HH:mm',
+			contentHeight: 'auto',
+			slotEventOverlap: false,
+			allDaySlot: false,
+			eventOverlap: false,
+
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: '{headerListe}'
+			},
+
+			businessHours:
+		    {
+			   start: '0:00', // a start time (10am in this example)
+			   end: '23:59', // an end time (12pm in this example)
+			   dow: [ 1,2,3,4,5 ]
+			},
+
+			views: {
+				agendaTwoWeeks: {
+					type: 'agenda',
+					duration: {weeks: 2},
+					buttonText: '2 Semaines',
+					columnFormat: 'DD',
+					eventLimit: 5
+				},
+				agendaFourWeeks: {
+					type: 'agenda',
+					duration: {weeks: 4},
+					buttonText: '4 Semaines',
+					columnFormat: 'DD',
+					eventLimit: 3
+				},
+				agendaHeightWeeks: {
+					type: 'agenda',
+					duration: {weeks: 8},
+					buttonText: '2 mois',
+					columnFormat: 'DD',
+					eventLimit: 3
+				}
+			},
+
+			select: function(start, end) {
+				//document.location="api.php?rub=uptdispo&jstart="+start+"&jend="+end;
+				$.ajax({ url: "api.php?mod=membres&rub=upddispo&fonc=select&id=0&mid={mid}&jstart="+start+"&jend="+end });
+			},
+
+			eventClick: function(event, element) {
+				//document.location="api.php?rub=uptdispo&id="+event.id;
+				$.ajax({ url: "api.php?mod=membres&rub=upddispo&fonc=click&id="+event.id });
+			},
+
+			eventResize: function(event, dayDelta, minuteDelta ) {
+				$.ajax({ url: 'api.php?mod=membres&rub=upddispo&fonc=resize&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
+			},
+			eventDrop: function(event,dayDelta,minuteDelta) {
+				$.ajax({ url: 'api.php?mod=membres&rub=upddispo&fonc=drop&id='+event.id+'&jstart='+event.start+'&jend='+event.end+'&dayDelta='+dayDelta });
+			},
+
+			events: {
+				url: 'api.php?mod=membres&rub=getdispo&mid={mid}',
+				error: function() {
+					$('#script-warning').show();
+				}
+			},
+
+			loading: function(bool) {
+				$('#loading').toggle(bool);
+			}
+		});
+		
+	});
+
+</script>
+
+	<br />
+
+	<div id='script-warning'>
+		Erreur : <code>api.php</code> doit être accessible.
+	</div>
+
+	<div id='loading'>loading...</div>
+
+	<div id='calendar'></div>
+
+<!-- END: corps -->

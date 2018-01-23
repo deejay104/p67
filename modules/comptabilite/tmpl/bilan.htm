@@ -1,0 +1,53 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	<A href="suiviclub.php"><IMG src="{path_module}/img/icn32_mouvement.png" border=0>Mouvement</A>
+	<A href="suiviclub.php?rub=echeances"><IMG src="{path_module}/img/icn32_echeances.png" border=0>Echéances</A>
+<!-- BEGIN: vols -->
+	<A href="suiviclub.php?rub=vols"><IMG src="{path_module}/img/icn32_vols.png" border=0>Vols</A>
+	<A href="suiviclub.php?rub=tarifs"><IMG src="{path_module}/img/icn32_tarifs.png" border=0>Tarifs</A>
+<!-- END: vols -->
+	<A href="suiviclub.php?rub=suivi"><IMG src="{path_module}/img/icn32_suivi.png" border=0>Suivi</A>
+	<A href="suiviclub.php?rub=liste"><IMG src="{path_module}/img/icn32_comptes.png" border=0>Liste des comptes</A>
+	<A href="suiviclub.php?rub=tableaubord"><IMG src="{path_module}/img/icn32_tabbord.png" border=0>Tableau de bord</A>
+	<A href="suiviclub.php?rub=bilan" class='pageTitleSelected'><IMG src="{path_module}/img/icn32_bilan.png" border=0>Bilan</A>
+<!-- END: infos -->
+
+<!-- BEGIN: corps -->
+
+<script language="JavaScript">
+function Recharge()
+{
+ 	document.location='suiviclub.php?rub=bilan&dte='+document.getElementById('form_date').value;
+}
+
+</script>
+
+
+<FORM name="compte" id="compte" method="post" action="suiviclub.php" enctype="multipart/form-data" OnSubmit="return false;">
+
+	<INPUT type="hidden" name="rub" value="bilan">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+
+
+	<BR>
+
+	<p>
+		Année : 
+		<SELECT id="form_date" name="form_date" OnChange="Recharge();">
+		<!-- BEGIN: lst_annee -->
+			<OPTION value="{dte_annee}" {chk_annee}>{dte_annee}</OPTION>
+		<!-- END: lst_annee -->
+		</SELECT>
+	</p>
+	<br />
+
+	{aff_tableau}
+	Résultat d'exploitation : {total}<br />
+	
+</FORM>
+
+
+
+<!-- END: corps -->

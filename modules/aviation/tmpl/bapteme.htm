@@ -47,7 +47,7 @@ function reloadImg() {
 var dte_j=document.getElementById("form_dte_j").value;
 var dte_h=document.getElementById("form_dte_h").value;
 var uid_avion=document.getElementById("form_info[id_avion]").value;
-console.log("dte_j="+dte_h);
+console.log("deb="+dte_j+" "+dte_h);
 var d=new Date(dte_j+" "+dte_h);
 //var d=new Date("2017-08-28 14:30");
 document.getElementById("imgdispo").src="api.php?mod=aviation&rub=disponibilite&id="+uid_avion+"&resa={id_resa}&deb="+Math.round(d.getTime()/1000)+"&fin="+Math.round(d.getTime()/1000+45*60);

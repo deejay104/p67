@@ -22,6 +22,9 @@
 <!-- BEGIN: suppression -->
 <A href="#" OnClick="ConfirmeClick('membres.php?rub=detail&id={id}&fonc=delete','Voulez-vous supprimer cet utilisateur ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0 alt="">Supprimer</A>
 <!-- END: suppression -->
+<!-- BEGIN: disponibilite -->
+<A href="membres.php?rub=disponibilite&id={id}"><IMG src="{path_module}/img/icn32_editer.png" border=0 alt="">Disponibilités</A>
+<!-- END: disponibilite -->
 <!-- END: infos -->
 
 
@@ -159,6 +162,12 @@
 			{form_type}
 		</p>
 		<!-- END: type -->
+		<!-- BEGIN: virtuel -->
+		<p>
+			<label for="type">Utilisateur système</label>
+			{form_virtuel}
+		</p>
+		<!-- END: virtuel -->
 		<!-- BEGIN: mod_creche_zone -->
 		<p>
 		<label for="zone">Zone :</label>
@@ -190,6 +199,12 @@
 			<label>Notifications par mail</label>
 			{form_notification}
 		</p>
+		<!-- BEGIN: disponibilite -->
+		<p>
+			<label for="disponibilite">Disponibilité par défaut</label>
+			{form_disponibilite}
+		</p>
+		<!-- END: disponibilite -->
 		<p>
 			<label for="dte_naissance">Date de naissance</label>
 			{form_dte_naissance}

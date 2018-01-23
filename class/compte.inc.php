@@ -208,6 +208,16 @@ class compte_class{
 		$totmnt=0;
 		foreach($this->mvt as $i=>$m)
 		{
+			$query="SELECT MAX(id) AS maxid FROM ".$this->tbl."_compte";
+			$res=$sql->QueryRow($query);
+			$maxid=$res["maxid"];
+			$query="SELECT id,signature FROM ".$this->tbl."_compte WHERE id='".$maxid."'";
+			$res=$sql->QueryRow($query);
+			$precedent=$res["signature"];
+
+			$montant=number_format($m["montant"],2,'.','');
+
+
 			$query="SELECT description FROM ".$this->tbl."_mouvement WHERE id='".$m["poste"]."'";
 			$res=$sql->QueryRow($query);
 
@@ -215,19 +225,30 @@ class compte_class{
 			$query.="mid='".$this->id."', ";
 			$query.="uid='".$m["uid"]."', ";
 			$query.="tiers='".$m["tiers"]."', ";
-			$query.="montant='".$m["montant"]."', ";
+			$query.="montant='".$montant."', ";
 			$query.="mouvement='".addslashes($res["description"])."', ";
 			$query.="commentaire='".addslashes($this->commentaire)."', ";
-			$query.="facture='".$m["facture"]."', ";
-			$query.="rembfact='".$m["rembfact"]."', ";
 			$query.="date_valeur='".$this->date_valeur."', ";
 			$query.="dte='".date("Ym",strtotime($this->date_valeur))."', ";
 			$query.="compte='".$this->compte."', ";
+			$query.="facture='".$m["facture"]."', ";
+			$query.="rembfact='".$m["rembfact"]."', ";
 			$query.="uid_creat=".$this->uid_creat.", date_creat='".now()."'";
 			// echo "$query<BR>";
-			$sql->Insert($query);
+			$id=$sql->Insert($query);
+
+			// Signe la transaction
+			$signature=md5($id."_".$m["uid"]."_".$m["tiers"]."_".$montant."_".$this->date_valeur."_".$maxid."_".$precedent);
+
+			$query="UPDATE ".$this->tbl."_compte SET ";
+			$query.="signature='".$signature."', ";
+			$query.="precedent='".$precedent."' ";
+			$query.="WHERE id='".$id."'";
+			$sql->Update($query);
+
 			$this->nbmvt++;
 			$totmnt=$totmnt+$form_montant[$k];
+
 		}
 
 		$this->status="debite";
@@ -304,4 +325,47 @@ class compte_class{
 		return $txt;
 	}
 }
+
+// Affiche le détail de toutes les lignes d'un mouvement
+function AfficheDetailMouvement($id,$mid)
+{ global $MyOpt,$sql;
+	$txt="Mouvement : ".$mid."\n";
+	$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE mid=$mid AND mid>0 ORDER BY uid";
+	$sql->Query($query);
+	$t=array();
+	for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+		$t[$i]=$sql->data;
+	}
+	foreach ($t as $i=>$d)
+	{
+		$usrc = new user_class($d["uid"],$sql);
+		$usrd = new user_class($d["tiers"],$sql);
+
+		$txt.=(($d["uid"]==$id) ? "* " : "").$usrc->fullname." (".$usrd->fullname.") : ".$d["mouvement"]." (".AffMontant($d["montant"]).")\n";
+	}
+	return $txt;
+}
+
+function AfficheSignatureCompte($lid)
+{ global $MyOpt,$sql;
+	$query="SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE id='".$lid."'";
+	$res_l=$sql->QueryRow($query);
+
+	$query="SELECT id,signature FROM ".$MyOpt["tbl"]."_compte WHERE signature='".$res_l["precedent"]."'";
+	$res_p=$sql->QueryRow($query);
+
+	$sign_l=md5($res_l["id"]."_".$res_l["uid"]."_".$res_l["tiers"]."_".$res_l["montant"]."_".$res_l["date_valeur"]."_".$res_p["id"]."_".$res_p["signature"]);
+
+	if ($sign_l==$res_l["signature"])
+	{
+		return "ok";
+	}
+	else
+	{
+		return "nok";
+	}
+}
+
 ?>

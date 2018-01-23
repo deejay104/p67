@@ -86,7 +86,7 @@
 		//preg_match("/^([^ ]*) (.*?)$/",$username,$t);
 
 		$sql   = new mysql_class($mysqluser, $mysqlpassword, $hostname, $db,$port);
-		$query = "SELECT id,prenom,nom,mail,password FROM p67_utilisateurs WHERE ((mail='$username' AND mail<>'') OR (initiales='$username' AND initiales<>'')) AND actif='oui'";
+		$query = "SELECT id,prenom,nom,mail,password FROM p67_utilisateurs WHERE ((mail='$username' AND mail<>'') OR (initiales='$username' AND initiales<>'')) AND actif='oui' AND virtuel='non'";
 
 		$res   = $sql->QueryRow($query);
 

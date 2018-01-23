@@ -114,6 +114,8 @@ $tabRoles["VisuDocument"]="Visualisation de tous les documents";
 $tabRoles["FactureManips"]="Facture une manifestation";
 $tabRoles["PlanifieMaintenance"]="Planification d'une maintenance";
 $tabRoles["AfficheDetailMouvement"]="Affiche le détail d'un mouvement";
+$tabRoles["AfficheSignatureCompte"]="Vérifie la signature des transactions";
+
 
 
 ?>

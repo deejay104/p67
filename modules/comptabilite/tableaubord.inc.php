@@ -43,9 +43,6 @@
 	$tmpl_x->assign("annee", $annee);
 	$dte=$annee;
 
-	if (GetModule("aviation"))
-	  {  	$tmpl_x->parse("corps.vols"); }
-
 // ---- Liste des comptes
 	if (!isset($id))
 	  { $id=$MyOpt["uid_tableaubord"]; }

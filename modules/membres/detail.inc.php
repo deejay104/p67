@@ -234,7 +234,10 @@
 	if ((GetDroit("SupprimeUser")) && ($usr->actif=="off"))
 	  { $tmpl_x->parse("infos.suppression"); }
 
-  // ---- Affiche toutes les donnees
+  	if ((GetDroit("ModifDisponibilite")) && ($usr->type=="instructeur"))
+	  { $tmpl_x->parse("infos.disponibilite"); }
+
+// ---- Affiche toutes les donnees
 	foreach($usr->data as $k=>$v)
 	  { $tmpl_x->assign("form_$k", $usr->aff($k,$typeaff)); }
 
@@ -276,6 +279,14 @@
   	if ( (count($usr->data["pere"])>0) || (count($usr->data["mere"])>0) )
 	{
 	  	$tmpl_x->parse("corps.aff_parents");
+	}
+  	if ( GetDroit("ADM") )
+	{
+	  	$tmpl_x->parse("corps.virtuel");
+	}
+  	if ( $usr->type=="instructeur" )
+	{
+	  	$tmpl_x->parse("corps.disponibilite");
 	}
 
   	if ((is_numeric($id)) && ($id>0))
