@@ -112,6 +112,7 @@
 				$resa["resa"]->uid_ressource=$form_uid_ress;
 				$resa["resa"]->destination=$form_destination;
 				$resa["resa"]->nbpersonne=$form_nbpersonne;
+				$resa["resa"]->invite=$form_invite;
 				$resa["resa"]->accept=$form_accept;
 				$resa["resa"]->tpsestime=$form_tpsestime;
 				$resa["resa"]->dte_deb="$form_dte_deb $form_hor_deb";
@@ -163,6 +164,21 @@
 	  {
 		$msg_err2.=$resa["resa"]->Save();
 
+		if (($id==0) && ($resa["resa"]->invite=='oui'))
+		{
+			$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql);
+
+			$query="INSERT INTO ".$MyOpt["tbl"]."_actualites SET ";
+			$query.="titre='Recherche passager(s)',";
+			$query.="message='".addslashes("Bonjour,\n\nIl me reste des places dans mon vol du ".sql2date($resa["resa"]->dte_deb).". Faites moi savoir si cela vous interresse.\n\n".$resa["pilote"]->Aff("fullname","val"))."',";
+			$query.="uid_creat='".$resa["resa"]->uid_pilote."',";
+			$query.="dte_creat='".now()."',";
+			$query.="uid_modif='".$resa["resa"]->uid_pilote."',";
+			$query.="dte_modif='".now()."'";
+
+			$id=$sql->Insert($query);
+		}
+		
 		if ($id==0)
 		  {	$id=$resa["resa"]->id; }
 

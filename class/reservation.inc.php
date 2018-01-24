@@ -39,6 +39,9 @@ class resa_class{
 		$this->horadeb="0";
 		$this->horafin="0";
 		$this->tpsestime="";
+		$this->destination="LOCAL";
+		$this->invite="non";
+
 		if ($id>0)
 		  {
 			$this->load($id);
@@ -72,6 +75,7 @@ class resa_class{
 		$this->uid_ressource=$res["uid_avion"];
 		$this->destination=$res["destination"];
 		$this->nbpersonne=$res["nbpersonne"];
+		$this->invite=$res["invite"];
 		$this->potentiel=$res["potentiel"];
 		$this->potentielh=floor($res["potentiel"]/60);
 		$this->potentielm=$res["potentiel"]-$this->potentielh*60;
@@ -331,6 +335,7 @@ class resa_class{
 		$query.="uid_avion='$this->uid_ressource',";
 		$query.="destination='$this->destination',";
 		$query.="nbpersonne='$this->nbpersonne',";
+		$query.="invite='$this->invite',";
 		$query.="accept='$this->accept',";
 		$query.="reel='$this->reel',";
 		$query.="temps='$this->temps',";

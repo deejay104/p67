@@ -66,13 +66,13 @@
 		
 							if ( (GetDroit("ModifActualite")) || ( ($uid==$res["uid_creat"]) && (time()-strtotime($d["dte_creat"])<3600) ) )
 							  {
-									$query="UPDATE ".$MyOpt["tbl"]."_actualites SET titre='".addslashes($form_titre)."',message='".addslashes($form_message)."',uid_modif='$uid',dte_modif='".now()."' WHERE id='$id'";
+									$query="UPDATE ".$MyOpt["tbl"]."_actualites SET titre='".addslashes(strip_tags($form_titre))."',message='".addslashes(strip_tags($form_message))."',uid_modif='$uid',dte_modif='".now()."' WHERE id='$id'";
 									$sql->Update($query);
 							  }
 						}
 					else
 						{
-							$query="INSERT INTO ".$MyOpt["tbl"]."_actualites (titre,message,uid_creat,dte_creat,uid_modif,dte_modif) VALUES ('".addslashes($form_titre)."','".addslashes($form_message)."','$uid','".now()."','$uid','".now()."')";
+							$query="INSERT INTO ".$MyOpt["tbl"]."_actualites (titre,message,uid_creat,dte_creat,uid_modif,dte_modif) VALUES ('".addslashes(strip_tags($form_titre))."','".addslashes(strip_tags($form_message))."','$uid','".now()."','$uid','".now()."')";
 							$id=$sql->Insert($query);
 						}
 					$tmpl_x->assign("aff_id", $id);
@@ -222,6 +222,7 @@
 		$resusr=new user_class($d["uid_creat"],$sql,false,false);
 
 		$txt=nl2br(htmlentities($d["message"],ENT_HTML5,"ISO-8859-1"));
+		$txt=nl2br($d["message"]);
 		$txt=preg_replace("/((http|https|ftp):\/\/[^ |<]*)/si","<a href='$1' target='_blank'>$1</a>",$txt);
 		$txt=preg_replace("/ (www\.[^ |\/]*)/si","<a href='http://$1' target='_blank'>$1</a>",$txt);
 

@@ -102,6 +102,7 @@
 	  	$resa["resa"]->potentielm=$form_potentielm;
 	  	$resa["resa"]->destination=$form_destination;
 	  	$resa["resa"]->nbpersonne=$form_nbpersonne;
+	  	$resa["resa"]->invite=$form_invite;
 	  	$resa["resa"]->description=$form_description;
 		$resa["resa"]->uid_maj=$uid;
 	  	$resa["resa"]->dte_maj=date("Y-m-d H:i:s");
@@ -273,12 +274,16 @@
 	
 			$tmpl_x->assign("uid_avion", $resr->id);
 			$tmpl_x->assign("nom_avion", strtoupper($resr->immatriculation));
+			if ($resr->id==0)
+			{
+				$resr->id=$resa["resa"]->uid_ressource;
+			}
 			if ($resa["resa"]->uid_ressource==$resr->id)
-			  {
+			{
 				$tmpl_x->assign("chk_avion", "selected");
 				$tmpl_x->assign("uid_avionrmq", $resr->id);
 				$tmpl_x->assign("aff_nom_avion", strtoupper($resr->immatriculation));
-			  }
+			}
 			else
 			  { $tmpl_x->assign("chk_avion", ""); }
 			$tmpl_x->parse("corps.aff_reservation.lst_avion");
@@ -403,6 +408,7 @@
 	$tmpl_x->assign("form_destination", $resa["resa"]->destination);
 	$tmpl_x->assign("chk_passager".$resa["resa"]->nbpersonne, "selected");
 	$tmpl_x->assign("form_nbpassager", $resa["resa"]->nbpersonne);
+	$tmpl_x->assign("chk_invite_".$resa["resa"]->invite, "selected");
 
 	$tmpl_x->assign("form_tpsestime", $resa["resa"]->tpsestime);
 

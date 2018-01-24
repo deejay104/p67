@@ -175,26 +175,35 @@ function reloadImg2() {
 			  <INPUT id="destination" name="form_destination" value="{form_destination}" size=30>
 		  </p>
 
-		  <p>
-				<label for="pob" title="Entrez le nombre de personne à bord, pilote compris (POB)">Nb de personnes</label>
-				<SELECT id="pob" name="form_nbpersonne">
+		<p>
+			<label for="pob" title="Entrez le nombre de personne à bord, pilote compris (POB)">Nb de personnes</label>
+			<SELECT id="pob" name="form_nbpersonne">
 				<OPTION value="1" {chk_passager1}>1</OPTION>
 				<OPTION value="2" {chk_passager2}>2</OPTION>
 				<OPTION value="3" {chk_passager3}>3</OPTION>
 				<OPTION value="4" {chk_passager4}>4</OPTION>
-				</SELECT>
-			</p>
+			</SELECT>
+		</p>
 
-		  <p>
-				<label for="tpsestime" title="Le temps de vol estimé correspond au temps durant lequel vous avez prévu de voler. Ce champs est obligatoire.">Temps de vol estimé</label>
-			  <INPUT id="tpsestime" name="form_tpsestime" value="{form_tpsestime}" size=6> (en minutes)
-		  </p>
-			<p>&nbsp;</p>
-			<p>
+		<p>
+			<label for="tpsestime" title="Le temps de vol estimé correspond au temps durant lequel vous avez prévu de voler. Ce champs est obligatoire.">Temps de vol estimé</label>
+			 <INPUT id="tpsestime" name="form_tpsestime" value="{form_tpsestime}" size=6> (en minutes)
+		</p>
+
+		<p>
+			<label for="invite" title="Indique aux membres que l'avion n'est pas plein et qu'il est possible de s'y rajouter. Contacter le pilote pour vérifier s'il reste des places.">Inviter les membres</label>
+			<SELECT id="invite" name="form_invite">
+				<OPTION value="non" {chk_invite_non}>Non</OPTION>
+				<OPTION value="oui" {chk_invite_oui}>Oui</OPTION>
+			</SELECT>
+		</p>
+
+		<p>&nbsp;</p>
+		<p>
 				<label for="form_dte_deb">Du</label>
-		  	<INPUT id="form_dte_deb" name="form_dte_deb" value="{form_dte_deb}" size="10" > à <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" size=8> <FONT color=red>{msg_dtedeb}</FONT>
-		  </p>
-		  <p>
+				<INPUT id="form_dte_deb" name="form_dte_deb" value="{form_dte_deb}" size="10" > à <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" size=8> <FONT color=red>{msg_dtedeb}</FONT>
+		</p>
+		<p>
 				<label for="form_dte_fin">Au</label>
 		  	<INPUT id="form_dte_fin" name="form_dte_fin" value="{form_dte_fin}" size="10"> à <INPUT name="form_hor_fin" id="form_hor_fin" value="{form_hor_fin}" size=8> <FONT color=red>{msg_dtefin}</FONT>
 		  </p>

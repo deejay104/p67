@@ -77,7 +77,7 @@
 				}
 	
 				$input_arrays[$ii]["id"]=$resa["resa"]->id;
-				$input_arrays[$ii]["title"]=utf8_encode((($d==1) ? $resa["ress"]->immatriculation." : \n" : "").$resa["pilote"]->Aff($affnom,"val").(($resa["instructeur"]->uid>0) ? " + ".($resa["instructeur"]->Aff($affnom,"val")) : ""));
+				$input_arrays[$ii]["title"]=utf8_encode((($d==1) ? $resa["ress"]->immatriculation." : \n" : "").$resa["pilote"]->Aff($affnom,"val").(($resa["instructeur"]->uid>0) ? " + ".($resa["instructeur"]->Aff($affnom,"val")) : "")).(($resa["resa"]->invite=="oui") ? " <img src='static/reservations/icn16_invite.png'>" : "");
 				$input_arrays[$ii]["start"]=date("c",strtotime($resa["resa"]->dte_deb));
 				$input_arrays[$ii]["end"]=date("c",strtotime($resa["resa"]->dte_fin));
 				$input_arrays[$ii]["description"]=utf8_encode($resa["ress"]->immatriculation." de ".sql2time($resa["resa"]->dte_deb,"nosec")." à ".sql2time($resa["resa"]->dte_fin,"nosec")."<br>".$resa["pilote"]->Aff("fullname","val").(($resa["instructeur"]->uid>0) ? "<br/>+ ".($resa["instructeur"]->Aff("fullname","val")) : "").(($resa["resa"]->description!="") ? "<br>----<br>".($resa["resa"]->description) : ""));
