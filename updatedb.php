@@ -941,6 +941,7 @@
 		$sql=array();
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_utilisateurs` ADD `disponibilite` ENUM('dispo','occupe') NOT NULL DEFAULT 'dispo' AFTER `notification`;";
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_compte` ADD `signature` VARCHAR(64) NOT NULL AFTER `rembfact`, ADD `precedent` VARCHAR(64) NOT NULL AFTER `signature`;";
+		UpdateDB($sql,$nver);
 
 		echo "Signe les transactions de la table de compte...";		
 
@@ -971,8 +972,9 @@
 		}
 		echo " [".$mysql->rows."]<br />";		
 
+		$sql=array();
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_compte` ADD UNIQUE(`signature`);";
-		$sql[]="CREATE TABLE ".$MyOpt["tbl"]."_disponibilite` ( `id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `uid` INT UNSIGNED NOT NULL , `dte_deb` DATETIME NOT NULL , `dte_fin` DATETIME NOT NULL , `uid_maj` INT UNSIGNED NOT NULL , `dte_maj` DATETIME NOT NULL , PRIMARY KEY (`id`), INDEX `uid` (`uid`)) ENGINE = InnoDB;";
+		$sql[]="CREATE TABLE ".$MyOpt["tbl"]."_disponibilite ( `id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `uid` INT UNSIGNED NOT NULL , `dte_deb` DATETIME NOT NULL , `dte_fin` DATETIME NOT NULL , `uid_maj` INT UNSIGNED NOT NULL , `dte_maj` DATETIME NOT NULL , PRIMARY KEY (`id`), INDEX `uid` (`uid`)) ENGINE = InnoDB;";
 		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_calendrier` ADD `invite` ENUM('oui','non') NOT NULL DEFAULT 'non' AFTER `nbpersonne`;";		
 
 		UpdateDB($sql,$nver);

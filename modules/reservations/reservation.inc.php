@@ -34,6 +34,42 @@
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("reservation.htm"));
 
+	if (!is_numeric($ress))
+	{
+		$ress=0;
+	}
+
+// ---- Récupère la liste des ressources
+	$lst=ListeRessources($sql);
+
+	foreach($lst as $i=>$rid)
+	{
+		$resr=new ress_class($rid,$sql);
+
+		// Initilialise l'id de ressouce s'il est vide
+		if ($ress==0)
+		{
+			$ress=$rid;
+		}
+
+		// Rempli la liste dans le template
+		$tmpl_x->assign("uid_avion", $resr->id);
+		$tmpl_x->assign("nom_avion", strtoupper($resr->immatriculation));
+		if ($resr->id==0)
+		{
+			$resr->id=$resa["resa"]->uid_ressource;
+		}
+		if ($resa["resa"]->uid_ressource==$resr->id)
+		{
+			$tmpl_x->assign("chk_avion", "selected");
+			$tmpl_x->assign("uid_avionrmq", $resr->id);
+			$tmpl_x->assign("aff_nom_avion", strtoupper($resr->immatriculation));
+		}
+		else
+		  { $tmpl_x->assign("chk_avion", ""); }
+		$tmpl_x->parse("corps.aff_reservation.lst_avion");
+	}
+
 // ---- Charge les données de la réservation
 	$res=array();
 
@@ -258,36 +294,6 @@
 
 
 // **************************************
-
-
-	// Liste des avions
-	$lst=ListeRessources($sql);
-
-	foreach($lst as $i=>$rid)
-	  {
-			$resr=new ress_class($rid,$sql);
-	
-			if (!is_numeric($resa["resa"]->uid_ressource))
-			  {
-			  	$resa["resa"]->uid_ressource=$resr->id;
-			  }
-	
-			$tmpl_x->assign("uid_avion", $resr->id);
-			$tmpl_x->assign("nom_avion", strtoupper($resr->immatriculation));
-			if ($resr->id==0)
-			{
-				$resr->id=$resa["resa"]->uid_ressource;
-			}
-			if ($resa["resa"]->uid_ressource==$resr->id)
-			{
-				$tmpl_x->assign("chk_avion", "selected");
-				$tmpl_x->assign("uid_avionrmq", $resr->id);
-				$tmpl_x->assign("aff_nom_avion", strtoupper($resr->immatriculation));
-			}
-			else
-			  { $tmpl_x->assign("chk_avion", ""); }
-			$tmpl_x->parse("corps.aff_reservation.lst_avion");
-	  }
 
 	$tmpl_x->assign("form_uid_ress", $resa["resa"]->uid_ressource);
 
