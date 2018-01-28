@@ -28,7 +28,7 @@
 
 // ---- Lit les paramètres
 //	$id=$HTTP_GET_VARS["id"];
-
+exit;
 	if (file_exists("temp/check.txt"))
 	  { $t=filemtime("temp/check.txt"); }
 	else

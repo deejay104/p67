@@ -5,9 +5,10 @@
 <!-- BEGIN: infos -->
 	<A href="index.php?mod=admin"><IMG src="{path_module}/img/icn32_config.png" border=0 alt="Fichier de configuration">Configuration</A>
 	<A href="index.php?mod=admin&rub=groupes"><IMG src="{path_module}/img/icn32_groupes.png" border=0 alt="Gestion des groupes">Groupes</A>
-	<A href="index.php?mod=admin&rub=echeances" class='pageTitleSelected'><IMG src="{path_module}/img/icn32_groupes.png" border=0 alt="Gestion des échéances">Echéances</A>
+	<A href="index.php?mod=admin&rub=echeances" class='pageTitleSelected'><IMG src="{path_module}/img/icn32_echeance.png" border=0 alt="Gestion des échéances">Echéances</A>
 	<A href="index.php?mod=admin&rub=postes"><IMG src="{path_module}/img/icn32_param.png" border=0 alt="Gestion des postes de mouvement comptable">Postes</A>
 	<A href="index.php?mod=admin&rub=utildonnees"><IMG src="{path_module}/img/icn32_param.png" border=0>Données Utilisateurs</A>
+	<A href="index.php?mod=admin&rub=crontab"><IMG src="{path_module}/img/icn32_config.png" border=0 alt="">Taches Planifiées</A>
 <!-- END: infos -->
 
 
@@ -24,8 +25,10 @@
 		<TD width="120"><B>Réservation</B></TD>
 		<TD width="410"><B>Poste</B></TD>
 		<TD width="90"><B>Cout</B></TD>
-		<TD width="90"><B>Droit</B></TD>
-		<TD width="90"><B>Multi</B></TD>
+		<TD width="60"><B>Droit</B></TD>
+		<TD width="60"><B>Multi</B></TD>
+		<TD width="60"><B>Notif</B></TD>
+		<TD width="60"><B>Délai</B></TD>
 	  </TR>
 	<!-- BEGIN: lst_echeance -->
 	<tr>
@@ -60,6 +63,15 @@
 			<option value="oui" {select_multi_oui}>Oui</option>
 			</select>
 		</td>
+		<td>
+			<select name="form_notif[{form_id}]">
+			<option value="non" {select_notif_non}>Non</option>
+			<option value="oui" {select_notif_oui}>Oui</option>
+			</select>
+		</td>
+		<td>
+			<INPUT type="text" name="form_delai[{form_id}]" style="width:50px;" value="{form_delai}" maxlength="3">
+		</td>
 	</tr>
 	<!-- END: lst_echeance -->
 	<tr>
@@ -83,7 +95,7 @@
 			</select>
 		</td>
 		<td>
-			<INPUT type="text" name="form_cout[0]" style="width:80px;" value="">
+			<INPUT type="text" name="form_cout[0]" style="width:80px;" value="0">
 		</td>
 		<td>
 			<INPUT type="text" name="form_droit[0]" style="width:50px;" value="" maxlength="3">
@@ -93,6 +105,15 @@
 			<option value="non">Non</option>
 			<option value="oui">Oui</option>
 			</select>
+		</td>
+		<td>
+			<select name="form_notif[0]">
+			<option value="non">Non</option>
+			<option value="oui">Oui</option>
+			</select>
+		</td>
+		<td>
+			<INPUT type="text" name="form_delai[0]" style="width:50px;" value="30" maxlength="3">
 		</td>
 	</tr>
 

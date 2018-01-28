@@ -53,33 +53,32 @@
 	  { $id=0; }
 
 	if ( ($fonc=="Poster") && (!isset($_SESSION['tab_checkpost'][$checktime])) )
+	{
+		$_SESSION['tab_checkpost'][$checktime]=$checktime;
+
+		if ($form_message!=$txtnewmsg)
 		{
-			$_SESSION['tab_checkpost'][$checktime]=$checktime;
-	
-			if ($form_message!=$txtnewmsg)
+			if ($id>0)
+			{
+				$query="SELECT titre,message FROM `".$MyOpt["tbl"]."_actualites` WHERE id='$id'";
+				$res = $sql->QueryRow($query);
+
+				if ( (GetDroit("ModifActualite")) || ( ($uid==$res["uid_creat"]) && (time()-strtotime($d["dte_creat"])<3600) ) )
 				{
-					if ($id>0)
-					  {
-		
-							$query="SELECT titre,message FROM `".$MyOpt["tbl"]."_actualites` WHERE id='$id'";
-							$res = $sql->QueryRow($query);
-		
-							if ( (GetDroit("ModifActualite")) || ( ($uid==$res["uid_creat"]) && (time()-strtotime($d["dte_creat"])<3600) ) )
-							  {
-									$query="UPDATE ".$MyOpt["tbl"]."_actualites SET titre='".addslashes(strip_tags($form_titre))."',message='".addslashes(strip_tags($form_message))."',uid_modif='$uid',dte_modif='".now()."' WHERE id='$id'";
-									$sql->Update($query);
-							  }
-						}
-					else
-						{
-							$query="INSERT INTO ".$MyOpt["tbl"]."_actualites (titre,message,uid_creat,dte_creat,uid_modif,dte_modif) VALUES ('".addslashes(strip_tags($form_titre))."','".addslashes(strip_tags($form_message))."','$uid','".now()."','$uid','".now()."')";
-							$id=$sql->Insert($query);
-						}
-					$tmpl_x->assign("aff_id", $id);
-					$tmpl_x->parse("corps.aff_sendmail");
-					$id=0;
+					$query="UPDATE ".$MyOpt["tbl"]."_actualites SET titre='".addslashes(strip_tags($form_titre))."',message='".addslashes(strip_tags($form_message))."',uid_modif='$uid',dte_modif='".now()."' WHERE id='$id'";
+					$sql->Update($query);
 				}
+			}
+			else
+			{
+				$query="INSERT INTO ".$MyOpt["tbl"]."_actualites (titre,message,uid_creat,dte_creat,uid_modif,dte_modif) VALUES ('".addslashes(strip_tags($form_titre))."','".addslashes(strip_tags($form_message))."','$uid','".now()."','$uid','".now()."')";
+				$id=$sql->Insert($query);
+			}
+			// $tmpl_x->assign("aff_id", $id);
+			// $tmpl_x->parse("corps.aff_sendmail");
+			$id=0;
 		}
+	}
 
 // ---- Supprime le post
 	if ( ($fonc=="supprimer") && ($id>0) )

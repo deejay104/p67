@@ -133,7 +133,7 @@
 	$tmpl_prg->assign("errmsg", $errmsg);
 	$tmpl_prg->assign("version", $version);
 	$tmpl_prg->assign("site_title", $MyOpt["site_title"]);
-  $tmpl_prg->assign("site_logo", $MyOpt["site_logo"]);
+	$tmpl_prg->assign("site_logo", $MyOpt["site_logo"]);
 
 	$tmpl_prg->parse("main");
 	echo $tmpl_prg->text("main");

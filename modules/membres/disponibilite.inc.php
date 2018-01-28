@@ -34,11 +34,14 @@
 	if ( (!GetDroit("AccesMembre")) && (!GetMyId($id)) )
 	  { FatalError("Accès non autorisé (AccesMembre)"); }
 
+
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("disponibilite.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Affiche les menus
+  	$tmpl_x->assign("id",$id);
+
 	if ((GetMyId($id)) || (GetDroit("ModifUser")))
 	  { $tmpl_x->parse("infos.modification"); }
 

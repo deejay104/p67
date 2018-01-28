@@ -980,7 +980,25 @@
 		UpdateDB($sql,$nver);
 
 	}
+
+// ----
+	$nver=472;
+	if ($ver<$nver)
+	{
+		$sql=array();
+		$sql[]="CREATE TABLE `".$MyOpt["tbl"]."_cron` ( `id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `description` VARCHAR(40) NOT NULL , `module` VARCHAR(20) NOT NULL , `script` VARCHAR(20) NOT NULL , `schedule` INT UNSIGNED NOT NULL , `lastrun` DATETIME NULL , `nextrun` DATETIME NULL , `txtretour` VARCHAR(20) NULL , `txtlog` TEXT NULL , `actif` ENUM('oui','non') NOT NULL DEFAULT 'oui' , PRIMARY KEY (`id`)) ENGINE = InnoDB;";
 		
+		$sql[]="INSERT INTO `".$MyOpt["tbl"]."_cron` (`description`, `module`, `script`, `schedule`, `actif`) VALUES ('Notification des échéances', 'comptabilite', 'echeances', 10080,'non');";
+		$sql[]="INSERT INTO `".$MyOpt["tbl"]."_cron` (`description`, `module`, `script`, `schedule`, `actif`) VALUES ('Notification de decouvert', 'comptabilite', 'decouvert', 10080,'non');";
+		$sql[]="INSERT INTO `".$MyOpt["tbl"]."_cron` (`description`, `module`, `script`, `schedule`, `actif`) VALUES ('Mail d\'actualités', 'actualites', 'sendmail', 5,'non');";
+
+		$sql[]="UPDATE `".$MyOpt["tbl"]."_actualites` SET mail='oui',dte_mail='".now()."' WHERE mail='non';";
+
+		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_echeancetype` ADD `notif` ENUM('oui','non') NOT NULL DEFAULT 'non' AFTER `multi`, ADD `delai` TINYINT UNSIGNED NOT NULL DEFAULT '30' AFTER `notif`;";
+		
+		UpdateDB($sql,$nver);
+	}
+	
 // *********************************************************************************************************
 
 	echo "<a href='".$MyOpt["host"]."'>-Retour au site-</a>";

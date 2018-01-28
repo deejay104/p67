@@ -42,8 +42,6 @@
 	$tabTitre["description"]["aff"]="Description";
 	$tabTitre["description"]["width"]=400;
 
-
-
 	$query="SELECT groupe,description FROM ".$MyOpt["tbl"]."_groupe ORDER BY groupe";
 	$sql->Query($query);
 
@@ -70,7 +68,5 @@
 	$infos=$tmpl_x->text("infos");
 	$tmpl_x->parse("corps");
 	$corps=$tmpl_x->text("corps");
-
-
 
 ?>

@@ -37,19 +37,6 @@
 
 	//error_reporting( E_ALL ^ E_NOTICE ^ E_DEPRECATED );
 
-// ---- Gestion des droits
-	session_start();
-
-	if ((isset($_SESSION['uid'])) && ($_SESSION['uid']>0))
-	  { $uid = $_SESSION['uid']; }
-	else
-	  { include "login.php"; exit; }
-
-// ---- Défini les variables globales
-	$prof="";
-	$gl_mode="";
-	$gl_uid=$uid;
-	
 // ---- Récupère les paramètres
 	$e ="foreach( \$_REQUEST as \$key=>\$value) {"."\n";
 	$e.="if (!isset(\$_SESSION[\"\$key\"])) {"."\n";
@@ -64,6 +51,18 @@
 
 	eval($e);
 
+// ---- Gestion des droits
+	session_start();
+
+	if ((isset($_SESSION['uid'])) && ($_SESSION['uid']>0))
+	  { $uid = $_SESSION['uid']; }
+	else
+	  { include "login.php"; exit; }
+
+// ---- Défini les variables globales
+	$prof="";
+	$gl_mode="html";
+	$gl_uid=$uid;
 
 
 // ---- Vérifie la variable $mod
@@ -102,7 +101,7 @@
 // Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J3 Safari/6533.18.5
 
 	$theme="";
-	if ($_REQUEST["settheme"]!="")
+	if ( (isset($_REQUEST["settheme"])) && ($_REQUEST["settheme"]!="") )
 	{	
 		$themes["default"]="";
 		$themes["phone"]="phone";
@@ -128,7 +127,7 @@
 	}
 
 // ---- Charge les variables et fonctions
-	$module="modules".(($default_profile!="") ? ".$default_profile" : "");
+	$module="modules";
 
 // ---- Charge le numéro de version
 	require ("version.txt");
@@ -156,8 +155,12 @@
 	  	exit;
 	  }	  	
 
+// ---- Nettoyage des variables
+	if (!isset($fonc))
+	  { $fonc=""; }
+
 // ---- Template par default
-	if (!preg_match("/[a-z]+/i",$tmpl))
+	if ( (!isset($tmpl)) || (!preg_match("/[a-z]+/i",$tmpl)) )
 	  { $tmpl="default"; }
 	$tmpl="$tmpl.htm";
 	$tmpl_prg = new XTemplate (MyRep($tmpl));
@@ -165,30 +168,21 @@
 // ---- Maj du template
 	$tmpl_prg->assign("uid", $uid);
 	$tmpl_prg->assign("username", $myuser->aff("prenom")." ".$myuser->aff("nom"));
-	$tmpl_prg->assign("version", $version.(($default_profile!="") ? ".".preg_replace("/([a-z])[a-z]*_(.._)?([a-z])[a-z]*/i","\\1\\3",$default_profile) : "").(($MyOpt["maintenance"]=="on") ? " - MAINTENANCE ACTIVE" : ""));
+	$tmpl_prg->assign("version", $version.(($MyOpt["maintenance"]=="on") ? " - MAINTENANCE ACTIVE" : ""));
 
 	$tmpl_prg->assign("site_logo", $MyOpt["site_logo"]);
 	$tmpl_prg->assign("site_title", $MyOpt["site_title"]);
 
-/*
-	if ($MyOpt["help"][$mod][$rub]!="")
-	  {
-		$tmpl_prg->assign("helplink", $MyOpt["help"][$mod][$rub]);
-		$tmpl_prg->parse("main.help");
-	  }
-*/
-
 // ---- Flag pour ne pouvoir poster qu'une seule fois les mêmes infos
 	if (!isset($_SESSION["checkpost"]))
-	  {
-		$checkpost=1;
+	{
 		$_SESSION["checkpost"]=1;
-	  }
+	}
 	else
-	  {
-		$checkpost=$checkpost+1;
+	{	
 	  	$_SESSION["checkpost"]=$_SESSION["checkpost"]+1;
-	  }
+	}
+	$checkpost=$_SESSION["checkpost"];
 
 	if (!isset($_SESSION["tab_checkpost"]))
 	  { 

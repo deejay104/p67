@@ -39,37 +39,7 @@
 		$ress=0;
 	}
 
-// ---- Récupère la liste des ressources
-	$lst=ListeRessources($sql);
-
-	foreach($lst as $i=>$rid)
-	{
-		$resr=new ress_class($rid,$sql);
-
-		// Initilialise l'id de ressouce s'il est vide
-		if ($ress==0)
-		{
-			$ress=$rid;
-		}
-
-		// Rempli la liste dans le template
-		$tmpl_x->assign("uid_avion", $resr->id);
-		$tmpl_x->assign("nom_avion", strtoupper($resr->immatriculation));
-		if ($resr->id==0)
-		{
-			$resr->id=$resa["resa"]->uid_ressource;
-		}
-		if ($resa["resa"]->uid_ressource==$resr->id)
-		{
-			$tmpl_x->assign("chk_avion", "selected");
-			$tmpl_x->assign("uid_avionrmq", $resr->id);
-			$tmpl_x->assign("aff_nom_avion", strtoupper($resr->immatriculation));
-		}
-		else
-		  { $tmpl_x->assign("chk_avion", ""); }
-		$tmpl_x->parse("corps.aff_reservation.lst_avion");
-	}
-
+	
 // ---- Charge les données de la réservation
 	$res=array();
 
@@ -77,14 +47,14 @@
 
 
 	if (($id>0) && ($ok!=3))
-	  {
+	{
 		// Charge une nouvelle réservation
 		$resa["resa"]=new resa_class($id,$sql);
 		$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql);
 		$resa["instructeur"]=new user_class($resa["resa"]->uid_instructeur,$sql);
-	  }
+	}
 	else if ($ok!=3)
-	  {
+	{
 		$id="";
 		if ($heure=="") { $heure="8"; }
 		if ($jour=="") { $jour=date("Y-m-d"); }
@@ -116,13 +86,13 @@
 
 		$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql);
 		$resa["instructeur"]=new user_class($resa["resa"]->uid_instructeur,$sql);
-	  }
+	}
 	else if ($ok==3)
-	  {
+	{
 	  	// Il y a eu une erreur on recharge les valeurs postées
-			$ress=$form_uid_ress;
+		$ress=$form_uid_ress;
 
-			$resa["resa"]=new resa_class(($id>0) ? $id : 0,$sql);
+		$resa["resa"]=new resa_class(($id>0) ? $id : 0,$sql);
 
 	  	$resa["resa"]->dte_deb=date2sql($form_dte_deb)." $form_hor_deb";
 	  	$resa["resa"]->dte_fin=date2sql($form_dte_fin)." $form_hor_fin";
@@ -145,7 +115,19 @@
 
 		$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql);
 		$resa["instructeur"]=new user_class($resa["resa"]->uid_instructeur,$sql);
-	  }
+	}
+	
+	$lstress=ListeRessources($sql);
+	if ($resa["resa"]->uid_ressource==0)
+	{
+		foreach($lstress as $i=>$rid)
+		{
+			if ($resa["resa"]->uid_ressource==0)
+			{
+				$resa["resa"]->uid_ressource=$rid;
+			}
+		}
+	}
 
 // ---- Charge le template
 
@@ -297,6 +279,29 @@
 
 	$tmpl_x->assign("form_uid_ress", $resa["resa"]->uid_ressource);
 
+	// Récupère la liste des ressources
+	$lstress=ListeRessources($sql);
+
+	foreach($lstress as $i=>$rid)
+	{
+		$resr=new ress_class($rid,$sql);
+
+		// Initilialise l'id de ressouce s'il est vide
+
+		// Rempli la liste dans le template
+		$tmpl_x->assign("uid_avion", $resr->id);
+		$tmpl_x->assign("nom_avion", strtoupper($resr->immatriculation));
+		if ($resa["resa"]->uid_ressource==$resr->id)
+		{
+			$tmpl_x->assign("chk_avion", "selected");
+			$tmpl_x->assign("uid_avionrmq", $resr->id);
+			$tmpl_x->assign("aff_nom_avion", strtoupper($resr->immatriculation));
+		}
+		else
+		  { $tmpl_x->assign("chk_avion", ""); }
+		$tmpl_x->parse("corps.aff_reservation.lst_avion");
+	}
+	
 	// Liste des pilotes	
 	$lst=ListActiveUsers($sql,"prenom,nom","!membre,!invite");
 

@@ -47,6 +47,7 @@
 
 	$token=$uid;
 	$module="modules";
+	$gl_mode="api";
 
 // ---- Vérifie la variable $mod
 	$mod=$_REQUEST["mod"];

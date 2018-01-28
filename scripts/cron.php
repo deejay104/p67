@@ -41,9 +41,9 @@
 
 // ---- Charge la config  
 	if (!file_exists("config/config.inc.php"))
-	  { FatalError("Fichier de configuration introuvable","Il manque le fichier de configuration 'config/config.inc.php'."); }
+	  { FatalError("Fichier de configuration introuvable","Il manque le fichier de configuration."); }
 	if (!file_exists("config/variables.inc.php"))
-	  { FatalError("Fichier des variables introuvable","Il manque le fichier de variables 'config/variables.inc.php'."); }
+	  { FatalError("Fichier des variables introuvable","Il manque le fichier de variables."); }
 
   	require ("config/config.inc.php");
 	require ("config/variables.inc.php");
@@ -51,84 +51,81 @@
 // ---- Charge le numéro de version
 	require ("version.txt");
 
-// ---- Charge les templates
-	require ("class/xtpl.inc.php");
-
 // ---- Charge les class
 	require ("class/user.inc.php");
 
 // ---- Se connecte à la base MySQL
 	require ("class/mysql.inc.php");
-	$sql = new mysql_class($mysqluser, $mysqlpassword, $hostname, $db, $port);
+
+	$sql = new mysql_class($mysqluser, $mysqlpassword, $hostname, $db);
+	$sql_cron = new mysql_class($mysqluser, $mysqlpassword, $hostname, $db);
 
 // ---- Défini l'utilisateur d'execution du batch
-	$gl_uid=$MyOpt["uid_club"];
+	if ((!is_numeric($MyOpt["uid_system"])) || ($MyOpt["uid_system"]==0))
+	  { FatalError("Compte systeme introuvable","Le compte systeme n'est pas défini."); }
+
+	$gl_uid=$MyOpt["uid_system"];
 	$uid=$gl_uid;
 	
 	
 // ---- Fonction des informations de l'utilisateur
 	if ($gl_uid>0)
-	  {
+	{
 		$myuser = new user_class($gl_uid,$sql,true);
 		$res_user=$myuser->data;
-	  }
-
-// ---- Template par default
-	$tmpl="vide.htm";
-	$tmpl_prg = new XTemplate (MyRep($tmpl));
-
-// ---- Maj du template
-	if (!isset($default_profile))
-	{
-		$default_profile="";
 	}
-	$tmpl_prg->assign("version", $version.(($default_profile!="") ? ".".eregi_replace("([a-z])[a-z]*_(.._)?([a-z])[a-z]*","\\1\\3",$default_profile) : ""));
-
-
-// ---- Définition des variables
-	$color   = "013366";
-	$color2  = "FFFFFF";
-	$color3  = "026AD3";
-	$colfond = "FFFFFF";
-
-	$MyOpt["col_fond"]["value"]=$color;
-	$MyOpt["col_prg"]["value"]=$color2;
-	$MyOpt["col_titre"]["value"]="AFC8E2";
 
 	$module="modules";
 
 // ---- Facture les lignes d'abonnement
-	if ($MyOpt["module"]["abonnement"]=="on")
-	{
-		echo "\n\n----\nAbonnement\n";
-		$mod="facturation";
-	 	require(MyRep("factureabo.inc.php"));
-	}
+	// if ($MyOpt["module"]["abonnement"]=="on")
+	// {
+		// echo "\n\n----\nAbonnement\n";
+		// $mod="facturation";
+	 	// require(MyRep("factureabo.inc.php"));
+	// }
 
 // ---- Envoie la notification pour les nouvelles factures
-	if ($MyOpt["module"]["facture"]=="on")
-	{
-		echo "\n\n----\nFacturation\n";
-		$mod="facturation";
-	 	require(MyRep("facturemail.inc.php"));
-	}
+	// if ($MyOpt["module"]["facture"]=="on")
+	// {
+		// echo "\n\n----\nFacturation\n";
+		// $mod="facturation";
+	 	// require(MyRep("facturemail.inc.php"));
+	// }
 
 // ---- Envoie la notification pour la validité des licences
-	if ($MyOpt["module"]["aviation"]=="on")
+	// if ($MyOpt["module"]["aviation"]=="on")
+	// {
+		// echo "\n\n----\nAviation\n";
+		// $mod="aviation";
+	  // require(MyRep("checkvalid.inc.php"));
+	// }
+
+// ---- Execute les taches planifiées
+	$query="SELECT * FROM ".$MyOpt["tbl"]."_cron WHERE actif='oui' AND (nextrun<='".now()."' OR nextrun IS NULL)";
+	$sql_cron->Query($query);
+
+	for($gl_cron_i=0; $gl_cron_i<$sql_cron->rows; $gl_cron_i++)
 	{
-		echo "\n\n----\nAviation\n";
-		$mod="aviation";
-	  require(MyRep("checkvalid.inc.php"));
+		$sql_cron->GetRow($gl_cron_i);
+
+		$gl_myprint_txt="";
+
+		echo utf8_encode($sql_cron->data["description"])."\n";
+
+		$mod=$sql_cron->data["module"];
+		require(MyRep($sql_cron->data["script"].".cron.php"));
+
+		echo "-----------------------------\n";
+		echo $gl_myprint_txt;
+		echo "-----------------------------\n\n";
+
+		$q="UPDATE ".$MyOpt["tbl"]."_cron SET lastrun='".now()."', nextrun='".date("Y-m-d H:i:s",time()+$sql_cron->data["schedule"]*60)."', txtretour='".$res."', txtlog='".addslashes($gl_myprint_txt)."' WHERE id='".$sql_cron->data["id"]."'";
+		$sql->Update($q);
+		
 	}
-	
-// ---- Affecte les blocs
-	$tmpl_prg->assign("corps", $corps);
 
-// ---- Affiche la page
-	$tmpl_prg->parse("main");
-	echo $tmpl_prg->text("main");
-
-// ---- Ferme la connexion à la base de données	  
+// ---- Ferme la connexion à la base de données	
  	$sql->closedb();
 
 ?>

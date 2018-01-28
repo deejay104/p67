@@ -12,6 +12,8 @@ $mysqluser = "root";
 $mysqlpassword = "";
 // The database lives in
 $db = "polygone67";
+// Port
+$port=3306;
 
 // Your language file
 $language = "french";

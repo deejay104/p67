@@ -37,11 +37,11 @@ function GetDroit($droit)
 
 		if (trim($droit)=="")
 		  { return true; }
-		else if ($myuser->role[$droit])
+		else if ((isset($myuser->role[$droit])) && ($myuser->role[$droit]))
 		  { return true; }
-		else if ($myuser->groupe["ADM"])
+		else if ((isset($myuser->groupe["ADM"])) && ($myuser->groupe["ADM"]))
 		  { return true; }
-		elseif ($myuser->groupe[$droit])
+		elseif ((isset($myuser->groupe[$droit])) && ($myuser->groupe[$droit]))
 		  { return true; }
 		else
 		  { return false; }
@@ -51,7 +51,7 @@ function myPrint($txt)
 { global $gl_mode,$gl_myprint_txt;
 	if ($gl_mode=="batch")
 	{
-		echo $txt."\n";
+		$gl_myprint_txt.=utf8_encode($txt)."\n";
 	}
 	else
 	{
@@ -148,6 +148,7 @@ function MyMail($from,$to,$tabcc,$subject,$message,$headers="",$files="")
 	{
 		$me=$from["name"];
 		$fromadd=$from["mail"];
+		$txtfrom=$from["mail"];
 	}
 	else
 	{
@@ -156,9 +157,16 @@ function MyMail($from,$to,$tabcc,$subject,$message,$headers="",$files="")
 		preg_match("/^([^@]*)@([^$]*)$/",$from,$t);
 		$me=$t[0];
 		$fromadd=$from;
+		$txtfrom=$from;
 	}
 
-	if ($MyOpt["sendmail"]==1) { MyPrint("From:$from - To:$to - Cc:$cc - Subject:$subject"); return -1; }
+	$txtcc="";
+	if ((is_array($tabcc)) && (count($tabcc)>0))
+	{
+		$txtcc=implode(",",$tabcc);
+	}
+
+	if ($MyOpt["sendmail"]==1) { myPrint("From:".$txtfrom." - To:".$to." - Cc:".$txtcc." - Subject:".$subject); return false; }
 
 	require_once 'external/PHPMailer/PHPMailerAutoload.php';
 	

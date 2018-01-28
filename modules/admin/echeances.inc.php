@@ -13,14 +13,14 @@
 		{
 			if ($id>0)
 			{
-				$query="UPDATE ".$MyOpt["tbl"]."_echeancetype SET description='".$d."',poste='".$form_poste[$id]."', droit='".$form_droit[$id]."',resa='".$form_resa[$id]."',multi='".$form_multi[$id]."',cout='".$form_cout[$id]."' WHERE id='".$id."'";
+				$query="UPDATE ".$MyOpt["tbl"]."_echeancetype SET description='".$d."',poste='".$form_poste[$id]."', droit='".$form_droit[$id]."',resa='".$form_resa[$id]."',multi='".$form_multi[$id]."',cout='".$form_cout[$id]."',notif='".$form_notif[$id]."',delai='".$form_delai[$id]."' WHERE id='".$id."'";
 				$sql->Update($query);
 			}
 			else
 			{
 				if (trim($d)!="")
 				{
-					$query="INSERT INTO ".$MyOpt["tbl"]."_echeancetype SET description='".$d."',poste='".$form_poste[$id]."',droit='".$form_droit[$id]."',resa='".$form_resa[$id]."',multi='".$form_multi[$id]."',cout='".$form_cout[$id]."'";
+					$query="INSERT INTO ".$MyOpt["tbl"]."_echeancetype SET description='".$d."',poste='".$form_poste[$id]."',droit='".$form_droit[$id]."',resa='".$form_resa[$id]."',multi='".$form_multi[$id]."',cout='".$form_cout[$id]."',notif='".$form_notif[$id]."',delai='".$form_delai[$id]."'";
 					$sql->Insert($query);
 				}
 			}
@@ -48,6 +48,7 @@
 		$tmpl_x->assign("form_description",$sql->data["description"]);
 		$tmpl_x->assign("form_droit",$sql->data["droit"]);
 		$tmpl_x->assign("form_cout",$sql->data["cout"]);
+		$tmpl_x->assign("form_delai",$sql->data["delai"]);
 
 		$tmpl_x->assign("select_resa_instructeur","");
 		$tmpl_x->assign("select_resa_obligatoire","");
@@ -55,8 +56,12 @@
 		$tmpl_x->assign("select_multi_oui","");
 		$tmpl_x->assign("select_multi_non","");
 
+		$tmpl_x->assign("select_notif_oui","");
+		$tmpl_x->assign("select_notif_non","");
+
 		$tmpl_x->assign("select_resa_".$sql->data["resa"],"selected");
 		$tmpl_x->assign("select_multi_".$sql->data["multi"],"selected");
+		$tmpl_x->assign("select_notif_".$sql->data["notif"],"selected");
 
 		foreach($tabposte as $id=>$d)
 		{

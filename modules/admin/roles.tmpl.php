@@ -32,6 +32,8 @@ $tabRoles["AccesConfiguration"]="Accès à la page de configuration des variables"
 $tabRoles["AccesSuiviVols"]="Accès au suivi des vols des membres";
 $tabRoles["AccesConfigEcheances"]="Accès à la gestion des échéances";
 $tabRoles["AccesConfigPostes"]="Accès à la page de modification des postes";
+$tabRoles["AccesCrontab"]="Accès à la page de gestion des taches planifiées";
+
 
 $tabRoles["AffUserComptes"]="Afficher le solde du compte sur la fiche du membre";
 $tabRoles["AffUserHeures"]="Afficher les heure de vol sur la fiche du membre";

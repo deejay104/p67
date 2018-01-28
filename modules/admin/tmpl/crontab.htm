@@ -1,0 +1,105 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+	<A href="index.php?mod=admin"'><IMG src="{path_module}/img/icn32_config.png" border=0 alt="">Configuration</A>
+	<A href="index.php?mod=admin&rub=groupes"><IMG src="{path_module}/img/icn32_groupes.png" border=0 alt="">Groupes</A>
+	<A href="index.php?mod=admin&rub=echeances"><IMG src="{path_module}/img/icn32_echeance.png" border=0 alt="">Echéances</A>
+	<A href="index.php?mod=admin&rub=postes"><IMG src="{path_module}/img/icn32_param.png" border=0>Postes</A>
+	<A href="index.php?mod=admin&rub=utildonnees"><IMG src="{path_module}/img/icn32_param.png" border=0>Données Utilisateurs</A>
+	<A href="index.php?mod=admin&rub=crontab" class='pageTitleSelected'><IMG src="{path_module}/img/icn32_config.png" border=0 alt="">Taches Planifiées</A>
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+<script>
+function SwitchEdit(champ,id)
+{
+	<!-- document.getElementById("sched_"+id).value = "<input type='text' value='"+document.getElementById("sched_"+id).value+"'>"; -->
+	if (champ=="actif")
+	{
+	}
+	else
+	{
+		document.getElementById(champ+"_"+id).innerHTML = "<input id='"+champ+"_"+id+"_val' onblur=\"SwitchHtml('"+champ+"',"+id+")\" type='text' value='"+document.getElementById(champ+"_"+id+"_a").innerHTML+"' size='4'>";
+		document.getElementById(champ+"_"+id+"_val").focus();
+		document.getElementById(champ+"_"+id+"_val").select();
+	}
+}
+function SwitchHtml(champ,id)
+{
+	$(function() {
+		$.ajax({
+			url:'api.php?mod=admin&rub=updcron&id='+id+'&var='+champ+'&val='+document.getElementById(champ+"_"+id+"_val").value,
+			type: 'html',
+			dataType: 'JSON',
+			success: function(response)
+			{
+				console.log(response);
+
+				if (response.result=="OK")
+				{
+					document.getElementById(champ+"_"+id).style.backgroundColor = "#BBFFAA";
+					document.getElementById(champ+"_"+id).innerHTML = "<a id='"+champ+"_"+id+"_a' onClick=\"SwitchEdit('"+champ+"',"+id+")\">"+response.value+"</a>";
+				}
+				else
+				{
+					document.getElementById(champ+"_"+id).style.backgroundColor = "#FFBBAA";
+					document.getElementById(champ+"_"+id).innerHTML = "<a id='"+champ+"_"+id+"_a' onClick=\"SwitchEdit('"+champ+"',"+id+")\">"+document.getElementById(champ+"_"+id+"_val").value+"</a>";
+				}
+			},
+			error : function(response)
+			{
+				document.getElementById(champ+"_"+id).style.backgroundColor = "#FFBBAA";
+				document.getElementById(champ+"_"+id).innerHTML = "<a id='"+champ+"_"+id+"_a' onClick=\"SwitchEdit('"+champ+"',"+id+")\">"+document.getElementById(champ+"_"+id+"_val").value+"</a>";
+			}
+		});
+	})
+
+}
+
+function SwitchOn(champ,id)
+{
+	$(function() {
+		$.ajax({
+			url:'api.php?mod=admin&rub=updcron&id='+id+'&var='+champ+'&val='+document.getElementById(champ+"_"+id+"_val").innerHTML,
+			type: 'html',
+			dataType: 'JSON',
+			success: function(response)
+			{
+				console.log(response);
+
+				if (response.result=="OK")
+				{
+					document.getElementById(champ+"_"+id).style.backgroundColor = "#BBFFAA";
+					document.getElementById(champ+"_"+id).innerHTML = "<a id='"+champ+"_"+id+"_val' onClick=\"SwitchOn('"+champ+"',"+id+")\">"+response.value+"</a>";
+				}
+				else
+				{
+					document.getElementById(champ+"_"+id).style.backgroundColor = "#FFBBAA";
+					document.getElementById(champ+"_"+id).innerHTML = "<a id='"+champ+"_"+id+"_val' onClick=\"SwitchOn('"+champ+"',"+id+")\">"+document.getElementById(champ+"_"+id+"_val").value+"</a>";
+				}
+			},
+			error : function(response)
+			{
+				document.getElementById(champ+"_"+id).style.backgroundColor = "#FFBBAA";
+				document.getElementById(champ+"_"+id).innerHTML = "<a id='"+champ+"_"+id+"_val' onClick=\"SwitchOn('"+champ+"',"+id+")\">"+document.getElementById(champ+"_"+id+"_val").value+"</a>";
+			}
+		});
+	})
+
+}
+
+
+</script>
+
+<br />
+{aff_tableau}
+
+<!-- BEGIN: resultat -->
+<div style='width: 1060px; border:1px solid #000000; border-radius: 5px; padding: 10px; background-color: #dddddd; margin-top: 30px; '>
+{aff_resultat}
+</div>
+<!-- END: resultat -->
+<!-- END: corps -->
