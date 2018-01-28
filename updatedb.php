@@ -982,7 +982,7 @@
 	}
 
 // ----
-	$nver=472;
+	$nver=474;
 	if ($ver<$nver)
 	{
 		$sql=array();
