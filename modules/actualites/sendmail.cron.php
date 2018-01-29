@@ -7,7 +7,8 @@
 	if ($gl_mode!="batch")
 	  { FatalError("Acces refuse","Ne peut etre execute qu'en arriere plan"); }
 
-  
+	myPrint("Notification des actualités");
+
 // ---- Récupère les actualités pour lesquels le mail n'a pas été envoyé
 	$query="SELECT * FROM `".$MyOpt["tbl"]."_actualites` WHERE mail='non' AND actif='oui'";
 	$sql->Query($query);
@@ -24,6 +25,8 @@
 	$lst=ListActiveMails($sql);
 
 // ---- traite toutes les actus
+	$ret=true;
+
 	foreach ($tabActu as $id=>$d)
 	{
 		myPrint($d["titre"]);
@@ -37,7 +40,6 @@
 
 		// Envoie du message aux membres
 		$dest="";
-		$ret=true;
 		foreach($lst as $i=>$uid)
 		{
 			// Et on envoie un mail à chacune des personnes de la liste
@@ -67,11 +69,11 @@
 
 	if ($ret)
 	{
-		$res="OK";
+		$gl_res="OK";
 	}
 	else
 	{
-		$res="ERREUR";
+		$gl_res="ERREUR";
 	}
 
 ?>

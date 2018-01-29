@@ -33,6 +33,7 @@
 
 // ---- Liste les comptes actifs
 	$lstusr=ListActiveUsers($sql,"std",$MyOpt["restrict"]["comptes"],"");
+	$gl_res="OK";
 
 	foreach($lstusr as $i=>$id)
 	{
@@ -55,9 +56,9 @@
 		}
 		if (!$ret)
 		{
-			$res="ERREUR";
+			$gl_res="ERREUR";
 		}
 	}
 
-	myPrint($res);
+	myPrint($gl_res);
 ?>

@@ -38,7 +38,7 @@ $MyOptTmpl["site_title"]="Polygone 67";
 $MyOptHelp["site_title"]="Titre du site web";
 
 // Logo du site dans le dossier images
-$MyOptTmpl["site_logo"]="logo.gif";
+$MyOptTmpl["site_logo"]="logo.png";
 $MyOptHelp["site_logo"]="Nom du fichier logo (dans le dossier images)";
 
 // Active l'envoi de mail (0=ok, 1=nok)
@@ -61,15 +61,15 @@ $MyOptTmpl["mail"]["password"]="";
 $MyOptHelp["mail"]["password"]="SMTP user password";
 
 // Uid Banque
-$MyOptTmpl["uid_banque"]=46;
+$MyOptTmpl["uid_banque"]=2;
 $MyOptHelp["uid_banque"]="ID du compte Banque";
 
 // Uid Club
-$MyOptTmpl["uid_club"]=47;
+$MyOptTmpl["uid_club"]=3;
 $MyOptHelp["uid_club"]="ID du compte club";
 
 // Uid Banque
-$MyOptTmpl["uid_system"]=211;
+$MyOptTmpl["uid_system"]=4;
 $MyOptHelp["uid_system"]="ID du compte système";
 
 // UID Bapteme

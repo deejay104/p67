@@ -47,12 +47,13 @@
 			$gl_mode="batch";
 			$gl_myprint_txt="";
 			$gl_id=$id;
+			$gl_res="";
 			require("modules/".$sql->data["module"]."/".$sql->data["script"].".cron.php");
 
-			$q="UPDATE ".$MyOpt["tbl"]."_cron SET lastrun='".now()."', txtretour='".$res."', txtlog='".addslashes($gl_myprint_txt)."' WHERE id='".$gl_id."'";
+			$q="UPDATE ".$MyOpt["tbl"]."_cron SET lastrun='".now()."', txtretour='".$gl_res."', txtlog='".addslashes($gl_myprint_txt)."' WHERE id='".$gl_id."'";
 			$sql->Update($q);
 			
-			$tmpl_x->assign("aff_resultat",nl2br(htmlentities(utf8_decode($gl_myprint_txt))));
+			$tmpl_x->assign("aff_resultat",nl2br(htmlentities(utf8_decode($gl_myprint_txt),ENT_HTML5,"ISO-8859-1")));
 			$tmpl_x->parse("corps.resultat");
 		}
 	}

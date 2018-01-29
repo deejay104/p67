@@ -57,7 +57,7 @@
 		$lsttype[$sql->data["id"]]=$sql->data;
 	}
 	
-	$res="OK";
+	$gl_res="OK";
 	
 	foreach($lsttype as $id=>$d)
 	{
@@ -105,11 +105,11 @@
 				}
 				if (!$ret)
 				{
-					$res="ERREUR";
+					$gl_res="ERREUR";
 				}
 			}
 		}
 	}
 	
-	myPrint($res);
+	myPrint($gl_res);
 ?>

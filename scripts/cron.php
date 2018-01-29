@@ -110,6 +110,7 @@
 		$sql_cron->GetRow($gl_cron_i);
 
 		$gl_myprint_txt="";
+		$gl_res="";
 
 		echo utf8_encode($sql_cron->data["description"])."\n";
 
@@ -120,7 +121,7 @@
 		echo $gl_myprint_txt;
 		echo "-----------------------------\n\n";
 
-		$q="UPDATE ".$MyOpt["tbl"]."_cron SET lastrun='".now()."', nextrun='".date("Y-m-d H:i:s",time()+$sql_cron->data["schedule"]*60)."', txtretour='".$res."', txtlog='".addslashes($gl_myprint_txt)."' WHERE id='".$sql_cron->data["id"]."'";
+		$q="UPDATE ".$MyOpt["tbl"]."_cron SET lastrun='".now()."', nextrun='".date("Y-m-d H:i:s",time()+$sql_cron->data["schedule"]*60)."', txtretour='".$gl_res."', txtlog='".addslashes($gl_myprint_txt)."' WHERE id='".$sql_cron->data["id"]."'";
 		$sql->Update($q);
 		
 	}

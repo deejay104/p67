@@ -1400,5 +1400,8 @@ INSERT INTO `p67_config` (`param`, `value`) VALUES ('dbversion', '474');
 INSERT INTO `p67_ressources` (`nom`, `immatriculation`, `marque`, `modele`, `couleur`, `actif`, `tarif`, `tarif_reduit`, `tarif_double`, `tarif_inst`, `tarif_nue`, `typehora`, `description`, `places`, `puissance`, `charge`, `massemax`, `vitesse`, `autonomie`, `tolerance`, `centrage`, `maintenance`, `uid_maj`, `dte_maj`) VALUES
 ('Default', 'F-XXXX', '', '', '', 'oui', '0', '0', '0', '0', '0', 'min', '', 0, 0, 0, 0, 0, 0, '', '', '', 0, '0000-00-00 00:00:00');
 
+INSERT INTO `p67_cron` (`description`, `module`, `script`, `schedule`, `actif`) VALUES ('Notification des échéances', 'comptabilite', 'echeances', 10080,'non');
+INSERT INTO `p67_cron` (`description`, `module`, `script`, `schedule`, `actif`) VALUES ('Notification de decouvert', 'comptabilite', 'decouvert', 10080,'non');
+INSERT INTO `p67_cron` (`description`, `module`, `script`, `schedule`, `actif`) VALUES ('Mail d\'actualités', 'actualites', 'sendmail', 5,'non');
 
 
