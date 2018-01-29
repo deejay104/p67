@@ -128,7 +128,7 @@ function reloadImg2() {
 		<div class="formulaire">
 			<p>
 				<label for="avion">Avion</label> 
-				<SELECT id="avion" name="form_uid_ress" OnChange="reservation.submit();">
+				<SELECT id="avion" name="form_uid_ress" OnChange="reservation.submit();" style='width: 220px;'>
 				<!-- BEGIN: lst_avion -->
 				<OPTION value="{uid_avion}" {chk_avion}>{nom_avion}</OPTION>
 				<!-- END: lst_avion -->
@@ -138,46 +138,46 @@ function reloadImg2() {
 				</span>
 	  	</p>
 
-			<p>&nbsp;</p>
+		<p>&nbsp;</p>
 			
-		  <p>
-				<label for="pilote">Pilote</label>
-				<SELECT id="pilote" name="form_uid_pilote" OnChange="reservation.submit();">
+		<p>
+			<label for="pilote">Pilote</label>
+			<SELECT id="pilote" name="form_uid_pilote" OnChange="reservation.submit();" style='width: 220px;'>
 				<!-- BEGIN: lst_pilote -->
 				<OPTION value="{uid_pilote}" {chk_pilote}>{nom_pilote}</OPTION>
 				<!-- END: lst_pilote -->
-				</SELECT>
+			</SELECT>
 	  	</p>
 
-		  <p>
-				<label for="debite" title="Choisissez un autre compte à débiter. Par exemple dans le cas d'un baptème, c'est le compte du club qui est débité">Débité (si différent)</label>
-				<SELECT id="debite" name="form_uid_debite">
+		<p>
+			<label for="debite" title="Choisissez un autre compte à débiter. Par exemple dans le cas d'un baptème, c'est le compte du club qui est débité">Débité (si différent)</label>
+			<SELECT id="debite" name="form_uid_debite" style='width: 220px;'>
 				<OPTION value="0">Pilote</OPTION>
 				<!-- BEGIN: lst_debite -->
 				<OPTION value="{uid_debite}" {chk_debite}>{nom_debite}</OPTION>
 				<!-- END: lst_debite -->
-			  </SELECT>
-		 	</p>
+			</SELECT>
+	 	</p>
 
 	<!-- BEGIN: aff_instructeur -->
 		<p>
 			<label for="instructeur">Instructeur</label>
-			<SELECT id="instructeur" name="form_uid_instructeur" OnChange="reservation.submit();">
-			<!-- BEGIN: lst_instructeur -->
-			<OPTION value="{uid_instructeur}" {chk_instructeur}>{nom_instructeur}</OPTION>
-			<!-- END: lst_instructeur -->
+			<SELECT id="instructeur" name="form_uid_instructeur" OnChange="reservation.submit();" style='width: 220px;'>
+				<!-- BEGIN: lst_instructeur -->
+				<OPTION value="{uid_instructeur}" {chk_instructeur}>{nom_instructeur}</OPTION>
+				<!-- END: lst_instructeur -->
 			</SELECT>
 			<img id="imgdispo" src="api.php?mod=membres&rub=checkdispo&mid={form_uid_instructeur}&deb={deb}&fin={fin}">
 		</p>
 	<!-- END: aff_instructeur -->
-		  <p>
-				<label for="destination" title="Préciser la destination ou LOCAL pour un vol local.">Destination</label>
-			  <INPUT id="destination" name="form_destination" value="{form_destination}" size=30>
+		<p>
+			<label for="destination" title="Préciser la destination ou LOCAL pour un vol local.">Destination</label>
+			<INPUT id="destination" name="form_destination" value="{form_destination}" style='width: 220px;'>
 		  </p>
 
 		<p>
 			<label for="pob" title="Entrez le nombre de personne à bord, pilote compris (POB)">Nb de personnes</label>
-			<SELECT id="pob" name="form_nbpersonne">
+			<SELECT id="pob" name="form_nbpersonne" style='width: 60px;'>
 				<OPTION value="1" {chk_passager1}>1</OPTION>
 				<OPTION value="2" {chk_passager2}>2</OPTION>
 				<OPTION value="3" {chk_passager3}>3</OPTION>
@@ -187,12 +187,12 @@ function reloadImg2() {
 
 		<p>
 			<label for="tpsestime" title="Le temps de vol estimé correspond au temps durant lequel vous avez prévu de voler. Ce champs est obligatoire.">Temps de vol estimé</label>
-			 <INPUT id="tpsestime" name="form_tpsestime" value="{form_tpsestime}" size=6> (en minutes)
+			 <INPUT id="tpsestime" name="form_tpsestime" value="{form_tpsestime}" style='width: 60px;'> (en minutes)
 		</p>
 
 		<p>
 			<label for="invite" title="Indique aux membres que l'avion n'est pas plein et qu'il est possible de s'y rajouter. Contacter le pilote pour vérifier s'il reste des places.">Inviter les membres</label>
-			<SELECT id="invite" name="form_invite">
+			<SELECT id="invite" name="form_invite" style='width: 60px;'>
 				<OPTION value="non" {chk_invite_non}>Non</OPTION>
 				<OPTION value="oui" {chk_invite_oui}>Oui</OPTION>
 			</SELECT>
@@ -200,37 +200,41 @@ function reloadImg2() {
 
 		<p>&nbsp;</p>
 		<p>
-				<label for="form_dte_deb">Du</label>
-				<INPUT id="form_dte_deb" name="form_dte_deb" value="{form_dte_deb}" size="10" > à <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" size=8> <FONT color=red>{msg_dtedeb}</FONT>
+			<label for="form_dte_deb">Du</label>
+			<INPUT id="form_dte_deb" name="form_dte_deb" value="{form_dte_deb}" style='width: 100px;' > à <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" style='width: 60px;'> <FONT color=red>{msg_dtedeb}</FONT>
 		</p>
 		<p>
-				<label for="form_dte_fin">Au</label>
-		  	<INPUT id="form_dte_fin" name="form_dte_fin" value="{form_dte_fin}" size="10"> à <INPUT name="form_hor_fin" id="form_hor_fin" value="{form_hor_fin}" size=8> <FONT color=red>{msg_dtefin}</FONT>
-		  </p>
-			<p>&nbsp;</p>
+			<label for="form_dte_fin">Au</label>
+		  	<INPUT id="form_dte_fin" name="form_dte_fin" value="{form_dte_fin}" style='width: 100px;'> à <INPUT name="form_hor_fin" id="form_hor_fin" value="{form_hor_fin}" style='width: 60px;'> <FONT color=red>{msg_dtefin}</FONT>
+		</p>
+		<p>&nbsp;</p>
 	
-		  <p>
-				<label for="commentaire" style="vertical-align: top;" title="Veuillez préciser le nom des passagers que vous emmenez.">Commentaire(s) :</label>
-				<TEXTAREA id="commentaire" name="form_description" cols="50" rows="6">{form_description}</TEXTAREA>
-		  </p>
+		<p>
+			<label for="commentaire" style="vertical-align: top;" title="Veuillez préciser le nom des passagers que vous emmenez.">Commentaire(s) :</label>
+			<TEXTAREA id="commentaire" name="form_description" cols="50" rows="6">{form_description}</TEXTAREA>
+		</p>
 	  	  
 		</div>
 
 
-		<div class="formulaireTitre">
+	<div class="formulaireTitre">
 	  	Saisi de l'horamètre
-	  </div>
+	</div>
 
-		<div class="formulaire">
+	<div class="formulaire">
 		
 		{aff_horametre}
 
 		<p>
-	  	<label for="potentiel">Potentiel fin de vol</label>
-	  	<INPUT id="poteltiel" name="form_potentielh" value="{form_potentielh}" size=5> heure(s) <INPUT name="form_potentielm" value="{form_potentielm}" size=5> minute(s)
-	  </p>
+			<label for="potentiel">Potentiel fin de vol</label>
+			<INPUT id="potentiel" name="form_potentielh" value="{form_potentielh}" style='width: 50px;'> heure(s) <INPUT name="form_potentielm" value="{form_potentielm}" style='width: 50px;'> minute(s)
+		</p>
 
-		</div>
+		<p>
+			<label for="carburant">Carburant ajouté</label>
+			<INPUT id="carburant" name="form_carburant" value="{form_carburant}" style='width: 50px;'> Litres, pour un total de <INPUT name="form_prixcarbu" value="{form_prixcarbu}" style='width: 50px;'> €
+		</p>
+	</div>
 
 	<!-- BEGIN: aff_chkreservation -->
 			<div style="width:800px; border: 1px solid #013366; border-radius: 4px; padding: 6px; margin-top:15px; margin-bottom:15px;">

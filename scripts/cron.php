@@ -66,7 +66,10 @@
 
 	$gl_uid=$MyOpt["uid_system"];
 	$uid=$gl_uid;
-	
+
+// ---- Timezone d'exécution
+	if ($MyOpt["timezone"]!="")
+	  { date_default_timezone_set($MyOpt["timezone"]); }
 	
 // ---- Fonction des informations de l'utilisateur
 	if ($gl_uid>0)
@@ -76,30 +79,6 @@
 	}
 
 	$module="modules";
-
-// ---- Facture les lignes d'abonnement
-	// if ($MyOpt["module"]["abonnement"]=="on")
-	// {
-		// echo "\n\n----\nAbonnement\n";
-		// $mod="facturation";
-	 	// require(MyRep("factureabo.inc.php"));
-	// }
-
-// ---- Envoie la notification pour les nouvelles factures
-	// if ($MyOpt["module"]["facture"]=="on")
-	// {
-		// echo "\n\n----\nFacturation\n";
-		// $mod="facturation";
-	 	// require(MyRep("facturemail.inc.php"));
-	// }
-
-// ---- Envoie la notification pour la validité des licences
-	// if ($MyOpt["module"]["aviation"]=="on")
-	// {
-		// echo "\n\n----\nAviation\n";
-		// $mod="aviation";
-	  // require(MyRep("checkvalid.inc.php"));
-	// }
 
 // ---- Execute les taches planifiées
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_cron WHERE actif='oui' AND (nextrun<='".now()."' OR nextrun IS NULL)";

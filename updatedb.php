@@ -998,7 +998,17 @@
 		
 		UpdateDB($sql,$nver);
 	}
-	
+
+// ----
+	$nver=475;
+	if ($ver<$nver)
+	{
+		$sql=array();
+		$sql[]="ALTER TABLE `".$MyOpt["tbl"]."_calendrier` ADD `carburant` VARCHAR(6) NOT NULL AFTER `potentiel`, ADD `prixcarbu` VARCHAR(6) NOT NULL AFTER `carburant`;";
+
+		UpdateDB($sql,$nver);
+	}
+		
 // *********************************************************************************************************
 
 	echo "<a href='".$MyOpt["host"]."'>-Retour au site-</a>";

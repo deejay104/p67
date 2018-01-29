@@ -45,6 +45,9 @@
 	require ("config/variables.inc.php");
 	require ("modules/fonctions.inc.php");
 
+	if ($MyOpt["timezone"]!="")
+	  { date_default_timezone_set($MyOpt["timezone"]); }
+
 // ---- Gestion des thèmes
 	$theme="";
 	if ( (isset($_REQUEST["settheme"])) && ($_REQUEST["settheme"]!="") )

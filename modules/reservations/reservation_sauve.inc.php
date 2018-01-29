@@ -122,6 +122,8 @@
 				$resa["resa"]->horafin=$form_horafin;
 				$resa["resa"]->potentielh=$form_potentielh;
 				$resa["resa"]->potentielm=$form_potentielm;
+				$resa["resa"]->carburant=$form_carburant;
+				$resa["resa"]->prixcarbu=$form_prixcarbu;
 			  }
 
 

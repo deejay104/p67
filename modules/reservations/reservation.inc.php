@@ -106,6 +106,8 @@
 	  	$resa["resa"]->horafin=$form_horafin;
 	  	$resa["resa"]->potentielh=$form_potentielh;
 	  	$resa["resa"]->potentielm=$form_potentielm;
+	  	$resa["resa"]->carburant=$form_carburant;
+	  	$resa["resa"]->prixcarbu=$form_prixcarbu;
 	  	$resa["resa"]->destination=$form_destination;
 	  	$resa["resa"]->nbpersonne=$form_nbpersonne;
 	  	$resa["resa"]->invite=$form_invite;
@@ -443,6 +445,8 @@
 	$tmpl_x->assign("form_potentielh", $resa["resa"]->potentielh);
 	$tmpl_x->assign("form_potentielm", $resa["resa"]->potentielm);
 
+	$tmpl_x->assign("form_carburant", $resa["resa"]->carburant);
+	$tmpl_x->assign("form_prixcarbu", $resa["resa"]->prixcarbu);
 
 	// Texte d'acceptation
 	if ($MyOpt["ChkValidResa"]=="oui")

@@ -383,6 +383,21 @@
 			$tmpl_x->assign("temps_vols", " <INPUT type=\"text\" name=\"form_tempsresa[".$id."]\" size=5 value=\"".$tps."\">");
 			$tmpl_x->assign("bloc_vols", " <INPUT type=\"text\" name=\"form_blocresa[".$id."]\" size=5 value=\"".$tbl."\">");
 
+			$tmpl_x->assign("destination_vols", $resa["resa"]->destination);
+			
+			$tmpl_x->assign("distance_vols", "0");
+			if ($resa["resa"]->destination!="LOCAL")
+			{
+				$query="SELECT description, lon, lat FROM ".$MyOpt["tbl"]."_navpoints AS wpt WHERE nom='".$resa["resa"]->destination."'";
+				$res=$sql->QueryRow($query);
+
+				if ($res["description"]!="")
+				{
+					$dist=round(getDistance($MyOpt["terrain"]["latitude"], $MyOpt["terrain"]["longitude"], $res["lat"], $res["lon"], "N"),0)." N";
+					$tmpl_x->assign("distance_vols", $dist);
+				}
+			}
+
 			$tmpl_x->parse("corps.aff_vols.lst_vols");
 		}
 

@@ -41,6 +41,8 @@ class resa_class{
 		$this->tpsestime="";
 		$this->destination="LOCAL";
 		$this->invite="non";
+		$this->carburant="";
+		$this->prixcarbu="";
 
 		if ($id>0)
 		  {
@@ -80,6 +82,8 @@ class resa_class{
 		$this->potentielh=floor($res["potentiel"]/60);
 		$this->potentielm=$res["potentiel"]-$this->potentielh*60;
 		$this->accept=$res["accept"];
+		$this->carburant=$res["carburant"];
+		$this->prixcarbu=$res["prixcarbu"];
 		$this->uid_maj=$res["uid_maj"];
 		$this->dte_maj=$res["dte_maj"];
 
@@ -196,7 +200,6 @@ class resa_class{
 		if ($this->tpsestime==0)
 	  	  { return "Vous devez saisir un temps de vol estimé.<br />"; }
 
-
 		if (!is_numeric($this->tpsreel))
 	  	  { $this->tpsreel=0; }
 
@@ -205,7 +208,19 @@ class resa_class{
 		if (!is_numeric($this->potentielm))
 	  	  { $this->potentielm=0; }
 
-		$this->potentiel=$this->potentielh*60+$this->potentielm;
+
+  		if (!is_numeric($this->carburant))
+	  	  { $this->carburant=0; }
+		else
+	  	  { $this->carburant=round($this->carburant,1); }
+
+  		if (!is_numeric($this->prixcarbu))
+	  	  { $this->prixcarbu=0; }
+		else
+	  	  { $this->prixcarbu=round($this->prixcarbu,2); }
+
+
+	  $this->potentiel=$this->potentielh*60+$this->potentielm;
 		if (!is_numeric($this->potentiel))
 	  	  { $this->potentiel=0; }
 
@@ -345,6 +360,8 @@ class resa_class{
 		$query.="horadeb='$this->horadeb',";
 		$query.="horafin='$this->horafin',";
 		$query.="potentiel='$this->potentiel',";
+		$query.="carburant='$this->carburant',";
+		$query.="prixcarbu='$this->prixcarbu',";
 		$query.="uid_maj=$uid, dte_maj='".now()."' ";
 		$query.="WHERE id=$this->id";
 		$sql->Update($query);

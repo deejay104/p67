@@ -61,8 +61,10 @@
 			<th width=170><B>Instructeur</B></TD>
 			<th width=170><B>Tarif</B></TD>
 			<th width=200 colspan=2><B>Horamètre</B></TD>
-			<th width=120><B>Temps (minutes)</B></TD>
-			<th width=160><B>Bloc (minutes)</B></TD>
+			<th width=100><B>Temps (min)</B></TD>
+			<th width=100><B>Bloc (min.)</B></TD>
+			<th width=100><B>Destination</B></TD>
+			<th width=100><B>Distance</B></TD>
 		  </tr>
 		<!-- BEGIN: lst_vols -->
 		  <TR>
@@ -78,10 +80,12 @@
 				<!-- END: lst_tarifs -->
 			      </SELECT>
 			</TD>
-			<TD width=100>{horadeb}</TD>
-			<TD width=100>{horafin}</TD>
+			<TD>{horadeb}</TD>
+			<TD>{horafin}</TD>
 			<TD>{temps_vols}</TD>
 			<TD>{bloc_vols}</TD>
+			<TD>{destination_vols}</TD>
+			<TD>{distance_vols}</TD>
 		  </TR>
 		<!-- END: lst_vols -->
 
@@ -116,6 +120,8 @@
 			<TD><INPUT type="text" name="form_horafin[{id_new}]" size=5></TD>
 			<TD><INPUT type="text" name="form_temps[{id_new}]" size=5></TD>
 			<TD><INPUT type="text" name="form_bloc[{id_new}]" size=5></TD>
+			<TD>&nbsp;</TD>
+			<TD>&nbsp;</TD>
 		  </TR>
 		<!-- END: lst2_vols -->
 		  <TR>
