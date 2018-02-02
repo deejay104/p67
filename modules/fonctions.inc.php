@@ -1121,4 +1121,14 @@ function getCompassDirection( $bearing )
   return $cardinals[round( $bearing / 45 )];
 }
 
+
+function affInformation($txt,$res)
+{
+	global $tmpl_prg;
+	
+	$tmpl_prg->assign("msg_infos", $txt);
+	$tmpl_prg->assign("msg_class", $res);
+	$tmpl_prg->parse("main.aff_infos");
+}
+
 ?>

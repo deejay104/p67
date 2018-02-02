@@ -6,6 +6,11 @@
 // ---- Vérifie le droit d'accès
 	if (!GetDroit("AccesUtilisateurDonnees")) { FatalError("Accès non autorisé (AccesEcheances)"); }
 
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once("modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+
 // ---- Sauvegarde
 	if (($fonc=="Enregistrer") && (GetDroit("ModifUtilDonnees")))
 	{

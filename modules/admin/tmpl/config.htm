@@ -3,12 +3,7 @@
 <!-- END: icone -->
 
 <!-- BEGIN: infos -->
-	<A href="index.php?mod=admin" class='pageTitleSelected'><IMG src="{path_module}/img/icn32_config.png" border=0 alt="">Configuration</A>
-	<A href="index.php?mod=admin&rub=groupes"><IMG src="{path_module}/img/icn32_groupes.png" border=0 alt="">Groupes</A>
-	<A href="index.php?mod=admin&rub=echeances"><IMG src="{path_module}/img/icn32_echeance.png" border=0 alt="">Echéances</A>
-	<A href="index.php?mod=admin&rub=postes"><IMG src="{path_module}/img/icn32_param.png" border=0>Postes</A>
-	<A href="index.php?mod=admin&rub=utildonnees"><IMG src="{path_module}/img/icn32_param.png" border=0>Données Utilisateurs</A>
-	<A href="index.php?mod=admin&rub=crontab"><IMG src="{path_module}/img/icn32_config.png" border=0 alt="">Taches Planifiées</A>
+{aff_menu}
 <!-- END: infos -->
 
 
@@ -43,13 +38,15 @@
 <input type="hidden" name="rub" value="index">
 
 <div class="formulaire">
-	<ul class="formulaireMulti">
+	<ul class="formulaireMulti tableauTitre">
 		<li>
 			<label>Paramètre</label>
 			<span>Variable</span>
 			<span>Valeur</span>
 			<span>Défault</span>
 		</li>
+	</ul>
+	<ul class="formulaireMulti">
 <!-- BEGIN: lst_param -->
 		<li class="{param_class}">
 			<label>{param_nom}</label>
@@ -58,9 +55,11 @@
 			<span>{param_default}</span>
 		</li>
 <!-- END: lst_param -->
+	<li>
+	<input type="submit" name="fonc" value="Enregistrer">
+	</li>
 	</ul>
 </div>
 
-<input type="submit" name="fonc" value="Enregistrer">
 </form>
 <!-- END: corps -->

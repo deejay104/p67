@@ -31,11 +31,17 @@
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérifie les droits d'accès
-	if (!GetDroit("AccesPageTableauBord")) { FatalError("Accès non autorisé"); }
+	if (!GetDroit("AccesPageBilan")) { FatalError("Accès non autorisé"); }
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once("modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
 
+
+// ---- Vérifie les variables
 	if ((isset($dte)) && (preg_match("/[0-9]{4}/",$dte)))
 	  { $annee=$dte; }
 	if ((!isset($annee)) && (!preg_match("/[0-9]{4}/",$annee)))

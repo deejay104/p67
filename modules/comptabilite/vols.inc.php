@@ -37,6 +37,10 @@
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once("modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Charge les tarifs
   	$tabTarif=array();
@@ -188,9 +192,10 @@
 
 		if ($msg_result!="")
 		{
-			$tmpl_x->assign("msg_confirmation", $msg_result);
-			$tmpl_x->assign("msg_confirmation_class", "msgerror");
-			$tmpl_x->parse("corps.msg_enregistre");
+			// $tmpl_x->assign("msg_confirmation", $msg_result);
+			// $tmpl_x->assign("msg_confirmation_class", "msgerror");
+			// $tmpl_x->parse("corps.msg_enregistre");
+		affInformation($msg_result,"error");
 		}
 	  
 		if ($fonc=="Débiter")
@@ -228,10 +233,10 @@
   				}
 			}
 
-			$tmpl_x->assign("msg_confirmation", $nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret);
-			$tmpl_x->assign("msg_confirmation_class", ($ret!="") ? "msgerror" : "msgok");
-			
-			$tmpl_x->parse("corps.msg_enregistre");
+			// $tmpl_x->assign("msg_confirmation", $nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret);
+			// $tmpl_x->assign("msg_confirmation_class", ($ret!="") ? "msgerror" : "msgok");			
+			// $tmpl_x->parse("corps.msg_enregistre");
+			affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret,($ret!="") ? "error" : "ok");
 
 		}
 

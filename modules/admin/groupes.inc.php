@@ -34,6 +34,10 @@
 // ---- Vérifie le droit d'accès
 	if (!GetDroit("AccesConfigGroupes")) { FatalError("Accès non autorisé (AccesConfigGroupes)"); }
 
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once("modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Liste les groupes
 	$tabTitre=array();

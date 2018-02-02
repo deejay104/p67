@@ -38,6 +38,11 @@
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once("modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+
 // ---- Enregistre les modifications
 	if (($fonc=="Enregistrer") && (is_array($form_poste)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	  {

@@ -3,12 +3,7 @@
 <!-- END: icone -->
 
 <!-- BEGIN: infos -->
-	<A href="index.php?mod=admin"><IMG src="{path_module}/img/icn32_config.png" border=0 alt="Fichier de configuration">Configuration</A>
-	<A href="index.php?mod=admin&rub=groupes"><IMG src="{path_module}/img/icn32_groupes.png" border=0 alt="Gestion des groupes">Groupes</A>
-	<A href="index.php?mod=admin&rub=echeances"><IMG src="{path_module}/img/icn32_echeance.png" border=0 alt="Gestion des échéances">Echéances</A>
-	<A href="index.php?mod=admin&rub=postes"><IMG src="{path_module}/img/icn32_param.png" border=0 alt="Gestion des postes de mouvement comptable">Postes</A>
-	<A href="index.php?mod=admin&rub=utildonnees" class='pageTitleSelected'><IMG src="{path_module}/img/icn32_param.png" border=0>Données Utilisateurs</A>
-	<A href="index.php?mod=admin&rub=crontab"><IMG src="{path_module}/img/icn32_config.png" border=0 alt="">Taches Planifiées</A>
+{aff_menu}
 <!-- END: infos -->
 
 
@@ -49,7 +44,8 @@ $(function() {
 	<input type="hidden" name="mod" value="admin">
 	<input type="hidden" name="rub" value="utildonnees">
 
-	<ul class="tableauOrdre tableauOrdreth">
+	<br />
+	<ul class="tableauOrdre tableauTitre">
 		<li>
 			<span style="width:24px;"></span>
 			<span style="width:300px; text-align:left;">Nom</span>

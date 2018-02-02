@@ -3,20 +3,18 @@
 <!-- END: icone -->
 
 <!-- BEGIN: infos -->
-	<A href="index.php?mod=admin"><IMG src="{path_module}/img/icn32_config.png" border=0 alt="">Configuration</A>
-	<A href="index.php?mod=admin&rub=groupes" class='pageTitleSelected'><IMG src="{path_module}/img/icn32_groupes.png" border=0 alt="">Groupes</A>
-	<A href="index.php?mod=admin&rub=echeances"><IMG src="{path_module}/img/icn32_groupes.png" border=0 alt="">Echéances</A>
-	<A href="index.php?mod=admin&rub=postes"><IMG src="{path_module}/img/icn32_param.png" border=0>Postes</A>
-	<A href="index.php?mod=admin&rub=utildonnees"><IMG src="{path_module}/img/icn32_param.png" border=0>Données Utilisateurs</A>
-	&nbsp;|&nbsp;
-	<A href="index.php?mod=admin&rub=groupes"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt="">Liste</A>
-	<A href="index.php?mod=admin&rub=grpdetail"><IMG src="{path_module}/img/icn32_groupeadd.png" border=0 alt="">Nouveau</A>
-	<A href="index.php?mod=admin&rub=grpdetail&grp={form_grp}&fonc=copier"><IMG src="{path_module}/img/icn32_groupecopy.png" border=0 alt="">Copier</A>
-	<A href="#" OnClick="ConfirmeClick('index.php?mod=admin&rub=grpdetail&grp={form_grp}&fonc=supprimer','Souhaitez-vous supprimer ce groupe ?');"><IMG src="{path_module}/img/icn32_groupesup.png" border=0 alt="">Supprimer</A>
+{aff_menu}
 <!-- END: infos -->
 
 
 <!-- BEGIN: corps -->
+<br />
+<div class="pagetitle" style="background-color: #dddddd; height: 40px; width: 100%">
+	<A href="index.php?mod=admin&rub=groupes"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt="">Liste</A>
+	<A href="index.php?mod=admin&rub=grpdetail"><IMG src="{path_module}/img/icn32_groupeadd.png" border=0 alt="">Nouveau</A>
+	<A href="index.php?mod=admin&rub=grpdetail&grp={form_grp}&fonc=copier"><IMG src="{path_module}/img/icn32_groupecopy.png" border=0 alt="">Copier</A>
+	<A href="#" OnClick="ConfirmeClick('index.php?mod=admin&rub=grpdetail&grp={form_grp}&fonc=supprimer','Souhaitez-vous supprimer ce groupe ?');"><IMG src="{path_module}/img/icn32_groupesup.png" border=0 alt="">Supprimer</A>
+</div>
 
   <style>
 

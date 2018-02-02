@@ -30,11 +30,14 @@
 	$tmpl_x = new XTemplate (MyRep("crontab.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
-// ---- Charge les variables par défault
-	require_once("$module/$mod/variables.tmpl.php");
-
 // ---- Vérifie le droit d'accès
 	if (!GetDroit("AccesCrontab")) { FatalError("Accès non autorisé (AccesCrontab)"); }
+
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once("modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+
 
 // ---- Execute les scripts
 	if (($fonc=="start") && ($id>0))

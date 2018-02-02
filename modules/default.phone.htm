@@ -18,26 +18,45 @@
 
 <!--PageHeaderFmt-->
 	<div id="main-content">
-	  <div class='head'>
-			<div class='icone'><a href="index.php">{icone}</a></div>
-			<div class='pagetitle'>{infos}</div>
+		<div class='head'>
+			<div class='icone boutton-phone'><a href="index.php"><img src="modules/actualites/img/icn48_titre.png" alt="" border=0 /></a></div>
+			<div class='icone boutton-phone'><a href="membres.php"><img src="modules/membres/img/icn48_membres.png" /></a></div>
+<!-- BEGIN: menu_famille -->
+			<div class='icone boutton-phone'><a href="familles.php"><img src="modules/membres/img/icn32_famille.png" /></a></div>
+<!-- END: menu_famille -->
+<!-- BEGIN: menu_reservations -->
+			<div class='icone boutton-phone'><a href="reservations.php?jour=-"><img src="modules/reservations/img/icn48_titre.png" /></a></div>
+<!-- END: menu_reservations -->
+ <!-- BEGIN: menu_comptes -->
+			<div class='icone boutton-phone'><a href="comptes.php"><img src="modules/comptes/img/icn48_titre.png" /></a></div>
+<!-- END: menu_comptes -->
+<!-- BEGIN: menu_vols -->
+			<div class='icone boutton-phone'><a href="vols.php"><img src="modules/aviation/img/icn48_suivivols.png" /></a></div>
+<!-- END: menu_vols -->
 			<div class='logout'>
 				<a href="mesinfos.php"><img src="modules/membres/img/icn32_detail.png" href="Mes informations"/></a>
 				<a href="login.php?fonc=logout"><img src="images/icn32_logout.png" /></a>
 			</div>
 		</div>
-	  <div id='popup'></div>
-	  <div class='main'>
+		<div class="navigation">{infos}</div>
+		<div id='popup'></div>
+		<div class='main'>
 	    {corps}
-	  </div>
-  </div>
+		</div>
+	</div>
+
+	<div class="msgbox">
+	<!-- BEGIN: aff_infos -->
+	<div class="msgbox-std msgbox-{msg_class}">{msg_infos}</div>
+	<!-- END: aff_infos-->
+	</div>
 
 <!--PageFooterFmt-->
-  <div class='footer'>  
-    <div class='lastmod'>
-    {username}&nbsp;-&nbsp;Version {version}&nbsp;&nbsp;
-    </div>
-  </div>
+	<div class='footer'>  
+		<div class='lastmod'>
+		{username}&nbsp;-&nbsp;Version {version}&nbsp;&nbsp;
+		</div>
+	</div>
 <!--/PageFooterFmt-->
 
 </body>

@@ -45,6 +45,11 @@
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once("modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+
 // ---- Affiche les types d'échéance
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_echeancetype ORDER BY description";
 	$sql->Query($query);
@@ -62,9 +67,8 @@
 		{
 			$form_poste=$sql->data["poste"];
 			$form_commentaire=$sql->data["description"];
-
 			$tmpl_x->assign("form_cout",$sql->data["cout"]);
-			if ($fonc!="Débiter")
+			if (($fonc!="Débiter") && (GetDroit($sql->data["droit"])))
 			{
 				$tmpl_x->parse("corps.aff_debite");
 			}
@@ -126,10 +130,10 @@
 			$dte->Save();
 		}
 
-		$tmpl_x->assign("msg_confirmation", $nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret);
-		$tmpl_x->assign("msg_confirmation_class", ($ret!="") ? "msgerror" : "msgok");
-		
-		$tmpl_x->parse("corps.msg_enregistre");
+		// $tmpl_x->assign("msg_confirmation", $nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret);
+		// $tmpl_x->assign("msg_confirmation_class", ($ret!="") ? "msgerror" : "msgok");		
+		// $tmpl_x->parse("corps.msg_enregistre");
+		affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret,($ret!="") ? "error" : "ok");
 	}
 	
 // ---- Liste des échéances

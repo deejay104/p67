@@ -2,27 +2,26 @@
 	<img src="{path_module}/img/icn48_detail.png" alt="" border=0 />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-<A href="membres.php"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt=""></A>
-<!-- BEGIN: ajout -->
-<A href="membres.php?rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt=""></A>
-<!-- END: ajout -->
-<!-- BEGIN: modification -->
-<A href="membres.php?rub=detail&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_editer.png" border=0 alt=""></A>
-<!-- END: modification -->
-<!-- BEGIN: password -->
-<A href="membres.php?rub=chgpwd&id={id}"><img src="{path_module}/img/icn32_password.png" border=0 alt="" width=32 height=32 /></A>
-<!-- END: password -->
-<!-- BEGIN: desactive -->
-<A href="#" OnClick="ConfirmeClick('membres.php?rub=detail&id={id}&fonc=desactive','Voulez-vous désactiver cette utilisateur ?');"><IMG src="{path_module}/img/icn32_desactive.png" border=0 alt=""></A>
-<!-- END: desactive -->
-<!-- BEGIN: suppression -->
-<A href="#" OnClick="ConfirmeClick('membres.php?rub=detail&id={id}&fonc=delete','Voulez-vous supprimer cette utilisateur ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0 alt=""></A>
-<!-- END: suppression -->
+	<p><A href="membres.php"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt=""></A></p>
+	<!-- BEGIN: ajout -->
+	<p><A href="membres.php?rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt=""></A></p>
+	<!-- END: ajout -->
+	<!-- BEGIN: modification -->
+	<p><A href="membres.php?rub=detail&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_editer.png" border=0 alt=""></A></p>
+	<!-- END: modification -->
+	<!-- BEGIN: password -->
+	<p><A href="membres.php?rub=chgpwd&id={id}"><img src="{path_module}/img/icn32_password.png" border=0 alt="" width=32 height=32 /></A></p>
+	<!-- END: password -->
+	<!-- BEGIN: desactive -->
+	<p><A href="#" OnClick="ConfirmeClick('membres.php?rub=detail&id={id}&fonc=desactive','Voulez-vous désactiver cette utilisateur ?');"><IMG src="{path_module}/img/icn32_desactive.png" border=0 alt=""></A></p>
+	<!-- END: desactive -->
+	<!-- BEGIN: suppression -->
+	<p><A href="#" OnClick="ConfirmeClick('membres.php?rub=detail&id={id}&fonc=delete','Voulez-vous supprimer cette utilisateur ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0 alt=""></A></p>
+	<!-- END: suppression -->
 <!-- END: infos -->
 
 
 <!-- BEGIN: corps -->
-
 
 <FORM name="form_detail" method="post" action="membres.php" enctype="multipart/form-data">
 <INPUT type="hidden" name="rub" value="detail">

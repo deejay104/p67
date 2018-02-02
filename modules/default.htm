@@ -53,9 +53,9 @@
 	<!-- BEGIN: menu_comptes_sm -->
 	   		<a href="comptes.php"><img src="modules/comptes/img/icn32_titre.png" /> Comptes</a>
 	<!-- END: menu_comptes_sm -->
-	<!-- BEGIN: menu_compta_sm -->
+	<!-- BEGIN: menu_suiviclub_sm -->
 	   		<a href="suiviclub.php"><img src="modules/comptabilite/img/icn32_titre.png" /> Suivi Club</a>
-	<!-- END: menu_compta_sm -->
+	<!-- END: menu_suiviclub_sm -->
 	<!-- BEGIN: menu_facture_sm -->
 	   		<a href="factures.php"><img src="modules/facturation/img/icn32_titre.png" /> Facturation</a>
 	<!-- END: menu_facture_sm -->
@@ -116,9 +116,9 @@
 <!-- BEGIN: menu_comptes -->
      		<li><a href="comptes.php"><img src="modules/comptes/img/icn32_titre.png" /> Comptes</a></li>
 <!-- END: menu_comptes -->
-<!-- BEGIN: menu_compta -->
+<!-- BEGIN: menu_suiviclub -->
      		<li><a href="suiviclub.php"><img src="modules/comptabilite/img/icn32_titre.png" /> Suivi Club</a></li>
-<!-- END: menu_compta -->
+<!-- END: menu_suiviclub -->
 <!-- BEGIN: menu_facture -->
      		<li><a href="factures.php"><img src="modules/facturation/img/icn32_titre.png" /> Facturation</a></li>
 <!-- END: menu_facture -->
@@ -139,32 +139,29 @@
 		</div> <!-- /.navigation -->
 	</div> <!-- /#main-sidebar -->
 
-
-<!--PageHeaderFmt-->
 	<div id="main-content">
-	  <div class='head'>
+		<div class='head'>
 			<div class='icone'>{icone}</div>
 			<div class='pagetitle'>{infos}</div>
 		</div>
-
-  <!--PageTitleFmt-->
-	  <div id='popup'></div>
-	  <div class='main'>
-	    {corps}
-	    <!--PageText-->
-	  </div>
-  </div>
-
-<!--PageFooterFmt-->
-
+		<div class="msgbox">
+		<!-- BEGIN: aff_infos -->
+		<div class="msgbox-std msgbox-{msg_class}">{msg_infos}</div>
+		<!-- END: aff_infos-->
+		</div>
+		<div id='popup'></div>
+		<div class='main'>
+			{corps}
+		</div>
+	</div>
 
   <div class='footer'>
   
-		<div class='helplink'>&nbsp;
   	<!-- BEGIN: help -->
+		<div class='helplink'>&nbsp;
 			<a href="{helplink}" target="_blank"><img src="images/icn32_help.gif" alt="aide" border="0" /> Aide en ligne</a>
-		<!-- END: help-->
 		</div>
+	<!-- END: help-->
     <div class='lastmod'>{username}&nbsp;-&nbsp;Version {version}&nbsp;&nbsp;</div>
   </div>
 <!--/PageFooterFmt-->

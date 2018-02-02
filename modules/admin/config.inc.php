@@ -36,13 +36,19 @@
 // ---- Vérifie le droit d'accès
 	if (!GetDroit("AccesConfiguration")) { FatalError("Accès non autorisé (AccesConfiguration)"); }
 
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once("modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+
 // ---- Enregistre le fichier des variables
 	if ($fonc=="Enregistrer")
 	{
 		$MyOptTab=$_REQUEST["MyOptTab"];
 		$ret=GenereVariables($MyOptTab);
-		$tmpl_x->assign("msg_ret", $ret);
-		$tmpl_x->parse("corps.msgok");
+		// $tmpl_x->assign("msg_ret", $ret);
+		// $tmpl_x->parse("corps.msgok");
+		affInformation($ret,"ok");
 		$MyOpt=UpdateVariables($MyOptTab);
 	}
 

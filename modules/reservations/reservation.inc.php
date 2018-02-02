@@ -171,15 +171,18 @@
 			if ($d["resa"]=="instructeur")
 			{
 				$m.="La présence d'un instructeur est obligatoire.<br />";
-				$tmpl_x->assign("msg_warning", $m);
-				$tmpl_x->parse("corps.msg_warning");
+				// $tmpl_x->assign("msg_warning", $m);
+				// $tmpl_x->parse("corps.msg_warning");
+				affInformation($m,"warning");
+
 				$ok_inst=1;
 			}
 			else if ($d["resa"]=="obligatoire")
 			{
 				$m.="La réservation n'est pas possible.<br />";
-				$tmpl_x->assign("msg_error", $m);
-				$tmpl_x->parse("corps.msg_error");
+				// $tmpl_x->assign("msg_error", $m);
+				// $tmpl_x->parse("corps.msg_error");
+				affInformation($m,"error");
 				$save=1;
 			}
 
@@ -193,9 +196,10 @@
 	{
 		$m ="<b><font color='red'>Le compte du pilote est NEGATIF ($s €).</font></b><br />";
 		$m.="Appeller le trésorier pour l'autorisation d'un découvert.<br />";
-  		$tmpl_x->assign("msg_error", $m);
-		$tmpl_x->parse("corps.msg_error");
-		
+  		// $tmpl_x->assign("msg_error", $m);
+		// $tmpl_x->parse("corps.msg_error");
+		affInformation($m,"error");
+
 		if ($id==0)
 		{
 			$ok_save=1;
@@ -206,8 +210,11 @@
 // ---- Vérifie si l'utilisateur est laché sur l'avion
 	if (!$resa["pilote"]->CheckLache($resa["resa"]->uid_ressource))
 	{
-		$tmpl_x->assign("msg_warning", "<b><font color='red'>Vous n'êtes pas laché sur cet avion.</font></b><br />La présence d'un instructeur est obligatoire.");
-		$tmpl_x->parse("corps.msg_warning");
+		// $tmpl_x->assign("msg_warning", "<b><font color='red'>Vous n'êtes pas laché sur cet avion.</font></b><br />La présence d'un instructeur est obligatoire.");
+		// $tmpl_x->parse("corps.msg_warning");
+		$m="<b><font color='red'>Vous n'êtes pas laché sur cet avion.</font></b><br />La présence d'un instructeur est obligatoire.";
+		affInformation($m,"warning");
+
 		$ok_inst=1;
 	}
 	
@@ -219,8 +226,9 @@
 // ---- Affiche les messages d'erreurs
 	if ($msg_err!="")
 	{ 
-		$tmpl_x->assign("msg_error",$msg_err);
-		$tmpl_x->parse("corps.msg_error");
+		// $tmpl_x->assign("msg_error",$msg_err);
+		// $tmpl_x->parse("corps.msg_error");
+		affInformation($msg_err,"error");
 	}
 	
 

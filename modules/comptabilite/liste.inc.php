@@ -37,6 +37,10 @@
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once("modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Affiche les infos
 	$tabTitre=array();

@@ -98,13 +98,14 @@ input[type=checkbox]:checked:after { content: "x"; }
 .logo a h1 { text-transform: uppercase; font-size: 25px; margin: 0; font-weight: 800; }
 .logo span { color: #bee3f6; font-size: 13px; }
 
-.head { padding: 5px 0px; background-color: #38a9e3; width: 100%; height: 60px; }
+.head { padding: 0px; background-color: #38a9e3; width: 100%; height: 60px; }
 
-.icone { padding-left:30px; display: inline-block; }
-.pagetitle { padding-left:10px; display: inline-block; text-transform: uppercase; font-size: 25px; color: white; }
-.pagetitle img { vertical-align:middle; margin-right: 5px; }
-.pagetitle a { height:36px; border: 1px solid #1799c3; background-color: #1799c3; font-size: 14px; text-transform: none; padding: 10px; border-radius: 5px; margin: 0px; }
+.icone { padding-left:30px; display: inline-block; float: left; padding-top:10px; }
+.pagetitle { padding-left:10px; display: inline-block; text-transform: uppercase; font-size: 25px; color: white;  margin-top: 25px;  }
+.pagetitle p { float: left; padding-right: 5px; margin-top: 0px; }
+.pagetitle a { height:36px; border: 1px solid #1799c3; background-color: #1799c3; font-size: 14px; text-transform: none; padding: 10px; border-radius: 5px; }
 .pagetitle a:hover { background-color: #38a9e3; border-radius: 8px; border: 1px solid #1799c3; color: #ffffff;  }
+.pagetitle img { vertical-align:middle; margin-right: 5px; }
 
 .pageTitleSelected { background-color: #38a9e3!important; border: 1px solid #076983!important; color: #ffffff!important; box-shadow: 2px 2px #1799c3; }
 
@@ -127,19 +128,18 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 .footer { /* general settings for footer*/
 	position:fixed;
 	bottom:0;
-  clear:both;
+	clear:both;
 	border-top: 1px solid #013366;
 	border-bottom: 1px solid #013366;
 	background-color: #F5F5F5;
 	width: 100%;
-	height: 37px;
+	height: 24px;
 	}
 
 .lastmod { /* last modified information */
 	float: right;
 	position: relative;
 	text-align: right;
-	top: -20px;
 	font-size: 10px;
 	}
 
@@ -160,13 +160,64 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 
 
 /* **** Message d'erreur **** */
+@-webkit-keyframes seconds {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    left: -9999px; 
+  }
+}
+@keyframes seconds {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    left: -9999px; 
+  }
+}
+
+.msgbox {
+	position: absolute;
+	top: 10px;
+	right:10px;
+	width: 480px;
+	font-size: 14px; 
+	color: #000000; 
+	font-weight: normal;
+	text-decoration: none;
+}
+
+.msgbox-std {
+	border: 1px solid #000000;
+	border-radius: 5px;
+	padding-top: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+	margin-bottom: 4px;
+	-webkit-animation: seconds 1.0s forwards;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-delay: 5s;
+	animation: seconds 1.0s forwards;
+	animation-iteration-count: 1;
+	animation-delay: 5s;
+}
+
+.msgbox-ok { background-color: #BBFFAA; }
+.msgbox-warning { background-color: #ffe49c; }
+.msgbox-error { background-color: #FFBBAA; }
+
 
 
 .msgok {
 	width: 680px;
-	padding: 4px 4px 4px 40px;
-	margin-left: 50px;
-	margin-bottom: 10px;
+	padding-top: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 10px;
 	font-size: 14px; 
 	color: #000000; 
 	font-weight: normal;
@@ -174,13 +225,16 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 	background-color: #BBFFAA;
 	border: 1px solid #000000;
 	border-radius: 5px;
+	margin-left: 50px;
 }
 
 .msgerror {
 	width: 680px;
-	padding: 4px 4px 4px 40px;
-	margin-left: 50px;
-	margin-bottom: 10px;
+	padding-top: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+	width: 680px;
 	font-size: 14px; 
 	color: #000000; 
 	font-weight: normal;
@@ -188,7 +242,9 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 	background-color: #FFBBAA;
 	border: 1px solid #000000;
 	border-radius: 5px;
+	margin-left: 50px;
 }
+
 .msgwarning {
 	width: 680px;
 	padding: 4px 4px 4px 40px;

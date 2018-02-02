@@ -17,6 +17,7 @@ $tabRoles["AccesPageSuivi"]="Accès à la page de suivi des comptes";
 $tabRoles["AccesPageListeComptes"]="Accès à la page de la liste des comptes";
 $tabRoles["AccesPageListeTarifs"]="Accès à la page des tarifs";
 $tabRoles["AccesPageTableauBord"]="Accès à la page des tableau de bord";
+$tabRoles["AccesPageAccesPageBilan"]="Accès à la page du bilan comptable";
 $tabRoles["AccesPresence"]="Accès à la page des présences";
 $tabRoles["AccesPresences"]="Accès au tableau des présences";
 $tabRoles["AccesPresencePonctuelle"]="Accès à la page de saisie d'une présence ponctuelle";
@@ -33,6 +34,7 @@ $tabRoles["AccesSuiviVols"]="Accès au suivi des vols des membres";
 $tabRoles["AccesConfigEcheances"]="Accès à la gestion des échéances";
 $tabRoles["AccesConfigPostes"]="Accès à la page de modification des postes";
 $tabRoles["AccesCrontab"]="Accès à la page de gestion des taches planifiées";
+$tabRoles["AccesSuiviClub"]="Accès aux pages de suivi du club";
 
 
 $tabRoles["AffUserComptes"]="Afficher le solde du compte sur la fiche du membre";

@@ -37,6 +37,11 @@
 
 	require_once ("class/compte.inc.php");
 
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once("modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+
 // ---- Enregistre le mouvement
 	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	{
@@ -74,8 +79,9 @@
 
 		if ($msg_result!="")
 		  {
-			$tmpl_x->assign("msg_resultat", "<FONT color=red>$msg_result</FONT>");
-			$tmpl_x->parse("corps.msg_enregistre");
+			// $tmpl_x->assign("msg_resultat", "<FONT color=red>$msg_result</FONT>");
+			// $tmpl_x->parse("corps.msg_enregistre");
+			affInformation($msg_result,"error");
 			$fonc="";
 		  }
 		else
@@ -104,10 +110,11 @@
 			}
 		}
 
-		$tmpl_x->assign("msg_confirmation", $nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret);
-		$tmpl_x->assign("msg_confirmation_class", ($ret!="") ? "msgerror" : "msgok");
+		// $tmpl_x->assign("msg_confirmation", $nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret);
+		// $tmpl_x->assign("msg_confirmation_class", ($ret!="") ? "msgerror" : "msgok");
+		affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret,($ret!="") ? "error" : "ok");
 		
-		$tmpl_x->parse("corps.msg_enregistre");
+		// $tmpl_x->parse("corps.msg_enregistre");
 		
 		$tmpl_x->assign("form_page", "vols");
 	  }
@@ -213,8 +220,6 @@
 	  	$tmpl_x->parse("corps.aff_mouvement");
 	  }
 
-	if (GetModule("aviation"))
-	  {  	$tmpl_x->parse("infos.vols"); }
 
 
 // ---- Affecte les variables d'affichage

@@ -3,23 +3,16 @@
 <!-- END: icone -->
 
 <!-- BEGIN: infos -->
-	<A href="suiviclub.php"><IMG src="{path_module}/img/icn32_mouvement.png" border=0>Mouvement</A>
-	<A href="suiviclub.php?rub=echeances"><IMG src="{path_module}/img/icn32_echeances.png" border=0>Echéances</A>
-<!-- BEGIN: vols -->
-	<A href="suiviclub.php?rub=vols"><IMG src="{path_module}/img/icn32_vols.png" border=0>Vols</A>
-	<A href="suiviclub.php?rub=tarifs" class='pageTitleSelected'><IMG src="{path_module}/img/icn32_tarifs.png" border=0>Tarifs</A>
-<!-- END: vols -->
-	<A href="suiviclub.php?rub=suivi"><IMG src="{path_module}/img/icn32_suivi.png" border=0>Suivi</A>
-	<A href="suiviclub.php?rub=liste"><IMG src="{path_module}/img/icn32_comptes.png" border=0>Liste des comptes</A>
-	<A href="suiviclub.php?rub=tableaubord"><IMG src="{path_module}/img/icn32_tabbord.png" border=0>Tableau de bord</A>
-	<A href="suiviclub.php?rub=bilan"><IMG src="{path_module}/img/icn32_bilan.png" border=0>Bilan</A>
+{aff_menu}
 <!-- END: infos -->
+
 
 <!-- BEGIN: corps -->
 
 
-<FORM name="reservation" method="post" action="suiviclub.php" enctype="multipart/form-data">
+<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<input type="hidden" name="mod" value="admin">
 	<INPUT type="hidden" name="rub" value="tarifs">
 	<br />
 
@@ -34,8 +27,8 @@
 	<!-- END: msg_enregistre -->
 
 	<!-- BEGIN: aff_tarifs -->
-		<TABLE border="0" cellspacing="0" cellpadding="0" background="">
-		  <TR height=20>
+		<TABLE >
+		  <TR class="tableauTitre">
 			<TD width=20>&nbsp;</TD>
 			<TD width=100><B>Avion</B></TD>
 			<TD width=40><B>Code</B></TD>

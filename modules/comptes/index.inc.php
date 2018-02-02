@@ -125,17 +125,17 @@
 	  }
 	$tabTitre["line"]["aff"]="<line>";
 	$tabTitre["line"]["width"]=1;
-	$tabTitre["montant"]["aff"]="&nbsp;&nbsp;Montant";
+	$tabTitre["montant"]["aff"]="Montant";
 	$tabTitre["montant"]["width"]=100;
-	if (GetDroit("AfficheSignatureCompte"))
+	if ((GetDroit("AfficheSignatureCompte")) && ($theme!="phone"))
 	{
 		$tabTitre["signature"]["aff"]="";
 		$tabTitre["signature"]["width"]=20;
 	}
 	if ($trie=="")
 	{
-		$tabTitre["solde"]["aff"]="&nbsp;&nbsp;Solde Cpt";
-		$tabTitre["solde"]["width"]=100;
+		$tabTitre["solde"]["aff"]="Solde";
+		$tabTitre["solde"]["width"]=110;
 	}
 	if ($theme!="phone")
 	{
@@ -206,7 +206,7 @@
 		}
 	}
 
-	if (GetDroit("AfficheSignatureCompte"))
+	if ((GetDroit("AfficheSignatureCompte")) && ($theme!="phone"))
 	{
 		foreach($tabValeur as $i=>$d)
 		{

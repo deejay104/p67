@@ -380,16 +380,14 @@
 
 // ---- Messages
 	if ($msg_erreur!="")
-	  {
-		$tmpl_x->assign("msg_erreur", $msg_erreur);
-		$tmpl_x->parse("corps.msgerror");
-	  }		
+	{
+		affInformation($msg_erreur,"error");
+	}		
 
 	if ($msg_confirmation!="")
-	  {
-		$tmpl_x->assign("msg_confirmation", $msg_confirmation);
-		$tmpl_x->parse("corps.msgok");
-	  }		
+	{
+		affInformation($msg_confirmation,"ok");
+	}
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");
