@@ -2,7 +2,7 @@
 	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-			<A href="#" OnClick="ConfirmeClick('reservations.php?rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette réservation ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0>Supprimer</A>
+		<p><A href="#" OnClick="ConfirmeClick('reservations.php?rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette réservation ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0>Supprimer</A></p>
 <!-- END: infos -->
 
 
@@ -16,25 +16,8 @@
 
 	<p class="lastupdate">Dernière mise à jour : {info_maj}</p>
 
-	<!-- BEGIN: date_depassee -->
-	<p class="msgaff">
-	<B><FONT color="{color_date}">{texte_date}</FONT></B><br />
-	Pour continuer à voler, merci d'envoyer une copie de votre {nom_date} au président.
-	</p>
-	<!-- END: date_depassee -->
-
-	<!-- BEGIN: msg_warning -->
-	<p class="msgwarning">{msg_warning}</p>
-	<!-- END: msg_warning -->
-
-	<!-- BEGIN: msg_error -->
-	<p class="msgerror">{msg_error}</p>
-	<!-- END: msg_error -->
-
 	<!-- BEGIN: aff_reservation -->
-	<div class="formulaireTitre">
-  	Réservation
-	</div>
+	<div class="formulaireTitre">Réservation</div>
 
 	<div class="formulaire">
 		<p>

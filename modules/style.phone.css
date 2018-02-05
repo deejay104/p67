@@ -24,7 +24,7 @@ h1, h2, h3, h4, h5, h6 { font-family: inherit; }
 .visible-xs,.visible-sm,.visible-md,.visible-lg {display:none!important}
 
 input {	-webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: 20px; width: 285px; font-family: inherit; height:30px; }
-select { font-size: 20px; font-family: inherit; width: 285px; height:30px; -webkit-appearance: none; background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");  background-repeat: no-repeat; background-position-x: 100%; background-position-y: 5px;  }
+select { font-size: 20px; font-family: inherit; width: 285px; height:30px; -webkit-appearance: none; background-color: #ffffff; background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");  background-repeat: no-repeat; background-position-x: 100%; background-position-y: 5px;  }
 textarea { width:420px; font-size: 20px; font-family: inherit; }
 
 

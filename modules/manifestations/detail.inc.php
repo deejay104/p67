@@ -137,6 +137,10 @@
 			$tabParticipant[]=$sql->data;
 		  }
 
+		$mvt = new compte_class(0,$sql);
+		$tmpl_x->assign("aff_mouvement_detail", $mvt->AfficheEntete());
+		$tmpl_x->parse("corps.msg_enregistre.lst_enregistre");
+
 		$ret="";
 		$nbmvt="";
 		$ok=0;
@@ -183,16 +187,14 @@
 				$ok=1;
 			}
 		}
-
-		$tmpl_x->assign("msg_confirmation", $nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret);
 		
 		if ($ret!="")
 		{
-			$tmpl_x->assign("msg_confirmation_class", "msgerror");
+			affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret,"error");
 		}
 		else
 		{
-			$tmpl_x->assign("msg_confirmation_class", "msgok");
+			affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : ""),"ok");
 
 			$query="UPDATE ".$MyOpt["tbl"]."_manips SET facture='oui' WHERE id='$id'";
 			$sql->Update($query);

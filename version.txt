@@ -1,6 +1,6 @@
 <?
 $Revision="";
-$versionsvn="$Revision: 476 $";
+$versionsvn="$Revision: 477 $";
 
 $myrev = str_replace("$Revision: ","",$versionsvn);
 $myrev = str_replace(" $","",$myrev);
