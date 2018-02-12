@@ -27,7 +27,7 @@ function Recharge()
   	var form_poste = document.getElementById("form_poste").value;
   	var form_tiers = document.getElementById("form_tiers").value;
   	var form_date = document.getElementById("form_date").value;
-	document.location='suiviclub.php?form_mvt='+form_poste+'&form_tiers='+form_tiers+'&form_dte='+form_date;
+	document.location='index.php?mod=comptabilite&rub=mouvement&form_mvt='+form_poste+'&form_tiers='+form_tiers+'&form_dte='+form_date;
 }
 
 function AffVentilation()
@@ -49,8 +49,9 @@ function AffVentilation()
 }
 </script>
 
-<FORM name="mouvement" method="post" action="suiviclub.php" enctype="multipart/form-data">
+<FORM name="mouvement" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="mod" value="comptabilite">
 
 
 	<BR><BR>

@@ -30,13 +30,14 @@
 	});
 </script>
 
-<a href="presence.php">-Tableau des présences-</a>&nbsp;
-<a href="presence.php?rub=presence">-Saisie présences-</a>&nbsp;
-<a href="presence.php?rub=vacances">-Vacances-</a>
+<a href="index.php?mod=facturation&rub=presence">-Tableau des présences-</a>&nbsp;
+<a href="index.php?mod=facturation&rub=presence">-Saisie présences-</a>&nbsp;
+<a href="index.php?mod=facturation&rub=vacances">-Vacances-</a>
 
-<form name="abonnement" method="post" action="factures.php" enctype="multipart/form-data">
+<form name="abonnement" method="post" action="index.php" enctype="multipart/form-data">
 
 	<input type="hidden" name="checktime" value="{form_checktime}">
+	<input type="hidden" name="mod" value="facturation">
 	<input type="hidden" name="rub" value="ponctuel">
 	<input type="hidden" name="mode" value="{mode}">
 	<input type="hidden" name="fonc2" value="post">

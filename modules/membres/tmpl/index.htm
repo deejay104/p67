@@ -3,15 +3,15 @@
 <!-- END: icone -->
 
 <!-- BEGIN: infos -->
-	<a href="membres.php"><IMG src="{path_module}/img/icn32_liste.png" alt="Liste">Liste</a>
-	<a href="membres.php?fonc=trombi"><IMG src="{path_module}/img/icn32_trombi.png" alt="Trombinoscope">Trombinoscope</a>
+	<a href="index.php?mod=membres"><IMG src="{path_module}/img/icn32_liste.png" alt="Liste">Liste</a>
+	<a href="index.php?mod=membres&fonc=trombi"><IMG src="{path_module}/img/icn32_trombi.png" alt="Trombinoscope">Trombinoscope</a>
 <!-- BEGIN: ajout -->
-<A href="membres.php?rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" alt="Ajouter">Ajouter</A>
+	<A href="index.php?mod=membres&rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" alt="Ajouter">Ajouter</A>
 <!-- END: ajout -->
 
 <!-- BEGIN: aff_virtuel -->
-<a href="membres.php" {aff_normal}>Normaux</a>
-<a href="membres.php?aff=virtuel" {aff_virtuel}>Virtuels</a>
+	<a href="index.php?mod=membres" {aff_normal}>Normaux</a>
+	<a href="index.php?mod=membres&aff=virtuel" {aff_virtuel}>Virtuels</a>
 <!-- END: aff_virtuel -->
 
 <!-- END: infos -->
@@ -29,7 +29,7 @@
 	  <tr>
 	    <!-- BEGIN: aff_colonne -->
 	    <td align=center>
-		<a href="membres.php?rub=detail&id={id_membre}">
+		<a href="index.php?mod=membres&rub=detail&id={id_membre}">
 		<img src="doc.php?id={id_photo}" alt="" style="width:200px; height:240px; border: 1px solid #013366; border-radius: 5px;" /><br />
 		{prenom_membre} {nom_membre}
 		</a>

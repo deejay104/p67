@@ -4,16 +4,16 @@
   <head>
 	<title>{site_title} - {module} - {rub}</title>
 	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
-	<link rel="stylesheet" href="modules/style.css" type="text/css" />
+	<link rel="stylesheet" href="static/css/style.css" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="external/jquery/css/smoothness/jquery-ui.css" />
 	<link rel="icon" type="image/png" href="favicon.png" />
   </head>
 <body>
 
-	<script type="text/javascript" src="modules/_table.js"></script>
+	<script type="text/javascript" src="static/js/_table.js"></script>
 	<script type="text/javascript" src="external/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="external/jquery/jquery-ui.min.js"></script>
-	<script language="JavaScript" src="modules/_popup.js"></script>
+	<script language="JavaScript" src="static/js/_popup.js"></script>
 
 	<!-- This one in here is responsive menu for tablet and mobiles -->
 	<div id="responsive-navigation">
@@ -22,56 +22,53 @@
 		</p>
 		<div class="responsive-menu">
 			<p class="responsive-menulink">
-	   		<a href="index.php"><img src="modules/actualites/img/icn32_titre.png" /> Accueil</a>
+	   		<a href="index.php"><img src="static/modules/actualites/img/icn32_titre.png" /> Accueil</a>
 	<!-- BEGIN: menu_membres_sm -->
-	   		<a href="membres.php"><img src="modules/membres/img/icn32_membres.png" /> Membres</a>
+	   		<a href="index.php?mod=membres"><img src="static/modules/membres/img/icn32_membres.png" /> Membres</a>
 	<!-- END: menu_membres_sm -->
 	<!-- BEGIN: menu_mesinfos_sm -->
-	   		<a href="mesinfos.php"><img src="modules/membres/img/icn32_detail.png" /> Mes informations</a>
+	   		<a href="mesinfos.php"><img src="static/modules/membres/img/icn32_detail.png" /> Mes informations</a>
 	<!-- END: menu_mesinfos_sm -->
 	<!-- BEGIN: menu_famille_sm -->
-	   		<a href="familles.php"><img src="modules/membres/img/icn32_famille.png" /> Familles</a>
+	   		<a href="index.php?mod=membres&rub=familles"><img src="static/modules/membres/img/icn32_famille.png" /> Familles</a>
 	<!-- END: menu_famille_sm -->
 	<!-- BEGIN: menu_reservations_sm -->
-	   		<a href="reservations.php?jour=-"><img src="modules/reservations/img/icn32_titre.png" /> Réservations</a>
+	   		<a href="index.php?mod=reservations.php&jour=-"><img src="static/modules/reservations/img/icn32_titre.png" /> Réservations</a>
 	<!-- END: menu_reservations_sm -->
 	<!-- BEGIN: menu_baptemes_sm -->
-	   		<a href="baptemes.php"><img src="modules/aviation/img/icn32_baptemes.png" /> Baptèmes</a>
+	   		<a href="index.php?mod=baptemes"><img src="static/modules/aviation/img/icn32_baptemes.png" /> Baptèmes</a>
 	<!-- END: menu_baptemes_sm -->
 	<!-- BEGIN: menu_presence_sm -->
-	   		<a href="presence.php"><img src="modules/facturation/img/icn32_presence.png" /> Présences</a>
+	   		<a href="index.php?mod=presence"><img src="static/modules/facturation/img/icn32_presence.png" /> Présences</a>
 	<!-- END: menu_presence_sm -->
 	<!-- BEGIN: menu_manips_sm -->
-	   		<a href="manips.php"><img src="modules/manifestations/img/icn32_titre.png" /> Manifestations</a>
+	   		<a href="index.php?mod=manifestations"><img src="static/modules/manifestations/img/icn32_titre.png" /> Manifestations</a>
 	<!-- END: menu_manips_sm -->
-	<!-- BEGIN: menu_photos_sm -->
-	   		<a href="photos.php"><img src="images/icn32_photos.png" /> Photos</a>
-	<!-- END: menu_photos_sm -->
 	<!-- BEGIN: menu_forums_sm -->
-	   		<a href="forums.php"><img src="modules/forums/img/icn32_titre.png" /> Documents</a>
+	   		<a href="index.php?mod=forums"><img src="static/modules/forums/img/icn32_titre.png" /> Documents</a>
 	<!-- END: menu_forums_sm -->
 	<!-- BEGIN: menu_comptes_sm -->
-	   		<a href="comptes.php"><img src="modules/comptes/img/icn32_titre.png" /> Comptes</a>
+	   		<a href="index.php?mod=comptes"><img src="static/modules/comptes/img/icn32_titre.png" /> Comptes</a>
 	<!-- END: menu_comptes_sm -->
 	<!-- BEGIN: menu_suiviclub_sm -->
-	   		<a href="suiviclub.php"><img src="modules/comptabilite/img/icn32_titre.png" /> Suivi Club</a>
+	   		<a href="index.php?mod=comptabilite"><img src="static/modules/comptabilite/img/icn32_titre.png" /> Suivi Club</a>
 	<!-- END: menu_suiviclub_sm -->
 	<!-- BEGIN: menu_facture_sm -->
-	   		<a href="factures.php"><img src="modules/facturation/img/icn32_titre.png" /> Facturation</a>
+	   		<a href="index.php?mod=facturation"><img src="static/modules/facturation/img/icn32_titre.png" /> Facturation</a>
 	<!-- END: menu_facture_sm -->
 	<!-- BEGIN: menu_vols_sm -->
-	   		<a href="vols.php"><img src="modules/aviation/img/icn32_suivivols.png" /> Suivi des vols</a>
+	   		<a href="index.php?mod=aviation&rub=vols"><img src="static/modules/aviation/img/icn32_suivivols.png" /> Suivi des vols</a>
 	<!-- END: menu_vols_sm -->
 	<!-- BEGIN: menu_ressources_sm -->
-	   		<a href="ressources.php"><img src="modules/ressources/img/icn32_titre.png" /> Suivi des Avions</a>
+	   		<a href="index.php?mod=ressources"><img src="static/modules/ressources/img/icn32_titre.png" /> Suivi des Avions</a>
 	<!-- END: menu_ressources_sm -->
 	<!-- BEGIN: menu_indicateurs_sm -->
-	   		<a href="indicateurs.php"><img src="modules/aviation/img/icn32_indicateurs.png" /> Indicateurs</a>
+	   		<a href="index.php?mod=aviation&rub=indicateurs"><img src="static/modules/aviation/img/icn32_indicateurs.png" /> Indicateurs</a>
 	<!-- END: menu_indicateurs_sm -->
 	<!-- BEGIN: menu_configuration_sm -->
-	   		<a href="index.php?mod=admin"><img src="modules/admin/img/icn32_titre.png" /> Configuration</a>
+	   		<a href="index.php?mod=admin"><img src="static/modules/admin/img/icn32_titre.png" /> Configuration</a>
 	<!-- END: menu_configuration_sm -->
-	   		<a href="login.php?fonc=logout"><img src="images/icn32_logout.png" /> Se déconnecter</A><br />
+	   		<a href="login.php?fonc=logout"><img src="static/images/icn32_logout.png" /> Se déconnecter</A><br />
 			</p>
 			<p style="text-align:center;"><a href="index.php?settheme=phone" style=" color:white;">-Affichage smartphone-</a></p>
     </div> <!-- /.main_menu -->
@@ -85,56 +82,53 @@
 
 		<div class="navigation">
 			<ul class="main-menu">
-     		<li><a href="index.php"><img src="modules/actualites/img/icn32_titre.png" /> Accueil</a></li>
+     		<li><a href="index.php"><img src="static/modules/actualites/img/icn32_titre.png" /> Accueil</a></li>
 <!-- BEGIN: menu_membres -->
-     		<li><a href="membres.php"><img src="modules/membres/img/icn32_membres.png" /> Membres</a></li>
+     		<li><a href="index.php?mod=membres"><img src="static/modules/membres/img/icn32_membres.png" /> Membres</a></li>
 <!-- END: menu_membres -->
 <!-- BEGIN: menu_mesinfos -->
-     		<li><a href="mesinfos.php"><img src="modules/membres/img/icn32_detail.png" /> Mes informations</a></li>
+     		<li><a href="mesinfos.php"><img src="static/modules/membres/img/icn32_detail.png" /> Mes informations</a></li>
 <!-- END: menu_mesinfos -->
 <!-- BEGIN: menu_famille -->
-     		<li><a href="familles.php"><img src="modules/membres/img/icn32_famille.png" /> Familles</a></li>
+     		<li><a href="index.php?mod=membres&rub=familles"><img src="static/modules/membres/img/icn32_famille.png" /> Familles</a></li>
 <!-- END: menu_famille -->
 <!-- BEGIN: menu_reservations -->
-     		<li><a href="reservations.php?jour=-"><img src="modules/reservations/img/icn32_titre.png" /> Réservations</a></li>
+     		<li><a href="index.php?mod=reservations?jour=-"><img src="static/modules/reservations/img/icn32_titre.png" /> Réservations</a></li>
 <!-- END: menu_reservations -->
 <!-- BEGIN: menu_baptemes -->
-     		<li><a href="baptemes.php"><img src="modules/aviation/img/icn32_baptemes.png" /> Baptèmes</a></li>
+     		<li><a href="index.php?mod=baptemes"><img src="static/modules/aviation/img/icn32_baptemes.png" /> Baptèmes</a></li>
 <!-- END: menu_baptemes -->
 <!-- BEGIN: menu_presence -->
-     		<li><a href="presence.php"><img src="modules/facturation/img/icn32_presence.png" /> Présences</a></li>
+     		<li><a href="index.php?mod=presence"><img src="static/modules/facturation/img/icn32_presence.png" /> Présences</a></li>
 <!-- END: menu_presence -->
 <!-- BEGIN: menu_manips -->
-     		<li><a href="manips.php"><img src="modules/manifestations/img/icn32_titre.png" /> Manifestations</a></li>
+     		<li><a href="index.php?mod=manifestations"><img src="static/modules/manifestations/img/icn32_titre.png" /> Manifestations</a></li>
 <!-- END: menu_manips -->
-<!-- BEGIN: menu_photos -->
-     		<li><a href="photos.php"><img src="images/icn32_photos.png" /> Photos</a></li>
-<!-- END: menu_photos -->
 <!-- BEGIN: menu_forums -->
-     		<li><a href="forums.php"><img src="modules/forums/img/icn32_titre.png" /> Documents</a></li>
+     		<li><a href="index.php?mod=forums"><img src="static/modules/forums/img/icn32_titre.png" /> Documents</a></li>
 <!-- END: menu_forums -->
 <!-- BEGIN: menu_comptes -->
-     		<li><a href="comptes.php"><img src="modules/comptes/img/icn32_titre.png" /> Comptes</a></li>
+     		<li><a href="index.php?mod=comptes"><img src="static/modules/comptes/img/icn32_titre.png" /> Comptes</a></li>
 <!-- END: menu_comptes -->
 <!-- BEGIN: menu_suiviclub -->
-     		<li><a href="suiviclub.php"><img src="modules/comptabilite/img/icn32_titre.png" /> Suivi Club</a></li>
+     		<li><a href="index.php?mod=comptabilite"><img src="static/modules/comptabilite/img/icn32_titre.png" /> Suivi Club</a></li>
 <!-- END: menu_suiviclub -->
 <!-- BEGIN: menu_facture -->
-     		<li><a href="factures.php"><img src="modules/facturation/img/icn32_titre.png" /> Facturation</a></li>
+     		<li><a href="index.php?mod=facturation"><img src="static/modules/facturation/img/icn32_titre.png" /> Facturation</a></li>
 <!-- END: menu_facture -->
 <!-- BEGIN: menu_vols -->
-     		<li><a href="vols.php"><img src="modules/aviation/img/icn32_suivivols.png" /> Suivi des vols</a></li>
+     		<li><a href="index.php?mod=aviation&rub=vols"><img src="static/modules/aviation/img/icn32_suivivols.png" /> Suivi des vols</a></li>
 <!-- END: menu_vols -->
 <!-- BEGIN: menu_ressources -->
-     		<li><a href="ressources.php"><img src="modules/ressources/img/icn32_titre.png" /> Suivi des Avions</a></li>
+     		<li><a href="index.php?mod=ressources"><img src="static/modules/ressources/img/icn32_titre.png" /> Suivi des Avions</a></li>
 <!-- END: menu_ressources -->
 <!-- BEGIN: menu_indicateurs -->
-     		<li><a href="indicateurs.php"><img src="modules/aviation/img/icn32_indicateurs.png" /> Indicateurs</a></li>
+     		<li><a href="index.php?mod=aviation&rub=indicateurs"><img src="static/modules/aviation/img/icn32_indicateurs.png" /> Indicateurs</a></li>
 <!-- END: menu_indicateurs -->
 <!-- BEGIN: menu_configuration -->
-	   		<li><a href="index.php?mod=admin"><img src="modules/admin/img/icn32_titre.png" /> Configuration</a></li>
+	   		<li><a href="index.php?mod=admin"><img src="static/modules/admin/img/icn32_titre.png" /> Configuration</a></li>
 <!-- END: menu_configuration -->
-     		<li><a href="login.php?fonc=logout"><img src="images/icn32_logout.png" /> Se déconnecter</A></li>
+     		<li><a href="login.php?fonc=logout"><img src="static/images/icn32_logout.png" /> Se déconnecter</A></li>
        </ul> <!-- /.main_menu -->
 		</div> <!-- /.navigation -->
 	</div> <!-- /#main-sidebar -->
@@ -159,7 +153,7 @@
   
   	<!-- BEGIN: help -->
 		<div class='helplink'>&nbsp;
-			<a href="{helplink}" target="_blank"><img src="images/icn32_help.gif" alt="aide" border="0" /> Aide en ligne</a>
+			<a href="{helplink}" target="_blank"><img src="static/images/icn32_help.gif" alt="aide" border="0" /> Aide en ligne</a>
 		</div>
 	<!-- END: help-->
     <div class='lastmod'>{username}&nbsp;-&nbsp;Version {version}&nbsp;&nbsp;</div>
@@ -169,23 +163,13 @@
 
 <script>
 jQuery(document).ready(function($){
-
-
-
     /************** Responsive Navigation *********************/
 
 	$('.menu-toggle-btn').click(function(){
         $('.responsive-menu').stop(true,true).slideToggle();
     });
-
-
-
-
 });
 </script>
 </body>
 </html>
-
-
-
 <!-- END: main -->

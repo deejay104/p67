@@ -2,14 +2,15 @@
 	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-		<p><A href="#" OnClick="ConfirmeClick('reservations.php?rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette réservation ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0>Supprimer</A></p>
+		<p><A href="#" OnClick="ConfirmeClick('index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette réservation ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0>Supprimer</A></p>
 <!-- END: infos -->
 
 
 <!-- BEGIN: corps -->
 
 
-<FORM name="reservation" method="post" action="reservations.php" enctype="multipart/form-data">
+<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="mod" value="reservations">
 	<INPUT type="hidden" name="rub" value="reservation_sauve">
 	<INPUT type="hidden" name="id" value="{id}">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">

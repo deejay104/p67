@@ -54,10 +54,10 @@
 			},
 
 			select: function(start, end) {
-				document.location="manips.php?rub=detail&jstart="+start;
+				document.location="index.php?mod=manifestations&rub=detail&jstart="+start;
 			},
 			eventClick: function(event, element) {
-				document.location="manips.php?rub=detail&id="+event.id;
+				document.location="index.php?mod=manifestations&rub=detail&id="+event.id;
 			},
 
 			eventResize: function(event, dayDelta, minuteDelta ) {
@@ -86,7 +86,7 @@
 
 
 	<div id='script-warning'>
-		Erreur : <code>manips/getcal.php</code> doit être accessible.
+		Erreur : <code>api.php</code> doit être accessible.
 	</div>
 
 	<div id='loading'>loading...</div>

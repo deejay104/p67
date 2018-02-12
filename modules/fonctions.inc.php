@@ -12,20 +12,20 @@ function GetModule($mod)
   }
 
 function MyRep($file)
-  { global $module, $mod, $lang,$theme;
+  { global $mod, $lang, $theme;
   	$myfile=substr($file,0,strrpos($file,"."));
-		$myext=substr($file,strrpos($file,".")+1,strlen($file)-strrpos($file,".")-1);
+	$myext=substr($file,strrpos($file,".")+1,strlen($file)-strrpos($file,".")-1);
 
-  	if ((file_exists("$module/$mod/tmpl/$myfile.$theme.$myext")) && ($mod!=""))
-  	  { return "$module/$mod/tmpl/$myfile.$theme.$myext"; }
-		else if ((file_exists("$module/$mod/tmpl/$file")) && ($mod!=""))
-  	  { return "$module/$mod/tmpl/$file"; }
-		else if ((file_exists("$module/$mod/$file")) && ($mod!=""))
-  	  { return "$module/$mod/$file"; }
-  	else if (file_exists("$module/$myfile.$theme.$myext"))
-  	  { return "$module/$myfile.$theme.$myext"; }
-  	else if (file_exists("$module/$file"))
-  	  { return "$module/$file"; }
+  	if ((file_exists("modules/$mod/tmpl/$myfile.$theme.$myext")) && ($mod!=""))
+  	  { return "modules/$mod/tmpl/$myfile.$theme.$myext"; }
+	else if ((file_exists("modules/$mod/tmpl/$file")) && ($mod!=""))
+  	  { return "modules/$mod/tmpl/$file"; }
+	else if ((file_exists("modules/$mod/$file")) && ($mod!=""))
+  	  { return "modules/$mod/$file"; }
+  	else if (file_exists("modules/$myfile.$theme.$myext"))
+  	  { return "modules/$myfile.$theme.$myext"; }
+  	else if (file_exists("modules/$file"))
+  	  { return "modules/$file"; }
   	else if (file_exists("config/$file"))
   	  { return "config/$file"; }
   	else
@@ -141,7 +141,38 @@ function AffInfo($txt,$key,$typeaff="html",$cond=true)
 	return "*Fonction AffInfo supprimée*";
   }
 
-function MyMail($from,$to,$tabcc,$subject,$message,$headers="",$files="")
+  
+function SendMailFromFile($from,$to,$tabcc,$subject,$tabvar,$file)
+{ global $mod;
+
+	if (file_exists("custom/".$file."mail.txt"))
+	{
+		$tmail=file("custom/".$file."mail.txt");
+	}
+	else
+	{
+		$tmail=file("modules/".$mod."/".$file."mail.txt");
+	}
+
+	$mail = '';
+	foreach($tmail as $ligne)
+	{
+		$mail.=$ligne;
+	}
+
+	$mail=nl2br($mail);
+	foreach($tabvar as $p=>$d)
+	{
+		$mail=str_replace("{".$p."}",$d,$mail);
+	}
+
+	$mail=str_replace("{url}",substr($_SERVER["HTTP_REFERER"],0,strrpos($_SERVER["HTTP_REFERER"],"/")),$mail);
+
+	MyMail($from,$to,$tabcc,$subject,$mail,"","");
+
+}
+  
+function MyMail($from,$to,$tabcc,$subject,$mail,$headers="",$files="")
 { global $MyOpt;
 
 	if (is_array($from))
@@ -253,42 +284,8 @@ function MyMail($from,$to,$tabcc,$subject,$message,$headers="",$files="")
 
 
 function SendMail($From,$To,$Cc,$Subject,$Text,$Html,$AttmFiles)
-{ global $MyOpt;
-	/*
-	function SendMail($From, $FromName, $To, $ToName, $Subject, $Text, $Html, $AttmFiles)
-	$From      ... sender mail address like "my@address.com"
-	$FromName  ... sender name like "My Name"
-	$To        ... recipient mail address like "your@address.com"
-	$ToName    ... recipients name like "Your Name"
-	$Subject   ... subject of the mail like "This is my first testmail"
-	$Text      ... text version of the mail
-	$Html      ... html version of the mail
-	$AttmFiles ... array containing the filenames to attach like array("file1","file2")
-	*/
-
-	// attachments
-	$attach=array();
-	if($AttmFiles)
-	{
-		$i=0;
-		foreach($AttmFiles as $AttmFile)
-		{
-			$patharray = explode ("/", $AttmFile); 
-			$FileName=$patharray[count($patharray)-1];
-			$attach[$i]["nom"]=$FileName;
-			$attach[$i]["type"]="file";
-			$attach[$i]["data"]=$AttmFile;
-
-			$i=$i+1;
-		}
-  }
-	
-	//message ends
-	$Msg.="\n--".$OB."--\n";
-
-	if ($MyOpt["sendmail"]==1) { echo "From:$From - To:$To - Cc:$Cc - Subject:$Subject<BR>"; return -1; }
-
-	return MyMail($From,$To,$Cc,$Subject,$Msg,$headers);
+{
+	echo "*Fonction SendMail supprimée*";
 }
 
 

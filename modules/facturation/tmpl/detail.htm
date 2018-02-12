@@ -2,22 +2,23 @@
 	<img src="{path_module}/img/icn48_titre.png" alt="" />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-	<IMG src="images/rien.gif" height=1 width=20 alt=""><a href="factures.php?usr={id_user}"><img src="images/icn32_retour.png"></a>
+	<IMG src="images/rien.gif" height=1 width=20 alt=""><a href="index.php?mod=facturation&usr={id_user}"><img src="static/images/icn32_retour.png"></a>
 	Facture {id_facture}
 <!-- END: infos -->
 
 
 <!-- BEGIN: corps -->
 
-<form name="facture" method="post" action="factures.php" enctype="multipart/form-data">
+<form name="facture" method="post" action="index.php" enctype="multipart/form-data">
 
 	<input type="hidden" name="checktime" value="{form_checktime}">
+	<input type="hidden" name="mod" value="facturation">
 	<input type="hidden" name="rub" value="detail">
 	<input type="hidden" name="usr" value="{id_user}">
 
 	<br />
 <!-- BEGIN: aff_compte -->
-			<select id="form_id" name="form_id" OnChange="document.location='factures.php?rub=detail&usr='+document.getElementById('form_id').value;">
+			<select id="form_id" name="form_id" OnChange="document.location='index.php?mod=facturation&rub=detail&usr='+document.getElementById('form_id').value;">
 			<option value="0">-</OPTION>
 			<!-- BEGIN: lst_compte -->
 			<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
@@ -37,10 +38,10 @@
   <td>&nbsp;</td><td colspan=2 align=center><h1>{titre_facture}</h1></td>
 	<td>
 <!-- BEGIN: aff_pdf -->
-	<a href="factures.php?rub=facture&usr={id_user}&facid={id_facture}&export=pdf" target="_blank"><img src="images/icn32_pdf.png" border="0" /></a>
+	<a href="index.php?mod=facturation&rub=facture&usr={id_user}&facid={id_facture}&export=pdf" target="_blank"><img src="static/images/icn32_pdf.png" border="0" /></a>
 <!-- END: aff_pdf -->
 <!-- BEGIN: aff_relance -->
-	<a href="factures.php?rub=detail&usr={id_user}&facid={id_facture}&fonc=relance"><img src="{path_module}/img/icn32_mail.png" border="0" title="Relancer sur cette facture"/></a>
+	<a href="index.php?mod=facturation&rub=detail&usr={id_user}&facid={id_facture}&fonc=relance"><img src="{path_module}/img/icn32_mail.png" border="0" title="Relancer sur cette facture"/></a>
 <!-- END: aff_relance -->
   </td>
 </tr>
@@ -58,7 +59,7 @@
 	<td>&nbsp;
 	<!-- BEGIN: edit_ligne -->
 	<span class="bouttonSupprime">
-		<a href="factures.php?rub=detail&usr={id_user}&hideline={id_ligne}" title="Ne plus afficher cette ligne dans les montants à facturer" class='imgDelete'><img src="{path_module}/img/icn16_supprimer.png" /></a>
+		<a href="index.php?mod=facturation&rub=detail&usr={id_user}&hideline={id_ligne}" title="Ne plus afficher cette ligne dans les montants à facturer" class='imgDelete'><img src="{path_module}/img/icn16_supprimer.png" /></a>
 	</span>
 	<input type="checkbox" name="form_facture[{id_ligne}]" value="{montant_ligne}" {chk_ligne}>
 	<!-- END: edit_ligne -->

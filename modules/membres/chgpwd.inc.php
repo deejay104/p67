@@ -62,19 +62,8 @@
 				// ---- Récupère l'adresse email de l'émetteur
 				$from=$myuser->data["mail"];
 				
-				$tmail=file("config/mail.mdp.txt");
-				
-				$mail = '';
-				foreach($tmail as $ligne)
-					{ $mail.=$ligne; }
-				
-				$mail=nl2br($mail);
-				$mail=str_replace("{username}",$usr->data["prenom"]." ".$usr->data["nom"],$mail);
-				$mail=str_replace("{initiales}",$usr->data["initiales"],$mail);
-				$mail=str_replace("{url}",substr($_SERVER["HTTP_REFERER"],0,strrpos($_SERVER["HTTP_REFERER"],"/")),$mail);
-
-				MyMail($from,$usr->data["mail"],"","[".$MyOpt["site_title"]."] : Changement de votre mot de passe",$mail);
-				
+				SendMailFromFile($from,$usr->data["mail"],"","[".$MyOpt["site_title"]."] : Changement de votre mot de passe",array("username"=>$usr->fullname,"initiales"->$usr->data["initiales"],"chgpwd");
+			
 				$msg_confirmation.="Votre mot de passe a été mis à jour.<br />";
 			}
 			else

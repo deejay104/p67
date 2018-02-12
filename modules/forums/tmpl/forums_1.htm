@@ -2,12 +2,12 @@
 	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-	<A href="forums.php" class=clsLien><IMG src="{path_module}/img/icn32_retour.png" border=0>Liste</A>
+	<A href="index.php?mod=forums" class=clsLien><IMG src="{path_module}/img/icn32_retour.png" border=0>Liste</A>
 	<!-- BEGIN: ecrire -->
-	<A href="forums.php?rub=forums_2&fid={fid}&fpars={fid}&fprec=forums_1" class=clsLienBlanc><IMG src="{path_module}/img/icn32_nouveau.png" border=0 title="Ajouter un document à ce classeur." align="absmiddle">Nouveau</A>&nbsp;&nbsp;
+	<A href="index.php?mod=forums&rub=forums_2&fid={fid}&fpars={fid}&fprec=forums_1" class=clsLienBlanc><IMG src="{path_module}/img/icn32_nouveau.png" border=0 title="Ajouter un document à ce classeur." align="absmiddle">Nouveau</A>&nbsp;&nbsp;
 	<!-- END: ecrire -->
-	<A href="forums.php?rub=forums_1&fid={fid}&fprec=forums&fonc=marquer" class=clsLienBlanc><IMG src="{path_module}/img/icn32_valider.png" border=0 title="Marquer tous les messages de ce forum comme lus." align="absmiddle">Marquer comme lus</A>
-	<A href="forums.php?rub=forums_8&critere={critere}&fid={fid}" class=clsLienBlanc><IMG src="{path_module}/img/icn32_rechercher.png" border=0 title="Effectuer une recherche sur l'ensemble des messages des forums." align="absmiddle">Rechercher</A>&nbsp;&nbsp;
+	<A href="index.php?mod=forums&rub=forums_1&fid={fid}&fprec=forums&fonc=marquer" class=clsLienBlanc><IMG src="{path_module}/img/icn32_valider.png" border=0 title="Marquer tous les messages de ce forum comme lus." align="absmiddle">Marquer comme lus</A>
+	<A href="index.php?mod=forums&rub=forums_8&critere={critere}&fid={fid}" class=clsLienBlanc><IMG src="{path_module}/img/icn32_rechercher.png" border=0 title="Effectuer une recherche sur l'ensemble des messages des forums." align="absmiddle">Rechercher</A>&nbsp;&nbsp;
 <!-- END: infos -->
 
 
@@ -21,11 +21,11 @@
 <!-- BEGIN: lst_msg -->
 	<div class="forum_Liste">
 		<div class="forum_Liste_Titre">
-			<p class="{msg_class}"><A href="forums.php?rub=forums_7&fid={id_forum}&mid={id_msg}&critere={crit}">{msg_titre}</A></p>
+			<p class="{msg_class}"><A href="index.php?mod=forums&rub=forums_7&fid={id_forum}&mid={id_msg}&critere={crit}">{msg_titre}</A></p>
 			<span>par {msg_auteur}, {msg_dte}</span>
 <!-- BEGIN: aff_supprimer -->
 			<div class="forum_Liste_Icones">
-				<a href="forums.php?rub=forums_1&fid={id_forum}&opt={id_msg}&anc=visu"><img src="{path_module}/img/icn24_supprimer.png"></a>
+				<a href="index.php?mod=forums&rub=forums_1&fid={id_forum}&opt={id_msg}&anc=visu"><img src="{path_module}/img/icn24_supprimer.png"></a>
 			</div>
 <!-- END: aff_supprimer -->
 <!-- BEGIN: aff_reponse -->
@@ -46,6 +46,6 @@
 <!-- END: lst_msg -->
  
 
-<div id="forum_texte"><a href="forums.php?rub=forums_1&fid={fid_forum}&max={max_forum}">-Afficher les messages suivants-</a></div>
+<div id="forum_texte"><a href="index.php?mod=forums&rub=forums_1&fid={fid_forum}&max={max_forum}">-Afficher les messages suivants-</a></div>
 <!-- END: corps -->
 

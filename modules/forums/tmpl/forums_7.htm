@@ -3,15 +3,15 @@
 <!-- END: icone -->
 
 <!-- BEGIN: infos -->
-<A href="forums.php?rub=forums_1&fid={fid}" class=clsLien><IMG src="{path_module}/img/icn32_retour.png">Retour</A>
+<A href="index.php?mod=forums&rub=forums_1&fid={fid}" class=clsLien><IMG src="{path_module}/img/icn32_retour.png">Retour</A>
 	<!-- BEGIN: ecrire -->
-	<A href="forums.php?rub=forums_2&fid={fid}&fpars={mid}&fprec=forums_7" title="Répondre à ce message."><IMG src="{path_module}/img/icn32_comment.png" />Répondre</A>
+	<A href="index.php?mod=forums&rub=forums_2&fid={fid}&fpars={mid}&fprec=forums_7" title="Répondre à ce message."><IMG src="{path_module}/img/icn32_comment.png" />Répondre</A>
 	<!-- END: ecrire -->
 	<!-- BEGIN: modifier -->
-	<A HREF="forums.php?rub=forums_2&fid={fid}&fpars={mid}&mid={mid}&fprec=forums_7" title="Modifier ce message."><IMG src="{path_module}/img/icn32_modifier.png" />Modifier</A>
+	<A HREF="index.php?mod=forums&rub=forums_2&fid={fid}&fpars={mid}&mid={mid}&fprec=forums_7" title="Modifier ce message."><IMG src="{path_module}/img/icn32_modifier.png" />Modifier</A>
 	<!-- END: modifier -->
 	<!-- BEGIN: supprimer -->
-	<A HREF="forums.php?rub=forums_1&fid={fid}&opt={idmsg}&anc=visu" title="Effacer ce message."><IMG src="{path_module}/img/icn32_supprimer.png" />Supprimer</A>
+	<A HREF="index.php?mod=forums&rub=forums_1&fid={fid}&opt={idmsg}&anc=visu" title="Effacer ce message."><IMG src="{path_module}/img/icn32_supprimer.png" />Supprimer</A>
 	<!-- END: supprimer -->
 
 <!-- END: infos -->
@@ -46,7 +46,7 @@
 			<img src="doc.php?id={rep_usrid}&type=image&width=64&height=64" alt="">
 		</div>
 
-		<p id="forum_Message_ReponseTitre"><a href="forums.php?rub=forums_7&fid={fid}&mid={rep_mid}">{rep_titre}</a></p>
+		<p id="forum_Message_ReponseTitre"><a href="index.php?mod=forums&rub=forums_7&fid={fid}&mid={rep_mid}">{rep_titre}</a></p>
 		<p id="forum_Message_ReponseModif">par {rep_usr_creat} {rep_dte_creat}</p>
 		<p>{rep_message}</p>
 	</div>

@@ -8,8 +8,9 @@
 <!-- BEGIN: corps -->
 
 
-<FORM name="reservation" method="post" action="suiviclub.php" enctype="multipart/form-data">
+<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="mod" value="comptabilite">
 	<INPUT type="hidden" name="rub" value="vols">
 
 	<BR>
@@ -60,7 +61,7 @@
 		<!-- BEGIN: lst_vols -->
 		  <TR>
 			<TD width=20>&nbsp;</TD>
-			<TD><a href="reservations.php?rub=reservation&id={idresa}">{date_vols}</a></TD>
+			<TD><a href="index.php?mod=reservations&rub=reservation&id={idresa}">{date_vols}</a></TD>
 			<TD>{pilote_vols}</TD>
 			<TD>{instructeur_vols}</TD>
 			<TD>

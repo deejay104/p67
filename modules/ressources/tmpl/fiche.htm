@@ -2,10 +2,10 @@
 	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-<A href="ressources.php"><IMG src="{path_module}/img/icn32_avions.png" border=0 alt="">&nbsp;Liste des avions</A>
-<A href="maintenance.php?rub=fichemaint"><IMG src="{path_module}/img/icn32_ficheajout.png" border=0 alt="">&nbsp;Créer une fiche</A>
-<A href="maintenance.php?rub=validation"><IMG src="{path_module}/img/icn32_ficheok.png" border=0 alt="">&nbsp;Fiches à valider</A>
-<A href="maintenance.php?rub=liste"><IMG src="{path_module}/img/icn32_maintenance.png" border=0 alt="">&nbsp;Maintenances</A>
+<A href="index.php?mod=ressources"><IMG src="{path_module}/img/icn32_avions.png" border=0 alt="">&nbsp;Liste des avions</A>
+<A href="index.php?mod=ressources&rub=fichemaint"><IMG src="{path_module}/img/icn32_ficheajout.png" border=0 alt="">&nbsp;Créer une fiche</A>
+<A href="index.php?mod=ressources&rub=validation"><IMG src="{path_module}/img/icn32_ficheok.png" border=0 alt="">&nbsp;Fiches à valider</A>
+<A href="index.php?mod=ressources&rub=liste"><IMG src="{path_module}/img/icn32_maintenance.png" border=0 alt="">&nbsp;Maintenances</A>
 <!-- END: infos -->
 
 
@@ -19,12 +19,13 @@
 	function Recharge()
 	  {
 	  	var a = document.maintenance.uid_avion.value;
-	  	document.location='maintenance.php?rub=fiche&uid_avion='+a;
+	  	document.location='index.php?mod=ressources&rub=fiche&uid_avion='+a;
 	  }
 </SCRIPT>
 
-<FORM name="maintenance" method="post" action="maintenance.php" enctype="multipart/form-data">
+<FORM name="maintenance" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="mod" value="ressources">
 	<INPUT type="hidden" name="rub" value="validation">
 
 	<BR>

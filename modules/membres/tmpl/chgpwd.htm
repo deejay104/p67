@@ -2,35 +2,36 @@
 	<img src="{path_module}/img/icn48_login.png" alt="" border=0 />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-<A href="membres.php"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt="">Liste</A>
+<A href="index.php?mod=membres"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt="">Liste</A>
 <!-- BEGIN: ajout -->
-<A href="membres.php?rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt="">&nbsp;Ajouter</A>
+<A href="index.php?mod=membres&rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt="">&nbsp;Ajouter</A>
 <!-- END: ajout -->
 <!-- BEGIN: modification -->
-<A href="membres.php?rub=detail&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_editer.png" border=0 alt="">&nbsp;Modifier</A>
+<A href="index.php?mod=membres&rub=detail&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_editer.png" border=0 alt="">&nbsp;Modifier</A>
 <!-- END: modification -->
 <!-- BEGIN: password -->
-<A href="membres.php?rub=chgpwd&id={id}"><img src="{path_module}/img/icn32_password.png" border=0 alt="" width=32 height=32 />&nbsp;Changer son mot de passe</A>
+<A href="index.php?mod=membres&rub=chgpwd&id={id}"><img src="{path_module}/img/icn32_password.png" border=0 alt="" width=32 height=32 />&nbsp;Changer son mot de passe</A>
 <!-- END: password -->
 <!-- BEGIN: desactive -->
-<A href="#" OnClick="ConfirmeClick('membres.php?rub=detail&id={id}&fonc=desactive','Voulez-vous désactiver cette utilisateur ?');"><IMG src="{path_module}/img/icn32_desactive.png" border=0 alt="">&nbsp;Désactiver</A>
+<A href="#" OnClick="ConfirmeClick('index.php?mod=membres&rub=detail&id={id}&fonc=desactive','Voulez-vous désactiver cette utilisateur ?');"><IMG src="{path_module}/img/icn32_desactive.png" border=0 alt="">&nbsp;Désactiver</A>
 <!-- END: desactive -->
 <!-- BEGIN: suppression -->
-<A href="#" OnClick="ConfirmeClick('membres.php?rub=detail&id={id}&fonc=delete','Voulez-vous supprimer cette utilisateur ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0 alt="">&nbsp;Supprimer</A>
+<A href="#" OnClick="ConfirmeClick('index.php?mod=membres&rub=detail&id={id}&fonc=delete','Voulez-vous supprimer cette utilisateur ?');"><IMG src="{path_module}/img/icn32_supprimer.png" border=0 alt="">&nbsp;Supprimer</A>
 <!-- END: suppression -->
 <!-- END: infos -->
 
 
 <!-- BEGIN: corps -->
 
-<FORM name="form_detail" method="post" action="membres.php" enctype="multipart/form-data">
+<FORM name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
+<INPUT type="hidden" name="mod" value="membres">
 <INPUT type="hidden" name="rub" value="chgpwd">
 <INPUT type="hidden" name="id" value="{id}">
 <INPUT type="hidden" name="checktime" value="{form_checktime}">
 
 <BR><BR>
 
-<SCRIPT language="JavaScript" src="modules/_md5.js"></SCRIPT>
+<SCRIPT language="JavaScript" src="static/js/_md5.js"></SCRIPT>
 <SCRIPT language="javascript">
 	<!-- 
 	function cryptData()

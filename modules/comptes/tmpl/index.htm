@@ -5,7 +5,7 @@
 <!-- BEGIN: infos -->
 
 		<!-- BEGIN: liste_compte -->
-			<p><A href="suiviclub.php?rub=liste"><IMG src="{path_module}/img/icn32_comptes.png" />Liste des comptes</A></p>
+			<p><A href="index.php?mod=comptabilite&rub=liste"><IMG src="{path_module}/img/icn32_comptes.png" />Liste des comptes</A></p>
 		<!-- END: liste_compte -->
 
 
@@ -14,13 +14,14 @@
 
 <!-- BEGIN: corps -->
 <br />
-<form name="compte" method="post" action="comptes.php" enctype="multipart/form-data">
+<form name="compte" method="post" action="index.php" enctype="multipart/form-data">
 
 	<input type="hidden" name="checktime" value="{form_checktime}">
+	<input type="hidden" name="mod" value="compte">
 
 <!-- BEGIN: compte -->
 	
-	<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='comptes.php?id='+id;">
+	<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='index.php?mod=comptes&id='+id;">
 	<!-- BEGIN: lst_compte -->
 	<option value="{id_compte}" {chk_compte}>{nom_compte}</OPTION>
 	<!-- END: lst_compte -->

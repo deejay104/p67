@@ -2,26 +2,27 @@
 	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-<A href="ressources.php"><IMG src="{path_module}/img/icn32_liste.png" border=0 alt="">Liste des avions</A>
+<A href="index.php?mod=ressources"><IMG src="{path_module}/img/icn32_liste.png" border=0 alt="">Liste des avions</A>
 <!-- BEGIN: ajout -->
-<A href="ressources.php?rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt="">Ajouter</A>
+<A href="index.php?mod=ressources&rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt="">Ajouter</A>
 <!-- END: ajout -->
 <!-- BEGIN: modification -->
-<A href="ressources.php?rub=detail&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_modifier.png" border=0 alt="">Modifier</A>
+<A href="index.php?mod=ressources&rub=detail&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_modifier.png" border=0 alt="">Modifier</A>
 <!-- END: modification -->
 <!-- BEGIN: desactive -->
-<A href="#" OnClick="ConfirmeClick('ressources.php?rub=detail&id={id}&fonc=desactive','Voulez-vous désactiver cet avion ?');"><IMG src="{path_module}/img/icn32_desactive.png" border=0 alt="">Désactiver</A>
+<A href="#" OnClick="ConfirmeClick('index.php?mod=ressources&rub=detail&id={id}&fonc=desactive','Voulez-vous désactiver cet avion ?');"><IMG src="{path_module}/img/icn32_desactive.png" border=0 alt="">Désactiver</A>
 <!-- END: desactive -->
 <!-- BEGIN: suppression -->
-<A href="#" OnClick="ConfirmeClick('ressources.php?rub=detail&id={id}&fonc=delete','Voulez-vous supprimer cet avion ?');"><IMG src="{path_module}/img/icn32_supprime.png" border=0 alt="">Supprimer</A>
+<A href="#" OnClick="ConfirmeClick('index.php?mod=ressources&rub=detail&id={id}&fonc=delete','Voulez-vous supprimer cet avion ?');"><IMG src="{path_module}/img/icn32_supprime.png" border=0 alt="">Supprimer</A>
 <!-- END: suppression -->
-<A href="maintenance.php?rub=fiche&uid_avion={id}"><IMG src="{path_module}/img/icn32_fiche.png" border=0 alt="">Fiches</A>
+<A href="index.php?mod=ressources&rub=fiche&uid_avion={id}"><IMG src="{path_module}/img/icn32_fiche.png" border=0 alt="">Fiches</A>
 <!-- END: infos -->
 
 
 <!-- BEGIN: corps -->
 
-<FORM name="form_detail" method="post" action="ressources.php" enctype="multipart/form-data">
+<FORM name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
+<INPUT type="hidden" name="mod" value="ressources">
 <INPUT type="hidden" name="rub" value="detail">
 <INPUT type="hidden" name="id" value="{id}">
 <INPUT type="hidden" name="checktime" value="{form_checktime}">

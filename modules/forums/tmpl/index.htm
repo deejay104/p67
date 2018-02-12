@@ -2,30 +2,30 @@
 	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-		<A href="forums.php?rub=forums_8&critere={critere}" class=clsLienBlanc><IMG src="{path_module}/img/icn32_rechercher.png" border=0 title="Effectuer une recherche sur l'ensemble des messages des forums." align="absmiddle"> Rechercher</A>&nbsp;&nbsp;
+		<A href="index.php?mod=forums&rub=forums_8&critere={critere}" class=clsLienBlanc><IMG src="{path_module}/img/icn32_rechercher.png" border=0 title="Effectuer une recherche sur l'ensemble des messages des forums." align="absmiddle"> Rechercher</A>&nbsp;&nbsp;
 		<!-- BEGIN: nouveau -->
-			<A href="forums.php?rub=forums_2&fid=0&fpars=0&fprec=forums_1" class=clsLienBlanc><IMG src="{path_module}/img/icn32_nouveau.png" border=0 title="Créer un nouveau classeur." align="absmiddle">Nouveau classeur</A>&nbsp;&nbsp;
+			<A href="index.php?mod=forums&rub=forums_2&fid=0&fpars=0&fprec=forums_1" class=clsLienBlanc><IMG src="{path_module}/img/icn32_nouveau.png" border=0 title="Créer un nouveau classeur." align="absmiddle">Nouveau classeur</A>&nbsp;&nbsp;
 		<!-- END: nouveau -->
-		<A href="forums.php?fonc=marquer" class=clsLienBlanc><IMG src="{path_module}/img/icn32_valider.png" border=0 title="Marquer tous les messages de ce forum comme lus." align="absmiddle"> Marquer comme lus</A>
+		<A href="index.php?mod=forums&fonc=marquer" class=clsLienBlanc><IMG src="{path_module}/img/icn32_valider.png" border=0 title="Marquer tous les messages de ce forum comme lus." align="absmiddle"> Marquer comme lus</A>
 <!-- END: infos -->
 
 <!-- BEGIN: corps -->
 	<br />
   <!-- BEGIN: nomforum -->
 	<div id="forum_Index_Liste">
-		<div id="forum_Index_Nom"><a href="forums.php?rub=forums_1&fid={numsforum}&prec=forums">{titreforum}</a></div>
+		<div id="forum_Index_Nom"><a href="index.php?mod=forums&rub=forums_1&fid={numsforum}&prec=forums">{titreforum}</a></div>
 		<div id="forum_Index_Nombre">({nbmessages} messages)</div>
 		<div id="forum_Index_Intitule">{intitule}</div>
 <!-- BEGIN: editforum -->
 		<div id="forum_Index_Edite">
-			<a href="forums.php?rub=forums_2&fid={numsforum}&fpars={numsforum}&mid={numsforum}&fprec=forums_1&fonc=edit"><img src="{path_module}/img/icn24_modifier.png"/></a>
-			<a href="forums.php?fid={numsforum}&fonc=delete"><img src="{path_module}/img/icn24_supprimer.png"/></a>
+			<a href="index.php?mod=forums&rub=forums_2&fid={numsforum}&fpars={numsforum}&mid={numsforum}&fprec=forums_1&fonc=edit"><img src="{path_module}/img/icn24_modifier.png"/></a>
+			<a href="index.php?mod=forums&fid={numsforum}&fonc=delete"><img src="{path_module}/img/icn24_supprimer.png"/></a>
 		</div>
 <!-- END: editforum -->
 	</div>
 		
 	<!-- BEGIN: msgnonlu -->
-	<div class="forum_Index_Message forum_Index_NouveauMessage">* <a href="forums.php?rub=forums_7&fid={id_forum}&mid={id_msg}">{usertxt}&nbsp;:&nbsp;{titremsg} ({datemsg})</a></div>
+	<div class="forum_Index_Message forum_Index_NouveauMessage">* <a href="index.php?mod=forums&rub=forums_7&fid={id_forum}&mid={id_msg}">{usertxt}&nbsp;:&nbsp;{titremsg} ({datemsg})</a></div>
 	<!-- END: msgnonlu -->
 	
 	<!-- BEGIN: msgnonlu2 -->

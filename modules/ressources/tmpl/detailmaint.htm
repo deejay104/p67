@@ -3,7 +3,7 @@
 <!-- END: icone -->
 <!-- BEGIN: infos -->
 	<!-- BEGIN: supprimemaint -->
-	<a href="maintenance.php?rub=detailmaint&id={id}&fonc=Supprimer"><img src="{path_module}/img/icn32_supprimer.png" alt=""> Supprimer la maintenance</a>&nbsp;
+	<a href="index.php?mod=ressources&rub=detailmaint&id={id}&fonc=Supprimer"><img src="{path_module}/img/icn32_supprimer.png" alt=""> Supprimer la maintenance</a>&nbsp;
 	<!-- END: supprimemaint -->
 	
 <!-- END: infos -->
@@ -36,8 +36,9 @@
 	});
 </script>
 
-<FORM name="maintenance" method="post" action="maintenance.php" enctype="multipart/form-data">
+<FORM name="maintenance" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="mod" value="ressources">
 	<INPUT type="hidden" name="rub" value="detailmaint">
 	<INPUT type="hidden" name="id" value="{id}">
 

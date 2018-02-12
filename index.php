@@ -127,7 +127,7 @@
 	}
 
 // ---- Charge les variables et fonctions
-	$module="modules";
+	$module="static/modules";
 
 // ---- Charge le numéro de version
 	require ("version.txt");
@@ -169,9 +169,16 @@
 	$tmpl_prg->assign("uid", $uid);
 	$tmpl_prg->assign("username", $myuser->aff("prenom")." ".$myuser->aff("nom"));
 	$tmpl_prg->assign("version", $version.(($MyOpt["maintenance"]=="on") ? " - MAINTENANCE ACTIVE" : ""));
-
-	$tmpl_prg->assign("site_logo", $MyOpt["site_logo"]);
 	$tmpl_prg->assign("site_title", $MyOpt["site_title"]);
+
+	if (file_exists("custom/".$MyOpt["site_logo"])
+	{
+		$tmpl_prg->assign("site_logo", "custom/".$MyOpt["site_logo"]);
+	}
+	else
+	{
+		$tmpl_prg->assign("site_logo", "static/images/logo.png");
+	}
 
 // ---- Flag pour ne pouvoir poster qu'une seule fois les mêmes infos
 	if (!isset($_SESSION["checkpost"]))

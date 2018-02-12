@@ -25,11 +25,11 @@
 		if (ns6)
 		  {
 		  	var a = document.getElementById("ress").value;
-		  	document.location="reservations.php?ress="+a+"&jour={form_jour}";
+		  	document.location="index.php?mod=reservations&ress="+a+"&jour={form_jour}";
 		  }
 		else
 		  {
-		  	document.location='reservations.php?ress='+ress.value+'&jour={form_jour}';
+		  	document.location='index.php?mod=reservations&ress='+ress.value+'&jour={form_jour}';
 		  }
 	  }
 </SCRIPT>
@@ -130,11 +130,11 @@
 			},
 
 			select: function(start, end) {
-				document.location="reservations.php?rub=reservation&ress={form_ress}"+"&jstart="+start+"&jend="+end;
+				document.location="index.php?mod=reservations&rub=reservation&ress={form_ress}"+"&jstart="+start+"&jend="+end;
 			},
 
 			eventClick: function(event, element) {
-				document.location="reservations.php?rub=reservation&id="+event.id;
+				document.location="index.php?mod=reservations&rub=reservation&id="+event.id;
 			},
 
 			eventResize: function(event, dayDelta, minuteDelta ) {

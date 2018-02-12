@@ -4,42 +4,21 @@
 
 <!-- BEGIN: infos -->
 <!-- BEGIN: ajout -->
-<a href="membres.php?rub=famille&id="><img src="{path_module}/img/icn32_ajouter.png" alt="" border=0 />Ajouter famille</A>
+<a href="index.php?mod=membres&rub=famille&id="><img src="{path_module}/img/icn32_ajouter.png" alt="" border=0 />Ajouter famille</A>
 <!-- END: ajout -->
 
 <!-- BEGIN: abonnements -->
-<a href="factures.php?rub=abonnements"><img src="{path_module}/../facturation/img/icn32_factures.png" border=0 />Abonnements</a>
+<a href="index.php?mod=factures&rub=abonnements"><img src="{path_module}/../facturation/img/icn32_factures.png" border=0 />Abonnements</a>
 <!-- END: abonnements -->
 
 <!-- BEGIN: exporter -->
-<a href="export.php?rub=export&list=famille" target="_blank"><img src="images/icn32_excel.png" border=0 />Exporter</a>
+<a href="index.php?mod=export&rub=export&list=famille" target="_blank"><img src="static/images/icn32_excel.png" border=0 />Exporter</a>
 <!-- END: exporter -->
 <!-- END: infos -->
 
 
 <!-- BEGIN: corps -->
 
-
-
-<!-- BEGIN: trombino -->
-	<table>
-	<!-- BEGIN: aff_ligne -->
-	  <tr>
-	    <!-- BEGIN: aff_colonne -->
-	    <td align=center>
-		<a href="membres.php?rub=detail&id={id_membre}">
-		<img src="{photo_membre}" alt="" width="200" height="240" /><br />
-		{prenom_membre} {nom_membre}
-		</a>
-	    </td>
-	    <!-- END: aff_colonne -->
-	  </tr>
-	<!-- END: aff_ligne -->
-	</table>
-<!-- END: trombino -->
-
-
 {aff_tableau}
-
 
 <!-- END: corps -->

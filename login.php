@@ -136,8 +136,15 @@
 	$tmpl_prg->assign("errmsg", $errmsg);
 	$tmpl_prg->assign("version", $version);
 	$tmpl_prg->assign("site_title", $MyOpt["site_title"]);
-	$tmpl_prg->assign("site_logo", $MyOpt["site_logo"]);
-
+	if (file_exists("custom/".$MyOpt["site_logo"])
+	{
+		$tmpl_prg->assign("site_logo", "custom/".$MyOpt["site_logo"]);
+	}
+	else
+	{
+		$tmpl_prg->assign("site_logo", "static/images/logo.png");
+	}
+		
 	$tmpl_prg->parse("main");
 	echo $tmpl_prg->text("main");
 

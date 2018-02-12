@@ -3,10 +3,10 @@
 <html>
   <head>
   <title>{site_title} - Login</title>
-  <link rel="SHORTCUT ICON" href="images/favicon.ico" />
-  <link rel='stylesheet' href='modules/style.css' type='text/css' />
+  <link rel="SHORTCUT ICON" href="favicon.png" />
+  <link rel='stylesheet' href='static/css/style.css' type='text/css' />
 
-	<script language="JavaScript" src="modules/_md5.js"></script>
+	<script language="JavaScript" src="static/js/_md5.js"></script>
 	<script language="javascript">
 		function setFormFocus()
 		{
@@ -55,19 +55,19 @@
 
 <form METHOD="post" ACTION="login.php" NAME="FormLogin" OnSubmit="cryptData();">
 	<input type="hidden" name="varlogin" value="{var}">
-  <input type="hidden" name="password" />
-  <input type="hidden" name="myid" value="{myid}" />
+	<input type="hidden" name="password" />
+	<input type="hidden" name="myid" value="{myid}" />
 
-  <div class='head'>
-	<a href="/"><img src="images/{site_logo}" alt="Home" border="0"/></a>
-  </div>
+	<div class='head'>
+		<a href="/"><img src="{site_logo}" alt="Home" border="0"/></a>
+	</div>
   
 	<div class="login">
 
 		<div class="loginAuthBox">
 			<div class="loginAuthLogo">
 				<ul>
-					<li><img src="images/icn64_login.png"></li>
+					<li><img src="static/images/icn64_login.png"></li>
 				  <li><h1>Authentification</h1></li>
 				</ul>
 			</div>

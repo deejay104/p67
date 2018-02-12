@@ -2,18 +2,19 @@
 	<img src="{path_module}/img/icn48_titre.png" alt="" />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-<a href="factures.php?rub=abonnements">Retour</a>
-<a href="factures.php?rub=abonnement&id={form_id}&mode=edit">Modifier</a> 
-<a href="factures.php?rub=abonnement&id={form_id}&mode=copy">Copier</a> 
-<a href="factures.php?rub=abonnement&id={form_id}&fonc=desactive">Désactiver</a> 
-<a href="#" OnClick="ConfirmeClick('factures.php?rub=abonnement&id={form_id}&fonc=facturer','Souhaitez-vous imputer les lignes de cet abonnement au compte ?');">Facturer</a> 
+<a href="index.php?mod=facturation&rub=abonnements">Retour</a>
+<a href="index.php?mod=facturation&rub=abonnement&id={form_id}&mode=edit">Modifier</a> 
+<a href="index.php?mod=facturation&rub=abonnement&id={form_id}&mode=copy">Copier</a> 
+<a href="index.php?mod=facturation&rub=abonnement&id={form_id}&fonc=desactive">Désactiver</a> 
+<a href="#" OnClick="ConfirmeClick('index.php?mod=facturation&rub=abonnement&id={form_id}&fonc=facturer','Souhaitez-vous imputer les lignes de cet abonnement au compte ?');">Facturer</a> 
 <!-- END: infos -->
 
 
 <!-- BEGIN: corps -->
-<form name="abonnement" method="post" action="factures.php" enctype="multipart/form-data">
+<form name="abonnement" method="post" action="index.php" enctype="multipart/form-data">
 
 	<input type="hidden" name="checktime" value="{form_checktime}">
+	<input type="hidden" name="mod" value="facturation">
 	<input type="hidden" name="rub" value="abonnement">
 	<input type="hidden" name="id" value="{form_id}">
 	<input type="hidden" name="mode" value="{mode}">

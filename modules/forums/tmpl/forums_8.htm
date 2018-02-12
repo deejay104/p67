@@ -7,13 +7,14 @@
 
 
 <!-- BEGIN: corps -->
-<FORM name="form_recherche" method="GET" action="forums.php" enctype="multipart/form-data">
+<FORM name="form_recherche" method="GET" action="index.php" enctype="multipart/form-data">
 
 	<INPUT name="critere" type="text" value="{crit}">
 
 	<INPUT type="submit" name="fonc" value="Rechercher">
 
 
+	<INPUT type="hidden" name="mod" value="forums">
 	<INPUT type="hidden" name="rub" value="forums_1">
 	<INPUT type="hidden" name="fid" value="{fid}">
 
@@ -37,8 +38,8 @@
 </TR>
 <TR valign=top bgcolor="#{bgcolor}">
 	<TD width=20>&nbsp;</TD>
-	<TD><A href="forums.php?rub=forums_1&fid={fid_msg}&critere={crit}" style="display: block;">{forum_msg}</A></TD>
-	<TD><A href="forums.php?rub=forums_7&fid={fid_msg}&mid={mid_msg}&critere={crit}" style="display: block;">{titre_msg}</A></TD>
+	<TD><A href="index.php?mod=forums&rub=forums_1&fid={fid_msg}&critere={crit}" style="display: block;">{forum_msg}</A></TD>
+	<TD><A href="index.php?mod=forums&rub=forums_7&fid={fid_msg}&mid={mid_msg}&critere={crit}" style="display: block;">{titre_msg}</A></TD>
 	<TD>{pseudo_msg}</TD>
 	<TD>{date_msg}</TD>
 </TR>

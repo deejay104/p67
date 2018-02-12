@@ -6,19 +6,19 @@
 
 <!-- BEGIN: bouttons -->
 
-		<a href="manips.php?dte={aff_dte}"><img src="{path_module}/img/icn32_retour.png" alt="Retour" border=0/>&nbsp;Liste</a>
+		<a href="index.php?mod=manifestations&dte={aff_dte}"><img src="{path_module}/img/icn32_retour.png" alt="Retour" border=0/>&nbsp;Liste</a>
 <!-- BEGIN: modification -->
-		<a href="manips.php?rub=detail&id={aff_id_manip}&fonc=modifier"><img src="{path_module}/img/icn32_modifier.png" alt="Modifier" border=0/>&nbsp;Modifier</a>
+		<a href="index.php?mod=manifestations&rub=detail&id={aff_id_manip}&fonc=modifier"><img src="{path_module}/img/icn32_modifier.png" alt="Modifier" border=0/>&nbsp;Modifier</a>
 <!-- END: modification -->
 <!-- BEGIN: suppression -->
-		<a href="manips.php?rub=detail&id={aff_id_manip}&fonc=supprimer"><img src="{path_module}/img/icn32_supprimer.png" alt="Modifier" border=0/>&nbsp;Supprimer</a>
+		<a href="index.php?mod=manifestations&rub=detail&id={aff_id_manip}&fonc=supprimer"><img src="{path_module}/img/icn32_supprimer.png" alt="Modifier" border=0/>&nbsp;Supprimer</a>
 <!-- END: suppression -->
 <!-- BEGIN: participe -->
-		<a href="manips.php?rub=detail&id={aff_id_manip}&fonc=ok"><img src="{path_module}/img/icn32_participe.png" alt="Participer" border=0/>&nbsp;Participer</a>
-		<a href="manips.php?rub=detail&id={aff_id_manip}&fonc=nok"><img src="{path_module}/img/icn32_absent.png" alt="Absent" border=0/>&nbsp;Absent</a>
+		<a href="index.php?mod=manifestations&rub=detail&id={aff_id_manip}&fonc=ok"><img src="{path_module}/img/icn32_participe.png" alt="Participer" border=0/>&nbsp;Participer</a>
+		<a href="index.php?mod=manifestations&rub=detail&id={aff_id_manip}&fonc=nok"><img src="{path_module}/img/icn32_absent.png" alt="Absent" border=0/>&nbsp;Absent</a>
 <!-- END: participe -->
 <!-- BEGIN: facture -->
-		<a href="manips.php?rub=detail&id={aff_id_manip}&fonc=facture"><img src="{path_module}/img/icn32_facture.png" alt="Absent" border=0/>&nbsp;Facturer la manifestation</a>
+		<a href="index.php?mod=manifestations&rub=detail&id={aff_id_manip}&fonc=facture"><img src="{path_module}/img/icn32_facture.png" alt="Absent" border=0/>&nbsp;Facturer la manifestation</a>
 <!-- END: facture -->
 
 <!-- END: bouttons -->
@@ -49,7 +49,8 @@
 	});
 </script>
 
-<form name="manips" method="post" action="manips.php" enctype="multipart/form-data">
+<form name="manips" method="post" action="index.php" enctype="multipart/form-data">
+	<input type="hidden" name="mod" value="manifestations" />
 	<input type="hidden" name="rub" value="detail" />
 	<input type="hidden" name="id" value="{aff_id_manip}" />
 	<input type="hidden" name="checktime" value="{form_checktime}" />
@@ -149,7 +150,7 @@
 <!-- END: aff_form_comment -->
 
 <!-- BEGIN: aff_retour -->
-			<a href="manips.php">Retourner à la liste des manifestations</a><br /><br />
+			<a href="index.php?mod=manifestations">Retourner à la liste des manifestations</a><br /><br />
 <!-- END: aff_retour -->
 
 
@@ -183,7 +184,7 @@
 <div class="formulaire">
 <!-- BEGIN: lst_autre_manip -->
 	<p>
-		<a href="manips.php?rub=detail&id={id_autre_manip}">{aff_autre_manip}</a>
+		<a href="index.php?mod=manifestations&rub=detail&id={id_autre_manip}">{aff_autre_manip}</a>
 	</p>
 <!-- END: lst_autre_manip -->
 <!-- END: autre_manip -->

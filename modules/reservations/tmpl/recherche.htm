@@ -10,7 +10,8 @@
 <!-- BEGIN: corps -->
 <script language="JavaScript" src="modules/_popdate.js"></script>
 
-<form name="recherche" method="post" action="reservations.php" enctype="multipart/form-data">
+<form name="recherche" method="post" action="index.php" enctype="multipart/form-data">
+	<input type="hidden" name="mod" value="reservations">
 	<input type="hidden" name="rub" value="recherche">
 	<input type="hidden" name="id" value="{id}">
 	<input type="hidden" name="checktime" value="{form_checktime}">

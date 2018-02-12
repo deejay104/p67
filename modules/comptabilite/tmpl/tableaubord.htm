@@ -22,14 +22,15 @@
 <script language="JavaScript">
 function Recharge()
 {
- 	document.location='suiviclub.php?rub=tableaubord&id='+document.getElementById('form_id').value+'&dte='+document.getElementById('form_date').value+'&m='+document.getElementById('form_mois').value;
+ 	document.location='index.php?mod=comptabilite&rub=tableaubord&id='+document.getElementById('form_id').value+'&dte='+document.getElementById('form_date').value+'&m='+document.getElementById('form_mois').value;
 }
 
 </script>
 
 
-<FORM name="compte" id="compte" method="post" action="suiviclub.php" enctype="multipart/form-data" OnSubmit="return false;">
+<FORM name="compte" id="compte" method="post" action="index.php" enctype="multipart/form-data" OnSubmit="return false;">
 
+	<INPUT type="hidden" name="mod" value="comptabilite">
 	<INPUT type="hidden" name="rub" value="tableaubord">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 

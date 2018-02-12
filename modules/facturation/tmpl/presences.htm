@@ -10,18 +10,18 @@
 <table>
 <tr>
 	<td width=450>
-		<a href="presence.php?rub=presence">-Saisie présences-</a>&nbsp;
-		<a href="presence.php?rub=ponctuel">-Présence ponctuelle-</a>
+		<a href="index.php?mod=facturation&rub=presence">-Saisie présences-</a>&nbsp;
+		<a href="index.php?mod=facturation&rub=ponctuel">-Présence ponctuelle-</a>
 <!-- BEGIN: AffVacances -->
-		<a href="presence.php?rub=vacances">-Vacances-</a>
+		<a href="index.php?mod=facturation&rub=vacances">-Vacances-</a>
 <!-- END: AffVacances -->
 <!-- BEGIN: AffPlage -->
-		<a href="presence.php?rub=plage">-Plage Horaire-</a>
+		<a href="index.php?mod=facturation&rub=plage">-Plage Horaire-</a>
 <!-- END: AffPlage -->
 	</td>
 
-	<td align=center width=42><a href="export.php?list=presence&dte={year1}" target="_blank"><img src="images/icn32_excel.png" /><br />{year1}</a></td>
-	<td align=center width=42><a href="export.php?list=presence&dte={year2}" target="_blank"><img src="images/icn32_excel.png" /><br />{year2}</a></td>
+	<td align=center width=42><a href="index.php?mod=export&list=presence&dte={year1}" target="_blank"><img src="static/images/icn32_excel.png" /><br />{year1}</a></td>
+	<td align=center width=42><a href="index.php?mod=export&list=presence&dte={year2}" target="_blank"><img src="static/images/icn32_excel.png" /><br />{year2}</a></td>
 </tr>
 </table>
 
@@ -31,8 +31,8 @@
 		  <td width=104><img src="images/rien.gif" alt="" /></td>
 		</tr>
 		<tr height=20>
-		  <td width=104 bgcolor="#013366" align=right><a href="presence.php?dtey={dtey_prev}&dtem={dtem_prev}" class="titre"><img src="images/prev2.gif" border=0 alt="" /> Pr&eacute;c&eacute;dent</a>&nbsp;</td>
-		  <td width=104 bgcolor="#013366" align=left>&nbsp;<a href="presence.php?dtey={dtey_next}&dtem={dtem_next}" class="titre">Suivant <img src="images/next2.gif" border=0 alt="" /></a></td>
+		  <td width=104 bgcolor="#013366" align=right><a href="index.php?mod=facturation&rub=presence&dtey={dtey_prev}&dtem={dtem_prev}" class="titre"><img src="images/prev2.gif" border=0 alt="" /> Pr&eacute;c&eacute;dent</a>&nbsp;</td>
+		  <td width=104 bgcolor="#013366" align=left>&nbsp;<a href="index.php?mod=facturation&rub=presence&dtey={dtey_next}&dtem={dtem_next}" class="titre">Suivant <img src="images/next2.gif" border=0 alt="" /></a></td>
 		</tr>
 	</table>
 
@@ -51,7 +51,7 @@
 			<tr><td {color_manip}>&nbsp;{aff_jour_manip}</td>
 
   <!-- BEGIN: lst_jour_periode -->
-				<td {color_manip} align="center"><a href="presence.php?rub=presence&dte={aff_dte}"><font color="{aff_color_pre}">{aff_presence}</font></a></td>
+				<td {color_manip} align="center"><a href="index.php?mod=facturation&rub=presence&dte={aff_dte}"><font color="{aff_color_pre}">{aff_presence}</font></a></td>
   <!-- END: lst_jour_periode -->
 			</tr>
 <!-- END: lst_jour -->

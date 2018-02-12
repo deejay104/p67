@@ -3,7 +3,7 @@
 <!-- END: icone -->
 <!-- BEGIN: infos -->
 	<!-- BEGIN: suiviVols -->
-	<p><A href="suivivols.php"><IMG src="{path_module}/img/icn32_listevols.png" border=0>Suivi des membres</A></p>
+	<p><A href="index.php?mod=aviation&rub=suivivols"><IMG src="{path_module}/img/icn32_listevols.png" border=0>Suivi des membres</A></p>
 	<!-- END: suiviVols -->
 <!-- END: infos -->
 
@@ -11,10 +11,11 @@
 <!-- BEGIN: corps -->
 
 <!-- BEGIN: listeVols -->
-<form name="users" method="post" action="vols.php" enctype="multipart/form-data">
+<form name="users" method="post" action="index.php" enctype="multipart/form-data">
 	<input type="hidden" name="checktime" value="{form_checktime}">
+	<input type="hidden" name="mod" value="aviation">
 	<br />
-	<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='vols.php?id='+id;">
+	<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='index.php?mod=aviation&rub=vols&id='+id;">
 	<!-- BEGIN: lst_user -->
 	<option value="{id_user}" {chk_user}>{nom_user}</OPTION>
 	<!-- END: lst_user -->
