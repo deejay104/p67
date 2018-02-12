@@ -61,8 +61,7 @@
 				// ENVOIE DU MDP PAR MAIL (+LOGIN)
 				// ---- Récupère l'adresse email de l'émetteur
 				$from=$myuser->data["mail"];
-				
-				SendMailFromFile($from,$usr->data["mail"],"","[".$MyOpt["site_title"]."] : Changement de votre mot de passe",array("username"=>$usr->fullname,"initiales"->$usr->data["initiales"],"chgpwd");
+				SendMailFromFile($from,$usr->data["mail"],"","[".$MyOpt["site_title"]."] : Changement de votre mot de passe",array("username"=>$usr->fullname,"initiales"=>$usr->data["initiales"]),"chgpwd");
 			
 				$msg_confirmation.="Votre mot de passe a été mis à jour.<br />";
 			}
@@ -82,18 +81,19 @@
 	}
 
 	if ($fonc=="Annuler")
-	  {
+	{
 		$affrub="detail";
-	  }
+	}
+	  
 // ---- Affiche les infos
 	if ((is_numeric($id)) && ($id>0))
-	  {
+	{
 			$usr = new user_class($id,$sql,((GetMyId($id)) ? true : false));
 			$usrmaj = new user_class($usr->uidmaj,$sql);
 	
 			$tmpl_x->assign("id", $id);
 			$tmpl_x->assign("info_maj", $usrmaj->prenom." ".$usrmaj->nom." le ".sql2date($usr->dtemaj));	
-	  }
+	}
 
 
 	if ($usr->data["password"]=="")
@@ -122,16 +122,15 @@
 
 // ---- Messages
 	if ($msg_erreur!="")
-	  {
-		$tmpl_x->assign("msg_erreur", $msg_erreur);
-		$tmpl_x->parse("corps.msgerror");
-	  }		
+	{
+		affInformation($msg_erreur,"error");
+	}		
 
 	if ($msg_confirmation!="")
-	  {
-		$tmpl_x->assign("msg_confirmation", $msg_confirmation);
-		$tmpl_x->parse("corps.msgok");
-	  }		
+	{
+		affInformation($msg_confirmation,"ok");
+	}
+
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

@@ -37,7 +37,7 @@ class document_class{
 
 		$this->id="";
 		$this->name="";
-		$this->filename="../images/none.gif";
+		$this->filename="../static/images/none.gif";
 		$this->uid="";
 		$this->type=$type;
 		$this->dossier="";
@@ -54,7 +54,7 @@ class document_class{
 		}
 		else if ($id==-1)
 		{
-			$this->filename="../images/icn64_membre.png";
+			$this->filename="../static/images/icn64_membre.png";
 		}
 	}
 
@@ -222,17 +222,17 @@ class document_class{
 				if (file_exists($this->filepath."/".$this->filename))
 				  {
 						$fsize=CalcSize(filesize($this->filepath."/".$this->filename));
-						$txt.="<a href='".$MyOpt["host"]."/doc.php?id=".$this->id."' target='_blank'><img src='".$MyOpt["host"]."/images/icn16_".$icon.".png' width=16 height=16 border=0> ".$this->name." ($fsize) </a>";
+						$txt.="<a href='".$MyOpt["host"]."/doc.php?id=".$this->id."' target='_blank'><img src='".$MyOpt["host"]."/static/images/icn16_".$icon.".png' width=16 height=16 border=0> ".$this->name." ($fsize) </a>";
 				  }
 				else
 				  {
-						$txt.="<img src='".$MyOpt["host"]."/images/icn16_".$icon.".png' style='vertical-align:middle; border: 0px; height: 16px; width: 16px;'> <s>".$this->name."</s>";
+						$txt.="<img src='".$MyOpt["host"]."/static/images/icn16_".$icon.".png' style='vertical-align:middle; border: 0px; height: 16px; width: 16px;'> <s>".$this->name."</s>";
 					}
 
 				// Si mode édition
 				if ($this->editmode=="edit")
 				  {
-		  			$txt.=" <a href=\"#\" OnClick=\"var win=window.open('doc.php?id=".$this->id."&fonc=delete','scrollbars=no,resizable=no,width=10'); return false;\" class='imgDelete'><img src='images/icn16_supprimer.png'></a>";
+		  			$txt.=" <a href=\"#\" OnClick=\"var win=window.open('doc.php?id=".$this->id."&fonc=delete','scrollbars=no,resizable=no,width=10'); return false;\" class='imgDelete'><img src='static/images/icn16_supprimer.png'></a>";
 		  		}
 		  }
 
@@ -265,7 +265,7 @@ class document_class{
 		$fname=$this->filepath."/".$this->filename;
 		if (!file_exists($fname))
 		{
-		  	$fname="images/icn32_erreur.png";
+		  	$fname="static/images/icn32_erreur.png";
 		  	$myext="png";
 		}
 
@@ -328,7 +328,7 @@ class document_class{
 
 		if (!file_exists($file))
 		{
-		  	$file="images/icn32_erreur.png";
+		  	$file="static/images/icn32_erreur.png";
 		}
 
 		$thumb = imagecreatetruecolor($newwidth, $newheight);
@@ -347,7 +347,7 @@ class document_class{
 		}
 		else
 		{
-			$file="images/icn32_erreur.png";
+			$file="static/images/icn32_erreur.png";
 			$source = imagecreatefrompng($file);
 		}
 

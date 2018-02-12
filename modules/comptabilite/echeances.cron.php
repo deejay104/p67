@@ -31,21 +31,6 @@
 	}
 	myPrint("President : '$mailpre'");
 
-// ---- Mail du trésorier
-	$query="SELECT mail FROM ".$MyOpt["tbl"]."_utilisateurs WHERE droits LIKE '%TRE%' AND actif='oui'";
-	$sql->Query($query);
-	
-	$tabTre=array();
-	for($i=0; $i<$sql->rows; $i++)
-	{ 
-		$sql->GetRow($i);
-	
-		$tabTre[$i]=$sql->data["mail"];
-	}
-	$mailtre=$tabTre[0];
-
-	myPrint("Tresorier : '$mailtre'");
-
 // ---- Liste les comptes actifs
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_echeancetype ORDER BY description";
 	$sql->Query($query);
@@ -63,7 +48,7 @@
 	{
 		myPrint("* ".$d["description"]);
 
-		$x=$d["delai"];
+		$delai=$d["delai"];
 		
 		if ($d["notif"]=="oui")
 		{
@@ -79,29 +64,23 @@
 				{
 					myPrint($usr->fullname." - ".$dte->description." echue");
 
-					$mail ="Bonjour,\n\n";
-					$mail.="L'échéance ".$dte->description." est échue depuis le ".sql2date($dte->Val())."\n";
-					$mail.="Je t'invite à faire le nécessaire pour la renouveler sans oublier de m'envoyer une copie pour mise à jour de ton profil sur le site.\n\n";
-					$mail.="A bientôt\n\n";
-					// $mail.=$usr->aff("prenom")."\n";
-					$mail.="Le Président";
-					$mail=nl2br(htmlentities($mail,ENT_COMPAT,'ISO-8859-1'));
-
-					$ret=MyMail($mailpre,$usr->mail,$tabPre,"[".$MyOpt["site_title"]."] : ".$dte->description." échue",$mail,"");
+					$tabvar=array();
+					$tabvar["description"]=$dte->description;
+					$tabvar["type"]="est échue depuis le";
+					$tabvar["date"]=sql2date($dte->Val());
+					
+					SendMailFromFile($mailpre,$usr->mail,$tabPre,"[".$MyOpt["site_title"]."] : ".$dte->description." échue",$tabvar,"echeances");
 				}
-				else if (date_diff_txt($dte->Val(),date("Y-m-d"))>-$x*24*3600)
+				else if (date_diff_txt($dte->Val(),date("Y-m-d"))>-$delai*24*3600)
 				{
-					myPrint($usr->fullname." - ".$dte->description." expire dans moins de ".$x." jours");
+					myPrint($usr->fullname." - ".$dte->description." expire dans moins de ".$delai." jours");
 
-					$mail ="Bonjour,\n\n";
-					$mail.="L'échéance ".$dte->description." arrive à son terme le ".sql2date($dte->Val())."\n";
-					$mail.="Je t'invite à faire le nécessaire pour la renouveler sans oublier de m'envoyer une copie pour mise à jour de ton profil sur le site.\n\n";
-					$mail.="A bientôt\n\n";
-					// $mail.=$usr->aff("prenom")."\n";
-					$mail.="Le Président";
-					$mail=nl2br(htmlentities($mail,ENT_COMPAT,'ISO-8859-1'));
-
-					$ret=MyMail($mailpre,$usr->mail,$tabPre,"[".$MyOpt["site_title"]."] : ".$dte->description." arrive à échéance le ".sql2date($dte->Val()),$mail,"");
+					$tabvar=array();
+					$tabvar["description"]=$dte->description;
+					$tabvar["type"]="est échue depuis le";
+					$tabvar["date"]=sql2date($dte->Val());
+					
+					SendMailFromFile($mailpre,$usr->mail,$tabPre,"[".$MyOpt["site_title"]."] : ".$dte->description." arrive à échéance le ".sql2date($dte->Val()),$tabvar,"echeances");
 				}
 				if (!$ret)
 				{
@@ -110,6 +89,7 @@
 			}
 		}
 	}
+	
 	
 	myPrint($gl_res);
 ?>

@@ -97,8 +97,8 @@
 	$textcolor = imagecolorallocate($img, 0, 0, 0);
 	imagefill($img,0,0,$white); 
 
-	$logo = imagecreatefrompng($module."/".$mod."/img/icn16_$ok.png");
-	list($width, $height) = getimagesize($module."/".$mod."/img/icn16_".$ok.".png");
+	$logo = imagecreatefrompng("static/modules/".$mod."/img/icn16_".$ok.".png");
+	list($width, $height) = getimagesize("static/modules/".$mod."/img/icn16_".$ok.".png");
 	imagecopy($img,$logo,2,2,0,0,$width,$height);
 
 	imagestring($img, 2, 20, 2, $txt, $textcolor);
@@ -112,8 +112,8 @@
 function erreur($txt)
   {
 	$error = imagecreate(320, 16);
-	$logo = imagecreatefrompng($module."/".$mod."/img/icn16_erreur.png");
-	list($width, $height) = getimagesize($module."/".$mod."/img/icn16_erreur.png");
+	$logo = imagecreatefrompng("static/modules/".$mod."/img/icn16_erreur.png");
+	list($width, $height) = getimagesize("static/modules/".$mod."/img/icn16_erreur.png");
 	$white = imagecolorallocate ($error, 255, 255, 255);
 	$textcolor = imagecolorallocate($error, 255, 0, 0);
 

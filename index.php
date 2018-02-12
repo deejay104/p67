@@ -66,12 +66,16 @@
 
 
 // ---- Vérifie la variable $mod
+	if (!isset($mod))
+	  { $mod=""; }
 	if (!preg_match("/^[a-z0-9_]*$/",$mod))
 	  { $mod = ""; }
 	if (trim($mod)=="")
 	  { $mod = ""; }
 
 // ---- Vérifie la variable $rub
+	if (!isset($rub))
+	  { $rub=""; }
 	if (!preg_match("/^[a-z0-9_]*$/",$rub))
 	  { $rub = "index"; }
 	if (trim($rub)=="")
@@ -171,7 +175,7 @@
 	$tmpl_prg->assign("version", $version.(($MyOpt["maintenance"]=="on") ? " - MAINTENANCE ACTIVE" : ""));
 	$tmpl_prg->assign("site_title", $MyOpt["site_title"]);
 
-	if (file_exists("custom/".$MyOpt["site_logo"])
+	if (file_exists("custom/".$MyOpt["site_logo"]))
 	{
 		$tmpl_prg->assign("site_logo", "custom/".$MyOpt["site_logo"]);
 	}
@@ -247,8 +251,10 @@
 	$tmpl_prg->assign("infos", $infos);
 	$tmpl_prg->assign("corps", $corps);
 
-	$tmpl_prg->assign("myprint", $gl_myprint_txt);
-
+	if ($gl_myprint_txt!="")
+	{
+		affInformation(nl2br(htmlentities(utf8_decode($gl_myprint_txt),ENT_COMPAT,'ISO-8859-1')),"warning");
+	}
 
 // ---- Affiche la page
 	$tmpl_prg->parse("main");

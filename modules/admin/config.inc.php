@@ -31,7 +31,7 @@
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Charge les variables par défault
-	require_once("$module/$mod/variables.tmpl.php");
+	require_once("modules/$mod/variables.tmpl.php");
 
 // ---- Vérifie le droit d'accès
 	if (!GetDroit("AccesConfiguration")) { FatalError("Accès non autorisé (AccesConfiguration)"); }

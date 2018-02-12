@@ -136,7 +136,7 @@
 	$tmpl_prg->assign("errmsg", $errmsg);
 	$tmpl_prg->assign("version", $version);
 	$tmpl_prg->assign("site_title", $MyOpt["site_title"]);
-	if (file_exists("custom/".$MyOpt["site_logo"])
+	if (file_exists("custom/".$MyOpt["site_logo"]))
 	{
 		$tmpl_prg->assign("site_logo", "custom/".$MyOpt["site_logo"]);
 	}

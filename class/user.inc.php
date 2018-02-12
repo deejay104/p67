@@ -603,7 +603,7 @@ class user_class{
 				  	  	foreach($this->data[$key] as $enfant)
 				  	  	  {
 				  	  		if ($enfant["id"]>0)
-				  	  		  { $ret.="<a href=\"membres.php?rub=detail&id=".$enfant["id"]."\">".$enfant["usr"]->fullname."</a><br />"; }
+				  	  		  { $ret.="<a href=\"index.php?mod=membres&rub=detail&id=".$enfant["id"]."\">".$enfant["usr"]->fullname."</a><br />"; }
 				  	  	  }
 					  }
 					if ($ret=="") { $ret="Aucun"; }
@@ -618,7 +618,6 @@ class user_class{
 				  	  	  {
 				  	  		if ($enfant["id"]>0)
 				  	  		  {
-				  	  		  	// $ret.="<a href=\"membres.php?rub=detail&id=".$enfant["id"]."\">".$enfant["usr"]->fullname."</a><br />";
 						  	  	$ret.="<option value=\"".$enfant["id"]."\" ".(($txt==$enfant["id"])?"selected":"").">".$enfant["usr"]->fullname."</option>";
 				  	  		  }
 				  	  	  }
@@ -705,7 +704,7 @@ class user_class{
 					foreach($this->data[$key] as $enfant)
 					  {
 						if ($enfant["id"]>0)
-						  { $ret.="<a href=\"membres.php?rub=detail&id=".$enfant["id"]."\">".$enfant["usr"]->fullname."</a><br />"; }
+						  { $ret.="<a href=\"index.php?mod=membres&rub=detail&id=".$enfant["id"]."\">".$enfant["usr"]->fullname."</a><br />"; }
 					  }
 				  }
 				if ($ret=="") { $ret="Aucun"; }
@@ -721,59 +720,59 @@ class user_class{
 					foreach($this->data["enfant"] as $enfant)
 					{
 						if ($enfant["id"]==$txt)
-						{ $ret="<a href=\"membres.php?rub=detail&id=".$enfant["id"]."\">".$enfant["usr"]->fullname."</a>"; }
+						{ $ret="<a href=\"index.php?mod=membres&rub=detail&id=".$enfant["id"]."\">".$enfant["usr"]->fullname."</a>"; }
 					}
 				}
 			}
 			else if ($key=="pere")
 			{
 				$t=$this->data[$key];
-				$ret="<a href=\"membres.php?rub=detail&id=".$t->uid."\">".$t->fullname."</a>";
+				$ret="<a href=\"index.php?mod=membres&rub=detail&id=".$t->uid."\">".$t->fullname."</a>";
 			}
 			else if ($key=="mere")
 			{
 				$t=$this->data[$key];
-				$ret="<a href=\"membres.php?rub=detail&id=".$t->uid."\">".$t->fullname."</a>";
+				$ret="<a href=\"index.php?mod=membres&rub=detail&id=".$t->uid."\">".$t->fullname."</a>";
 			}
 			else if ( ($key=="fullname") && ($this->actif=="off"))
 			{
-				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s>".$ret."</s></a>";
+				$ret="<a href=\"index.php?mod=membres&rub=detail&id=".$this->uid."\"><s>".$ret."</s></a>";
 			}
 			else if ( ($key=="fullname") && ($this->actif=="non"))
 			{
-				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s style='color:#ff0000;'>".$ret."</s></a>";
+				$ret="<a href=\"index.php?mod=membres&rub=detail&id=".$this->uid."\"><s style='color:#ff0000;'>".$ret."</s></a>";
 			}
 			else if ($key=="fullname")
 			{
-				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\">".$ret."</a>";
+				$ret="<a href=\"index.php?mod=membres&rub=detail&id=".$this->uid."\">".$ret."</a>";
 			}
 			else if ( ($key=="nom") && ($this->actif=="off"))
 			{
-				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s>".$ret."</s></a>";
+				$ret="<a href=\"index.php?mod=membres&rub=detail&id=".$this->uid."\"><s>".$ret."</s></a>";
 			}
 			else if ( ($key=="nom") && ($this->data["password"]=="") && (GetDroit("ModifUserPassword")))
 			{
-				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><i>".$ret." (*)</i></a>";
+				$ret="<a href=\"index.php?mod=membres&rub=detail&id=".$this->uid."\"><i>".$ret." (*)</i></a>";
 			}
 			else if ( ($key=="nom") && ($this->actif=="non"))
 			{
-				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s style='color:#ff0000;'>".$ret."</s></a>";
+				$ret="<a href=\"index.php?mod=membres&rub=detail&id=".$this->uid."\"><s style='color:#ff0000;'>".$ret."</s></a>";
 			}
 			else if ($key=="nom")
 			{
-				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\">".$ret."</a>";
+				$ret="<a href=\"index.php?mod=membres&rub=detail&id=".$this->uid."\">".$ret."</a>";
 			}
 			else if ( ($key=="prenom") && ($this->actif=="off"))
 			{
-				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s>".$ret."</s></a>";
+				$ret="<a href=\"index.php?mod=membres&rub=detail&id=".$this->uid."\"><s>".$ret."</s></a>";
 			}
 			else if ( ($key=="prenom") && ($this->actif=="non"))
 			{
-				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\"><s style='color:#ff0000;'>".$ret."</s></a>";
+				$ret="<a href=\"index.php?mod=membres&rub=detail&id=".$this->uid."\"><s style='color:#ff0000;'>".$ret."</s></a>";
 			}
 			else if ($key=="prenom")
 			{
-				$ret="<a href=\"membres.php?rub=detail&id=".$this->uid."\">".$ret."</a>";
+				$ret="<a href=\"index.php?mod=membres&rub=detail&id=".$this->uid."\">".$ret."</a>";
 			}
 			else if ($key=="droits")
 			{
@@ -811,7 +810,7 @@ class user_class{
 		$t=$this->NbHeuresVol();
 
 		$ret=(($t>0) ? AffTemps($t) : "0h 00");
-		return "<a href='vols.php?id=$this->uid'>$ret</a>";
+		return "<a href='index.php?mod=aviation&rub=vols&id=$this->uid'>$ret</a>";
 	}
 
 	function AffNbHeuresAn(){
@@ -820,7 +819,7 @@ class user_class{
 		$t=$t+$res["nb"];
 
 		$ret=(($t>0) ? AffTemps($t) : "0h 00");
-		return "<a href='vols.php?id=$this->uid'>$ret</a>";
+		return "<a href='index.php?mod=aviation&rub=vols&id=$this->uid'>$ret</a>";
 	}
 
 	function AffNbHeures12mois() {
@@ -834,7 +833,7 @@ class user_class{
 		  { $ret="0h 00"; }
 		
 
-		return "<a href='vols.php?id=$this->uid'>$ret</a>";
+		return "<a href='index.php?mod=aviation&rub=vols&id=$this->uid'>$ret</a>";
 	}
 
 	function AffNbHeuresProrogation() {
@@ -847,7 +846,7 @@ class user_class{
 		else
 		  { $ret="0h 00"; }
 
-		return "<a href='vols.php?id=$this->uid'>$ret</a>";
+		return "<a href='index.php?mod=aviation&rub=vols&id=$this->uid'>$ret</a>";
 	}
 
 	function NbHeuresVol(){
@@ -968,7 +967,7 @@ class user_class{
 			  { $ret="<font color='green'>$ret</font>"; }
 			else
 			  { $ret="<font color='red'><b>$ret</b></font>"; }
-		  	return "<a href='vols.php?id=$this->uid'>".$ret."</a>";
+		  	return "<a href='index.php?mod=aviation&rub=vols&id=$this->uid'>".$ret."</a>";
 		  }
 	}
 
@@ -980,7 +979,7 @@ class user_class{
 
 		$solde=(($res["total"]=="") ? AffMontant(0) : (($res["total"]<0) ? "<FONT color=red><B>".AffMontant($res["total"])."</B></FONT>" : AffMontant($res["total"])));
 
-		return "<a href=\"comptes.php?id=$this->idcpt\">$solde</a>";
+		return "<a href=\"index.php?mod=comptes&id=$this->idcpt\">$solde</a>";
 	}
 
 	function CalcSoldeFacture(){

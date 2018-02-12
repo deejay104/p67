@@ -67,12 +67,12 @@
 			$tabValeur[$i]["ress"]["aff"]=$ress->aff("immatriculation");
 			
 			$tabValeur[$i]["dte_deb"]["val"]=strtotime($maint->dte_deb);
-			$tabValeur[$i]["dte_deb"]["aff"]="<a href='maintenance.php?rub=detailmaint&id=$id'>".$maint->aff("dte_deb")."</a>";
+			$tabValeur[$i]["dte_deb"]["aff"]="<a href='index.php?mod=ressources&rub=detailmaint&id=$id'>".$maint->aff("dte_deb")."</a>";
 			$tabValeur[$i]["dte_fin"]["val"]=strtotime($maint->dte_fin);
-			$tabValeur[$i]["dte_fin"]["aff"]="<a href='maintenance.php?rub=detailmaint&id=$id'>".$maint->aff("dte_fin")."</a>";
+			$tabValeur[$i]["dte_fin"]["aff"]="<a href=''index.php?mod=ressources&rub=detailmaint&id=$id'>".$maint->aff("dte_fin")."</a>";
 
 			$tabValeur[$i]["status"]["val"]=$maint->aff("status");
-			$tabValeur[$i]["status"]["aff"]="<a href='maintenance.php?rub=detailmaint&id=$id'>".$maint->aff("status")."</a>";
+			$tabValeur[$i]["status"]["aff"]="<a href=''index.php?mod=ressources&rub=detailmaint&id=$id'>".$maint->aff("status")."</a>";
 
 			$tabValeur[$i]["atelier"]["val"]=$maint->nom_atelier;
 			$tabValeur[$i]["atelier"]["aff"]=$maint->nom_atelier;

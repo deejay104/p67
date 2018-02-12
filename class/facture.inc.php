@@ -214,7 +214,14 @@ class facture_class{
 	
 	// ---- Affiche la facture demandée
 		$tmpl_pdf->assign("id_facture",$this->id);
-		$tmpl_pdf->assign("titre_logo","images/".$MyOpt["site_logo"]);
+		if (file_exists("custom/".$MyOpt["site_logo"]))
+		{
+			$tmpl_pdf->assign("titre_logo", "custom/".$MyOpt["site_logo"]);
+		}
+		else
+		{
+			$tmpl_pdf->assign("titre_logo", "static/images/logo.png");
+		}
 	
 		$clubusr = new user_class($MyOpt["uid_club"],$sql);
 		$tmpl_pdf->assign("club_nom_compte", preg_replace("/-/"," ",$clubusr->Aff("prenom","val"))." ".$clubusr->Aff("nom","val"));

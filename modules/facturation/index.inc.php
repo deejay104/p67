@@ -173,7 +173,7 @@
 		  {
 		  	$fac=new facture_class($id,$sql);
 			$tabValeur[$i]["num"]["val"]=$fac->id;
-			$tabValeur[$i]["num"]["aff"]="<a href='factures.php?rub=detail&usr=".$fac->uid."&facid=".$fac->id."'>".$fac->id."</a>";
+			$tabValeur[$i]["num"]["aff"]="<a href='index.php?mod=facturation&rub=detail&usr=".$fac->uid."&facid=".$fac->id."'>".$fac->id."</a>";
 			$tabValeur[$i]["date"]["val"]=CompleteTxt($i,"20","0");
 			$tabValeur[$i]["date"]["aff"]=sql2date($fac->dte);
 			$tabValeur[$i]["rem"]["val"]=$fac->comment;

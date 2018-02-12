@@ -211,7 +211,7 @@
 		foreach($tabValeur as $i=>$d)
 		{
 			$tabValeur[$i]["signature"]["val"]=AfficheSignatureCompte($d[lid]["val"]);
-			$tabValeur[$i]["signature"]["aff"]=($tabValeur[$i]["signature"]["val"]=="ok") ? "<a title='Signature de la transaction confirmée'><img src='images/icn16_signed.png' /></a>" : "<a title='Transaction potentiellement altérée'><img src='images/icn16_warning.png' /></a>";
+			$tabValeur[$i]["signature"]["aff"]=($tabValeur[$i]["signature"]["val"]=="ok") ? "<a title='Signature de la transaction confirmée'><img src='static/images/icn16_signed.png' /></a>" : "<a title='Transaction potentiellement altérée'><img src='static/images/icn16_warning.png' /></a>";
 		}
 	}
 	

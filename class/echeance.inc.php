@@ -151,7 +151,7 @@ class echeance_class
 		{
 			$sql=$this->sql;
 			$n=0;
-			$ret.="<img src='".$MyOpt["host"]."/images/icn16_vide.png' style='vertical-align:middle; border: 0px;  height: 16px; width: 16px;'>&nbsp;";
+			$ret.="<img src='static/images/icn16_vide.png' style='vertical-align:middle; border: 0px;  height: 16px; width: 16px;'>&nbsp;";
 			$ret.="<select name='form_echeance_type'>";
 
 			$tabEcheance=array();
@@ -189,14 +189,14 @@ class echeance_class
 		else if ( ($this->editmode=="edit") && (GetDroit($this->droit)) )
 		{
 			$ret ="<div id='aff_echeance".$this->id."'>";
-			$ret.="<img src='".$MyOpt["host"]."/images/icn16_vide.png' style='vertical-align:middle; border: 0px;  height: 16px; width: 16px;'>&nbsp;";
+			$ret.="<img src='static/images/icn16_vide.png' style='vertical-align:middle; border: 0px;  height: 16px; width: 16px;'>&nbsp;";
 			$ret.="Echéance ".$this->description." le <input name='form_echeance[".$this->id."]' id='form_echeance".$this->id."' value='".$this->dte_echeance."' type='date' style='width: 165px;'>&nbsp;";
-			$ret.="<a href=\"#\" OnClick=\"document.getElementById('form_echeance".$this->id."').value=''; document.getElementById('aff_echeance".$this->id."').style.display='none';\" class='imgDelete'><img src='".$MyOpt["host"]."/images/icn16_supprimer.png'></a>";
+			$ret.="<a href=\"#\" OnClick=\"document.getElementById('form_echeance".$this->id."').value=''; document.getElementById('aff_echeance".$this->id."').style.display='none';\" class='imgDelete'><img src='static/images/icn16_supprimer.png'></a>";
 			$ret.="</div>";
 		}
 		else
 		{
-			$ret ="<img src='".$MyOpt["host"]."/images/icn16_".EcheanceDate($this->dte_echeance).".png' style='vertical-align:middle; border: 0px;  height: 16px; width: 16px;'>&nbsp;";
+			$ret ="<img src='static/images/icn16_".EcheanceDate($this->dte_echeance).".png' style='vertical-align:middle; border: 0px;  height: 16px; width: 16px;'>&nbsp;";
 			$ret.="Echéance ".$this->description." le ".AffDate($this->dte_echeance);
 		}
 		return $ret;

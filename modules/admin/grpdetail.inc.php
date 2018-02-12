@@ -34,7 +34,7 @@
 // ---- Vérifie le droit d'accès
 	if (!GetDroit("AccesConfigGroupes")) { FatalError("Accès non autorisé (AccesConfigGroupes)"); }
 
-	require_once("$module/$mod/roles.tmpl.php");
+	require_once("modules/".$mod."/roles.tmpl.php");
 
 // ---- Affiche le menu
 	$aff_menu="";

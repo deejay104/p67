@@ -231,7 +231,7 @@ class ress_class{
 				$ret=$res["description"];
 			}
 			else
-		  	  { $ret="<a href=\"ressources.php?rub=detail&id=".$this->id."\">".$ret."</a>"; }
+		  	  { $ret="<a href=\"index.php?mod=ressources&rub=detail&id=".$this->id."\">".$ret."</a>"; }
 		  }
 
 		return $ret;

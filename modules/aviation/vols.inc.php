@@ -118,9 +118,9 @@
 		  { $dte=$t1; }
 
 		$tabValeur[$i]["dte_deb"]["val"]=strtotime($resa->dte_deb);
-		$tabValeur[$i]["dte_deb"]["aff"]="<a href='reservations.php?rub=reservation&id=$rid'>".$dte."</a>";
+		$tabValeur[$i]["dte_deb"]["aff"]="<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".$dte."</a>";
 		$tabValeur[$i]["immat"]["val"]=$ress->nom;
-		$tabValeur[$i]["immat"]["aff"]="<a href='reservations.php?rub=reservation&id=$rid'>".$ress->immatriculation."</a>";
+		$tabValeur[$i]["immat"]["aff"]="<a href='index.php?mod=reservations&rub=reservation&id=$rid'>".$ress->immatriculation."</a>";
 		$tabValeur[$i]["tpsreel"]["val"]=$resa->tpsreel;
 		$tabValeur[$i]["tpsreel"]["aff"]=$resa->AffTempsReel();
 		$tabValeur[$i]["temps"]["val"]=$resa->temps;
@@ -129,12 +129,14 @@
 		$tabValeur[$i]["cout"]["aff"]=$resa->AffPrix()."&nbsp;&nbsp;";
 		$tabValeur[$i]["cout"]["align"]="right";
 		if ($id==$resa->uid_instructeur)
-		  {
+		{
 		  	$usrinst = new user_class($resa->uid_pilote,$sql);
-			$tabValeur[$i]["instructeur"]["val"]="Avec : <a href='vols.php?id=".$usrinst->uid."'>".$usrinst->Aff("prenom")." ".$usrinst->Aff("nom")."</a>";
-		  }
+			$tabValeur[$i]["instructeur"]["val"]="Avec : ".$usrinst->Aff("fullname");
+		}
 		else
-		  { $tabValeur[$i]["instructeur"]["val"]="<a href='vols.php?id=".$resa->uid_instructeur."'>".$usrinst->Aff("prenom")." ".$usrinst->Aff("nom")."</a>"; }
+		{
+			$tabValeur[$i]["instructeur"]["val"]=$usrinst->Aff("fullname");
+		}
 
 	}
 

@@ -73,7 +73,7 @@
 // **************************************
 
 		$tabValeur[$i]["hora"]["val"]=(($t>0) ? $t : "0");
-		$tabValeur[$i]["hora"]["aff"]="<A href='ressources.php?rub=detail&id=$id'>".AffTemps($t)."</a>";
+		$tabValeur[$i]["hora"]["aff"]="<A href='index.php?mod=ressources&rub=detail&id=$id'>".AffTemps($t)."</a>";
 	  }
 
 	if ($order=="") { $order="nom"; }

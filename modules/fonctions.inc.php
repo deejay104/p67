@@ -145,13 +145,18 @@ function AffInfo($txt,$key,$typeaff="html",$cond=true)
 function SendMailFromFile($from,$to,$tabcc,$subject,$tabvar,$file)
 { global $mod;
 
-	if (file_exists("custom/".$file."mail.txt"))
+	if (file_exists("custom/".$file.".mail.txt"))
 	{
-		$tmail=file("custom/".$file."mail.txt");
+		$tmail=file("custom/".$file.".mail.txt");
+	}
+	else if (file_exists("modules/".$mod."/".$file.".mail.txt"))
+	{
+		$tmail=file("modules/".$mod."/".$file.".mail.txt");
 	}
 	else
 	{
-		$tmail=file("modules/".$mod."/".$file."mail.txt");
+		echo "file not found";
+		return false;
 	}
 
 	$mail = '';
@@ -167,12 +172,12 @@ function SendMailFromFile($from,$to,$tabcc,$subject,$tabvar,$file)
 	}
 
 	$mail=str_replace("{url}",substr($_SERVER["HTTP_REFERER"],0,strrpos($_SERVER["HTTP_REFERER"],"/")),$mail);
-
+	
 	MyMail($from,$to,$tabcc,$subject,$mail,"","");
 
 }
   
-function MyMail($from,$to,$tabcc,$subject,$mail,$headers="",$files="")
+function MyMail($from,$to,$tabcc,$subject,$message,$headers="",$files="")
 { global $MyOpt;
 
 	if (is_array($from))
@@ -277,7 +282,7 @@ function MyMail($from,$to,$tabcc,$subject,$mail,$headers="",$files="")
 			}
 		}
 	}
-	
+
 	//send the message, check for errors
 	return $mail->send();
 }
@@ -338,41 +343,38 @@ function AfficheTableau($tabValeur,$tabTitre="",$order="",$trie="",$url="",$star
 	$page=$_SERVER["SCRIPT_NAME"]."?mod=$mod&rub=$rub";
 
 	if (!is_array($tabTitre))
-	  {
+	{
 	  	$tabTitre=array();
 	  	foreach($tabValeur[0] as $name=>$t)
-	  	  {
+	  	{
 	  	  	$tabTitre[$name]["aff"]=$name;
-	  	  }
-	  }
+	  	}
+	}
   	foreach($tabTitre as $name=>$v)
-	  {
+	{
+		if (!isset($v["align"]))
+		{
+			$v["align"]="left";
+		}
 		if ($name==$order)
-		  {
+		{
 			$ret.="<th width='".$v["width"]."'".(($v["align"]!="") ? " align='".$v["align"]."'" : "").">";
-			$ret.="<b><a href='$page&order=$name&trie=".(($trie=="d") ? "i" : "d").(($url!="") ? "&$url" : "")."&ts=$i'>".$v["aff"]."</a></b>";
-		  	$ret.=" <img src='images/sens_$trie.gif' border=0>";
-		  }
+			$ret.="<b><a href='$page&order=$name&trie=".(($trie=="d") ? "i" : "d").(($url!="") ? "&$url" : "")."&ts=0'>".$v["aff"]."</a></b>";
+		  	$ret.=" <img src='static/images/sens_$trie.gif' border=0>";
+		}
 		else if ($v["aff"]=="<line>")
-		  {
+		{
 			$ret.="<th style='width:".$v["width"]."px; background-color:black;'>";
-		  }
+		}
 		else
-		  {
+		{
 			$ret.="<th width='".$v["width"]."'".(($v["align"]!="") ? " align='".$v["align"]."'" : "").">";
-			$ret.="<b><a href='$page&order=$name&trie=d".(($url!="") ? "&$url" : "")."&ts=$i'>".$v["aff"]."</a></b>";
-		  }
+			$ret.="<b><a href='$page&order=$name&trie=d".(($url!="") ? "&$url" : "")."&ts=0'>".$v["aff"]."</a></b>";
+		}
 		$ret.="</th>";
 		$nb++;
-	  }
-
-	
+	}
 	$ret.="</tr>\n";
-/*
-	$ret.="<tr bgcolor='black'>";
-	$ret.="<td height='1' colspan='$nb'><img src='images/rien.gif' height=1 alt=''></td>";
-	$ret.="</tr>\n";
-*/
 
 	if (is_array($tabValeur))
 	  {
@@ -397,6 +399,10 @@ function AfficheTableau($tabValeur,$tabTitre="",$order="",$trie="",$url="",$star
 		
 				foreach($tabTitre as $name=>$v)
 				  {
+					if (!isset($val[$name]["align"]))
+					{
+						$val[$name]["align"]="left";
+					}
 					if ($val[$name]["val"]=="<line>")
 					  {
 						$ret.="<td style='background-color:black;'></td>";
@@ -505,8 +511,8 @@ function AfficheTableauFiltre($tabValeur,$tabTitre="",$order="",$trie="",$url=""
 		if ($name==$order)
 		  {
 			$ret.="<th width='".$v["width"]."'".(($v["align"]!="") ? " align='".$v["align"]."'" : "").">";
-			$ret.="<b><a href='$page&order=$name&trie=".(($trie=="d") ? "i" : "d").(($url!="") ? "&$url" : "")."&ts=$i'>".$v["aff"]."</a></b>";
-		  	$ret.=" <img src='images/sens_$trie.gif' border=0>";
+			$ret.="<b><a href='$page&order=$name&trie=".(($trie=="d") ? "i" : "d").(($url!="") ? "&$url" : "")."&ts=0'>".$v["aff"]."</a></b>";
+		  	$ret.=" <img src='static/images/sens_$trie.gif' border=0>";
 		  }
 		else if ($v["aff"]=="<line>")
 		  {
@@ -515,7 +521,7 @@ function AfficheTableauFiltre($tabValeur,$tabTitre="",$order="",$trie="",$url=""
 		else
 		  {
 			$ret.="<th width='".$v["width"]."'".(($v["align"]!="") ? " align='".$v["align"]."'" : "").">";
-			$ret.="<b><a href='$page&order=$name&trie=d".(($url!="") ? "&$url" : "")."&ts=$i'>".$v["aff"]."</a></b>";
+			$ret.="<b><a href='$page&order=$name&trie=d".(($url!="") ? "&$url" : "")."&ts=0'>".$v["aff"]."</a></b>";
 		  }
 		$ret.="</th>";
 		$nb++;
@@ -523,11 +529,6 @@ function AfficheTableauFiltre($tabValeur,$tabTitre="",$order="",$trie="",$url=""
 
 	
 	$ret.="</tr>\n";
-/*
-	$ret.="<tr bgcolor='black'>";
-	$ret.="<td height='1' colspan='$nb'><img src='images/rien.gif' height=1 alt=''></td>";
-	$ret.="</tr>\n";
-*/
 
 	if (is_array($tabValeur))
 	  {
@@ -724,7 +725,7 @@ function FatalError($txt,$msg="")
   { global $tmpl_prg;
   	if (isset($tmpl_prg))
   	{
-		$tmpl_prg->assign("icone","<IMG src=\"images/icn48_erreur.png\">");
+		$tmpl_prg->assign("icone","<IMG src=\"static/images/icn48_erreur.png\">");
 		$tmpl_prg->assign("infos","$txt");
 		$tmpl_prg->assign("corps","$msg");
 		$tmpl_prg->parse("main");

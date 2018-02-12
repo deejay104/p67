@@ -1,9 +1,8 @@
 Cher(e) ami(e) pilote,
 
-La validité de {type} est échue.
+L'échéance {description} {type} {date}.
 
 Je t'invite à faire le nécessaire pour la renouveler sans oublier de m'envoyer une copie pour mise à jour de ton profil sur le site.
-Pour le moment, tu ne peux malheureusement ni voler, ni réserver un avion.
 
 A bientôt au club
 

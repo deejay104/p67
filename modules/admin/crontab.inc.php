@@ -51,6 +51,7 @@
 			$gl_myprint_txt="";
 			$gl_id=$id;
 			$gl_res="";
+			$mod=$sql->data["module"];
 			require("modules/".$sql->data["module"]."/".$sql->data["script"].".cron.php");
 
 			$q="UPDATE ".$MyOpt["tbl"]."_cron SET lastrun='".now()."', txtretour='".$gl_res."', txtlog='".addslashes($gl_myprint_txt)."' WHERE id='".$gl_id."'";

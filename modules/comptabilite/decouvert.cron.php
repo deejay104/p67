@@ -39,20 +39,16 @@
 	{
 		$usr = new user_class($id,$sql,false,true);
 		$ret=true;
-		$m=$usr->CalcSolde();
+		$solde=$usr->CalcSolde();
 		if (($m<-$usr->data["decouvert"]) && ($usr->mail!="") && ($usr->virtuel=="non"))
 		{
-			myPrint($usr->fullname." - Solde: ".$m);
+			myPrint($usr->fullname." - Solde: ".$solde);
 
-			$mail ="Bonjour,\n\n";
-			$mail.="Sauf erreur de notre part, le solde ton compte est de ".$m." €.\n";
-			$mail.="Conformément à notre règlement intérieur et afin de préserver la santé financière de notre association, je te demande de faire le nécessaire au plus vite afin de régulariser ta situation. Dans un souci de rapidité, nous te demandons de privilégier dans le mesure du possible un règlement par virement bancaire sans oublier de m'en informer.\n\n";
-			$mail.="Nous comptons sur toi.\n\n";
-			$mail.="A bientôt\n\n";
-			$mail.="Le Trésorier";
-			$mail=nl2br(htmlentities($mail,ENT_COMPAT,'ISO-8859-1'));
+			$tabvar=array();
+			$tabvar["solde"]=$solde;
+			
+			SendMailFromFile($mailtre,$usr->mail,$tabTre,"[".$MyOpt["site_title"]."] : Compte à découvert",$tabvar,"decouvert");
 
-			$ret=MyMail($mailtre,$usr->mail,$tabTre,"[".$MyOpt["site_title"]."] Compte à découvert",$mail,"");
 		}
 		if (!$ret)
 		{
