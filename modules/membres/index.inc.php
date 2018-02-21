@@ -47,21 +47,15 @@
 
 			$lstdoc=ListDocument($sql,$id,"avatar");
 			if (count($lstdoc)>0)
-			  {
-				$doc = new document_class($lstdoc[0],$sql);
-			  	$tmpl_x->assign("id_photo",$lstdoc[0]);
-			  }
+			{
+				$doc=new document_class($lstdoc[0],$sql);
+				$tmpl_x->assign("aff_avatar",$doc->GenerePath(200,240));
+			}
 			else
-			  {
-			  	$tmpl_x->assign("id_photo","0");
-			  }
-
-			$tmpl_x->assign("id_membre",$usr->uid);
-/*			  
-			$tmpl_x->assign("photo_membre",$usr->Photo());
-			$tmpl_x->assign("prenom_membre",$usr->aff("prenom"));
-			$tmpl_x->assign("nom_membre",$usr->aff("nom"));
-*/
+			{
+				$tmpl_x->assign("aff_avatar","static/images/none.gif");
+			}	
+			$tmpl_x->assign("id_membre",$id);
 
 			$tmpl_x->parse("corps.trombino.aff_ligne.aff_colonne");
 			$col++;
@@ -99,14 +93,16 @@
 
 				$lstdoc=ListDocument($sql,$id,"avatar");
 				if (count($lstdoc)>0)
-				  {
-					$doc = new document_class($lstdoc[0],$sql);
-					$tmpl_x->assign("id_photo",$lstdoc[0]);
-				  }
+				{
+					$doc=new document_class($lstdoc[0],$sql);
+					$tmpl_x->assign("aff_avatar",$doc->GenerePath(64,64));
+				}
 				else
-				  {
-					$tmpl_x->assign("id_photo","-1");
-				  }				
+				{
+					$tmpl_x->assign("aff_avatar","static/images/icn64_membre.png");
+				}	
+
+				$tmpl_x->assign("id_membre",$usr->uid);
 				$tmpl_x->parse("corps.lst_ligne");
 			}
 		}

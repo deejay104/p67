@@ -36,6 +36,7 @@ class mysql_class{
 
 	# Update elements in database
 	function Update($query){
+		$this->mysql_ErrorMsg="";
 		$this->result=mysqli_query($this->id,$query) or
 			$this->mysql_ErrorMsg("Unable to perform update: $query");
 		return $this->a_rows=@mysqli_affected_rows($this->id);

@@ -48,14 +48,14 @@ class echeance_class
 
 	# Charge une échéance par son type
 	function loadtype($tid){
-		$this->id=$id;
 		$sql=$this->sql;
 		$query = "SELECT echeance.*, echeancetype.poste, echeancetype.description, echeancetype.droit, echeancetype.multi, echeancetype.resa FROM ".$this->tbl."_echeance AS echeance LEFT JOIN ".$this->tbl."_echeancetype AS echeancetype ON echeance.typeid=echeancetype.id WHERE echeance.typeid='$tid' AND echeance.uid='".$this->uid."'";
 		$res = $sql->QueryRow($query);
 		// Charge les variables
+		$this->id=$res["id"];
 		$this->typeid=$res["typeid"];
 		$this->poste=$res["poste"];
-		$this->uid=$res["uid"];
+		// $this->uid=$res["uid"];
 		$this->dte_echeance=$res["dte_echeance"];
 		$this->paye=$res["paye"];
 		$this->description=$res["description"];
@@ -143,7 +143,7 @@ class echeance_class
 		$sql->Insert($query);
 	}
 
-	function Affiche() 
+	function Affiche($type) 
 	{ global $MyOpt;
 		$ret="";
 
@@ -193,6 +193,10 @@ class echeance_class
 			$ret.="Echéance ".$this->description." le <input name='form_echeance[".$this->id."]' id='form_echeance".$this->id."' value='".$this->dte_echeance."' type='date' style='width: 165px;'>&nbsp;";
 			$ret.="<a href=\"#\" OnClick=\"document.getElementById('form_echeance".$this->id."').value=''; document.getElementById('aff_echeance".$this->id."').style.display='none';\" class='imgDelete'><img src='static/images/icn16_supprimer.png'></a>";
 			$ret.="</div>";
+		}
+		else if ($type=="val")
+		{
+			$ret=AffDate($this->dte_echeance);
 		}
 		else
 		{

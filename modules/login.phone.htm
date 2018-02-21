@@ -2,16 +2,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <title>{site_title} - Login</title>
-  <link rel='stylesheet' href='static/css/style.phone.css' type='text/css' />
-  <link rel="SHORTCUT ICON" href="favicon.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-
-
-
-  </style>
+	  <title>{site_title} - Login</title>
+	  <link rel='stylesheet' href='static/css/style.phone.css' type='text/css' />
+	  <link rel="SHORTCUT ICON" href="favicon.png" />
+	  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+  </head>
   
-	<script language="JavaScript" src="statuc/js/_md5.js"></script>
+<body onload="setFormFocus();">
+	<script language="JavaScript" src="static/js/_md5.js"></script>
 	<script language="javascript">
 	<!-- 
 		function setFormFocus()
@@ -54,7 +52,6 @@
 
   </head>
 
-<body onload="setFormFocus();">
 
 <form METHOD="post" ACTION="login.php" NAME="FormLogin" OnSubmit="cryptData();">
 	<input type="hidden" name="varlogin" value="{var}">

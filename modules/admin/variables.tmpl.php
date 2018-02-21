@@ -157,6 +157,12 @@ $MyOptHelp["showSupprime"]="on : Affiche les membres supprimés";
 $MyOptTmpl["ventilationNbLigne"]="4";
 $MyOptHelp["ventilationNbLigne"]="Nombre de lignes à afficher lors d'une ventilation de mouvement";
 
+// Documents
+$MyOptTmpl["expireCache"]="0";
+$MyOptHelp["expireCache"]="Si supérieur à 0, nombre d'heure durant lesquelles on garde les fichiers en cache. Si 0, on garde indéfiniment.";
+
+
+
 // Modules
 // on : Affiché et actif
 $MyOptTmpl["module"]["aviation"]="on";

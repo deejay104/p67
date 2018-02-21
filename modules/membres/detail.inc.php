@@ -293,16 +293,26 @@
 	  { 
 
 		// Photo du membre
+		// $lstdoc=ListDocument($sql,$id,"avatar");
+		// if (count($lstdoc)>0)
+		  // {
+			// $doc = new document_class($lstdoc[0],$sql);
+		  	// $tmpl_x->assign("id_photo",$lstdoc[0]);
+		  // }
+		// else
+		  // {
+		  	// $tmpl_x->assign("id_photo","0");
+		  // }
 		$lstdoc=ListDocument($sql,$id,"avatar");
 		if (count($lstdoc)>0)
-		  {
-			$doc = new document_class($lstdoc[0],$sql);
-		  	$tmpl_x->assign("id_photo",$lstdoc[0]);
-		  }
+		{
+			$doc=new document_class($lstdoc[0],$sql);
+			$tmpl_x->assign("aff_avatar",$doc->GenerePath(200,240));
+		}
 		else
-		  {
-		  	$tmpl_x->assign("id_photo","0");
-		  }
+		{
+			$tmpl_x->assign("aff_avatar","static/images/none.gif");
+		}	
 
 
 		if (GetModule("aviation"))

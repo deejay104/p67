@@ -32,6 +32,10 @@
 	{
 		$tmpl_menu->parse("infos.tarifs");
 	}
+	if (GetDroit("AccesPagePrevisions"))
+	{
+		$tmpl_menu->parse("infos.previsions");
+	}
 	if (GetDroit("AccesUtilisateurDonnees"))
 	{
 		$tmpl_menu->parse("infos.utildonnees");

@@ -1,0 +1,61 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+{aff_menu}
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+<script>
+function update(id,mois,ress)
+{
+	$(function() {
+		$.ajax({
+			url:'api.php?mod=admin&rub=updprev&mois='+mois+'&dte={aff_annee}&ress='+ress+'&var='+document.getElementById(id).value,
+			type: 'html',
+			dataType: 'JSON',
+			success: function(response)
+			{
+				console.log(response);
+
+				if (response.result=="OK")
+				{
+					document.getElementById(id).style.backgroundColor = "#BBFFAA";
+				}
+				else
+				{
+					document.getElementById(id).style.backgroundColor = "#FFBBAA";
+				}
+			},
+			error : function(response)
+			{
+				document.getElementById(id).style.backgroundColor = "#FFBBAA";
+			}
+		});
+	})
+}
+</script>
+
+<select id="dte" name="form_dte" OnChange="document.location='index.php?mod=admin&rub=previsions&dte='+document.getElementById('dte').value;">
+<!-- BEGIN: lst_annee -->
+	<option value="{form_dte}" {form_selected}>{form_dte}</option>		
+<!-- END: lst_annee -->
+</select>
+
+	<table class="tableauAff">
+	<tr>
+		<th width='150'>Mois</th>{aff_lst_ress}
+	</tr>
+<!-- BEGIN: lst_mois -->
+	<tr>
+		<td>{aff_nom}</td>
+<!-- BEGIN: lst_ress -->
+		<td><input id='{aff_ress}_{aff_id}' onblur="update('{aff_ress}_{aff_id}','{aff_id}','{aff_ress}');" type="number" style="width:80px;" value="{aff_val}"></td>
+<!-- END: lst_ress -->
+	</tr>
+<!-- END: lst_mois -->
+	</table>
+
+<!-- END: corps -->

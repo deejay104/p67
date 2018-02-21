@@ -34,10 +34,11 @@ class document_class{
 		$this->sql=$sql;
 		$this->tbl=$MyOpt["tbl"];
 		$this->myuid=$gl_uid;
+		$this->expire=$MyOpt["expireCache"];
 
 		$this->id="";
 		$this->name="";
-		$this->filename="../static/images/none.gif";
+		$this->filename="";
 		$this->uid="";
 		$this->type=$type;
 		$this->dossier="";
@@ -52,9 +53,18 @@ class document_class{
 		{
 			$this->load($id);
 		}
-		else if ($id==-1)
+		// else if ($id==-1)
+		// {
+			// $this->id=0;
+			// $this->filepath="static/images";
+			// $this->filename="icn64_membre.png";
+			// $this->droit="ALL";
+		// }
+		else
 		{
-			$this->filename="../static/images/icn64_membre.png";
+			$this->id=0;
+			$this->filename="";
+			$this->droit="ALL";
 		}
 	}
 
@@ -103,9 +113,9 @@ class document_class{
 		$mypath=substr($myname,0,3);
 
 		if (!is_dir($this->filepath."/".$mypath))
-		  {
+		{
 		  	mkdir($this->filepath."/".$mypath);
-		  }
+		}
 
 		$this->uid=$id;
 		$this->filename=$mypath."/".$myname.".".$myext;
@@ -119,7 +129,7 @@ class document_class{
 			$sql->Update($query);
 		  }
 
-		return $ret;		
+		return $ret;
 	}
 
 	function Import($id,$name,$filename="",$droit="")
@@ -168,6 +178,8 @@ class document_class{
 				  	$ret.="Fichier supprimé";
 				  }
 			}
+
+			
 			if (!file_exists($this->filepath."/".$this->filename))
 			  {
 				$query="UPDATE ".$this->tbl."_document SET actif='non' WHERE id='".$this->id."'";
@@ -295,43 +307,27 @@ class document_class{
 		}
 	}
 
-	function Resize($newwidth,$newheight)
+	function Resize($newwidth,$newheight,$dest="")
 	{
 		$file=$this->filepath."/".$this->filename;
+		if ($dest=="")
+		{
+			$dest=$this->filepath."/".$this->filename;
+		}
 
-		$thumb = imagecreatetruecolor($newwidth, $newheight);
-	  	list($width, $height) = getimagesize($file);
-		$source = imagecreatefromjpeg($file);
-
-		//imageantialias($thumb, true);
-
-		if ($width<$height)
-		  {
-			$w = $newwidth;
-			$h = floor(($height/$width) * $newwidth );
-			imagecopyresampled($thumb, $source, 0, ($newheight-$h)/2, 0, 0, $w, $h, $width, $height);
-		  }
-		else
-		  {
-		  	$w = floor(($width/$height) * $newheight);
-		  	$h = $newheight;
-			imagecopyresampled($thumb, $source, 0, 0, 0, 0, $w, $h, $width, $height);
-		  }
-
-		imagejpeg($thumb,$file,95);
-		//unlink($file.".tmp");
-	}
-
-	function ShowImage($newwidth,$newheight)
-	{
-		$file=$this->filepath."/".$this->filename;
-
+		if ((!is_numeric($newwidth)) || (!is_numeric($newheight)))
+		{
+		  	list($newwidth, $newheight) = getimagesize($file);
+		}
+		
 		if (!file_exists($file))
 		{
 		  	$file="static/images/icn32_erreur.png";
 		}
 
 		$thumb = imagecreatetruecolor($newwidth, $newheight);
+		$white = imagecolorallocate ($thumb, 255, 255, 255);
+		imagefill($thumb,0,0,$white); 
 
 		if (exif_imagetype($file)==IMAGETYPE_JPEG)
 		{
@@ -354,27 +350,110 @@ class document_class{
 		list($width, $height) = getimagesize($file);
 		
 		if (($width<$height) && ($newwidth>0))
-		  {
+		{
 			$w = $newwidth;
 			$h = floor(($height/$width) * $newwidth );
 			imagecopyresampled($thumb, $source, 0, ($newheight-$h)/2, 0, 0, $w, $h, $width, $height);
-		  }
+		}
 		else if (($width>$height) && ($newheight>0))
-		  {
+		{
 			$w = floor(($width/$height) * $newheight);
 			$h = $newheight;
 			imagecopyresampled($thumb, $source, 0, 0, 0, 0, $w, $h, $width, $height);
-		  }
+		}
 		else
-		  {
+		{
 			imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newwidth, $width, $height);
-		  }
+		}
+
+		
+		if ($dest=="show")
+		{
+			return $thumb;
+		}
+		
+		if (exif_imagetype($file)==IMAGETYPE_JPEG)
+		{
+			imagejpeg($thumb,$dest,95);
+		}
+		else if (exif_imagetype($file)==IMAGETYPE_PNG)
+		{
+			imagepng($thumb,$dest,6);
+		}
+		else if (exif_imagetype($file)==IMAGETYPE_GIF)
+		{
+			imagegif($thumb,$dest);
+		}
+	}
+
+	function ShowImage($newwidth,$newheight)
+	{
+		$file=$this->filepath."/".$this->filename;
+
+		$thumb=$this->Resize($newwidth,$newheight,"show");
 
 		header('Content-Type: image/png');
 		imagepng($thumb);
 	}
-}
 
+	function GenerePath($w,$h)
+	{
+		// $f=preg_split("/\\//",$this->filename);
+		// $file=$f[1];
+		// if ($file=="")
+		// {
+			// $file=$f[0];
+		// }
+		$myid=CompleteTxt($this->id,6,"0");
+		$myext=GetExtension($this->filename);
+
+		$type="";
+		if (($w>0) && ($h>0))
+		{
+			$type="&type=".$type."&width=".$w."&height=".$h;
+			$file=$w."x".$h.".".$myext;
+		}
+		else
+		{
+			$file="original.".$myext;
+		}
+		$mypath="static/cache/".$myid."/".$file;
+		
+		if ($this->droit=="ALL")
+		{
+			if (!is_dir("static/cache/".$myid))
+			{
+				mkdir("static/cache/".$myid);
+			}
+
+			if ((file_exists($mypath)) && ($this->expire>0) && (time()-filectime($mypath)>3600*$this->expire))
+			{
+				error_log("clear cache:".$mypath);
+				unlink($mypath);
+			}
+			
+			if (!file_exists($mypath))
+			{
+				if (($w>0) && ($h>0))
+				{
+					$this->Resize($w,$h,$mypath);
+				}
+				else
+				{
+					copy($this->filepath."/".$this->filename,$mypath);
+				}
+			}
+
+			if (file_exists($mypath))
+			{
+				error_log("path from cache:".$mypath);
+				return $mypath;
+			}
+		}
+		return "doc.php?id=".$this->id.$type;
+	}
+}
+	
 // Gestion de fichier
 function GetExtension($file)
 {

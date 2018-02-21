@@ -232,14 +232,15 @@
 		$tmpl_x->assign("msg_date", DisplayDate($d["dte_creat"]));	
 
 		$lstdoc=ListDocument($sql,$d["uid_creat"],"avatar");
+
 		if (count($lstdoc)>0)
 		{
-			// $doc = new document_class($lstdoc[0],$sql);
-			$tmpl_x->assign("msg_imgusr",$lstdoc[0]);
+			$img=new document_class($lstdoc[0],$sql);
+			$tmpl_x->assign("msg_avatar",$img->GenerePath(64,64));
 		}
 		else
 		{
-			$tmpl_x->assign("msg_imgusr","-1");
+			$tmpl_x->assign("msg_avatar","static/images/icn64_membre.png");
 		}				
 
 		$tmpl_x->assign("msg_idprev", $idprev);	

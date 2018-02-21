@@ -1325,8 +1325,8 @@ class user_class{
 		$query="UPDATE ".$this->tbl."_utilisateurs SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE id=$this->uid";
 		$sql->Update($query);
 
-		$query="UPDATE ".$this->tbl."_document SET actif='non' WHERE uid=$this->uid";
-		$sql->Update($query);
+		// $query="UPDATE ".$this->tbl."_document SET actif='non' WHERE uid=$this->uid";
+		// $sql->Update($query);
 
 		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
 		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$uid', '".now()."', 'DEL', 'Delete user')";

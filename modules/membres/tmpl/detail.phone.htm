@@ -10,7 +10,7 @@
 	<p><A href="index.php?mod=membres&rub=detail&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_editer.png" border=0 alt=""></A></p>
 	<!-- END: modification -->
 	<!-- BEGIN: password -->
-	<p><A href="index.php?mod=membres&chgpwd&id={id}"><img src="{path_module}/img/icn32_password.png" border=0 alt="" width=32 height=32 /></A></p>
+	<p><A href="index.php?mod=membres&rub=chgpwd&id={id}"><img src="{path_module}/img/icn32_password.png" border=0 alt="" width=32 height=32 /></A></p>
 	<!-- END: password -->
 	<!-- BEGIN: desactive -->
 	<p><A href="#" OnClick="ConfirmeClick('index.php?mod=membres.php&rub=detail&id={id}&fonc=desactive','Voulez-vous désactiver cette utilisateur ?');"><IMG src="{path_module}/img/icn32_desactive.png" border=0 alt=""></A></p>
@@ -26,7 +26,8 @@
 
 <!-- BEGIN: corps -->
 
-<FORM name="form_detail" method="post" action="membres.php" enctype="multipart/form-data">
+<FORM name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
+<INPUT type="hidden" name="mod" value="membres">
 <INPUT type="hidden" name="rub" value="detail">
 <INPUT type="hidden" name="id" value="{id}">
 <INPUT type="hidden" name="checktime" value="{form_checktime}">

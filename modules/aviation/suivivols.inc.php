@@ -37,27 +37,43 @@
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
+	require_once ("class/echeance.inc.php");
 
+// ---- Liste des échéances
+	$query="SELECT * FROM ".$MyOpt["tbl"]."_echeancetype WHERE resa='instructeur' ORDER BY description";
+	$sql->Query($query);
+
+	$tabecheance=array();
+	for($i=0; $i<$sql->rows; $i++)
+	{
+		$sql->GetRow($i);
+		$tabecheance[$sql->data["id"]]=$sql->data["description"];
+	}
+
+// ---- Entete du tableau
 	$tabTitre=array();
 	$tabTitre["prenom"]["aff"]="Prénom";
 	$tabTitre["prenom"]["width"]=150;
 	$tabTitre["nom"]["aff"]="Nom";
-	$tabTitre["nom"]["width"]=250;
+	$tabTitre["nom"]["width"]=210;
 	$tabTitre["type"]["aff"]="Type";
-	$tabTitre["type"]["width"]=90;
+	$tabTitre["type"]["width"]=100;
 	$tabTitre["total"]["aff"]="Total";
-	$tabTitre["total"]["width"]=80;
+	$tabTitre["total"]["width"]=100;
 	$tabTitre["lastyear"]["aff"]="12 mois";
-	$tabTitre["lastyear"]["width"]=80;
+	$tabTitre["lastyear"]["width"]=100;
 	$tabTitre["lastflight"]["aff"]="Dernier vol";
-	$tabTitre["lastflight"]["width"]=100;
-	$tabTitre["prorogation"]["aff"]="PPL";
-	$tabTitre["prorogation"]["width"]=30;
-	$tabTitre["lic"]["aff"]="Licence";
-	$tabTitre["lic"]["width"]=100;
-	$tabTitre["med"]["aff"]="Visite Med.";
-	$tabTitre["med"]["width"]=100;
+	$tabTitre["lastflight"]["width"]=140;
 
+	// $tabTitre["lic"]["aff"]="Licence";
+	// $tabTitre["lic"]["width"]=100;
+	// $tabTitre["med"]["aff"]="Visite Med.";
+	// $tabTitre["med"]["width"]=100;
+	foreach($tabecheance as $i=>$t)
+	{
+		$tabTitre["ech".$i]["aff"]=$t;
+		$tabTitre["ech".$i]["width"]=100;
+	}
 
 	$lstres=ListeRessources($sql,array("oui"));
 	foreach($lstres as $i=>$id)
@@ -88,7 +104,7 @@
 		$tabValeur[$i]["total"]["aff"]=$usr->AffNbHeuresVol();
 		$dte=$usr->DernierVol();
 		$tabValeur[$i]["lastflight"]["val"]=strtotime($dte["dte"]);
-		$tabValeur[$i]["lastflight"]["aff"]="<a href='vols.php?id=$id'>".$usr->AffDernierVol()."</a>";
+		$tabValeur[$i]["lastflight"]["aff"]="<a href='index.php?mod=aviation&vols&id=$id'>".$usr->AffDernierVol()."</a>";
 
 		//$lastdc=strtotime($usr->AffDernierVol("DC"));
 		//$renewlic=strtotime($usr->data["dte_licence"]);
@@ -135,10 +151,17 @@
 				$tabValeur[$i]["prorogation"]["aff"]=" ";
 		  }
 
-		$tabValeur[$i]["lic"]["val"]=$usr->data["dte_licence"];
-		$tabValeur[$i]["lic"]["aff"]="<a href='membres.php?rub=detail&id=$id'>".$usr->aff("dte_licence")."</a>";
-		$tabValeur[$i]["med"]["val"]=$usr->data["dte_medicale"];
-		$tabValeur[$i]["med"]["aff"]="<a href='membres.php?rub=detail&id=$id'>".$usr->aff("dte_medicale")."</a>";
+		// $tabValeur[$i]["lic"]["val"]=$usr->data["dte_licence"];
+		// $tabValeur[$i]["lic"]["aff"]="<a href='membres.php?rub=detail&id=$id'>".$usr->aff("dte_licence")."</a>";
+		// $tabValeur[$i]["med"]["val"]=$usr->data["dte_medicale"];
+		// $tabValeur[$i]["med"]["aff"]="<a href='membres.php?rub=detail&id=$id'>".$usr->aff("dte_medicale")."</a>";
+		foreach($tabecheance as $ii=>$t)
+		{
+			$dte = new echeance_class(0,$sql,$id);
+			$dte->loadtype($ii);
+			$tabValeur[$i]["ech".$ii]["val"]=$dte->Val();
+			$tabValeur[$i]["ech".$ii]["aff"]=$dte->Affiche("val");
+		}
 
 		foreach($tavion as $ii=>$res)
 		  {
