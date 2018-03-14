@@ -33,7 +33,7 @@
 	   		<a href="index.php?mod=membres&rub=familles"><img src="static/modules/membres/img/icn32_famille.png" /> Familles</a>
 	<!-- END: menu_famille_sm -->
 	<!-- BEGIN: menu_reservations_sm -->
-	   		<a href="index.php?mod=reservations.php&jour=-"><img src="static/modules/reservations/img/icn32_titre.png" /> Réservations</a>
+	   		<a href="index.php?mod=reservations&jour=-"><img src="static/modules/reservations/img/icn32_titre.png" /> Réservations</a>
 	<!-- END: menu_reservations_sm -->
 	<!-- BEGIN: menu_baptemes_sm -->
 	   		<a href="index.php?mod=aviation&rub=baptemes"><img src="static/modules/aviation/img/icn32_baptemes.png" /> Baptèmes</a>
@@ -73,7 +73,25 @@
 			<p style="text-align:center;"><a href="index.php?settheme=phone" style=" color:white;">-Affichage smartphone-</a></p>
     </div> <!-- /.main_menu -->
 
-  </div> <!-- /responsive_navigation -->
+	</div> <!-- /responsive_navigation -->
+
+	<div id="main-content">
+		<div class='headbox'>
+		<div class='head'>
+			<div class='icone'>{icone}</div>
+			<div class='pagetitle'>{infos}</div>
+		</div>
+		</div>
+		<div class="msgbox">
+		<!-- BEGIN: aff_infos -->
+		<div class="msgbox-std msgbox-{msg_class}">{msg_infos}</div>
+		<!-- END: aff_infos-->
+		</div>
+		<div id='popup'></div>
+		<div class='main'>
+			{corps}
+		</div>
+	</div>
 
 	<div id="main-sidebar">
 		<div class="logo">
@@ -133,23 +151,6 @@
 		</div> <!-- /.navigation -->
 	</div> <!-- /#main-sidebar -->
 
-	<div id="main-content">
-		<div class='headbox'>
-		<div class='head'>
-			<div class='icone'>{icone}</div>
-			<div class='pagetitle'>{infos}</div>
-		</div>
-		</div>
-		<div class="msgbox">
-		<!-- BEGIN: aff_infos -->
-		<div class="msgbox-std msgbox-{msg_class}">{msg_infos}</div>
-		<!-- END: aff_infos-->
-		</div>
-		<div id='popup'></div>
-		<div class='main'>
-			{corps}
-		</div>
-	</div>
 
   <div class='footer'>
   

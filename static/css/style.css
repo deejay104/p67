@@ -64,15 +64,15 @@ input[type=checkbox]:checked:after { content: "x"; }
 
 /* **** Block principaux **** */
 #main-content { position: relative; left: 0%; width: 100%; }
-#main-sidebar { display: none; float: left; width: 20%; height: 100%; position: fixed; background-color: #888e91; color: white; }
+#main-sidebar { display: none; float: left; width: 240px; height: 100%; position: fixed; background-color: #888e91; color: white; }
 #responsive-navigation { position: relative; width: 100%; display: block; z-index: 9999; }
 
 /* **** Style Responsive **** */
 
-@media (min-width: 800px) and (min-device-width: 800px) {
+@media (min-width: 1024px) and (min-device-width: 1024px) {
     #responsive-navigation { display: none; }
-    #main-content { width: 80%; left: 20%; }
-    #main-sidebar { display: block; }
+    #main-content { width: 100%; padding-left: 240px;  }
+    #main-sidebar { top: 0px; display: block; }
 }
 @media print {
     #responsive-navigation { display: none; }

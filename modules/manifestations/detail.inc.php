@@ -406,7 +406,7 @@
 			  	$txt_ok.="<p>".AffFullname($sql->data["prenom"],$sql->data["nom"])." ".(($sql->data["nb"]>1) ? "(".$sql->data["nb"].")" :"");
 					if (GetDroit("ModifParticipant"))
 					  {
-					  	$txt_ok.=" <a href='manips.php?rub=detail&id=$id&idusr=".$sql->data["id"]."&fonc=nok'><img src='modules/$mod/img/icn12_absent.png' border=0/></a>";
+					  	$txt_ok.=" <a href='index.php?mod=manifestations&rub=detail&id=$id&idusr=".$sql->data["id"]."&fonc=nok'><img src='static/modules/$mod/img/icn12_absent.png' border=0/></a>";
 					  }
 			  	$txt_ok.="</p>";
 			  	$nbok=$nbok+$sql->data["nb"];
@@ -416,7 +416,7 @@
 			  	$txt_nok.="<p>".AffFullname($sql->data["prenom"],$sql->data["nom"])." ".(($sql->data["nb"]>1) ? "(".$sql->data["nb"].")" :"");
 					if (GetDroit("ModifParticipant"))
 					  {
-					  	$txt_nok.=" <a href='manips.php?rub=detail&id=$id&idusr=".$sql->data["id"]."&fonc=ok'><img src='modules/$mod/img/icn12_participe.png' border=0/></a>";
+					  	$txt_nok.=" <a href='index.php?mod=manifestations&rub=detail&id=$id&idusr=".$sql->data["id"]."&fonc=ok'><img src='static/modules/$mod/img/icn12_participe.png' border=0/></a>";
 					  }
 			  	$txt_nok.="</p>";
 			  	$nbnok=$nbnok+$sql->data["nb"];
@@ -424,8 +424,8 @@
 			else if (GetDroit("ModifParticipant"))
 			  {
 			  	$txt_na.="<p>".AffFullname($sql->data["prenom"],$sql->data["nom"])." ".(($sql->data["nb"]>1) ? "(".$sql->data["nb"].")" :"");
-			  	$txt_na.=" <a href='manips.php?rub=detail&id=$id&idusr=".$sql->data["id"]."&fonc=ok'><img src='modules/$mod/img/icn12_participe.png' border=0/></a>&nbsp;";
-			  	$txt_na.=" <a href='manips.php?rub=detail&id=$id&idusr=".$sql->data["id"]."&fonc=nok'><img src='modules/$mod/img/icn12_absent.png' border=0/></a>&nbsp;";
+			  	$txt_na.=" <a href='index.php?mod=manifestations&rub=detail&id=$id&idusr=".$sql->data["id"]."&fonc=ok'><img src='static/modules/$mod/img/icn12_participe.png' border=0/></a>&nbsp;";
+			  	$txt_na.=" <a href='index.php?mod=manifestations&rub=detail&id=$id&idusr=".$sql->data["id"]."&fonc=nok'><img src='static/modules/$mod/img/icn12_absent.png' border=0/></a>&nbsp;";
 			  	$txt_na.="</p>";
 			  }
 		  }

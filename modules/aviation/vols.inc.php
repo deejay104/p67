@@ -65,7 +65,7 @@
   }
 
 	if (GetDroit("AccesSuiviVols"))
-  {
+	{
 		$tmpl_x->parse("infos.suiviVols");
 	}
 

@@ -130,7 +130,7 @@
 	// Affichage du jour et de la nuit
 	for($i=floor(strtotime($start)/86400)*86400; $i<=floor(strtotime($end)/86400)*86400; $i=$i+86400)
 	  {
-			$tabcs=CalculSoleil($i,$MyOpt["terrain"]["longitude"],$MyOpt["terrain"]["latitude"]);
+			$tabcs=CalculSoleil($i,-$MyOpt["terrain"]["longitude"],$MyOpt["terrain"]["latitude"]);
 
 			$input_arrays[$ii]["title"]="";
 			$input_arrays[$ii]["start"]=date("c",$i);

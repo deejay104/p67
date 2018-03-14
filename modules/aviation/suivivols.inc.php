@@ -29,7 +29,7 @@
 
 <?
 // ---- Charge le template
-	$tmpl_x = new XTemplate (MyRep("suivi_vols.htm"));
+	$tmpl_x = new XTemplate (MyRep("suivivols.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérifie les variables
@@ -39,6 +39,13 @@
 
 	require_once ("class/echeance.inc.php");
 
+// ----
+	if (GetDroit("AccesSuiviVols"))
+	{
+		$tmpl_x->parse("infos.suiviVols");
+	}
+
+	
 // ---- Liste des échéances
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_echeancetype WHERE resa='instructeur' ORDER BY description";
 	$sql->Query($query);

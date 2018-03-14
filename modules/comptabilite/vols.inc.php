@@ -101,6 +101,8 @@
 			
 				  	// $query="UPDATE ".$MyOpt["tbl"]."_calendrier SET temps='$tps', tpsreel='".$form_blocresa[$k]."', tarif='".$form_tarif[$k]."' WHERE id=$k";
 				  	// $sql->Update($query);
+					$res->horadeb=$form_horadeb[$k];
+					$res->horafin=$form_horafin[$k];
 					$res->temps=$tps;
 					$res->tpsreel=$form_blocresa[$k];
 					$res->tarif=$form_tarif[$k];
@@ -134,7 +136,7 @@
 						$horadeb=$form_horadeb[$k];
 						$horafin=$form_horafin[$k];
 						$tpsreel=$form_bloc[$k];
-
+						
 						// Récupérer tarifs pilote depuis la base
 						$p=round($tabTarif[$uid_a][$form_tarif[$k]]["pilote"]*$tps/60,2);
 
@@ -292,10 +294,11 @@
 		$tmpl_x->assign("nom_avion_edt",$tab_avions[$idavion]["immatriculation"]);
 
 		// Récupère la plus vieille date de saisie des vols
-		$query = "SELECT dte_deb FROM ".$MyOpt["tbl"]."_calendrier WHERE prix>0 AND uid_avion='$idavion' ORDER BY dte_deb DESC LIMIT 0,1";
+		$query = "SELECT dte_deb,horadeb FROM ".$MyOpt["tbl"]."_calendrier WHERE prix>0 AND uid_avion='$idavion' ORDER BY dte_deb DESC LIMIT 0,1";
 		$res=$sql->QueryRow($query);
 		$dte=$res["dte_deb"];
-	
+		$horadeb_prec=$res["horadeb"];
+
 		// Liste des vols réservés
 		$query = "SELECT id ";
 		$query.= "FROM ".$MyOpt["tbl"]."_calendrier ";
@@ -307,6 +310,7 @@
 			$sql->GetRow($i);
 			$tvols[$i]=$sql->data["id"];
 		}
+
 
 		foreach ($tvols as $i=>$id)
 		{
@@ -381,11 +385,16 @@
 			{
 				$tbl=$resa["resa"]->tpsreel;
 			}
-			  
+
+			if ($horadeb_prec==0)
+			{ $horadeb_prec=$resa["resa"]->horadeb; }
+			
 			$tmpl_x->assign("idresa", $id);
-			$tmpl_x->assign("horadeb", $resa["resa"]->horadeb);
-			$tmpl_x->assign("horafin", $resa["resa"]->horafin);
-			$tmpl_x->assign("temps_vols", " <INPUT type=\"text\" name=\"form_tempsresa[".$id."]\" size=5 value=\"".$tps."\">");
+			$tmpl_x->assign("horadeb",  " <INPUT type=\"text\" id=\"form_horadeb_".$id."\" name=\"form_horadeb[".$id."]\" size=5 value=\"".$resa["resa"]->horadeb."\" style='".(($resa["resa"]->horadeb!=$horadeb_prec) ? "color: #ff0000; background-color: #FFBBAA;" : "")."' OnChange=\"calcHorametre(".$id.");\">");
+			$horadeb_prec=$resa["resa"]->horafin;
+
+			$tmpl_x->assign("horafin", "<INPUT type=\"text\" id=\"form_horafin_".$id."\" name=\"form_horafin[".$id."]\" size=5 value=\"".$resa["resa"]->horafin."\" OnChange=\"calcHorametre(".$id.");\">");
+			$tmpl_x->assign("temps_vols", " <INPUT type=\"text\" id=\"form_tempsresa_".$id."\" name=\"form_tempsresa[".$id."]\" size=5 value=\"".$tps."\">");
 			$tmpl_x->assign("bloc_vols", " <INPUT type=\"text\" name=\"form_blocresa[".$id."]\" size=5 value=\"".$tbl."\">");
 
 			$tmpl_x->assign("destination_vols", $resa["resa"]->destination);

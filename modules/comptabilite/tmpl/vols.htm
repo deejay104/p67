@@ -8,6 +8,20 @@
 <!-- BEGIN: corps -->
 
 
+<script language="JavaScript">
+function calcHorametre(id)
+{
+	var horadeb=document.getElementById('form_horadeb_'+id).value;
+	var horafin=document.getElementById('form_horafin_'+id).value;
+	
+	var tdeb=horadeb.split('.');
+	var tfin=horafin.split('.');
+	tps=parseInt(tfin[0]*60)+parseInt(tfin[1])-(parseInt(tdeb[0]*60)+parseInt(tdeb[1]));
+
+	document.getElementById('form_tempsresa_'+id).value=tps;
+}
+</script>
+
 <FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<INPUT type="hidden" name="mod" value="comptabilite">
@@ -45,11 +59,11 @@
 			</TD>
 		  </TR>
 		</TABLE>
-		<TABLE>
-		  <tr style="">
+		<TABLE  class='tableauAff'>
+		  <tr>
 			<th width=20>&nbsp;</TD>
-			<th width=170><B>Date</B></TD>
-			<th width=300><B>Pilote</B></TD>
+			<th width=165><B>Date</B></TD>
+			<th width=240><B>Pilote</B></TD>
 			<th width=170><B>Instructeur</B></TD>
 			<th width=170><B>Tarif</B></TD>
 			<th width=200 colspan=2><B>Horamètre</B></TD>
@@ -116,11 +130,9 @@
 			<TD>&nbsp;</TD>
 		  </TR>
 		<!-- END: lst2_vols -->
-		  <TR>
-			<TD width=20>&nbsp;</TD>
-			<TD colspan=4><BR><INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Débiter"> <INPUT type="submit" name="fonc" value="Annuler"></TD>
-		  </TR>
 		</TABLE>
+		<br />
+		<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Débiter"> <INPUT type="submit" name="fonc" value="Annuler">
 	<!-- END: aff_vols -->
 
 </FORM>

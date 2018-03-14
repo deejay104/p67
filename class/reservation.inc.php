@@ -137,6 +137,21 @@ class resa_class{
 		return "<a href='reservations.php?rub=reservation&id=".$this->id."'>".$dte."</a>";
 	}
 
+	function AffPotentiel()
+	{ global $MyOpt;
+		$sql=$this->sql;
+
+		$query="SELECT dte_fin,potentiel AS tot FROM ".$this->tbl."_calendrier WHERE potentiel>0 AND dte_fin<='".$this->dte_deb."' AND uid_avion='".$this->uid_ressource."' ORDER BY dte_fin DESC LIMIT 0,1";
+		$respot=$sql->QueryRow($query);
+
+		$query="SELECT SUM(tpsreel) AS tot FROM ".$this->tbl."_calendrier WHERE dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".$this->dte_deb."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$this->uid_ressource."'";
+		$resreel=$sql->QueryRow($query);
+
+		$t=$respot["tot"]+$resreel["tot"];
+		return AffTemps($t);
+		// return $t;
+	}
+	
 	function Save($ValidResa=false)
 	{ global $uid,$MyOpt;
 
@@ -514,6 +529,21 @@ function ListReservationVols($sql,$id,$order="dte_deb",$trie="i",$ts=0,$tl=0)
 	return $res;
 }	
 
+function ListCarnetVols($sql,$id,$order="dte_deb",$trie="i",$ts=0,$tl=0)
+{ global $MyOpt;
+	$query="SELECT id FROM ".$MyOpt["tbl"]."_calendrier WHERE uid_avion='$id' AND tpsreel>0 AND actif='oui' ".(($order!="") ? "ORDER BY ".$order." ".((($trie=="i") || ($trie=="")) ? "DESC" : "") : "")." ".(($tl>0) ? "LIMIT $ts,$tl" : "");
+
+	$res=array();
+	$sql->Query($query);
+	for($i=0; $i<$sql->rows; $i++)
+	{
+		$sql->GetRow($i);
+		$res[$i]=$sql->data["id"];
+	}
+
+	return $res;
+}	
+
 function ListReservationNbLignes($sql,$id)
 { global $MyOpt;
 	$query="SELECT COUNT(*) AS nb FROM ".$MyOpt["tbl"]."_calendrier WHERE (".$MyOpt["tbl"]."_calendrier.uid_pilote='$id' OR ".$MyOpt["tbl"]."_calendrier.uid_instructeur='$id') AND ".$MyOpt["tbl"]."_calendrier.tpsreel>0 AND actif='oui'";
@@ -521,4 +551,10 @@ function ListReservationNbLignes($sql,$id)
 	return $res["nb"];
 }
 
+function ListCarnetNbLignes($sql,$id)
+{ global $MyOpt;
+	$query="SELECT COUNT(*) AS nb FROM ".$MyOpt["tbl"]."_calendrier WHERE uid_avion='$id' AND tpsreel>0 AND actif='oui'";
+	$res=$sql->QueryRow($query);
+	return $res["nb"];
+}
 ?>

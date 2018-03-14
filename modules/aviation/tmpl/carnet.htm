@@ -1,0 +1,28 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_suivivols.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+	<p><A href="index.php?mod=aviation&rub=vols"><IMG src="{path_module}/img/icn32_listevols.png" border=0>Mes vols</A></p>
+	<p><A href="index.php?mod=aviation&rub=carnet" class='pageTitleSelected'><IMG src="{path_module}/img/icn32_listevols.png" border=0>Carnet de vol</A></p>
+	<!-- BEGIN: suiviVols -->
+	<p><A href="index.php?mod=aviation&rub=suivivols"><IMG src="{path_module}/img/icn32_listevols.png" border=0>Suivi des membres</A></p>
+	<!-- END: suiviVols -->
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+	<form name="form_avion" method="post" action="index.php" enctype="multipart/form-data">
+		<input type="hidden" name="checktime" value="{form_checktime}">
+		<input type="hidden" name="mod" value="aviation">
+		<input type="hidden" name="rub" value="carnet">
+		<select id="form_id" name="form_id" OnChange="var id=document.getElementById('form_id').value; document.location='index.php?mod=aviation&rub=carnet&id='+id;">
+		<!-- BEGIN: lst_avion -->
+		<option value="{uid_avion}" {chk_avion}>{nom_avion}</OPTION>
+		<!-- END: lst_avion -->
+		</select>
+	</form>
+	<br />
+	{tab_liste}	
+
+<!-- END: corps -->

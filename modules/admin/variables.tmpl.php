@@ -100,7 +100,7 @@ $MyOptHelp["globalTrie"]="Ordre de trie par défault des listes (prenom, nom,...)
 // Coordonnées terrain
 $MyOptTmpl["terrain"]["nom"]="Neuhof";
 $MyOptHelp["terrain"]["nom"]="Nom du terrain d'origine";
-$MyOptTmpl["terrain"]["longitude"]=-7.77750;
+$MyOptTmpl["terrain"]["longitude"]=7.77750;
 $MyOptHelp["terrain"]["longitude"]="Longitude du terrain (négatif si à l'est)";
 $MyOptTmpl["terrain"]["latitude"]=48.55360;
 $MyOptHelp["terrain"]["latitude"]="Latitude du terrain";
