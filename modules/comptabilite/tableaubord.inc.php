@@ -117,7 +117,7 @@
 		  {
 			if ($poste!="_total")
 			  {
-				$tmpl_x->assign("nom_sousposte", Duplique("&nbsp;",$dep)."<A href=\"suiviclub.php?rub=tableaubord&poste=$pwd/$poste&id=$id&dte=$annee\">".$poste."</A>");
+				$tmpl_x->assign("nom_sousposte", Duplique("&nbsp;",$dep)."<A href=\"index.php?mod=comptabilite&rub=tableaubord&poste=$pwd/$poste&id=$id&dte=$annee\">".$poste."</A>");
 				$tmpl_x->assign("date_sousposte", sql2date($mtab["_enr"]["date_valeur"]));
 				$tmpl_x->assign("tot_sousposte", AffMontant($mtab["_total"]));
 				$tmpl_x->assign("old_tot_sousposte", AffMontant($oldtab[$poste]["_total"]));
@@ -139,7 +139,7 @@
 		$t="";
 		foreach ($tmp as $k=>$v)
 		  {
-		  	$tmp[$k]="<A href=\"suiviclub.php?rub=tableaubord&poste=$t$v&id=$id&dte=$annee\">$v</A>";
+		  	$tmp[$k]="<A href=\"index.php?mod=comptabilite&rub=tableaubord&poste=$t$v&id=$id&dte=$annee\">$v</A>";
 		  	if ($v!="--") { $t.="$v/"; }
 		  }
 	
@@ -157,7 +157,7 @@
 				  {
 					foreach($v as $enr)
 					  {	
-						$tmpl_x->assign("nom_sousposte", Duplique("&nbsp;",$dep)."<A href=\"suiviclub.php?rub=tableaubord&poste=". $enr["mouvement"]."&id=$id&dte=$annee\">".$enr["commentaire"]."</A>");
+						$tmpl_x->assign("nom_sousposte", Duplique("&nbsp;",$dep)."<A href=\"index.php?mod=comptabilite&rub=tableaubord&poste=". $enr["mouvement"]."&id=$id&dte=$annee\">".$enr["commentaire"]."</A>");
 						$tmpl_x->assign("date_sousposte", sql2date($enr["date_valeur"]));
 						$tmpl_x->assign("tot_sousposte", AffMontant($enr["montant"]));
 				
@@ -170,7 +170,7 @@
 				  }
 				else
 				  {
-					$tmpl_x->assign("nom_sousposte", Duplique("&nbsp;",$dep)."<A href=\"suiviclub.php?rub=tableaubord&poste=$pwd/$p&id=$id\"><U>$p</U></A>");
+					$tmpl_x->assign("nom_sousposte", Duplique("&nbsp;",$dep)."<A href=\"index.php?mod=comptabilite&rub=tableaubord&poste=$pwd/$p&id=$id\"><U>$p</U></A>");
 					$tmpl_x->assign("tot_sousposte", AffMontant($v["_total"]));
 			
 					// Affiche le résultat
@@ -223,7 +223,7 @@
 		$oldtotal=0;
 		foreach($tabposte as $poste=>$tab)
 		  {
-			$tmpl_x->assign("nom_poste", "<A href=\"suiviclub.php?rub=tableaubord&poste=$poste&id=$id&dte=$annee\">$poste</A>");
+			$tmpl_x->assign("nom_poste", "<A href=\"index.php?mod=comptabilite&rub=tableaubord&poste=$poste&id=$id&dte=$annee\">$poste</A>");
 			$tmpl_x->assign("total_poste", AffMontant($tab["_total"]));
 			$tmpl_x->assign("old_total_poste", AffMontant($taboldposte[$poste]["_total"]));
 			AfficheSousPoste($tab,$taboldposte[$poste],4,$poste);

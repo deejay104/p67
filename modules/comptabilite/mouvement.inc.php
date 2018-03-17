@@ -58,18 +58,18 @@
 		$ventil=array();
 		$ventil["ventilation"]=$form_ventilation;
 		
-		foreach($form_mvtmontant_ventil as $i=>$p)
+		foreach($form_montant_ventil as $i=>$p)
 		{
 			if ($p<>0)
 			{
 				$ventil["data"][$i]["poste"]=$form_poste_ventil[$i];
 				$ventil["data"][$i]["tiers"]=$form_tiers_ventil[$i];
-				$ventil["data"][$i]["montant"]=$form_mvtmontant_ventil[$i];
+				$ventil["data"][$i]["montant"]=$form_montant_ventil[$i];
 			}
 		}
 
 		$mvt = new compte_class(0,$sql);
-		$mvt->Generate($form_tiers,$form_poste,trim($form_commentaire),date2sql($form_date),$form_mvtmontant,$ventil,($form_facture=="") ? "NOFAC" : "");
+		$mvt->Generate($form_tiers,$form_poste,trim($form_commentaire),date2sql($form_date),$form_montant,$ventil,($form_facture=="") ? "NOFAC" : "");
 		$mvt->Save();
 		$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
 		$tmpl_x->parse("corps.enregistre.lst_visualisation");
@@ -86,6 +86,8 @@
 		{
 		  	$tmpl_x->assign("form_date", $form_date);
 		  	$tmpl_x->assign("form_poste", $form_poste);
+		  	$tmpl_x->assign("form_commentaire", $form_commentaire);
+		  	$tmpl_x->assign("form_montant", $form_montant);
 
 		  	$tmpl_x->assign("msg_resultat", "");
 			$tmpl_x->parse("corps.enregistre");
@@ -176,7 +178,7 @@
 			  { $dte=date("d/m/Y"); }
 	
 			$tmpl_x->assign("date_mouvement", $dte);
-			$tmpl_x->assign("form_montant", (($form_montant<>0) ? -$form_montant : $montant));
+			$tmpl_x->assign("form_montant", (($form_montant<>0) ? $form_montant : $montant));
 			$tmpl_x->assign("form_commentaire", $form_commentaire);
 
 			$tmpl_x->AUTORESET=0;
