@@ -69,7 +69,7 @@
 		}
 
 		$mvt = new compte_class(0,$sql);
-		$mvt->Generate($form_tiers,$form_poste,$form_commentaire,date2sql($form_date),$form_mvtmontant,$ventil,($form_facture=="") ? "NOFAC" : "");
+		$mvt->Generate($form_tiers,$form_poste,trim($form_commentaire),date2sql($form_date),$form_mvtmontant,$ventil,($form_facture=="") ? "NOFAC" : "");
 		$mvt->Save();
 		$tmpl_x->assign("enr_mouvement",$mvt->Affiche());
 		$tmpl_x->parse("corps.enregistre.lst_visualisation");
