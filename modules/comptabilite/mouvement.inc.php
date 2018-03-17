@@ -140,6 +140,7 @@
 			$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE actif='oui' ORDER BY ordre,description";
 			$sql->Query($query);
 			$montant=0;
+
 			for($i=0; $i<$sql->rows; $i++)
 			  { 
 				$sql->GetRow($i);

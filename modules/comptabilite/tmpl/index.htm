@@ -27,7 +27,7 @@ function Recharge()
   	var form_poste = document.getElementById("form_poste").value;
   	var form_tiers = document.getElementById("form_tiers").value;
   	var form_date = document.getElementById("form_date").value;
-	document.location='index.php?mod=comptabilite&rub=mouvement&form_mvt='+form_poste+'&form_tiers='+form_tiers+'&form_dte='+form_date;
+	document.location='index.php?mod=comptabilite&rub=mouvement&form_poste='+form_poste+'&form_tiers='+form_tiers+'&form_dte='+form_date;
 }
 
 function AffVentilation()
@@ -84,9 +84,9 @@ function AffVentilation()
 		<TD>
 			<SELECT id="form_poste" name="form_poste" OnChange="Recharge();" >
 			<!-- BEGIN: lst_mouvement -->
-			<OPTION value="{id_mouvement}" {chk_mouvement}>{nom_mouvement}</OPTION>
+				<OPTION value="{id_mouvement}" {chk_mouvement}>{nom_mouvement}</OPTION>
 			<!-- END: lst_mouvement -->
-		        </SELECT>
+		    </SELECT>
 		</TD>
 		<TD>
 			<SELECT id="form_tiers" name="form_tiers">
@@ -134,7 +134,7 @@ function AffVentilation()
 				<div style="padding-top: 5px;">
 					<SELECT id="form_poste_ventil[{ventilid}]" name="form_poste_ventil[{ventilid}]" >
 					<!-- BEGIN: lst_mouvement -->
-					<OPTION value="{id_mouvement}" {chk_tiers}>{nom_mouvement}</OPTION>
+					<OPTION value="{id_mouvement}" {chk_mvt_ventil}>{nom_mouvement}</OPTION>
 					<!-- END: lst_mouvement -->
 					</SELECT>
 					<SELECT id="form_tiers_ventil[{ventilid}]" name="form_tiers_ventil[{ventilid}]" >
