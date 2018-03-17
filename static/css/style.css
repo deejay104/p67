@@ -10,7 +10,7 @@ html { -ms-text-size-adjust:100%; -webkit-text-size-adjust:100%}
 a {background:0 0}
 a:active,a:hover {outline:0}
 
-body { margin:0; font: 16px/1.85em Arial, Helvetice Neue, sans-serif; color: #000000; font-weight: 300; font-style: normal; -webkit-font-smoothing: antialiased; /* Fix for webkit rendering */ -webkit-text-size-adjust: 100%; }
+body { margin:0; font: 16px/1.85em Arial, Helvetice Neue, sans-serif; font-size:12px; color: #000000; font-weight: 300; font-style: normal; -webkit-font-smoothing: antialiased; /* Fix for webkit rendering */ -webkit-text-size-adjust: 100%; }
 
 a, a:hover, a:focus { text-decoration: none; -webkit-transition: all 50ms ease-in; -moz-transition: all 50ms ease-in; -o-transition: all 50ms ease-in; transition: all 50ms ease-in; }
 a:link { color: black; }
@@ -70,6 +70,7 @@ input[type=checkbox]:checked:after { content: "x"; }
 /* **** Style Responsive **** */
 
 @media (min-width: 1024px) and (min-device-width: 1024px) {
+	body { font-size:16px; }
     #responsive-navigation { display: none; }
     #main-content { width: 100%; padding-left: 240px;  }
     #main-sidebar { top: 0px; display: block; }
@@ -295,7 +296,7 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 
 .encadreInfos { min-width: 300px; border: 1px solid #013366; border-radius: 5px; padding: 0px 0px 10px 0px; margin-bottom:10px; }
 .encadreInfos label { display: inline-block; width: 60%; text-align: left; vertical-align: top; padding-left: 20px; }
-.encadreInfos span { display: inline-block; width: 40%; text-align: left; vertical-align: top; }
+.encadreInfos span { display: inline-block; text-align: left; vertical-align: top; }
 .encadreInfos p { line-height: 16px; margin: 5px 10px 0px 10px;  }
 .encadreTitre { background-color: #dddddd; padding: 10px 10px 30px 10px; font-size:18px; height:26px; margin-bottom: 10px; border-radius: 5px 5px 0px 0px; }
 
@@ -431,11 +432,8 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 /* **** Formulaire **** */
 .lastupdate { font-size: 10px;  font-style: italic; border-bottom: 1px solid; }
 
-.resaInfos { width:450px; border: 1px solid #013366; border-radius: 4px; padding: 4px; }
+.resaInfos { border: 1px solid #013366; border-radius: 4px; padding: 4px; }
 
-.tableauTitre { background-color: #dddddd; border-bottom: 1px solid black; height: 30px; font-weight: bold; text-align: left;}
-.tableauBorderLeft { border-left: 1px solid black; width:1 px; }
-.tableauBas { background-color: #dddddd; border-top: 1px solid black; height: 20px; font-weight: bold; }
 
 .formulaire p { margin: 4px;  }
 .formulaire label { display: inline-block; width: 180px; margin-right: 10px; text-align: left; vertical-align: top; }
@@ -454,6 +452,7 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 .formulaireMulti li { padding: 4px; 0px 4px 0px;  }
 .formulaireMulti label { width:150px; }
 .formulaireMulti span { width:200px; vertical-align:top; margin-left: 5px; }
+.formulaireMulti li:hover { background-color: #FFE1E1!important; }
 
 .formulaireSep { border-top: 1px dashed #999999; }
 
@@ -467,7 +466,13 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 .tableauAff th { background-color: #cccccc; height: 30px; border-bottom: 1px solid #cccccc; }
 .tableauAff tr { border-bottom: 1px dashed #cccccc; height: 25px; }
 .tableauAff tr:nth-child(even) { background-color: #f8f8f8; }
-.tableauAff tr:hover { background-color: #FFE1E1; }
+.tableauAff tr:hover { background-color: #FFE1E1!important; }
+
+.tableauAffLight tr:nth-child(even) { background-color: #ffffff; }
+
+.tableauTitre { background-color: #cccccc; height: 30px; border-bottom: 1px solid #cccccc; }
+.tableauBorderLeft { border-left: 1px solid black; width:1 px; }
+.tableauBas { background-color: #dddddd; border-top: 1px solid black; height: 20px; font-weight: bold; }
 
 /* **** Comptes **** */
 .soldeCompte { padding-top: 5px; border: 1px solid #000000; border-radius: 4px; display: inline-block; position:relative; width:350px; height: 30px; text-align: center;}

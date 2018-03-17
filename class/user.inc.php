@@ -928,7 +928,7 @@ class user_class{
 			$d=sql2date($res["dte"],"jour");
 			$l=floor((time()-strtotime($res["dte"]))/86400);
 
-			$ret=(($l<60) ? $d : (($l<90) ? "<font color=orange>$d</font>": "<font color=red>$d</font>"));
+			$ret=(($l<60) ? $d : (($l<90) ? "<font color=orange>$d</font>" : "<font color=red>$d</font>"));
 		  }
 
 		return $ret;

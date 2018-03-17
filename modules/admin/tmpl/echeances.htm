@@ -13,17 +13,17 @@
 	<input type="hidden" name="mod" value="admin">
 	<input type="hidden" name="rub" value="echeances">
 	<br />
-	<table>
-	  <TR class="tableauTitre">
-		<TD width="20">&nbsp;</TD>
-		<TD width="260"><B>Description</B></TD>
-		<TD width="120"><B>Réservation</B></TD>
-		<TD width="410"><B>Poste</B></TD>
-		<TD width="90"><B>Cout</B></TD>
-		<TD width="60"><B>Droit</B></TD>
-		<TD width="60"><B>Multi</B></TD>
-		<TD width="60"><B>Notif</B></TD>
-		<TD width="60"><B>Délai</B></TD>
+	<table class="tableauAff tableauAffLight">
+	  <TR>
+		<th width="20">&nbsp;</th>
+		<th width="260"><B>Description</B></th>
+		<th width="120"><B>Réservation</B></th>
+		<th width="410"><B>Poste</B></th>
+		<th width="90"><B>Cout</B></th>
+		<th width="60"><B>Droit</B></th>
+		<th width="60"><B>Multi</B></th>
+		<th width="60"><B>Notif</B></th>
+		<th width="60"><B>Délai</B></th>
 	  </TR>
 	<!-- BEGIN: lst_echeance -->
 	<tr>
@@ -111,11 +111,8 @@
 			<INPUT type="text" name="form_delai[0]" style="width:50px;" value="30" maxlength="3">
 		</td>
 	</tr>
-
-	<tr>
-		<TD width="20">&nbsp;</TD>
-		<TD colspan="6"><br /><INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler"></TD>
-	  </tr>
 	</table>
+	<br />
+	<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler">
 </form>
 <!-- END: corps -->

@@ -4,7 +4,7 @@
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérifie le droit d'accès
-	if (!GetDroit("AccesUtilisateurDonnees")) { FatalError("Accès non autorisé (AccesEcheances)"); }
+	if (!GetDroit("AccesConfigDonneesUser")) { FatalError("Accès non autorisé (AccesConfigDonneesUser)"); }
 
 // ---- Affiche le menu
 	$aff_menu="";

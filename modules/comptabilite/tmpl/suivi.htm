@@ -29,27 +29,28 @@
 
 
 	<!-- BEGIN: aff_suivi -->
-		<TABLE>
-		  <TR class="tableauTitre">
-				<td width=20>&nbsp;</td>
-				<td width=100>Date</td>
-				<td width=200>Mouvement</td>
-				<td width=10>&nbsp;</td>
-				<td width=400>Commentaire</td>
-				<td width=110 align=right class="tableauBorderLeft"Montant</td>
-				<td width=10>&nbsp;</td>
-				<td width=80 align=right>Relevé</td>
-			<tr  class="tableauTitre">
-				<TD >&nbsp;</TD>
-				<TD colspan=4 align=right><I>Ancien solde</I>&nbsp;</TD>
-				<TD align=right><I>{ancien_solde} €</I></TD>
-				<TD>&nbsp;</TD>
-				<TD>&nbsp;</TD>
-		  </TR>
+		<TABLE class="tableauAff">
+			<TR >
+				<th width=20>&nbsp;</th>
+				<th width=100>Date</th>
+				<th width=250>Mouvement</th>
+				<th width=10>&nbsp;</th>
+				<th width=400>Commentaire</th>
+				<th width=110 align=right>Montant</th>
+				<th width=10>&nbsp;</th>
+				<th width=80 align=right>Relevé</th>
+			</tr>
+			<TR class="tableauTitre">
+				<th >&nbsp;</th>
+				<th colspan=4 align=right><I>Ancien solde</I>&nbsp;</th>
+				<th align=right><I>{ancien_solde} €</I></th>
+				<th>&nbsp;</th>
+				<th>&nbsp;</th>
+			</TR>
 	
 		<!-- BEGIN: lst_suivi -->
-		  <TR valign=top bgcolor="#{color_suivi}">
-			<TD width=20 bgcolor=white>&nbsp;</TD>
+		  <TR valign=top>
+			<TD width=20>&nbsp;</TD>
 			<TD>{date_suivi}</TD>
 			<TD>{mouvement_suivi}<BR><I><FONT size=1>{tiers_suivi}</FONT></I></TD>
 			<TD>&nbsp;</TD>
@@ -66,15 +67,11 @@
 				<TD>&nbsp;</TD>
 				<TD align=right><B><I>{pointe_solde}</I></B></TD>
 		  </TR>
-		  <TR>
-				<TD width=20>&nbsp;</TD>
-				<TD colspan=8><BR>
-					<INPUT type="submit" name="fonc" value="Enregistrer">&nbsp;
-					<INPUT type="submit" name="fonc" value="Annuler">&nbsp;
-					<INPUT type="submit" name="fonc" value="Clore">
-				</TD>
-		  </TR>
 		</TABLE>
+		<br />
+		<INPUT type="submit" name="fonc" value="Enregistrer">&nbsp;
+		<INPUT type="submit" name="fonc" value="Annuler">&nbsp;
+		<INPUT type="submit" name="fonc" value="Clore">
 	<!-- END: aff_suivi -->
 
 

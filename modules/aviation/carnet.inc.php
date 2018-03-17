@@ -49,7 +49,7 @@
 	$tabTitre["dte_deb"]["width"]=100;
 	$tabTitre["nom"]["aff"]="Equipage";
 	$tabTitre["nom"]["width"]=350;
-	$tabTitre["tarif"]["aff"]="Fonc";
+	$tabTitre["tarif"]["aff"]="Tarif";
 	$tabTitre["tarif"]["width"]=50;
 	$tabTitre["dest"]["aff"]="Lieu";
 	$tabTitre["dest"]["width"]=100;

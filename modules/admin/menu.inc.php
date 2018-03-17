@@ -28,19 +28,19 @@
 	{
 		$tmpl_menu->parse("infos.postes");
 	}
-	if (GetDroit("AccesPageListeTarifs"))
+	if (GetDroit("AccesConfigTarifs"))
 	{
 		$tmpl_menu->parse("infos.tarifs");
 	}
-	if (GetDroit("AccesPagePrevisions"))
+	if (GetDroit("AccesConfigPrevisions"))
 	{
 		$tmpl_menu->parse("infos.previsions");
 	}
-	if (GetDroit("AccesUtilisateurDonnees"))
+	if (GetDroit("AccesConfigDonneesUser"))
 	{
 		$tmpl_menu->parse("infos.utildonnees");
 	}
-	if (GetDroit("AccesCrontab"))
+	if (GetDroit("AccesConfigCrontab"))
 	{
 		$tmpl_menu->parse("infos.crontab");
 	}

@@ -31,7 +31,7 @@
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérifie le droit d'accès
-	if (!GetDroit("AccesCrontab")) { FatalError("Accès non autorisé (AccesCrontab)"); }
+	if (!GetDroit("AccesConfigCrontab")) { FatalError("Accès non autorisé (AccesConfigCrontab)"); }
 
 // ---- Affiche le menu
 	$aff_menu="";

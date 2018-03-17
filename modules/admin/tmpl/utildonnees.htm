@@ -45,45 +45,46 @@ $(function() {
 	<input type="hidden" name="rub" value="utildonnees">
 
 	<br />
-	<ul class="tableauOrdre tableauTitre">
-		<li>
-			<span style="width:24px;"></span>
-			<span style="width:300px; text-align:left;">Nom</span>
-			<span>Type</span>
-		</li>
-	</ul>
+	<div class="formulaire">
+		<ul class="formulaireMulti tableauTitre">
+			<li>
+				<span style="width:24px;"></span>
+				<span style="width:300px; text-align:left;">Nom</span>
+				<span style="width:100px;">Type</span>
+			</li>
+		</ul>
 
-	<ul id="tableauOrdre" class="tableauOrdre">
-	<!-- BEGIN: lst_donnees -->
-		<li id="id_{form_id}">
-			<span style="width:24px;"><div  style='width: 24px; height:24px; display:inline-block;' OnMouseOver="document.getElementById('imgsort_{form_id}').style.visibility='visible';" OnMouseOut="document.getElementById('imgsort_{form_id}').style.visibility='hidden';" ><img id='imgsort_{form_id}' src="{path_module}/img/icn16_sort.png"/></div></span>
-			<span style="width:300px; text-align:left;"><INPUT type="text" name="form_nom[{form_id}]" style="width:250px;" value="{form_nom}"></span>
-			<span>
-				<select name="form_type[{form_id}]">
-				<option value="text" {select_type_text}>Texte</option>
-				<option value="number" {select_type_number}>Nombre</option>
-				<option value="date" {select_type_date}>Date</option>
-				<option value="tel" {select_type_tel}>Téléphone</option>
-				</select>
-			</span>
-			<span class="bouttonSupprime"><a href="index.php?mod=admin&rub=utildonnees&fonc=delete&id={form_id}" class='imgDelete'><img src="{path_module}/img/icn16_supprimer.png" border=0 /></a></span>
-		</li>	
-	<!-- END: lst_donnees -->
-		<li>
-			<span style="width:24px;"></span>
-			<span style="width:300px; text-align:left;"><INPUT type="text" name="form_nom[0]" style="width:250px;" value="{form_description}"></span>
-			<span>
-				<select name="form_type[0]">
-				<option value="text" >Texte</option>
-				<option value="number">Nombre</option>
-				<option value="date" >Date</option>
-				<option value="tel" >Téléphone</option>
-				</select>
-			</span>
-		</li>
+		<ul id="tableauOrdre" class="formulaireMulti">
+		<!-- BEGIN: lst_donnees -->
+			<li id="id_{form_id}" class="formulaireSep">
+				<span style="width:24px;"><div  style='width: 24px; height:24px; display:inline-block;' OnMouseOver="document.getElementById('imgsort_{form_id}').style.visibility='visible';" OnMouseOut="document.getElementById('imgsort_{form_id}').style.visibility='hidden';" ><img id='imgsort_{form_id}' src="{path_module}/img/icn16_sort.png"/></div></span>
+				<span style="width:300px; text-align:left;"><INPUT type="text" name="form_nom[{form_id}]" style="width:250px;" value="{form_nom}"></span>
+				<span style="width:100px;">
+					<select name="form_type[{form_id}]">
+					<option value="text" {select_type_text}>Texte</option>
+					<option value="number" {select_type_number}>Nombre</option>
+					<option value="date" {select_type_date}>Date</option>
+					<option value="tel" {select_type_tel}>Téléphone</option>
+					</select>
+				</span>
+				<span class="bouttonSupprime"><a href="index.php?mod=admin&rub=utildonnees&fonc=delete&id={form_id}" class='imgDelete'><img src="{path_module}/img/icn16_supprimer.png" border=0 /></a></span>
+			</li>	
+		<!-- END: lst_donnees -->
+			<li class="formulaireSep">
+				<span style="width:24px;"></span>
+				<span style="width:300px; text-align:left;"><INPUT type="text" name="form_nom[0]" style="width:250px;" value="{form_description}"></span>
+				<span style="width:100px;">
+					<select name="form_type[0]">
+					<option value="text" >Texte</option>
+					<option value="number">Nombre</option>
+					<option value="date" >Date</option>
+					<option value="tel" >Téléphone</option>
+					</select>
+				</span>
+			</li>
 
-	</ul>
-
+		</ul>
+	</div>
 	<br />
 	<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler">
 	

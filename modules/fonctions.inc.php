@@ -39,7 +39,7 @@ function GetDroit($droit)
 		  { return true; }
 		else if ((isset($myuser->role[$droit])) && ($myuser->role[$droit]))
 		  { return true; }
-		else if ((isset($myuser->groupe["ADM"])) && ($myuser->groupe["ADM"]))
+		else if ((isset($myuser->groupe["SYS"])) && ($myuser->groupe["SYS"]))
 		  { return true; }
 		elseif ((isset($myuser->groupe[$droit])) && ($myuser->groupe[$droit]))
 		  { return true; }

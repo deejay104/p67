@@ -33,7 +33,7 @@
 	$tmpl_x->assign("path_module","$module/$mod");
 
 // ---- Vérifie les variables
-	if (!GetDroit("AccesPageListeTarifs")) { FatalError("Accès non autorisé"); }
+	if (!GetDroit("AccesConfigTarifs")) { FatalError("Accès non autorisé (AccesConfigTarifs)"); }
 
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 

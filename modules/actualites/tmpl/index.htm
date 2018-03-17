@@ -51,7 +51,7 @@
 
 .fc-toolbar { display: none; }
 .fc-day-grid { display: none; }
-
+.fc-axis { width: 60px; }
 </style>
 
 <script type="text/javascript">
@@ -202,8 +202,8 @@
 		</form>
 	</div>
 <!-- BEGIN: aff_reservation -->
-	<div class="encadreInfos">
-		<div class="encadreTitre">Réservation du jour</div>
+	<div class="encadreInfos" style='height:440px;'>
+		<div class="encadreTitre">Réservations du jour</div>
 		
 		<div id='script-warning'>
 			Erreur : <code>api.php</code> doit être accessible.
@@ -224,7 +224,7 @@
 			<input type="hidden" name="checktime" value="{form_checktime}">
 	
 			<input type="text" name="form_titre" value="{news_title}"  OnClick="ClearText(event,'{news_title_clear}');"  style="color:#{new_color};"><br />
-			<textarea name="form_message" OnClick="ClearText(event,'{news_message_clear}');"  style="color:#{new_color};">{news_message}</textarea>
+			<textarea name="form_message" OnClick="ClearText(event,'{news_message_clear}');"  style="color:#{new_color}; height:51px;">{news_message}</textarea>
 			<p>
 				<input name='fonc' type='submit' value='Poster'>
 			</p>

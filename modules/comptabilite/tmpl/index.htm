@@ -53,36 +53,31 @@ function AffVentilation()
 	<INPUT type="hidden" name="checktime" value="{form_checktime}">
 	<INPUT type="hidden" name="mod" value="comptabilite">
 
-
-	<BR><BR>
-
-
-	<!-- BEGIN: msg_enregistre -->
-	<div class="{msg_confirmation_class}">{msg_confirmation}</div>
-	<!-- END: msg_enregistre -->
-
+	<BR>
 
 	<!-- BEGIN: enregistre -->
 		<!-- BEGIN: lst_visualisation -->
 		{enr_mouvement}
 		<!-- END: lst_visualisation -->
+		<INPUT type="hidden" name="form_date" id="form_date" value="{form_date}">
+		<INPUT type="hidden" name="form_poste" id="form_poste" value="{form_poste}">
 		<INPUT type="submit" name="fonc" value="Valider"> <INPUT type="submit" name="fonc" value="Annuler">
 		<br /><br />
 	<!-- END: enregistre -->
 
 	<!-- BEGIN: aff_mouvement -->
 	<TABLE>
-	  <tr>
-		<td width=20>&nbsp;</td>
-		<td width=120 style="border-top: 1px solid black; padding-top:10px; padding-bottom:10px;"><B>Date</B></td>
-		<td width=400 style="border-top: 1px solid black; padding-top:10px; padding-bottom:10px"><B>Poste</B></td>
-		<td width=250 style="border-top: 1px solid black; padding-top:10px; padding-bottom:10px;"><B>Tiers</B></td>
-		<td width=150 style="border-top: 1px solid black; padding-top:10px; padding-bottom:10px;"><B>Montant</B></TD>
+	  <tr class="tableauTitre" >
+		<th width=20>&nbsp;</th>
+		<th width=120 >Date</th>
+		<th width=400>Poste</th>
+		<th width=250>Tiers</th>
+		<th width=150>Montant</th>
 	  </tr>
 	
 	<!-- BEGIN: lst_aff_mouvement -->
 	  <TR>
-		<TD>&nbsp;</TD>
+		<TD style="padding-top:10px; padding-bottom:10px;">&nbsp;</TD>
 		<TD>
 			<INPUT type="text" name="form_date" id="form_date" size=8 value="{date_mouvement}">
 		</TD>
@@ -108,10 +103,10 @@ function AffVentilation()
 	  </TR>
 
 	  <TR>
-		<TD style="padding-top:20px;">&nbsp;</TD>
+		<TD style="padding-top:10px;">&nbsp;</TD>
 		<TD>Commentaire</TD>
 		<TD colspan=3>
-			<INPUT name="form_commentaire" value="{form_commentaire}" size=80>
+			<INPUT name="form_commentaire" value="{form_commentaire}" style="width:777px;">
 		</TD>
 	  </TR>
 
@@ -119,9 +114,9 @@ function AffVentilation()
 		<TD width=20>&nbsp;</TD>
 		<TD colspan=4>&nbsp;</TD>
 	  </TR>	
-	  <TR>
-		<TD width=20>&nbsp;</TD>
-		<TD colspan=4 style="border-top: 1px solid black; padding-top:10px; padding-bottom:10px; background-color: #dddddd;">
+	  <TR style="padding-top:10px; padding-bottom:10px; background-color: #cccccc;">
+		<TD width=20 style="padding-top:5px; padding-bottom:5px;">&nbsp;</TD>
+		<TD colspan=4>
 			Ventilation du mouvement :
 			<SELECT id="form_ventilation" name="form_ventilation"  OnChange="AffVentilation();">
 			<OPTION value="non">Non</OPTION>
@@ -129,7 +124,6 @@ function AffVentilation()
 			<OPTION value="crediteur">Créditeur</OPTION>
 	        </SELECT>
 		</TD>
-
 	  </TR>
 	  <TR>
 		<TD width=20>&nbsp;</TD>
@@ -137,7 +131,7 @@ function AffVentilation()
 		<TD colspan=3 style="padding-bottom:10px;">
 			<div id="aff_ventilation" style="visibility: hidden; height:0px;">
 				<!-- BEGIN: lst_ventilation -->
-				<div>
+				<div style="padding-top: 5px;">
 					<SELECT id="form_poste_ventil[{ventilid}]" name="form_poste_ventil[{ventilid}]" >
 					<!-- BEGIN: lst_mouvement -->
 					<OPTION value="{id_mouvement}" {chk_tiers}>{nom_mouvement}</OPTION>
@@ -155,19 +149,18 @@ function AffVentilation()
 			</div>
 		</TD>
 	  </TR>
-	  <TR>
+	  <TR style="border-top: 1px solid black;">
 		<TD width=20>&nbsp;</TD>
-		<TD colspan=4  style="border-top: 1px solid black; padding-top:10px; padding-bottom:10px;">
+		<TD colspan=4 >
 			Saisir en Facturation : <input type='checkbox' name='form_facture' value="on"> 
 		</TD>
 	  </TR> 
    <!-- END: lst_aff_mouvement -->
-	
-	  <TR>
-		<TD width=20>&nbsp;</TD>
-		<TD colspan=4 style="border-top: 1px solid black; padding-top:10px; padding-bottom:10px;"><INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler"></TD>
-	  </TR>
 	</TABLE>
+	
+
+	<br />
+	<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler">
 	<!-- END: aff_mouvement -->
 </FORM>
 
