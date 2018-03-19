@@ -134,7 +134,7 @@
 	$module="static/modules";
 
 // ---- Charge le numéro de version
-	require ("version.txt");
+	require ("version.php");
 
 // ---- Charge les templates
 	require ("class/xtpl.inc.php");

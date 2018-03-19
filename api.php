@@ -66,7 +66,18 @@
 // ---- Charge la page
 	if (($mod!="") && ($rub!=""))
 	{
-		require("modules/".$mod."/".$rub.".inc.php");
+		if (file_exists("modules/".$mod."/".$rub.".api.php"))
+		{
+			require("modules/".$mod."/".$rub.".api.php");
+		}
+		else if (file_exists("modules/".$mod."/".$rub.".inc.php"))
+		{
+			require("modules/".$mod."/".$rub.".inc.php");
+		}
+		else
+		{
+			echo "{  \"result\": \"File not found\" }\n";
+		}
 	}
 	else
 	{

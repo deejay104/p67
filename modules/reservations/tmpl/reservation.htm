@@ -224,21 +224,30 @@ function reloadImg2() {
 
 	<div class="formulaire">
 		
+		<div style='float: left; width:500px;'>
 		{aff_horametre}
-
+		</div>
+		
+		<div >
 		<p>
 			<label for="potentiel">Potentiel fin de vol</label>
-			<INPUT id="potentiel" name="form_potentielh" value="{form_potentielh}" style='width: 50px;'> heure(s) <INPUT name="form_potentielm" value="{form_potentielm}" style='width: 50px;'> minute(s)
+			{form_potentiel} 
+			(Corriger <INPUT type="number" name="form_potentielh" value="{form_potentielh}" style='width: 50px;'> h <INPUT type="number" name="form_potentielm" value="{form_potentielm}" style='width: 50px;'>)
 		</p>
 
 		<p>
 			<label for="carburant">Carburant ajouté</label>
-			<INPUT id="carburant" name="form_carburant" value="{form_carburant}" style='width: 50px;'> Litres, pour un total de <INPUT name="form_prixcarbu" value="{form_prixcarbu}" style='width: 50px;'> €
+			<INPUT type="number" name="form_carbavant" value="{form_carbavant}" style='width: 50px;'> Litres Avant,
+			<INPUT type="number" name="form_carbapres" value="{form_carbapres}" style='width: 50px;'> Litres Après
 		</p>
+		<p>
+			<label for="carburant">Total Carburant</label>
+			<INPUT name="form_prixcarbu" value="{form_prixcarbu}" style='width: 50px;'> €
+		</p>
+		</div>
 	</div>
-
 	<!-- BEGIN: aff_chkreservation -->
-			<div style="width:800px; border: 1px solid #013366; border-radius: 4px; padding: 6px; margin-top:15px; margin-bottom:15px;">
+			<div style="width:800px; border: 1px solid #013366; border-radius: 4px; padding: 6px; margin-top:15px; margin-bottom:15px; clear: left;">
 				<div style="float:left; height:100px; padding:4px;"><input type="checkbox" name="form_accept" value="oui"></div>
 				<div>{TxtValidResa}</div>
 			</div>
@@ -247,9 +256,10 @@ function reloadImg2() {
 		<input type="hidden" name="form_accept" value="oui">
 	<!-- END: aff_chkreservation_ok -->
 
-		<div>
+	<br />
+		<div  style='clear: left;'>
 	  		<!-- BEGIN: aff_enregistrer -->
-	  		<input type="submit" name="fonc" value="Enregistrer">  <input type="submit" name="fonc" value="Devis masse" />
+	  		<input type="submit" name="fonc" value="Enregistrer"> <input type="submit" name="fonc" value="Actualiser">  <input type="submit" name="fonc" value="Devis masse" />
 	  		<!-- END: aff_enregistrer -->
 			<input type="submit" name="fonc" value="Annuler">
 		</div>

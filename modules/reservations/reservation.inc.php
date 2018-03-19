@@ -106,7 +106,8 @@
 	  	$resa["resa"]->horafin=$form_horafin;
 	  	$resa["resa"]->potentielh=$form_potentielh;
 	  	$resa["resa"]->potentielm=$form_potentielm;
-	  	$resa["resa"]->carburant=$form_carburant;
+	  	$resa["resa"]->carbavant=$carbavant;
+	  	$resa["resa"]->carbapres=$carbapres;
 	  	$resa["resa"]->prixcarbu=$form_prixcarbu;
 	  	$resa["resa"]->destination=$form_destination;
 	  	$resa["resa"]->nbpersonne=$form_nbpersonne;
@@ -262,7 +263,7 @@
 
 // **************************************
 //	Calcul du temps de vol
-	
+	/*
 	// Récupère la date de la dernière maintenance
 	$query="SELECT dte_fin,potentiel AS tot FROM p67_calendrier WHERE potentiel>0 AND dte_fin<='".$resa["resa"]->dte_deb."' AND uid_avion='".$resa["resa"]->uid_ressource."' ORDER BY dte_fin DESC LIMIT 0,1";
 	$respot=$sql->QueryRow($query);
@@ -283,7 +284,8 @@
 
 	$t=$respot["tot"]+$resestim["tot"]+$resreel["tot"];
 	$tmpl_x->assign("potentiel", AffTemps($t));
-
+*/
+	$tmpl_x->assign("potentiel", $resa["resa"]->AffPotentiel("prev"));
 
 // **************************************
 
@@ -450,10 +452,12 @@
 	$tmpl_x->assign("form_description", $resa["resa"]->description);
 
 	// Potentiel restant
+	$tmpl_x->assign("form_potentiel", $resa["resa"]->AffPotentiel("fin"));
 	$tmpl_x->assign("form_potentielh", $resa["resa"]->potentielh);
 	$tmpl_x->assign("form_potentielm", $resa["resa"]->potentielm);
 
-	$tmpl_x->assign("form_carburant", $resa["resa"]->carburant);
+	$tmpl_x->assign("form_carbavant", $resa["resa"]->carbavant);
+	$tmpl_x->assign("form_carbapres", $resa["resa"]->carbapres);
 	$tmpl_x->assign("form_prixcarbu", $resa["resa"]->prixcarbu);
 
 	// Texte d'acceptation

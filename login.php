@@ -73,7 +73,7 @@
 	  }
 
 // ---- Charge le numéro de version
-	require ("version.txt");
+	require ("version.php");
 
 // ---- Test si l'on a validé la page
 	$ok=0;

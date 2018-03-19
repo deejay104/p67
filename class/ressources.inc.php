@@ -38,6 +38,8 @@ class ress_class{
 		$this->immatriculation="";
 		$this->actif="oui";
 		$this->poste=0;
+		$this->maxpotentiel=50;
+		$this->alertpotentiel=45;
 		$this->marque="";
 		$this->modele="";
 		$this->couleur="A9D7FE";
@@ -63,6 +65,8 @@ class ress_class{
 		$this->data["immatriculation"]="";
 		$this->data["actif"]="oui";
 		$this->data["poste"]=0;
+		$this->data["maxpotentiel"]=50;
+		$this->data["alertpotentiel"]=45;
 		$this->data["marque"]="";
 		$this->data["modele"]="";
 		$this->data["couleur"]="A9D7FE";
@@ -103,6 +107,8 @@ class ress_class{
 		$this->immatriculation=strtoupper($res["immatriculation"]);
 		$this->actif=$res["actif"];
 		$this->poste=$res["poste"];
+		$this->maxpotentiel=$res["maxpotentiel"];
+		$this->alertpotentiel=$res["alertpotentiel"];
 		$this->marque=$res["marque"];
 		$this->modele=$res["modele"];
 		$this->couleur=$res["couleur"];
@@ -332,7 +338,82 @@ class ress_class{
 		  {
 		  	return true;
 		  }
-}
+	}
+	
+	function Potentiel()
+	{ global $MyOpt;
+		$sql=$this->sql;
+
+		$query="SELECT dte_fin,potentiel AS tot FROM ".$MyOpt["tbl"]."_calendrier WHERE potentiel>0 AND dte_fin<='".now()."' AND uid_avion='".$this->id."' ORDER BY dte_fin DESC LIMIT 0,1";
+		$respot=$sql->QueryRow($query);
+
+		$query="SELECT SUM(tpsreel) AS tot FROM ".$MyOpt["tbl"]."_calendrier WHERE dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".now()."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$this->id."'";
+		$resreel=$sql->QueryRow($query);
+
+		$t=$respot["tot"]+$resreel["tot"];
+
+		return $t;
+	}
+
+	function AffPotentiel()
+	{
+		$t=$this->Potentiel();
+		if (floor($t/60)>$this->maxpotentiel)
+		{
+			$ret="<font color=red>".AffTemps($t)."</font>";
+		}
+		else if (floor($t/60)>$this->alertpotentiel)
+		{
+			$ret="<font color=orange>".AffTemps($t)."</font>";
+		}
+		else
+		{
+			$ret=AffTemps($t);
+		}
+		return $ret;
+	}
+
+	function EstimeMaintenance()
+	{ global $MyOpt;
+		$sql=$this->sql;
+
+		$query="SELECT dte_fin,potentiel AS tot FROM ".$this->tbl."_calendrier WHERE potentiel>0 AND dte_fin<='".now()."' AND uid_avion='".$this->id."' ORDER BY dte_fin DESC LIMIT 0,1";
+		$respot=$sql->QueryRow($query);
+
+		$query="SELECT SUM(tpsreel) AS tot FROM ".$this->tbl."_calendrier WHERE dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".now()."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$this->id."'";
+		$resreel=$sql->QueryRow($query);
+
+		$t=$respot["tot"]+$resreel["tot"];
+
+		$query="SELECT dte_fin FROM ".$this->tbl."_calendrier WHERE tpsreel<>0 AND dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".now()."' AND uid_avion='".$this->id."' ORDER BY dte_fin DESC LIMIT 0,1";
+		$reslast=$sql->QueryRow($query);
+		if ($reslast["dte_fin"]=="")
+		{
+			$reslast=array();
+			$reslast["dte_fin"]=$respot["dte_fin"];
+		}
+
+		$dte=$reslast["dte_fin"];
+		
+		$query="SELECT dte_fin,tpsestime FROM ".$this->tbl."_calendrier WHERE dte_deb>='".$reslast["dte_fin"]."' AND tpsreel=0 AND actif='oui' AND uid_avion='".$this->id."' ORDER BY dte_deb";
+		$sql->Query($query);
+		for($i=0; $i<$sql->rows; $i++)
+		{
+			$sql->GetRow($i);
+
+			if (floor($t/60)>=$this->maxpotentiel)
+			{
+				$i=$sql->rows;
+			}
+			else
+			{
+				$dte=$sql->data["dte_fin"];
+				$t=$t+$sql->data["tpsestime"];
+			}
+		}
+			
+		return $dte;
+	}
 }
 
 

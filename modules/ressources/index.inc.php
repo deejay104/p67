@@ -40,6 +40,8 @@
 	$tabTitre["nom"]["width"]=150;
 	$tabTitre["hora"]["aff"]="Temps Vol";
 	$tabTitre["hora"]["width"]=150;
+	$tabTitre["estimemaint"]["aff"]="Estimation Prochaine maintenance";
+	$tabTitre["estimemaint"]["width"]=150;
 
 	$lstusr=ListeRessources($sql);
 
@@ -55,6 +57,7 @@
 
 // **************************************
 //	Calcul du temps de vol
+/*
 		// Récupère la date de la dernière maintenance
 		$query="SELECT dte_fin,idmaint FROM p67_calendrier WHERE idmaint>0 AND dte_fin<='".now()."' AND uid_avion='".$usr->id."' ORDER BY dte_fin DESC LIMIT 0,1";
 		$res["first"]=$sql->QueryRow($query);
@@ -69,12 +72,20 @@
 		$resreel=$sql->QueryRow($query);
 	
 		$t=$respot["tot"]+$resestim["tot"]+$resreel["tot"];
-
+*/
 // **************************************
-
+		$t=$usr->AffPotentiel();
 		$tabValeur[$i]["hora"]["val"]=(($t>0) ? $t : "0");
-		$tabValeur[$i]["hora"]["aff"]="<A href='index.php?mod=ressources&rub=detail&id=$id'>".AffTemps($t)."</a>";
-	  }
+		$tabValeur[$i]["hora"]["aff"]="<A href='index.php?mod=ressources&rub=detail&id=$id'>".$t."</a>";
+
+		$t=$usr->EstimeMaintenance();		
+		if (strtotime($t)<time())
+		{
+			// $t=date("Y-m-d",$t);
+		}
+		$tabValeur[$i]["estimemaint"]["val"]=$t;
+		$tabValeur[$i]["estimemaint"]["aff"]="<A href='index.php?mod=ressources&rub=detail&id=$id'>".sql2date($t,"jour")."</a>";
+	}
 
 	if ($order=="") { $order="nom"; }
 	if ($trie=="") { $trie="d"; }

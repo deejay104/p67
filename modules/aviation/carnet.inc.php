@@ -59,9 +59,11 @@
 	$tabTitre["heure_fin"]["width"]=70;
 	$tabTitre["heure"]["aff"]="Heures de vol";
 	$tabTitre["heure"]["width"]=100;
-	$tabTitre["essence"]["aff"]="Carburant";
-	$tabTitre["essence"]["width"]=100;
-	$tabTitre["potentiel"]["aff"]="Potentiel";
+	$tabTitre["carbavant"]["aff"]="Carburant Avant";
+	$tabTitre["carbavant"]["width"]=100;
+	$tabTitre["carbapres"]["aff"]="Carburant Après";
+	$tabTitre["carbapres"]["width"]=100;
+	$tabTitre["potentiel"]["aff"]="Total heures de vol";
 	$tabTitre["potentiel"]["width"]=100;
 
 // ---- Chargement des données
@@ -145,12 +147,16 @@
 		$tabValeur[$i]["heure"]["aff"]=$resa->AffTempsReel();
 		$tabValeur[$i]["heure"]["align"]="center";
 
-		$tabValeur[$i]["essence"]["val"]=$resa->carburant;
-		$tabValeur[$i]["essence"]["aff"]=($resa->carburant>0) ? $resa->carburant : " ";
-		$tabValeur[$i]["essence"]["align"]="center";
+		$tabValeur[$i]["carbavant"]["val"]=$resa->carbavant;
+		$tabValeur[$i]["carbavant"]["aff"]=($resa->carbavant>0) ? $resa->carbavant : " ";
+		$tabValeur[$i]["carbavant"]["align"]="center";
+
+		$tabValeur[$i]["carbapres"]["val"]=$resa->carbapres;
+		$tabValeur[$i]["carbapres"]["aff"]=($resa->carbapres>0) ? $resa->carbapres : " ";
+		$tabValeur[$i]["carbapres"]["align"]="center";
 
 		$tabValeur[$i]["potentiel"]["val"]="";
-		$tabValeur[$i]["potentiel"]["aff"]=$resa->AffPotentiel();
+		$tabValeur[$i]["potentiel"]["aff"]=$resa->AffPotentiel("fin");
 		$tabValeur[$i]["potentiel"]["align"]="center";
 
 	}

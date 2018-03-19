@@ -1,9 +1,0 @@
-<?
-$Revision="";
-$versionsvn="$Revision: 481 $";
-
-$myrev = str_replace("$Revision: ","",$versionsvn);
-$myrev = str_replace(" $","",$myrev);
-$version = "2.14.".$myrev;
-
-?>

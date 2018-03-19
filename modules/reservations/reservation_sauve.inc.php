@@ -46,7 +46,7 @@
 	$resa["resa"]=new resa_class($id,$sql);
 
 // ---- Vérifie les infos
-	if (($fonc=="Enregistrer") || ($fonc=="Devis masse"))
+	if (($fonc=="Enregistrer") || ($fonc=="Actualiser") || ($fonc=="Devis masse"))
 	  {
 		$ok=1;
 
@@ -122,7 +122,9 @@
 				$resa["resa"]->horafin=$form_horafin;
 				$resa["resa"]->potentielh=$form_potentielh;
 				$resa["resa"]->potentielm=$form_potentielm;
-				$resa["resa"]->carburant=$form_carburant;
+
+				$resa["resa"]->carbavant=$form_carbavant;
+				$resa["resa"]->carbapres=$form_carbapres;
 				$resa["resa"]->prixcarbu=$form_prixcarbu;
 			  }
 
@@ -209,6 +211,11 @@
 		$ok=0;
 		$mod="aviation";
 		$affrub="centrage";
+	  }
+
+	if ($fonc=="Actualiser")  	
+	  {
+		$ok=2;
 	  }
 
 	if ($ok>1)

@@ -34,7 +34,7 @@
 // ---- Vérifie le droit d'accès
 	if (!GetDroit("AccesConfigGroupes")) { FatalError("Accès non autorisé (AccesConfigGroupes)"); }
 
-	require_once("modules/".$mod."/roles.tmpl.php");
+	require_once("modules/".$mod."/conf/roles.tmpl.php");
 
 // ---- Affiche le menu
 	$aff_menu="";
@@ -91,7 +91,7 @@
 
 		$form_grp=substr($grp,0,4)."2";
 
-  	$q="INSERT INTO ".$MyOpt["tbl"]."_groupe SET groupe='$form_grp',description='".$res["description"]."'";
+		$q="INSERT INTO ".$MyOpt["tbl"]."_groupe SET groupe='$form_grp',description='".$res["description"]."'";
 		$sql->Insert($q);
 
 

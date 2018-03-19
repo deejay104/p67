@@ -39,7 +39,7 @@ $MyOptHelp["site_title"]="Titre du site web";
 
 // Logo du site dans le dossier images
 $MyOptTmpl["site_logo"]="logo.png";
-$MyOptHelp["site_logo"]="Nom du fichier logo (dans le dossier images)";
+$MyOptHelp["site_logo"]="Nom du fichier pour le logo. Il doit se trouver dans le dossier custom.";
 
 // Active l'envoi de mail (0=ok, 1=nok)
 $MyOptTmpl["sendmail"]="1";

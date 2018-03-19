@@ -279,8 +279,6 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 	border-radius: 5px;
 }
 
-.imgDelete img { width: 16px; height: 16px; vertical-align:middle; }
-.imgDelete img:hover { background-color: #1799c3; background-color: #dddddd; border-radius: 2px; border: 1px solid #013366; }
 
 /* **** Actualités **** */
 
@@ -460,6 +458,9 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 /* **** Boutton de suppression */
 .bouttonSupprime { margin-left:5px; }
 .bouttonSupprime a { display: inline-block; width:20px; text-align:center; }
+
+.imgDelete img { width: 16px; height: 16px; vertical-align:middle; }
+.imgDelete img:hover { background-color: #1799c3; background-color: #dddddd; border-radius: 2px; border: 1px solid #013366; }
 
 /* **** Tableau **** */
 .tableauAff { border-bottom: 1px solid #cccccc; }

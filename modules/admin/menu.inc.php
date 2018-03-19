@@ -16,6 +16,10 @@
 	{
 		$tmpl_menu->parse("infos.config");
 	}
+	if (GetDroit("AccesConfigBase"))
+	{
+		$tmpl_menu->parse("infos.base");
+	}
 	if (GetDroit("AccesConfigGroupes"))
 	{
 		$tmpl_menu->parse("infos.groupes");

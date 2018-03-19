@@ -95,23 +95,8 @@ class user_class{
 		$this->data["dte_medicale"]="";
 
 		// Déplacer dans variable utilisateur
-		$this->data["regime"]="";
 		$this->data["tarif"]="0";
-		$this->data["profession"]="";
-		$this->data["employeur"]="";
-		$this->data["num_caf"]="";
-		$this->data["nom_medecin"]="";
-		$this->data["tel_medecin"]="";
-		$this->data["adr_medecin"]="";
-		$this->data["type_repas"]="standard";
-		$this->data["maladies"]="";
-		$this->data["handicap"]="non";
-		$this->data["allergie_asthme"]="N";
-		$this->data["allergie_medicament"]="N";
-		$this->data["allergie_alimentaire"]="N";
-		$this->data["allergie_commentaire"]="";
-		$this->data["remarque_sante"]="";
-		$this->data["aut_prelevement"]="N";
+
 
 
 		if ($uid>0)

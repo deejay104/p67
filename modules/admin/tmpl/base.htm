@@ -1,0 +1,99 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+{aff_menu}
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+<script>
+function Update()
+{
+	document.getElementById("form_update").style.backgroundColor = "";
+	document.getElementById("form_update").innerHTML = "En cours...";
+
+	$(function() {
+		$.ajax({
+			url:'api.php?mod=admin&rub=update',
+			type: 'html',
+			dataType: 'JSON',
+			success: function(response)
+			{
+				console.log(response);
+
+				if (response.result=="OK")
+				{
+					document.getElementById("form_update").style.backgroundColor = "#BBFFAA";
+				}
+				else
+				{
+					document.getElementById("form_update").style.backgroundColor = "#FFBBAA";
+				}
+				document.getElementById("form_update").innerHTML = response.data;
+			},
+			error : function(response)
+			{
+				document.getElementById("form_update").style.backgroundColor = "#FFBBAA";
+				document.getElementById("form_update").innerHTML = response;
+			}
+		});
+	})
+
+}
+
+
+function ReIndex()
+{
+	document.getElementById("form_reindex").style.backgroundColor = "";
+	document.getElementById("form_reindex").innerHTML = "En cours...";
+
+	$(function() {
+		$.ajax({
+			url:'api.php?mod=admin&rub=reindex',
+			type: 'html',
+			dataType: 'JSON',
+			success: function(response)
+			{
+				console.log(response);
+
+				if (response.result=="OK")
+				{
+					document.getElementById("form_reindex").style.backgroundColor = "#BBFFAA";
+				}
+				else
+				{
+					document.getElementById("form_reindex").style.backgroundColor = "#FFBBAA";
+				}
+				document.getElementById("form_reindex").innerHTML = response.data;
+			},
+			error : function(response)
+			{
+				document.getElementById("form_reindex").style.backgroundColor = "#FFBBAA";
+				document.getElementById("form_reindex").innerHTML = response;
+			}
+		});
+	})
+
+}
+</script>
+
+<table class="tableauAff">
+	<tr>
+		<th width=200>Test</th>
+		<th width=150>Action</th>
+		<th width=500>Résultat</th>
+	</tr>
+	<tr>
+		<td>Mise à jour</td>
+		<td><input type="submit" value="Mettre à jour" OnClick="Update();"></td>
+		<td><div id="form_update"style="padding:4px;"></div>
+	</tr>
+	<tr>
+		<td>Suppression des Index</td>
+		<td><input type="submit" value="Re-Index" OnClick="ReIndex();"></td>
+		<td><div id="form_reindex"style="padding:4px;"></div>
+	</tr>
+</table>
+<!-- END: corps -->

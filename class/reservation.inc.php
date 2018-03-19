@@ -78,14 +78,17 @@ class resa_class{
 		$this->destination=$res["destination"];
 		$this->nbpersonne=$res["nbpersonne"];
 		$this->invite=$res["invite"];
-		$this->potentiel=$res["potentiel"];
-		$this->potentielh=floor($res["potentiel"]/60);
-		$this->potentielm=$res["potentiel"]-$this->potentielh*60;
 		$this->accept=$res["accept"];
-		$this->carburant=$res["carburant"];
+		$this->carbavant=$res["carbavant"];
+		$this->carbapres=$res["carbapres"];
 		$this->prixcarbu=$res["prixcarbu"];
 		$this->uid_maj=$res["uid_maj"];
 		$this->dte_maj=$res["dte_maj"];
+
+		
+		$this->potentiel=$res["potentiel"];
+		$this->potentielh=floor($this->potentiel/60);
+		$this->potentielm=$this->potentiel-$this->potentielh*60;
 
 		if ($this->horadeb==0)
 		  {
@@ -137,19 +140,66 @@ class resa_class{
 		return "<a href='reservations.php?rub=reservation&id=".$this->id."'>".$dte."</a>";
 	}
 
-	function AffPotentiel()
+	function AffPotentiel($affvol="deb")
 	{ global $MyOpt;
 		$sql=$this->sql;
 
-		$query="SELECT dte_fin,potentiel AS tot FROM ".$this->tbl."_calendrier WHERE potentiel>0 AND dte_fin<='".$this->dte_deb."' AND uid_avion='".$this->uid_ressource."' ORDER BY dte_fin DESC LIMIT 0,1";
+		$query="SELECT alertpotentiel,maxpotentiel FROM ".$this->tbl."_ressources WHERE id='".$this->uid_ressource."'";
+		$res=$sql->QueryRow($query);
+
+		$t=$this->Potentiel($affvol);
+		if (floor($t/60)>$res["maxpotentiel"])
+		{
+			$ret="<font color=red>".AffTemps($t)."</font>";
+		}
+		else if (floor($t/60)>$res["alertpotentiel"])
+		{
+			$ret="<font color=orange>".AffTemps($t)."</font>";
+		}
+		else
+		{
+			$ret=AffTemps($t);
+		}
+		return $ret;
+	}
+
+	function Potentiel($affvol="deb")
+	{ global $MyOpt;
+		$sql=$this->sql;
+		if (($affvol!="prev") && ($this->potentiel>0))
+		{
+			return $this->potentiel;
+		}
+
+		$query="SELECT dte_fin,potentiel AS tot FROM ".$this->tbl."_calendrier WHERE potentiel>0 AND ".(($affvol=="fin") ? "dte_deb" : "dte_fin")."<='".$this->dte_deb."' AND uid_avion='".$this->uid_ressource."' ORDER BY dte_fin DESC LIMIT 0,1";
 		$respot=$sql->QueryRow($query);
 
 		$query="SELECT SUM(tpsreel) AS tot FROM ".$this->tbl."_calendrier WHERE dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".$this->dte_deb."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$this->uid_ressource."'";
 		$resreel=$sql->QueryRow($query);
 
 		$t=$respot["tot"]+$resreel["tot"];
-		return AffTemps($t);
-		// return $t;
+
+		if ($affvol=="prev")
+		{
+			$query="SELECT dte_fin FROM ".$this->tbl."_calendrier WHERE tpsreel<>0 AND dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".$this->dte_deb."' AND uid_avion='".$this->uid_ressource."' ORDER BY dte_fin DESC LIMIT 0,1";
+			$reslast=$sql->QueryRow($query);
+			if ($reslast["dte_fin"]=="")
+			  {
+				$reslast=array();
+				$reslast["dte_fin"]=$respot["dte_fin"];
+			  }
+
+			$query="SELECT SUM(tpsestime) AS tot FROM ".$this->tbl."_calendrier WHERE dte_deb>='".$reslast["dte_fin"]."' AND dte_fin<='".$this->dte_deb."' AND tpsreel=0 AND actif='oui' AND uid_avion='".$this->uid_ressource."'";
+			$resestim=$sql->QueryRow($query);
+
+			$t=$t+$resestim["tot"];
+		}
+
+		if (($affvol=="fin") && ($this->tpsreel>0))
+		{
+			$t=$t+$this->tpsreel;
+		}		
+		return $t;
 	}
 	
 	function Save($ValidResa=false)
@@ -224,10 +274,14 @@ class resa_class{
 	  	  { $this->potentielm=0; }
 
 
-  		if (!is_numeric($this->carburant))
-	  	  { $this->carburant=0; }
+  		if (!is_numeric($this->carbavant))
+	  	  { $this->carbavant=0; }
 		else
-	  	  { $this->carburant=round($this->carburant,1); }
+	  	  { $this->carbavant=round($this->carbavant,1); }
+  		if (!is_numeric($this->carbapres))
+	  	  { $this->carbapres=0; }
+		else
+	  	  { $this->carbapres=round($this->carbapres,1); }
 
   		if (!is_numeric($this->prixcarbu))
 	  	  { $this->prixcarbu=0; }
@@ -235,7 +289,7 @@ class resa_class{
 	  	  { $this->prixcarbu=round($this->prixcarbu,2); }
 
 
-	  $this->potentiel=$this->potentielh*60+$this->potentielm;
+		$this->potentiel=$this->potentielh*60+$this->potentielm;
 		if (!is_numeric($this->potentiel))
 	  	  { $this->potentiel=0; }
 
@@ -375,7 +429,8 @@ class resa_class{
 		$query.="horadeb='$this->horadeb',";
 		$query.="horafin='$this->horafin',";
 		$query.="potentiel='$this->potentiel',";
-		$query.="carburant='$this->carburant',";
+		$query.="carbavant='$this->carbavant',";
+		$query.="carbapres='$this->carbapres',";
 		$query.="prixcarbu='$this->prixcarbu',";
 		$query.="uid_maj=$uid, dte_maj='".now()."' ";
 		$query.="WHERE id=$this->id";

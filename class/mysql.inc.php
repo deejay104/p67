@@ -6,6 +6,7 @@ class mysql_class{
 		$this->user=$user;
 		$this->host=$host;
 		$this->db=$db;
+		$this->show=true;
 
 		//$this->class = new mysqli($this->host,$this->user,$pass,$this->db,$port);
 
@@ -36,9 +37,8 @@ class mysql_class{
 
 	# Update elements in database
 	function Update($query){
-		$this->mysql_ErrorMsg="";
 		$this->result=mysqli_query($this->id,$query) or
-			$this->mysql_ErrorMsg("Unable to perform update: $query");
+			$this->mysql_ErrorMsg("Unable to perform update: $query",$this->show);
 		return $this->a_rows=@mysqli_affected_rows($this->id);
 
 	}
@@ -46,7 +46,7 @@ class mysql_class{
 	# Insert row into a table
 	function Insert($query){
 		$this->result=@mysqli_query($this->id,$query) or
-			$this->mysql_ErrorMsg("Unable to perform insert: $query");
+			$this->mysql_ErrorMsg("Unable to perform insert: $query",$this->show);
 		$this->a_rows=@mysqli_affected_rows($this->id);
 		return @mysqli_insert_id($this->id);
 	}
@@ -61,7 +61,7 @@ class mysql_class{
 	# Multiple row return query - Use GetRow function to loop through
 	function Query($query){
 		$this->result=@mysqli_query($this->id,$query) or
-			$this->mysql_ErrorMsg("Unable to perform query: $query");
+			$this->mysql_ErrorMsg("Unable to perform query: $query",$this->show);
 		$this->query=$query;
 		$this->rows=@mysqli_num_rows($this->result);
 	}
@@ -72,20 +72,20 @@ class mysql_class{
 		@mysqli_data_seek($this->result,$row) or
 			$this->mysql_ErrorMsg("Unable to seek data row: $row for this query $this->query");
 		$this->data=@mysqli_fetch_array($this->result) or
-			$this->mysql_ErrorMsg("Unable to fetch row: $row");
+			$this->mysql_ErrorMsg("Unable to fetch row: $row",$this->show);
 	}
 	
 	# Single row return query
 	function QueryRow($query)
 	{
 		$this->result=@mysqli_query($this->id,$query) or
-			$this->mysql_ErrorMsg("Unable to perform query row: $query");
+			$this->mysql_ErrorMsg("Unable to perform query row: $query",$this->show);
 		$this->rows=@mysqli_num_rows($this->result);
 
 		if ($this->rows)
 		{
 			$this->data=@mysqli_fetch_array($this->result) or
-				$this->mysql_ErrorMsg("Unable to fetch data from query row: $query");
+				$this->mysql_ErrorMsg("Unable to fetch data from query row: $query",$this->show);
 			$this->numfields=mysqli_num_fields($this->result);
 			return($this->data);
 		} else {
@@ -117,7 +117,7 @@ class mysql_class{
 
 
 	# MySQL error message function
-	function mysql_ErrorMsg($msg){
+	function mysql_ErrorMsg($msg,$show=true){
 		global $resume;
 		# Get out of html constraints so we can see the message
 		$text="</ul></ul></ul></dl></dl></dl></ol></ol></ol>\n";
@@ -126,12 +126,19 @@ class mysql_class{
 		# Display the error message
 		$text ="<font color=\"#ff0000\">Error: $msg :";
 		$text .= "</font><BR>\n";
-		echo "$text";
+		if ($show)
+		{
+			echo "$text";
 	
-		if ($resume==false)
-		  {
-		  	exit;
-		  }
+			if ($resume==false)
+			{
+				exit;
+			}
+		}
+		else
+		{
+			return "NOK";
+		}
 	}
 
 
