@@ -62,9 +62,9 @@ function AjoutLog($txt)
 		// echo $nb." variables ajoutées<br>";
 		$ret["data"].=AjoutLog($nb." variables ajoutées");
 
-		$ret=GenereVariables($MyOptTab);
+		$res=GenereVariables($MyOptTab);
 		$MyOpt=UpdateVariables($MyOptTab);
-		$ret["data"].=AjoutLog($ret);
+		$ret["data"].=AjoutLog($res);
 	}
 	
 	

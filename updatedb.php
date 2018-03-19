@@ -34,7 +34,7 @@
 	require ("class/mysql.inc.php");
 
 // ---- Charge les variables
-	require ("version.txt");
+	require ("version.php");
 	if (file_exists("config/variables.inc.php"))
 	{
 		require ("config/config.inc.php");
@@ -50,7 +50,7 @@
 		require ("config/variables.inc.php");
 	}
 
-	require ("modules/admin/variables.tmpl.php");
+	require ("modules/admin/conf/variables.tmpl.php");
 	require ("modules/fonctions.inc.php");
 
 	echo "Version des programmes : $myrev<br />";
