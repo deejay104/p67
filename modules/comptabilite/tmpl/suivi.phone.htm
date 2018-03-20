@@ -1,0 +1,65 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+{aff_menu}
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+
+<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="mod" value="comptabilite">
+	<INPUT type="hidden" name="rub" value="suivi">
+
+	<!-- BEGIN: aff_suivi -->
+		<TABLE class="tableauAff" style="line-height:19px;">
+			<TR >
+				<th width=20>&nbsp;</th>
+				<th width=100>Date</th>
+				<th width=250>Mouvement</th>
+				<th width=110 align=right>Montant</th>
+				<th width=10>&nbsp;</th>
+				<th width=80 align=right>Relevé</th>
+			</tr>
+			<TR class="tableauTitre">
+				<th >&nbsp;</th>
+				<th colspan=2 align=right><I>Ancien solde</I>&nbsp;</th>
+				<th align=right><I>{ancien_solde} €</I></th>
+				<th>&nbsp;</th>
+				<th>&nbsp;</th>
+			</TR>
+	
+		<!-- BEGIN: lst_suivi -->
+		  <TR valign=top>
+			<TD width=20>&nbsp;</TD>
+			<TD>{date_suivi}</TD>
+			<TD>{commentaire_suivi}<br />{mouvement_suivi}<BR><I><FONT size=1>{tiers_suivi}</FONT></I><br /></TD>
+			<TD align=right class="tableauBorderLeft">{montant_suivi}</TD>
+			<TD>&nbsp;</TD>
+			<TD align=center><INPUT type="checkbox" name="form_releve[{id_suivi}]" {chk_suivi}></TD>
+		  </TR>
+
+		<!-- END: lst_suivi -->
+		  <TR class="tableauBas">
+				<TD>&nbsp;</TD>
+				<TD colspan=2 align=right><B><I>Solde</I></B>&nbsp;</TD>
+				<TD align=right class="tableauBorderLeft"><B><I>{nouveau_solde}</I></B></TD>
+				<TD>&nbsp;</TD>
+				<TD align=right><B><I>{pointe_solde}</I></B></TD>
+		  </TR>
+		</TABLE>
+		<br />
+		<INPUT type="submit" name="fonc" value="Enregistrer">&nbsp;
+		<INPUT type="submit" name="fonc" value="Annuler">&nbsp;
+		<INPUT type="submit" name="fonc" value="Clore">
+	<!-- END: aff_suivi -->
+
+
+</FORM>
+
+
+
+<!-- END: corps -->

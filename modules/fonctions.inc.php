@@ -138,7 +138,7 @@ function AffInitiales($res)
 
 function AffInfo($txt,$key,$typeaff="html",$cond=true)
   {
-	return "*Fonction AffInfo supprimée*";
+	affInformation("*Fonction AffInfo supprimée*","warning");
   }
 
   
@@ -202,14 +202,14 @@ function MyMail($from,$to,$tabcc,$subject,$message,$headers="",$files="")
 		$txtcc=implode(",",$tabcc);
 	}
 
-	if ($MyOpt["sendmail"]==1) { myPrint("From:".$txtfrom." - To:".$to." - Cc:".$txtcc." - Subject:".$subject); return false; }
+	if ($MyOpt["sendmail"]!="on") { myPrint("From:".$txtfrom." - To:".$to." - Cc:".$txtcc." - Subject:".$subject); return false; }
 
 	require_once 'external/PHPMailer/PHPMailerAutoload.php';
 	
 	//Create a new PHPMailer instance
 	$mail = new PHPMailer;
 
-	if ($MyOpt["mail"]["smtp"]==1)
+	if ($MyOpt["mail"]["smtp"]=="on")
 	{
 		// Set PHPMailer to use SMTP transport
 		$mail->isSMTP();
@@ -290,7 +290,7 @@ function MyMail($from,$to,$tabcc,$subject,$message,$headers="",$files="")
 
 function SendMail($From,$To,$Cc,$Subject,$Text,$Html,$AttmFiles)
 {
-	echo "*Fonction SendMail supprimée*";
+	affInformation("*Fonction SendMail supprimée*","warning");
 }
 
 

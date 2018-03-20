@@ -79,12 +79,12 @@
 
 		<p>
   		<label>Du</label>
-  		<INPUT name="form_dte_deb" id="form_dte_deb" value="{form_dte_debsql}" type="date" style="width:160px;"> 
+  		<INPUT name="form_dte_deb" id="form_dte_deb" value="{form_dte_debsql}" type="date" style="width:180px;"> 
   		à <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" type="time" style="width:80px;"> <FONT color=red>{msg_dtedeb}</FONT>
 		</p>
 		<p>
 			<label>Au</label>
-			<INPUT name="form_dte_fin" id="form_dte_fin" value="{form_dte_finsql}" type="date" style="width:160px;"> 
+			<INPUT name="form_dte_fin" id="form_dte_fin" value="{form_dte_finsql}" type="date" style="width:180px;"> 
 			à <INPUT name="form_hor_fin" id="form_hor_fin" value="{form_hor_fin}" type="time" style="width:80px;"> <FONT color=red>{msg_dtefin}</FONT>
 		</p>
 
@@ -113,16 +113,17 @@
   </div>
 
 	<div class="formulaire">
+		<p>Estimation du temps de vol à la prise en charge : {potentiel}</p>
 
 		{aff_horametre}
 
 		<p>
-			<label for="carburant">Carb Avant</label>
-			<INPUT type="number" id="carburant" name="form_carbavant" value="{form_carbavant}" style="width:90px;"> Litres
+			<label for="form_carbavant">Carb Avant</label>
+			<INPUT type="number" name="form_carbavant" value="{form_carbavant}" style="width:90px;"> Litres
 		</p>
 		<p>
-			<label for="carburant">Carb Apres</label>
-			<INPUT type="number" id="carburant" name="form_carbapres" value="{form_carbapres}" style="width:90px;"> Litres
+			<label for="form_carbapres">Carb Apres</label>
+			<INPUT type="number" name="form_carbapres" value="{form_carbapres}" style="width:90px;"> Litres
 		</p>
 		<p>
 			<label for="prixcarbu">Total</label>

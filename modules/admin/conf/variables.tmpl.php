@@ -42,11 +42,11 @@ $MyOptTmpl["site_logo"]="logo.png";
 $MyOptHelp["site_logo"]="Nom du fichier pour le logo. Il doit se trouver dans le dossier custom.";
 
 // Active l'envoi de mail (0=ok, 1=nok)
-$MyOptTmpl["sendmail"]="1";
-$MyOptHelp["sendmail"]="Active l'envoi de mail (0=ok, 1=nok)";
+$MyOptTmpl["sendmail"]="off";
+$MyOptHelp["sendmail"]="Active l'envoi de mail (on=Activé)";
 
-$MyOptTmpl["mail"]["smtp"]="1";
-$MyOptHelp["mail"]["smtp"]="Envoie des mails par SMTP (0=Sendmail, 1=SMTP)";
+$MyOptTmpl["mail"]["smtp"]="on";
+$MyOptHelp["mail"]["smtp"]="Envoie des mails par SMTP (on=SMTP sinon sendmail)";
 
 $MyOptTmpl["mail"]["host"]="localhost";
 $MyOptHelp["mail"]["host"]="FQDN du serveur SMTP";
@@ -88,9 +88,6 @@ $MyOptHelp["id_PosteManip"]="ID du poste pour facturation manifestation";
 $MyOptTmpl["id_PosteFacture"]=0;
 $MyOptHelp["id_PosteFacture"]="ID du poste pour le crédit des factures";
 
-// Compense le compte CLUB lors du remboursement d'une facture
-$MyOptTmpl["CompenseClub"]=0;
-$MyOptHelp["CompenseClub"]="Compense le compte CLUB lors du remboursement d'une facture (1=on)";
 
 
 // Trie par Nom ou par Prénom
@@ -120,8 +117,8 @@ $MyOptHelp["unitVol"]="Unité des volumes";
 // Texte à accepter pour une réservation
 $MyOptTmpl["TxtValidResa"]="Pilote, il est de votre responsabilité de vérifier que vous respectez bien les conditions d’expérience récente pour voler sur cet avion. Au delà de 3 mois maximum sans voler : un vol avec un instructeur du club est obligatoire.<br />Confirmer que vous avez volé depuis moins de 3 mois sur cet avion ou assimilé.";
 $MyOptHelp["TxtValidResa"]="Texte à afficher si les conditions de vol pour le pilote ne sont pas satisfaites";
-$MyOptTmpl["ChkValidResa"]="oui";
-$MyOptHelp["ChkValidResa"]="Active l'affichage du texte à confirmer";
+$MyOptTmpl["ChkValidResa"]="on";
+$MyOptHelp["ChkValidResa"]="Active l'affichage du texte à confirmer (on=Activé)";
 
 
 // Liste des types de membres
@@ -214,6 +211,10 @@ $MyOptHelp["restrict"]["comptes"]="Restreint l'affichage de la liste des membres
 // Saisir les vols en facturation
 $MyOptTmpl["facturevol"]="";
 $MyOptHelp["facturevol"]="Saisi les vols en facturation (on=Activé)";
+
+// Compense le compte CLUB lors du remboursement d'une facture
+$MyOptTmpl["CompenseClub"]="";
+$MyOptHelp["CompenseClub"]="Compense le compte CLUB lors du remboursement d'une facture (on=Activé)";
 
 
 // Couleurs du calendrier

@@ -69,30 +69,34 @@
 	$tabTitre["total"]["width"]=100;
 	$tabTitre["lastyear"]["aff"]="12 mois";
 	$tabTitre["lastyear"]["width"]=100;
-	$tabTitre["lastflight"]["aff"]="Dernier vol";
-	$tabTitre["lastflight"]["width"]=140;
 
-	// $tabTitre["lic"]["aff"]="Licence";
-	// $tabTitre["lic"]["width"]=100;
-	// $tabTitre["med"]["aff"]="Visite Med.";
-	// $tabTitre["med"]["width"]=100;
-	foreach($tabecheance as $i=>$t)
+	if ($theme!="phone")
 	{
-		$tabTitre["ech".$i]["aff"]=$t;
-		$tabTitre["ech".$i]["width"]=100;
+		$tabTitre["lastflight"]["aff"]="Dernier vol";
+		$tabTitre["lastflight"]["width"]=140;
+
+		// $tabTitre["lic"]["aff"]="Licence";
+		// $tabTitre["lic"]["width"]=100;
+		// $tabTitre["med"]["aff"]="Visite Med.";
+		// $tabTitre["med"]["width"]=100;
+		foreach($tabecheance as $i=>$t)
+		{
+			$tabTitre["ech".$i]["aff"]=$t;
+			$tabTitre["ech".$i]["width"]=100;
+		}
+
+		$lstres=ListeRessources($sql,array("oui"));
+		foreach($lstres as $i=>$id)
+		{ 
+			$tavion[$i]=new ress_class($id, $sql);
+			$txt=substr($tavion[$i]->immatriculation,strlen($tavion[$i]->immatriculation)-2,2);
+
+			$tabTitre["av".$i]["aff"]=$txt;
+			$tabTitre["av".$i]["width"]=30;
+		}
 	}
 
-	$lstres=ListeRessources($sql,array("oui"));
-	foreach($lstres as $i=>$id)
-	{ 
-		$tavion[$i]=new ress_class($id, $sql);
-		$txt=substr($tavion[$i]->immatriculation,strlen($tavion[$i]->immatriculation)-2,2);
-
-		$tabTitre["av".$i]["aff"]=$txt;
-		$tabTitre["av".$i]["width"]=30;
-	}
-
-
+// ---- Liste des membres
 	$lstusr=ListActiveUsers($sql);
 	
 	$tabValeur=array();

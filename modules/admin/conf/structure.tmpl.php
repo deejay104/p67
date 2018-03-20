@@ -79,7 +79,7 @@ $tabTmpl=Array
 		"horafin" => Array("Type" => "varchar(10)", "Default" => "0", ),
 		"idmaint" => Array("Type" => "int(10) unsigned", ),
 		"potentiel" => Array("Type" => "int(10) unsigned", ),
-		"carburant" => Array("Type" => "int(11)", ),
+		"carburant" => Array("Type" => "varchar(8)", ),
 		"carbavant" => Array("Type" => "int(10) unsigned", "Default" => 0),
 		"carbapres" => Array("Type" => "int(10) unsigned", "Default" => 0),
 		"prixcarbu" => Array("Type" => "varchar(8)" ),

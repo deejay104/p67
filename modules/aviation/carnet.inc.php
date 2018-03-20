@@ -49,23 +49,39 @@
 	$tabTitre["dte_deb"]["width"]=100;
 	$tabTitre["nom"]["aff"]="Equipage";
 	$tabTitre["nom"]["width"]=350;
-	$tabTitre["tarif"]["aff"]="Tarif";
-	$tabTitre["tarif"]["width"]=50;
-	$tabTitre["dest"]["aff"]="Lieu";
-	$tabTitre["dest"]["width"]=100;
-	$tabTitre["heure_deb"]["aff"]="Départ";
-	$tabTitre["heure_deb"]["width"]=70;
-	$tabTitre["heure_fin"]["aff"]="Arrivée";
-	$tabTitre["heure_fin"]["width"]=70;
+
+	if ($theme!="phone")
+	{
+		$tabTitre["tarif"]["aff"]="Tarif";
+		$tabTitre["tarif"]["width"]=50;
+		$tabTitre["dest"]["aff"]="Lieu";
+		$tabTitre["dest"]["width"]=100;
+		$tabTitre["heure_deb"]["aff"]="Départ";
+		$tabTitre["heure_deb"]["width"]=70;
+		$tabTitre["heure_fin"]["aff"]="Arrivée";
+		$tabTitre["heure_fin"]["width"]=70;
+	}
 	$tabTitre["heure"]["aff"]="Heures de vol";
 	$tabTitre["heure"]["width"]=100;
-	$tabTitre["carbavant"]["aff"]="Carburant Avant";
-	$tabTitre["carbavant"]["width"]=100;
-	$tabTitre["carbapres"]["aff"]="Carburant Après";
-	$tabTitre["carbapres"]["width"]=100;
-	$tabTitre["potentiel"]["aff"]="Total heures de vol";
-	$tabTitre["potentiel"]["width"]=100;
-
+	if ($theme=="phone")
+	{
+		$tabTitre["carbavant"]["aff"]="Avant";
+		$tabTitre["carbavant"]["width"]=100;
+		$tabTitre["carbapres"]["aff"]="Après";
+		$tabTitre["carbapres"]["width"]=100;
+		$tabTitre["potentiel"]["aff"]="Total";
+		$tabTitre["potentiel"]["width"]=100;
+	}
+	else
+	{
+		$tabTitre["carbavant"]["aff"]="Carburant Avant";
+		$tabTitre["carbavant"]["width"]=100;
+		$tabTitre["carbapres"]["aff"]="Carburant Après";
+		$tabTitre["carbapres"]["width"]=100;
+		$tabTitre["potentiel"]["aff"]="Total heures de vol";
+		$tabTitre["potentiel"]["width"]=100;
+	}
+		
 // ---- Chargement des données
 
 	$lstress=ListeRessources($sql);

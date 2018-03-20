@@ -1,0 +1,58 @@
+<!-- BEGIN: icone -->
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+
+
+<form name="reservation" method="post" action="index.php" enctype="multipart/form-data">
+	<input type="hidden" name="mod" value="aviation" />
+	<input type="hidden" name="rub" value="centrage" />
+	<input type="hidden" name="id" value="{id}" />
+	<input type="hidden" id="maj" name="maj" value="" />
+	<input type="hidden" name="checktime" value="{form_checktime}" />
+
+<div class="formulaireTitre">Sélection des passagers</div>
+
+<div class="formulaire">
+
+	<!-- BEGIN: lst_passager -->
+	<p>
+		<label for="passager{passager_id}">{passager_txt}</label>
+		<span id="passager{passager_id}" style="width: 200px;">
+		<!-- BEGIN: aff_pilote -->
+		<select name="form_passager_pilote[{passager_id}]" OnChange="document.getElementById('maj').value='{passager_id}'; reservation.submit();" style="width:200px;">
+			<option value="0">Aucun</option>
+			<option value="65535" {chk_pax}>PAX</option>
+			<!-- BEGIN: lst_pilote -->
+			<option value="{uid_pilote}" {chk_pilote}>{nom_pilote}</option>
+			<!-- END: lst_pilote -->
+		</select>
+		<!-- END: aff_pilote -->
+		</span>
+		&nbsp;
+		<input type="number" name="form_passager_poids[{passager_id}]" value="{passager_poids}" style="width:60px;" /> {passager_unite}
+	</p>
+	<!-- END: lst_passager -->
+
+	<p>
+		<label for="passager{passager_id}">&nbsp;</label>
+		<span id="passager{passager_id}" style="width: 180px; text-align:right;">
+			Masse Totale :
+		</span>
+		<b>{masse_totale} {masse_max}</b>
+	</p>
+</div>
+
+<div class="formulaireSubmit">
+	<input type="submit" name="fonc" value="Actualiser">
+	<input type="submit" name="fonc" value="Retour">
+</div>
+
+<div class="formulaireTitre">Graphique de centrage et masse</div>
+
+<p style="padding-left:10px;"><img src="api.php?mod=aviation&rub=imgcentrage&id={id}" border="0" width="420"/></p>
+</form>
+<!-- END: corps -->

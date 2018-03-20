@@ -50,7 +50,7 @@
 	$tabTitre["nom"]["width"]=250;
 	$tabTitre["solde"]["aff"]="Solde";
 	$tabTitre["solde"]["width"]=120;
-	if ($MyOpt["module"]["aviation"]=="on")
+	if (($MyOpt["module"]["aviation"]=="on") && ($theme!="phone"))
 	  {
 		$tabTitre["lastflight"]["aff"]="Vols/12mois";
 		$tabTitre["lastflight"]["width"]=80;

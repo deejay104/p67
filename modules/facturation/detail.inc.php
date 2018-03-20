@@ -188,7 +188,7 @@
 		 	  	// $query="INSERT INTO ".$MyOpt["tbl"]."_compte SET uid='".$MyOpt["uid_banque"]."', tiers='$usr', montant='-".$montant."', mouvement='".$res2["description"]."', commentaire='Règlement facture $facid (".$fonc.")', date_valeur='".now()."', facture='NOFAC', rembfact='$facid', uid_creat='$gl_uid', date_creat='".now()."'";
 				// $sql->Insert($query);
 
-				if ($MyOpt["CompenseClub"]==1)
+				if ($MyOpt["CompenseClub"]=="on")
 				  {
 				  	$facusr=new user_class($fac->uid,$sql);
 				  	

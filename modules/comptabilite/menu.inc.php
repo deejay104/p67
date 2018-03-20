@@ -12,7 +12,7 @@
 
 	
 // ---- Affiche les menus
-	if (GetDroit("AccesPageMouvements"))
+	if ((GetDroit("AccesPageMouvements")) && ($theme!="phone"))
 	{
 		$tmpl_menu->parse("infos.mouvement");
 	}
@@ -20,7 +20,7 @@
 	{
 		$tmpl_menu->parse("infos.echeances");
 	}
-	if (GetDroit("AccesPageVols"))
+	if ((GetDroit("AccesPageVols")) && ($theme!="phone"))
 	{
 		$tmpl_menu->parse("infos.vols");
 	}	

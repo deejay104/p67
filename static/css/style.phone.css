@@ -45,7 +45,7 @@ input[type=checkbox]:checked { background: #dddddd; border-color: #000000; }
 input[type=checkbox]:after { content: " "; padding-left: 6px; }
 input[type=checkbox]:checked:after { content: "x"; }
 
-input[type=submit] { -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: 20px; background-color: #eeeeee; color: #013366; width: 170px; height: 40px;	}
+input[type=submit] { -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: 20px; background-color: #eeeeee; border: 1px solid #888888; width: 170px; height: 36px;	}
 
 
 /* **** Haut de page **** */

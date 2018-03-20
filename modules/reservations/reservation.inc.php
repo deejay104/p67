@@ -461,18 +461,18 @@
 	$tmpl_x->assign("form_prixcarbu", $resa["resa"]->prixcarbu);
 
 	// Texte d'acceptation
-	if ($MyOpt["ChkValidResa"]=="oui")
-	  {
-			if ($resa["pilote"]->NombreVols(3,"val",$resa["resa"]->uid_ressource,$ddeb)>0)
-			  {
-					$tmpl_x->parse("corps.aff_reservation.aff_chkreservation_ok");
-		    }
-			  else
-			  {
-					$tmpl_x->assign("TxtValidResa", $MyOpt["TxtValidResa"]);
-					$tmpl_x->parse("corps.aff_reservation.aff_chkreservation");
-		    }
-	  }
+	if ($MyOpt["ChkValidResa"]=="on")
+	{
+		if ($resa["pilote"]->NombreVols(3,"val",$resa["resa"]->uid_ressource,$ddeb)>0)
+		{
+			$tmpl_x->parse("corps.aff_reservation.aff_chkreservation_ok");
+		}
+		else
+		{
+			$tmpl_x->assign("TxtValidResa", $MyOpt["TxtValidResa"]);
+			$tmpl_x->parse("corps.aff_reservation.aff_chkreservation");
+		}
+	}
 
 	if ( ($resa["resa"]->edite!='non') && ($ok_save==0) )
 	{
