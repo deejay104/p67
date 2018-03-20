@@ -12,7 +12,7 @@
 
 function AjoutLog($txt)
 {
-	return htmlentities($txt)."<br />";
+	return htmlentities($txt,ENT_HTML5,"ISO-8859-1")."<br />";
 }	
 
 // ---- Vérification des variables
