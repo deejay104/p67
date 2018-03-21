@@ -240,9 +240,18 @@ function AjoutLog($txt)
 		$num=$p[1];
 		if (!isset($tabPatch[$num]))
 		{
-			$ret["data"].=AjoutLog(" - ".$p[1]);
-			$q="INSERT INTO ".$MyOpt["tbl"]."_config SET param='patch',value='".$num."',dte_creat='".now()."'";
-			$sql->Insert($q);
+			$ok=0;
+			require($dir."/".$d);
+			if ($ok==0)
+			{
+				$ret["data"].=AjoutLog(" - Patch ".$p[1]);
+				$q="INSERT INTO ".$MyOpt["tbl"]."_config SET param='patch',value='".$num."',dte_creat='".now()."'";
+				$sql->Insert($q);
+			}
+			else
+			{
+				$ret["data"].=AjoutLog(" ! Erreur patch ".$p[1]);
+			}
 		}
 	}
 

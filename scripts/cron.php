@@ -1,7 +1,7 @@
 <?php
 /*
-    SoceIt v2.0
-    Copyright (C) 2012 Matthieu Isorez
+    Easy Aero v2.14
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,9 +17,6 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-	($Author: miniroot $)
-	($Date: 2012-07-31 22:04:07 +0200 (mar., 31 juil. 2012) $)
-	($Rev: 388 $)
 */
 
 	set_time_limit(0);
@@ -49,7 +46,7 @@
 	require ("config/variables.inc.php");
 
 // ---- Charge le numéro de version
-	require ("version.txt");
+	require ("version.php");
 
 // ---- Charge les class
 	require ("class/user.inc.php");

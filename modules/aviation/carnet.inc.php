@@ -164,11 +164,11 @@
 		$tabValeur[$i]["heure"]["align"]="center";
 
 		$tabValeur[$i]["carbavant"]["val"]=$resa->carbavant;
-		$tabValeur[$i]["carbavant"]["aff"]=($resa->carbavant>0) ? $resa->carbavant : " ";
+		$tabValeur[$i]["carbavant"]["aff"]=($resa->carbavant>0) ? $resa->carbavant."L" : " ";
 		$tabValeur[$i]["carbavant"]["align"]="center";
 
 		$tabValeur[$i]["carbapres"]["val"]=$resa->carbapres;
-		$tabValeur[$i]["carbapres"]["aff"]=($resa->carbapres>0) ? $resa->carbapres : " ";
+		$tabValeur[$i]["carbapres"]["aff"]=($resa->carbapres>0) ? $resa->carbapres."L" : " ";
 		$tabValeur[$i]["carbapres"]["align"]="center";
 
 		$tabValeur[$i]["potentiel"]["val"]="";
