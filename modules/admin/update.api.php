@@ -266,6 +266,7 @@ function AjoutLog($txt)
 	}
 
 // ---- Mise à jour de la base
+	require("version.php");
 	$query="SELECT value FROM ".$MyOpt["tbl"]."_config WHERE param='version'";
 	$res=$sql->QueryRow($query);
 	$ver=$res["value"];

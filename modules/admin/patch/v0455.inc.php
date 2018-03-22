@@ -1,6 +1,6 @@
 <?
 	
-if (file_exists("config/role.inc.php")
+if (file_exists("config/role.inc.php"))
 {
 	$query="TRUNCATE ".$MyOpt["tbl"]."_roles";
 	$sql->Update($query);
@@ -17,5 +17,5 @@ if (file_exists("config/role.inc.php")
 
 	}
 }
-	
+
 ?>

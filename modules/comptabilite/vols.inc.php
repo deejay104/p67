@@ -294,10 +294,10 @@
 		$tmpl_x->assign("nom_avion_edt",$tab_avions[$idavion]["immatriculation"]);
 
 		// Récupère la plus vieille date de saisie des vols
-		$query = "SELECT dte_deb,horadeb FROM ".$MyOpt["tbl"]."_calendrier WHERE prix>0 AND uid_avion='$idavion' ORDER BY dte_deb DESC LIMIT 0,1";
+		$query = "SELECT dte_deb,horafin FROM ".$MyOpt["tbl"]."_calendrier WHERE prix>0 AND uid_avion='$idavion' ORDER BY dte_deb DESC LIMIT 0,1";
 		$res=$sql->QueryRow($query);
 		$dte=$res["dte_deb"];
-		$horadeb_prec=$res["horadeb"];
+		$horadeb_prec=$res["horafin"];
 
 		// Liste des vols réservés
 		$query = "SELECT id ";
