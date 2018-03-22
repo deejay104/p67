@@ -1,4 +1,4 @@
-# p67
+# Easy Aero (http://www.easy-aero.fr)
 Outil de gestion complet pour les associations.
 Modules disponibles : crèches, aéroclub
 

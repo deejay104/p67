@@ -155,9 +155,6 @@
 				$tmpl_x->assign("chk_pax", "selected");
 			  }
 
-			// $query = "SELECT * FROM p67_utilisateurs WHERE actif='oui' AND virtuel='non' AND type<>'membre' AND type<>'invite' ORDER BY prenom,nom";
-			// $sql->Query($query);
-			// for($i=0; $i<$sql->rows; $i++)
 			$lst=ListActiveUsers($sql,"prenom,nom","!membre,!invite");
 
 			foreach($lst as $i=>$tmpuid)

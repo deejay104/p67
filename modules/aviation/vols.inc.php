@@ -44,11 +44,8 @@
 		if (!isset($id))
 		  { $id=$uid; }
 
-		//$query = "SELECT * FROM p67_utilisateurs WHERE actif='oui' ORDER BY prenom,nom";
-		//$sql->Query($query);
 		$lstusr=ListActiveUsers($sql,"prenom");
 
-//		for($i=0; $i<$sql->rows; $i++)
 		foreach($lstusr as $i=>$tid)
 		{ 
 			$tmpusr=new user_class($tid,$sql);

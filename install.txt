@@ -1,23 +1,37 @@
-SoceIt 2.0 Installation
+Easy Aero 2.14 Installation
 -------------------
 
 1. Prérequis
 
 - Serveur permettant l'execution de PHP
+- php.ini
+default_charset = "ISO-8859-1"
+short_open_tag = On
+upload_max_filesize = 250M
+
 - Serveur MySQL
+- /etc/mysql/mariadb.conf.d/50-server.cnf
+character-set-server  = latin1
+collation-server      = latin1_general_ci
+
+- Creation de la base de données
+CREATE DATABASE demo;
+GRANT ALL PRIVILEGES ON demo.* TO 'demo'@'localhost' IDENTIFIED BY 'xxx';
+
 
 2. Installation
 
 - Décompresser le fichier dans un dossier accessible par le serveur web
-- Donner au compte utilisé pour le serveur web les droits d'écriture aux dossiers documents
-- Executer le script config/structure.sql sur le serveur MySQL
-- Copier le fichier config/config.tmpl.inc.php dans config/config.inc.php
-- Modifier le fichier config/config.inc.php avec les bons paramètres d'accès au serveur MySQL
-- Accéder à la page <url du site>/updatedb.php
-- Accéder via le navigateur web vers le dossier du serveur
-- Vous connecter avec le compte adm et mot de passe admin
 
-3. Update
+- Mise à jour des droits (www-data étant le compte utilisé par le serveur web)
+echo>config/variables.inc.php
+chown www-data:www-data config/variables.inc.php
+chown www-data:www-data documents
+chown www-data:www-data static/cache
 
-- Décompresser le fichier dans un dossier accessible par le serveur web
-- Accéder à la page <url du site>/updatedb.php
+- Création du fichier de connexion à la base de données
+Copie de config/config.tmpl.php dans config/config.inc.php
+Editer les informations du fichier
+
+- Ouvrir l'url du site
+La création des tables se fait automatiquement

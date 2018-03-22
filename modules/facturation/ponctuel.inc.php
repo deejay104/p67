@@ -180,36 +180,6 @@
 					  		  }
 					
 
-/*
-							if ((substr($type,1,1)=="A") || (substr($type,1,1)=="J"))
-							  {
-								// Matin 8h->12h
-								$query ="INSERT p67_presence (uid,dte,dtedeb,dtefin,type,zone,regime,tpspaye,tpsreel,age,handicap) ";
-								$query.="VALUES ('".$usr->uid."','".date("Ym",strtotime($dte))."','$dte 8:00','$dte 12:00','".substr($type,0,1)."A"."','".$usr->zone."','".$usr->data["regime"]."','4','4','".$usr->CalcAge($dte)."','".$usr->data["handicap"]."')";
-								$sql->Insert($query);
-							  }
-							if ((substr($type,1,1)=="P") || (substr($type,1,1)=="J"))
-							  {
-								// Après-midi 14h->16h
-								$query ="INSERT p67_presence (uid,dte,dtedeb,dtefin,type,zone,regime,tpspaye,tpsreel,age,handicap) ";
-								$query.="VALUES ('".$usr->uid."','".date("Ym",strtotime($dte))."','$dte 14:00','$dte 16:00','".substr($type,0,1)."P"."','".$usr->zone."','".$usr->data["regime"]."','2','2','".$usr->CalcAge($dte)."','".$usr->data["handicap"]."')";
-								$sql->Insert($query);
-							  }
-							if (substr($type,1,1)=="M")
-							  {
-								// Midi 12h -> 14h
-								$query ="INSERT p67_presence (uid,dte,dtedeb,dtefin,type,zone,regime,tpspaye,tpsreel,age,handicap) ";
-								$query.="VALUES ('".$usr->uid."','".date("Ym",strtotime($dte))."','$dte 12:00','$dte 14:00','".$type."','".$usr->zone."','".$usr->data["regime"]."','2','2','".$usr->CalcAge($dte)."','".$usr->data["handicap"]."')";
-								$sql->Insert($query);
-							  }
-							if (substr($type,1,1)=="S")
-							  {
-								// Soir 16h -> 18h
-								$query ="INSERT p67_presence (uid,dte,dtedeb,dtefin,type,zone,regime,tpspaye,tpsreel,age,handicap) ";
-								$query.="VALUES ('".$usr->uid."','".date("Ym",strtotime($dte))."','$dte 16:00','$dte 18:00','".$type."','".$usr->zone."','".$usr->data["regime"]."','2','2','".$usr->CalcAge($dte)."','".$usr->data["handicap"]."')";
-								$sql->Insert($query);
-							  }
-*/
 
 							if ($res["j".$todayNum]!="")
 							  {

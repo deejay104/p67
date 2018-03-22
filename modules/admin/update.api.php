@@ -138,7 +138,7 @@ function AjoutLog($txt)
 
 	
 // ---- Compare les structures
-    // [p67_abo_ligne] => Array
+    // [ae_abo_ligne] => Array
         // (
             // [id] => Array
                 // (
