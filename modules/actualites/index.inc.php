@@ -135,7 +135,7 @@
 
 // ---- Prochaine manips
 
-	$query = "SELECT p67_manips.* FROM p67_manips WHERE p67_manips.dte_manip>'".now()."' ORDER BY dte_manip LIMIT 1";
+	$query = "SELECT * FROM ".$MyOpt["tbl"]."_manips WHERE dte_manip>'".now()."' ORDER BY dte_manip LIMIT 1";
 	$res = $sql->QueryRow($query);
 
 	if ($res["id"]>0)

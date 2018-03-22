@@ -92,7 +92,7 @@ class resa_class{
 
 		if ($this->horadeb==0)
 		  {
-				$query = "SELECT horafin FROM p67_calendrier WHERE dte_fin<='".$res["dte_deb"]."' AND uid_avion='".$res["uid_avion"]."' ORDER BY dte_fin DESC LIMIT 0,1";
+				$query = "SELECT horafin FROM ".$this->tbl."_calendrier WHERE dte_fin<='".$res["dte_deb"]."' AND uid_avion='".$res["uid_avion"]."' ORDER BY dte_fin DESC LIMIT 0,1";
 				$res2 = $sql->QueryRow($query);
 				$this->horadeb=$res2["horafin"];
 		  }

@@ -982,6 +982,11 @@ function GenereVariables($tab)
 	if (!file_exists($conffile))
 		{ $ret.="Création du fichier";}
 
+	if (!file_exists($conffile))
+	{
+		$ret.=" - La création du fichier a échouée";
+		return $ret;
+	}
 
 	if(is_writable($conffile))
 	{

@@ -52,11 +52,11 @@
 	$tmpl_x->assign("id", $id);
 
 	// Récupère les informations sur le vol
-	$query = "SELECT * FROM p67_calendrier WHERE id='$id'";
+	$query = "SELECT * FROM ".$MyOpt["tbl"]."_calendrier WHERE id='$id'";
 	$res=$sql->QueryRow($query);
 
 	// Charge les données de l'avion
-	$query = "SELECT * FROM p67_ressources WHERE id='".$res["uid_avion"]."'";
+	$query = "SELECT * FROM ".$MyOpt["tbl"]."_ressources WHERE id='".$res["uid_avion"]."'";
 
 	$resavion=$sql->QueryRow($query);
 	$data=$resavion["centrage"];
@@ -100,7 +100,7 @@
 	  }
 
 	// Récupère la liste des passagers
-	$query = "SELECT * FROM p67_masses WHERE uid_vol='$id'";
+	$query = "SELECT * FROM ".$MyOpt["tbl"]."_masses WHERE uid_vol='$id'";
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
 	  { 
@@ -232,7 +232,7 @@
 	  {
 		if ($v["idenr"]>0)
 		  {
-		  	$query="UPDATE p67_masses SET uid_vol='$id', uid_pilote='".$v["idpilote"]."', uid_place=$k, poids='".$v["poids"]."', uid_modif='$uid', dte_modif='".now()."' WHERE id='".$v["idenr"]."'";
+		  	$query="UPDATE ".$MyOpt["tbl"]."_masses SET uid_vol='$id', uid_pilote='".$v["idpilote"]."', uid_place=$k, poids='".$v["poids"]."', uid_modif='$uid', dte_modif='".now()."' WHERE id='".$v["idenr"]."'";
 			$sql->Update($query);
 		  	//echo $query."<br>\n";
 		  }
@@ -240,7 +240,7 @@
 		  {
 		  	if (!is_numeric($v["idpilote"]))
 		  	  { $v["idpilote"]=0; }
-		  	$query="INSERT INTO p67_masses SET uid_vol='$id', uid_pilote='".$v["idpilote"]."', uid_place='$k', poids='".$v["poids"]."', uid_creat='$uid', dte_creat='".now()."', uid_modif='$uid', dte_modif='".now()."'";
+		  	$query="INSERT INTO ".$MyOpt["tbl"]."_masses SET uid_vol='$id', uid_pilote='".$v["idpilote"]."', uid_place='$k', poids='".$v["poids"]."', uid_creat='$uid', dte_creat='".now()."', uid_modif='$uid', dte_modif='".now()."'";
 			$sql->Insert($query);
 		  	//echo $query."<br>\n";
 		  }

@@ -66,7 +66,7 @@
 
 
 // ---- Vérifie s'il existe des prévisions pour l'année demandée
-	$query="SELECT * FROM p67_prevision WHERE annee='$dte'";
+	$query="SELECT * FROM ".$MyOpt["tbl"]."_prevision WHERE annee='$dte'";
 	$sql->Query($query);
 	if ($sql->rows==0)
 	  {
@@ -81,21 +81,21 @@
 	
 	if ($scale=="yes")
 	  {
-		$query="SELECT MAX(heures) AS heures FROM p67_prevision";
+		$query="SELECT MAX(heures) AS heures FROM ".$MyOpt["tbl"]."_prevision";
 		$res=$sql->QueryRow($query);
 		$mdte1=$res["heures"];
 
-		$query="SELECT YEAR(dte_deb), MONTH(dte_deb),SUM(temps)/60 AS heures FROM p67_calendrier GROUP BY uid_avion, YEAR(dte_deb), MONTH(dte_deb) ORDER BY heures DESC";
+		$query="SELECT YEAR(dte_deb), MONTH(dte_deb),SUM(temps)/60 AS heures FROM ".$MyOpt["tbl"]."_calendrier GROUP BY uid_avion, YEAR(dte_deb), MONTH(dte_deb) ORDER BY heures DESC";
 		$res=$sql->QueryRow($query);
 		$mdte2=floor($res["heures"])+1;
 
 		$maxp=(($mdte1>$mdte2) ? $mdte1 : $mdte2);
 
-		$query="SELECT annee,SUM(heures)*60 AS heures FROM p67_prevision GROUP BY avion, annee ORDER BY heures DESC";
+		$query="SELECT annee,SUM(heures)*60 AS heures FROM ".$MyOpt["tbl"]."_prevision GROUP BY avion, annee ORDER BY heures DESC";
 		$res=$sql->QueryRow($query);
 		$mdte1=$res["heures"];
 
-		$query="SELECT YEAR(dte_deb),SUM(temps) AS heures FROM p67_calendrier GROUP BY uid_avion, YEAR(dte_deb) ORDER BY heures DESC";
+		$query="SELECT YEAR(dte_deb),SUM(temps) AS heures FROM ".$MyOpt["tbl"]."_calendrier GROUP BY uid_avion, YEAR(dte_deb) ORDER BY heures DESC";
 		$res=$sql->QueryRow($query);
 		$mdte2=$res["heures"];
 
@@ -110,7 +110,7 @@
 // ---- Récupère les prévisions
 	$tress=array();
 
-	$query="SELECT * FROM p67_prevision WHERE annee='$dte'";
+	$query="SELECT * FROM ".$MyOpt["tbl"]."_prevision WHERE annee='$dte'";
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
 	  { 
@@ -146,10 +146,10 @@
 
 // ---- Récupère les heures de vols
 
-	$query ="SELECT p67_calendrier.uid_avion AS id, date_format(p67_calendrier.dte_deb,'%c') AS dte2, SUM(p67_calendrier.temps) AS nb ";
-	$query.="FROM p67_calendrier ";
-	$query.="WHERE p67_calendrier.dte_deb>='$dte' AND p67_calendrier.dte_deb<'$dte2' AND p67_calendrier.prix<>0 ";
-	$query.="GROUP BY p67_calendrier.uid_avion, date_format(p67_calendrier.dte_deb,'%Y%m') ORDER BY dte_deb";
+	$query ="SELECT ".$MyOpt["tbl"]."_calendrier.uid_avion AS id, date_format(".$MyOpt["tbl"]."_calendrier.dte_deb,'%c') AS dte2, SUM(".$MyOpt["tbl"]."_calendrier.temps) AS nb ";
+	$query.="FROM ".$MyOpt["tbl"]."_calendrier ";
+	$query.="WHERE ".$MyOpt["tbl"]."_calendrier.dte_deb>='$dte' AND ".$MyOpt["tbl"]."_calendrier.dte_deb<'$dte2' AND ".$MyOpt["tbl"]."_calendrier.prix<>0 ";
+	$query.="GROUP BY ".$MyOpt["tbl"]."_calendrier.uid_avion, date_format(".$MyOpt["tbl"]."_calendrier.dte_deb,'%Y%m') ORDER BY dte_deb";
 	$sql->Query($query);
 
 	$tabval=array();
@@ -384,7 +384,7 @@
 	  }
 // ---- Affiche les années
 
-	$query="SELECT annee FROM p67_prevision GROUP BY annee";
+	$query="SELECT annee FROM ".$MyOpt["tbl"]."_prevision GROUP BY annee";
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
 	  { 

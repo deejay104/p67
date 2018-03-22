@@ -63,7 +63,7 @@
 	  	  	$s=",";
 	  	  }
 
-		$query ="INSERT INTO p67_manips SET ";
+		$query ="INSERT INTO ".$MyOpt["tbl"]."_manips SET ";
 		$query.="titre='".addslashes($form_titre)."', ";
 		$query.="comment='".addslashes($form_comment)."', ";
 		$query.="dte_manip='".date2sql($form_date)."', ";
@@ -87,7 +87,7 @@
 	  	  	$s=",";
 	  	  }
 
-		$query ="UPDATE p67_manips SET titre='".addslashes($form_titre)."', ";
+		$query ="UPDATE ".$MyOpt["tbl"]."_manips SET titre='".addslashes($form_titre)."', ";
 		$query.="comment='".addslashes($form_comment)."', ";
 		$query.="dte_limite='".date2sql($form_date_limite)."', ";
 		$query.="cout='".addslashes($form_cout)."', ";
@@ -101,7 +101,7 @@
 // ---- Facture la manifestation aux participants
 	if (($fonc=="facture") && ($id>0) && GetDroit("FactureManips"))
 	  {
-		$query="SELECT * FROM p67_manips WHERE id='$id'";
+		$query="SELECT * FROM ".$MyOpt["tbl"]."_manips WHERE id='$id'";
 		$res=$sql->QueryRow($query);
 
 		$txt="1=0 ";
@@ -124,8 +124,8 @@
 */
 
 		$query ="SELECT usr.id,usr.nom, usr.prenom, usr.idcpt, participants.participe, participants.nb ";
-		$query.="FROM p67_utilisateurs AS usr ";
-		$query.="LEFT JOIN p67_participants AS participants ON usr.id=participants.idusr AND participants.idmanip=$id ";
+		$query.="FROM ".$MyOpt["tbl"]."_utilisateurs AS usr ";
+		$query.="LEFT JOIN ".$MyOpt["tbl"]."_participants AS participants ON usr.id=participants.idusr AND participants.idmanip=$id ";
 		$query.="WHERE usr.actif='oui' AND usr.virtuel='non' AND participants.participe='Y'";
 	 	$sql->Query($query);
 
@@ -149,27 +149,6 @@
 			$val=$res["cout"]*$v["nb"];
 			$dte=date("Y-m-d");
 
-	  		// $query ="INSERT p67_compte SET ";
-	  		// $query.="uid='".$v["idcpt"]."', ";
-	  		// $query.="tiers='".$MyOpt["uid_club"]."', ";
-	  		// $query.="montant='".(-$val)."', ";
-	  		// $query.="mouvement='Participation manifestation', ";
-	  		// $query.="commentaire='".addslashes($res["titre"])." du ".sql2date($res["dte_manip"])." (".$v["nb"]."x".$res["cout"]."€)', ";
-	  		// $query.="date_valeur='".$dte."', ";
-	  		// $query.="facture='NOFAC', ";
-	  		// $query.="uid_creat=0, date_creat='".now()."'";
-	  		// $sql->Insert($query);
-	
-	  		// $query ="INSERT p67_compte SET ";
-	  		// $query.="uid='".$MyOpt["uid_club"]."', ";
-	  		// $query.="tiers='".$v["idcpt"]."', ";
-	  		// $query.="montant='".$val."', ";
-	  		// $query.="mouvement='Participation manifestation', ";
-	  		// $query.="commentaire='".addslashes($res["titre"])." du ".sql2date($res["dte_manip"])." (".$v["nb"]."x".$res["cout"]."€)', ";
-	  		// $query.="date_valeur='".$dte."', ";
-	  		// $query.="facture='NOFAC', ";
-	  		// $query.="uid_creat=0, date_creat='".now()."'";
-			// $sql->Insert($query);
 			$form_commentaire=addslashes($res["titre"])." du ".sql2date($res["dte_manip"])." (".$v["nb"]."x".$res["cout"]."€)";
 			
 			$mvt = new compte_class(0,$sql);
@@ -207,9 +186,9 @@
 
 	 if (($fonc=="supprimer") && ($id>0))
 	  {
-			$query= "DELETE FROM p67_manips WHERE id='".$id."'";
+			$query= "DELETE FROM ".$MyOpt["tbl"]."_manips WHERE id='".$id."'";
 			$sql->Delete($query);
-			$query= "DELETE FROM p67_participants WHERE idmanip='".$id."'";
+			$query= "DELETE FROM ".$MyOpt["tbl"]."_participants WHERE idmanip='".$id."'";
 			$sql->Delete($query);
 			$_SESSION['tab_checkpost'][$checktime]=$checktime;
 			$id="del";
@@ -218,7 +197,7 @@
 // ---- Charge les infos sur la manip
 	if ((isset($id)) && (is_numeric($id)))
 	  {
-			$query="SELECT * FROM p67_manips WHERE id='$id'";
+			$query="SELECT * FROM ".$MyOpt["tbl"]."_manips WHERE id='$id'";
 			$res=$sql->QueryRow($query);
 	  }
 	else if ($id=="del")
@@ -250,28 +229,28 @@
 
 	if (($fonc=="ok") && ($id>0))
 	  {
-			$query="SELECT * FROM p67_participants WHERE idmanip='$id' AND idusr='$idusr' AND participe='Y'";
+			$query="SELECT * FROM ".$MyOpt["tbl"]."_participants WHERE idmanip='$id' AND idusr='$idusr' AND participe='Y'";
 			$ins=$sql->QueryRow($query);
 	
-			$query="DELETE FROM p67_participants WHERE idmanip='$id' AND idusr='$idusr' AND participe='N'";
+			$query="DELETE FROM ".$MyOpt["tbl"]."_participants WHERE idmanip='$id' AND idusr='$idusr' AND participe='N'";
 			$sql->Delete($query);
 	
 			if ($ins["idusr"]>0)
 			  {
-					$query="UPDATE p67_participants SET nb='".($ins["nb"]+1)."', uid_creat='$uid', dte_creat='".now()."' WHERE idmanip='$id' AND idusr='$idusr' AND participe='Y'";
+					$query="UPDATE ".$MyOpt["tbl"]."_participants SET nb='".($ins["nb"]+1)."', uid_creat='$uid', dte_creat='".now()."' WHERE idmanip='$id' AND idusr='$idusr' AND participe='Y'";
 					$sql->Update($query);
 			  }
 			else
 			  {
-					$query="INSERT INTO p67_participants SET idmanip='$id', idusr='$idusr', participe='Y', nb='1', uid_creat='$uid', dte_creat='".now()."'";
+					$query="INSERT INTO ".$MyOpt["tbl"]."_participants SET idmanip='$id', idusr='$idusr', participe='Y', nb='1', uid_creat='$uid', dte_creat='".now()."'";
 					$sql->Insert($query);
 			  }
 	  }
 	elseif (($fonc=="nok") && ($id>0))
 	  {
-			$query="DELETE FROM p67_participants WHERE idmanip='$id' AND idusr='$idusr'";
+			$query="DELETE FROM ".$MyOpt["tbl"]."_participants WHERE idmanip='$id' AND idusr='$idusr'";
 			$sql->Delete($query);
-			$query="INSERT INTO p67_participants SET idmanip='$id', idusr='$idusr', participe='N', uid_creat='$uid', dte_creat='".now()."'";
+			$query="INSERT INTO ".$MyOpt["tbl"]."_participants SET idmanip='$id', idusr='$idusr', participe='N', uid_creat='$uid', dte_creat='".now()."'";
 			$sql->Insert($query);
 	  }
 
@@ -387,7 +366,7 @@
 
 		$order=(($MyOpt["globalTrie"]=="nom") ? "nom,prenom" : "prenom,nom");
 
-		$query="SELECT usr.id,usr.nom, usr.prenom, participants.participe, participants.nb FROM p67_utilisateurs AS usr LEFT JOIN p67_participants AS participants ON usr.id=participants.idusr AND participants.idmanip=$id WHERE usr.actif='oui' AND usr.virtuel='non' AND ($txt) ORDER BY ".$order;
+		$query="SELECT usr.id,usr.nom, usr.prenom, participants.participe, participants.nb FROM ".$MyOpt["tbl"]."_utilisateurs AS usr LEFT JOIN ".$MyOpt["tbl"]."_participants AS participants ON usr.id=participants.idusr AND participants.idmanip=$id WHERE usr.actif='oui' AND usr.virtuel='non' AND ($txt) ORDER BY ".$order;
 	     	$sql->Query($query);
 
 		$txt_ok="";
@@ -453,7 +432,7 @@
 	  }
 
 // ---- Liste des autres manips
-	$query="SELECT * FROM p67_manips WHERE dte_manip='".$res["dte_manip"]."' ORDER BY id";
+	$query="SELECT * FROM ".$MyOpt["tbl"]."_manips WHERE dte_manip='".$res["dte_manip"]."' ORDER BY id";
         $sql->Query($query);
 
         if ($sql->rows>1)

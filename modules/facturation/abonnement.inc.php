@@ -45,7 +45,7 @@
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
 
 // ---- Récupère la liste des mouvements
-	$query = "SELECT * FROM p67_mouvement ORDER BY ordre,description";
+	$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement ORDER BY ordre,description";
 	$sql->Query($query);
 	$tabPoste=array();
 	for($i=0; $i<$sql->rows; $i++)
@@ -156,10 +156,10 @@
 	if (($fonc=="facturer") && ($id>0))
 	  {
 		$dte=date("Y-m-d");
-		$query ="SELECT usr.prenom, usr.nom, usr.idcpt, abo.id, abo.uid, abo.abonum, abo.jour_num, abo.jour_sem, ligne.mouvid,ligne.montant,mvt.description,mvt.compte FROM p67_abonnement AS abo ";
-		$query.="LEFT JOIN p67_abo_ligne AS ligne ON abo.abonum=ligne.abonum ";
-		$query.="LEFT JOIN p67_mouvement AS mvt ON ligne.mouvid=mvt.id ";
-		$query.="LEFT JOIN p67_utilisateurs AS usr ON abo.uid=usr.id ";
+		$query ="SELECT usr.prenom, usr.nom, usr.idcpt, abo.id, abo.uid, abo.abonum, abo.jour_num, abo.jour_sem, ligne.mouvid,ligne.montant,mvt.description,mvt.compte FROM ".$MyOpt["tbl"]."_abonnement AS abo ";
+		$query.="LEFT JOIN ".$MyOpt["tbl"]."_abo_ligne AS ligne ON abo.abonum=ligne.abonum ";
+		$query.="LEFT JOIN ".$MyOpt["tbl"]."_mouvement AS mvt ON ligne.mouvid=mvt.id ";
+		$query.="LEFT JOIN ".$MyOpt["tbl"]."_utilisateurs AS usr ON abo.uid=usr.id ";
 		$query.="WHERE abo.actif='oui' AND usr.actif='oui' AND abo.dtedeb<='$dte' AND abo.dtefin>='$dte' AND abo.id='$id'";
 		$sql->Query($query);
 
@@ -175,7 +175,7 @@
 			foreach($tabValeur as $i=>$d)
 			  {
 				$val=$d["montant"];
-		  		$query ="INSERT p67_compte SET ";
+		  		$query ="INSERT ".$MyOpt["tbl"]."_compte SET ";
 		  		$query.="uid='".$d["idcpt"]."', ";
 		  		$query.="tiers='".$MyOpt["uid_club"]."', ";
 		  		$query.="montant='".(-$val)."', ";
@@ -187,7 +187,7 @@
 		  		$query.="uid_creat=0, date_creat='".now()."'";
 		  		$sql->Insert($query);
 	
-		  		$query ="INSERT p67_compte SET ";
+		  		$query ="INSERT ".$MyOpt["tbl"]."_compte SET ";
 		  		$query.="uid='".$MyOpt["uid_club"]."', ";
 		  		$query.="tiers='".$d["idcpt"]."', ";
 		  		$query.="montant='".$val."', ";

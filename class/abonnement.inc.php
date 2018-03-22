@@ -27,7 +27,11 @@
 class abonnement_class{
 	# Constructor
 	function __construct($id="",$sql){
+		global $MyOpt;
+
 		$this->sql=$sql;
+		$this->tbl=$MyOpt["tbl"];
+
 		$this->id="";
 		$this->abonum="10000A";
 		$this->uid=0;
@@ -46,7 +50,7 @@ class abonnement_class{
 	function load($id){
 		$this->id=$id;
 		$sql=$this->sql;
-		$query = "SELECT * FROM p67_abonnement WHERE id='$id'";
+		$query = "SELECT * FROM ".$this->tbl."_abonnement WHERE id='$id'";
 		$res = $sql->QueryRow($query);
 
 		// Charge les variables
@@ -95,7 +99,7 @@ class abonnement_class{
 		  }
 		else
 		  {
-			$query ="UPDATE p67_abonnement SET ";
+			$query ="UPDATE ".$this->tbl."_abonnement SET ";
 			$query.="actif='non', ";
 			$query.="uid_maj=$uid, dte_maj='".now()."' ";
 			$query.="WHERE abonum LIKE '".substr($this->abonum,0,6)."%'";
@@ -103,7 +107,7 @@ class abonnement_class{
 			$this->abonum=$this->NewRevision();
 		  }
 
-		$query="INSERT INTO p67_abonnement SET abonum='".$this->abonum."', uid='".$this->uid."', dtedeb='".date2sql($this->dte_deb)."', dtefin='".date2sql($this->dte_fin)."', jour_num='".$this->jour_num."', jour_sem='".$this->jour_sem."', actif='oui', uid_maj=$uid, dte_maj='".now()."'";
+		$query="INSERT INTO ".$this->tbl."_abonnement SET abonum='".$this->abonum."', uid='".$this->uid."', dtedeb='".date2sql($this->dte_deb)."', dtefin='".date2sql($this->dte_fin)."', jour_num='".$this->jour_num."', jour_sem='".$this->jour_sem."', actif='oui', uid_maj=$uid, dte_maj='".now()."'";
 		$this->id=$sql->Insert($query);
 
 		
@@ -111,13 +115,13 @@ class abonnement_class{
 		  { 
 			if ($ligne["mouvid"]>0)
 			  {
-				$query="INSERT INTO p67_abo_ligne SET abonum='".$this->abonum."', uid='".$this->uid."', mouvid='".$ligne["mouvid"]."', montant='".$ligne["montant"]."'";
+				$query="INSERT INTO ".$this->tbl."_abo_ligne SET abonum='".$this->abonum."', uid='".$this->uid."', mouvid='".$ligne["mouvid"]."', montant='".$ligne["montant"]."'";
 				$sql->Insert($query);			
 			  }
 		  }
 
-		$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'abonnement', 'p67_abonnement', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create subscription')";
+		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
+		$query.="VALUES (NULL , 'abonnement', '".$this->tbl."_abonnement', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create subscription')";
 		$sql->Insert($query);
 
 		return $this->id;
@@ -133,7 +137,7 @@ class abonnement_class{
 	function Desactive()
 	  {  global $gl_uid;
 		$sql=$this->sql;
-		$query ="UPDATE p67_abonnement SET ";
+		$query ="UPDATE ".$this->tbl."_abonnement SET ";
 		$query.="actif='non', ";
 		$query.="uid_maj=$gl_uid, dte_maj='".now()."' ";
 		$query.="WHERE abonum = '".$this->abonum."'";
@@ -146,7 +150,7 @@ class abonnement_class{
 
 		if ($this->id=="")
 		  {
-  			$query = "SELECT abonum FROM p67_abonnement ORDER BY abonum DESC LIMIT 0,1";
+  			$query = "SELECT abonum FROM ".$this->tbl."_abonnement ORDER BY abonum DESC LIMIT 0,1";
 			$res = $sql->QueryRow($query);
 			if ($res["abonum"]=="")
 			  { $num="100001A"; }
@@ -155,7 +159,7 @@ class abonnement_class{
 		  }
 		else
 		  {
-			$query = "SELECT abonum FROM p67_abonnement WHERE abonum LIKE '".substr($this->abonum,0,6)."%' ORDER BY abonum DESC LIMIT 0,1";
+			$query = "SELECT abonum FROM ".$this->tbl."_abonnement WHERE abonum LIKE '".substr($this->abonum,0,6)."%' ORDER BY abonum DESC LIMIT 0,1";
 			$res = $sql->QueryRow($query);
 	
 			$rev=chr(ord(substr($res["abonum"],6,1))+1);
@@ -165,7 +169,7 @@ class abonnement_class{
 			  }
 			else
 			  {
-	  			$query = "SELECT abonum FROM p67_abonnement ORDER BY abonum DESC LIMIT 0,1";
+	  			$query = "SELECT abonum FROM ".$this->tbl."_abonnement ORDER BY abonum DESC LIMIT 0,1";
 				$res = $sql->QueryRow($query);
 				$num=(substr($res["abonum"],0,6)+1)."A";
 			  }
@@ -176,18 +180,18 @@ class abonnement_class{
 	function Delete()
 	{ global $uid;
 		$sql=$this->sql;
-		$query="UPDATE p67_abonnement SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE abonum='$this->abonum'";
+		$query="UPDATE ".$this->tbl."_abonnement SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE abonum='$this->abonum'";
 		$sql->Update($query);
 
-		$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'reservation', 'p67_calendrier', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete subscription')";
+		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
+		$query.="VALUES (NULL , 'reservation', '".$this->tbl."_calendrier', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete subscription')";
 		$sql->Insert($query);
 	}
 
 	function LoadLignes()
 	{
 		$sql=$this->sql;
-		$query="SELECT p67_abo_ligne.id AS id, p67_abo_ligne.mouvid AS mouvid,p67_mouvement.description AS description,p67_abo_ligne.montant AS montant FROM p67_abo_ligne LEFT JOIN p67_mouvement ON p67_abo_ligne.mouvid=p67_mouvement.id WHERE abonum='$this->abonum' ORDER BY p67_mouvement.ordre,p67_mouvement.description";
+		$query="SELECT ".$this->tbl."_abo_ligne.id AS id, ".$this->tbl."_abo_ligne.mouvid AS mouvid,".$this->tbl."_mouvement.description AS description,".$this->tbl."_abo_ligne.montant AS montant FROM ".$this->tbl."_abo_ligne LEFT JOIN ".$this->tbl."_mouvement ON ".$this->tbl."_abo_ligne.mouvid=".$this->tbl."_mouvement.id WHERE abonum='$this->abonum' ORDER BY ".$this->tbl."_mouvement.ordre,".$this->tbl."_mouvement.description";
 		$sql->Query($query);
 
 		$res=array();
@@ -223,8 +227,10 @@ class abonnement_class{
 
 
 function ListAbonnement($sql,$uid)
-  {
-	$query="SELECT p67_abonnement.id, p67_abonnement.abonum FROM p67_abonnement WHERE p67_abonnement.actif='oui' ".(($uid>0) ? "AND p67_abonnement.uid='$uid'" : "" )." ORDER BY abonum";
+{
+	global $MyOpt;
+	
+	$query="SELECT id, abonum FROM ".$MyOpt["tbl"]."_abonnement WHERE actif='oui' ".(($uid>0) ? "AND uid='$uid'" : "" )." ORDER BY abonum";
 	$lstabo=array();
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
@@ -238,9 +244,9 @@ function ListAbonnement($sql,$uid)
 
 function TodayAbonnement($sql,$dte,$uid=0)
   {
-	$query ="SELECT abo.id, abo.uid, abo.abonum,ligne.mouvid,ligne.montant, mvt.j0, mvt.j1, mvt.j2, mvt.j3, mvt.j4, mvt.j5, mvt.j6, mvt.j7 FROM p67_abonnement AS abo ";
-	$query.="LEFT JOIN p67_abo_ligne AS ligne ON abo.abonum=ligne.abonum ";
-	$query.="LEFT JOIN p67_mouvement AS mvt ON ligne.mouvid=mvt.id ";
+	$query ="SELECT abo.id, abo.uid, abo.abonum,ligne.mouvid,ligne.montant, mvt.j0, mvt.j1, mvt.j2, mvt.j3, mvt.j4, mvt.j5, mvt.j6, mvt.j7 FROM ".$MyOpt["tbl"]."_abonnement AS abo ";
+	$query.="LEFT JOIN ".$MyOpt["tbl"]."_abo_ligne AS ligne ON abo.abonum=ligne.abonum ";
+	$query.="LEFT JOIN ".$MyOpt["tbl"]."_mouvement AS mvt ON ligne.mouvid=mvt.id ";
 	$query.="WHERE abo.actif='oui' ".(($uid>0) ? "AND abo.uid='$uid'" : "" )." AND abo.dtedeb<='$dte' AND abo.dtefin>='$dte'";
 
 	$lstabo=array();
@@ -258,7 +264,7 @@ function CountAbonnement($sql,$dte)
   { global $MyOpt;
 	$lstabo=array();
   	$todayNum=date("w",strtotime($dte));
-	$query="SELECT id FROM p67_vacances WHERE dtedeb<='$dte' AND dtefin>='$dte'";
+	$query="SELECT id FROM ".$MyOpt["tbl"]."_vacances WHERE dtedeb<='$dte' AND dtefin>='$dte'";
 	$res=$sql->QueryRow($query);
 
 	if (($res["id"]>0) && ($MyOpt["tabPresenceJour"][$todayNum]!=""))
@@ -268,10 +274,10 @@ function CountAbonnement($sql,$dte)
 
   	$lstabo["type"]=$todayNum;
 
-	$query ="SELECT abo.id, abo.uid, abo.abonum,ligne.mouvid,ligne.montant, mvt.j0, mvt.j1, mvt.j2, mvt.j3, mvt.j4, mvt.j5, mvt.j6, mvt.j7 FROM p67_abonnement AS abo ";
-	$query.="LEFT JOIN p67_abo_ligne AS ligne ON abo.abonum=ligne.abonum ";
-	$query.="LEFT JOIN p67_mouvement AS mvt ON ligne.mouvid=mvt.id ";
-	$query.="LEFT JOIN p67_utilisateurs AS usr ON abo.uid=usr.id ";
+	$query ="SELECT abo.id, abo.uid, abo.abonum,ligne.mouvid,ligne.montant, mvt.j0, mvt.j1, mvt.j2, mvt.j3, mvt.j4, mvt.j5, mvt.j6, mvt.j7 FROM ".$this->tbl."_abonnement AS abo ";
+	$query.="LEFT JOIN ".$MyOpt["tbl"]."_abo_ligne AS ligne ON abo.abonum=ligne.abonum ";
+	$query.="LEFT JOIN ".$MyOpt["tbl"]."_mouvement AS mvt ON ligne.mouvid=mvt.id ";
+	$query.="LEFT JOIN ".$MyOpt["tbl"]."_utilisateurs AS usr ON abo.uid=usr.id ";
 	$query.="WHERE abo.actif='oui' AND usr.actif='oui' AND abo.dtedeb<='$dte' AND abo.dtefin>='$dte'";
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)

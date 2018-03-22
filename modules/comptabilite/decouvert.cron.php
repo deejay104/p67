@@ -10,7 +10,7 @@
   	require_once ("class/echeance.inc.php");
 
 // ---- Mail du trésorier
-	$query="SELECT p67_utilisateurs.mail FROM p67_utilisateurs WHERE droits LIKE '%TRE%' AND actif='oui'";
+	$query="SELECT mail FROM ".$MyOpt["tbl"]."_utilisateurs WHERE droits LIKE '%TRE%' AND actif='oui'";
 	$sql->Query($query);
 	
 	$tabTre=array();

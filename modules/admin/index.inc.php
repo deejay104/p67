@@ -29,7 +29,7 @@
 
 <?
 
-	if (GetDroit("AccesConfiguration"))
+	if (GetDroit("AccesConfigVar"))
 	  {
 	  	$affrub="config";
 	  }

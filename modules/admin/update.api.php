@@ -12,7 +12,7 @@
 
 function AjoutLog($txt)
 {
-	return htmlentities($txt,ENT_HTML5,"ISO-8859-1")."<br />";
+	return utf8_encode(htmlentities($txt,ENT_HTML5,"ISO-8859-1"))."<br />";
 }	
 
 // ---- Vérification des variables
@@ -22,6 +22,7 @@ function AjoutLog($txt)
 
 	$nb=0;
 	$MyOptTab=array();
+
 	foreach ($MyOptTmpl as $nom=>$d)
 	{
 		if (is_array($d))
@@ -33,7 +34,7 @@ function AjoutLog($txt)
 					$MyOptTab[$nom][$var]=$dd;
 					$nb=$nb+1;
 					// echo "Ajout : \$MyOpt[\"".$nom."\"][\"".$var."\"]='".$dd."'<br>";
-					$ret["data"].=AjoutLog(" - Ajout : \$MyOpt[\"".$nom."\"][\"".$var."\"]='".$dd."'");
+					$ret["data"].=AjoutLog(" - Ajout : ".$nom.":".$var."='".$dd."'");
 				}
 				else
 				{
@@ -48,7 +49,7 @@ function AjoutLog($txt)
 				$MyOptTab[$nom]["valeur"]=$d;
 				$nb=$nb+1;
 				// echo "Ajout : \$MyOpt[\"".$nom."\"]='".$d."'<br>";
-				$ret["data"].=AjoutLog(" - Ajout : \$MyOpt[\"".$nom."\"]='".$d."'");
+				$ret["data"].=AjoutLog(" - Ajout : ".$nom."='".preg_replace("/\//","-",$d)."'");
 			}
 			else
 			{
@@ -63,10 +64,18 @@ function AjoutLog($txt)
 		$ret["data"].=AjoutLog($nb." variables ajoutées");
 
 		$res=GenereVariables($MyOptTab);
-		$MyOpt=UpdateVariables($MyOptTab);
 		$ret["data"].=AjoutLog($res);
+		$MyOpt=UpdateVariables($MyOptTab);
 	}
-	
+
+	if (!file_exists("config/variables.inc.php"))
+	{
+		error_log("easy-aero cannot variable file");
+		$ret["result"]="NOK";
+		$ret["data"]=AjoutLog("La création du fichier variables a échouée");
+		echo json_encode($ret);
+		exit;
+	}
 	
 // ---- Charge la structure des tables de la version_compare
 	$ret["data"].=AjoutLog("Vérification de la base de données");
@@ -172,7 +181,7 @@ function AjoutLog($txt)
 				// Le champ n'existe pas
 				if (!isset($tabProd[$MyOpt["tbl"]."_".$tab][$field]))
 				{
-					$q="ALTER TABLE `".$MyOpt["tbl"]."_".$tab."` ADD `".$field."` ".$tabTmpl[$tab][$field]["Type"]." DEFAULT '".(isset($tabTmpl[$tab][$field]["Default"]) ? $tabTmpl[$tab][$field]["Default"] : "")."'";
+					$q="ALTER TABLE `".$MyOpt["tbl"]."_".$tab."` ADD `".$field."` ".$tabTmpl[$tab][$field]["Type"]." NOT NULL ".(isset($tabTmpl[$tab][$field]["Default"]) ? "DEFAULT '".$tabTmpl[$tab][$field]["Default"]."'" : "");
 					$res=$sql->Update($q);
 					if ($res==-1)
 					{
@@ -185,9 +194,9 @@ function AjoutLog($txt)
 					}
 				}
 				// Le champ n'a pas le bon type
-				else if ($tabTmpl[$tab][$field]["Type"]!=$tabProd[$MyOpt["tbl"]."_".$tab][$field]["Type"])
+				else if ( ($tabTmpl[$tab][$field]["Type"]!=$tabProd[$MyOpt["tbl"]."_".$tab][$field]["Type"]) && ($tabTmpl[$tab][$field]["Index"]!="PRIMARY") )
 				{
-					$q="ALTER TABLE `".$MyOpt["tbl"]."_".$tab."` MODIFY `".$field."` ".$tabTmpl[$tab][$field]["Type"]." DEFAULT '".(isset($tabTmpl[$tab][$field]["Default"]) ? $tabTmpl[$tab][$field]["Default"] : "")."'";
+					$q="ALTER TABLE `".$MyOpt["tbl"]."_".$tab."` MODIFY `".$field."` ".$tabTmpl[$tab][$field]["Type"]." NOT NULL ".(isset($tabTmpl[$tab][$field]["Default"]) ? "DEFAULT '".$tabTmpl[$tab][$field]["Default"]."'" : "");
 					$res=$sql->Update($q);
 					if ($res==-1)
 					{
@@ -238,6 +247,7 @@ function AjoutLog($txt)
 	{
 		preg_match("/v([0-9]*)\.inc\.php/",$d,$p);
 		$num=$p[1];
+
 		if (!isset($tabPatch[$num]))
 		{
 			$ok=0;
@@ -255,6 +265,22 @@ function AjoutLog($txt)
 		}
 	}
 
+// ---- Mise à jour de la base
+	$query="SELECT value FROM ".$MyOpt["tbl"]."_config WHERE param='version'";
+	$res=$sql->QueryRow($query);
+	$ver=$res["value"];
+
+	if ($ver=="")
+	{
+		$query="INSERT INTO ".$MyOpt["tbl"]."_config SET param='version',value='".$myrev."',dte_creat='".now()."'";
+		$sql->Insert($query);
+	}
+	else
+	{
+		$query="UPDATE ".$MyOpt["tbl"]."_config SET value='".$myrev."',dte_creat='".now()."' WHERE param='version'";
+		$sql->Update($query);
+	}
+	
 // ---- Renvoie le log
 	echo json_encode($ret);
   

@@ -260,31 +260,6 @@
 	$tmpl_x->assign("info_historique",$txtmaj);
 
 	
-
-// **************************************
-//	Calcul du temps de vol
-	/*
-	// Récupère la date de la dernière maintenance
-	$query="SELECT dte_fin,potentiel AS tot FROM p67_calendrier WHERE potentiel>0 AND dte_fin<='".$resa["resa"]->dte_deb."' AND uid_avion='".$resa["resa"]->uid_ressource."' ORDER BY dte_fin DESC LIMIT 0,1";
-	$respot=$sql->QueryRow($query);
-
-	$query="SELECT SUM(tpsreel) AS tot FROM p67_calendrier WHERE dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".$resa["resa"]->dte_deb."' AND tpsreel<>0 AND actif='oui' AND uid_avion='".$resa["resa"]->uid_ressource."'";
-	$resreel=$sql->QueryRow($query);
-
-	$query="SELECT dte_fin FROM p67_calendrier WHERE tpsreel<>0 AND dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".$resa["resa"]->dte_deb."' AND uid_avion='".$resa["resa"]->uid_ressource."' ORDER BY dte_fin DESC LIMIT 0,1";
-	$reslast=$sql->QueryRow($query);
-	if ($reslast["dte_fin"]=="")
-	  {
-	  	$reslast=array();
-	  	$reslast["dte_fin"]=$respot["dte_fin"];
-	  }
-
-	$query="SELECT SUM(tpsestime) AS tot FROM p67_calendrier WHERE dte_deb>='".$reslast["dte_fin"]."' AND dte_fin<='".$resa["resa"]->dte_deb."' AND tpsreel=0 AND actif='oui' AND uid_avion='".$resa["resa"]->uid_ressource."'";
-	$resestim=$sql->QueryRow($query);
-
-	$t=$respot["tot"]+$resestim["tot"]+$resreel["tot"];
-	$tmpl_x->assign("potentiel", AffTemps($t));
-*/
 	$tmpl_x->assign("potentiel", $resa["resa"]->AffPotentiel("prev"));
 
 // **************************************

@@ -34,7 +34,7 @@
 	require_once("modules/$mod/conf/variables.tmpl.php");
 
 // ---- Vérifie le droit d'accès
-	if (!GetDroit("AccesConfiguration")) { FatalError("Accès non autorisé (AccesConfiguration)"); }
+	if (!GetDroit("AccesConfigVar")) { FatalError("Accès non autorisé (AccesConfiguration)"); }
 
 // ---- Affiche le menu
 	$aff_menu="";

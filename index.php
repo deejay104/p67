@@ -85,13 +85,12 @@
 	$lang="fr";
 
 // ---- Charge la config  
-	if (!file_exists("config/config.inc.php"))
-	  { FatalError("Fichier de configuration introuvable","Il manque le fichier de configuration 'config/config.inc.php'."); }
-	if (!file_exists("config/variables.inc.php"))
-	  { FatalError("Fichier des variables introuvable","Il manque le fichier de variables 'config/variables.inc.php'."); }
+	if (file_exists("config/config.inc.php"))
+	  { require ("config/config.inc.php"); }
+	if (file_exists("config/variables.inc.php"))
+	  { require ("config/variables.inc.php"); }
 
-	require ("config/config.inc.php");
-	require ("config/variables.inc.php");
+	
 	require ("modules/fonctions.inc.php");
 
 	if ($MyOpt["timezone"]!="")

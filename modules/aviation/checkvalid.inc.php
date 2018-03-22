@@ -50,7 +50,7 @@ exit;
 		$txt.=myPrint("Script pour mail de rappel.");
 
 // ---- Mail du président
-		$query="SELECT p67_utilisateurs.mail FROM p67_utilisateurs WHERE droits LIKE '%PRE%' AND actif='oui'";
+		$query="SELECT ".$MyOpt["tbl"]."_utilisateurs.mail FROM ".$MyOpt["tbl"]."_utilisateurs WHERE droits LIKE '%PRE%' AND actif='oui'";
 		$sql->Query($query);
 		
 		$tabPre=array();
@@ -65,7 +65,7 @@ exit;
 		$txt.=myPrint("Président : '$mailpre'");
 
 // ---- Mail du trésorier
-		$query="SELECT p67_utilisateurs.mail FROM p67_utilisateurs WHERE droits LIKE '%TRE%' AND actif='oui'";
+		$query="SELECT ".$MyOpt["tbl"]."_utilisateurs.mail FROM ".$MyOpt["tbl"]."_utilisateurs WHERE droits LIKE '%TRE%' AND actif='oui'";
 		$sql->Query($query);
 		
 		$tabTre=array();
@@ -81,7 +81,7 @@ exit;
 
 // ---- Liste les comptes actifs
 
-		$query="SELECT usr.id, usr.nom, usr.prenom, usr.mail, usr.dte_licence, usr.dte_medicale, usr.decouvert, usr.type, SUM(cpt.montant) AS total FROM p67_utilisateurs AS usr, p67_compte AS cpt WHERE usr.id = cpt.uid AND usr.actif<>'non' AND usr.virtuel='non' GROUP BY usr.id";
+		$query="SELECT usr.id, usr.nom, usr.prenom, usr.mail, usr.dte_licence, usr.dte_medicale, usr.decouvert, usr.type, SUM(cpt.montant) AS total FROM ".$MyOpt["tbl"]."_utilisateurs AS usr, ".$MyOpt["tbl"]."_compte AS cpt WHERE usr.id = cpt.uid AND usr.actif<>'non' AND usr.virtuel='non' GROUP BY usr.id";
 		$sql->Query($query);
 		for($i=0; $i<$sql->rows; $i++)
 		  { 

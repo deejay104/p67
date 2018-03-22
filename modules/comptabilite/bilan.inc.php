@@ -52,7 +52,7 @@
 
 // ---- Liste des années
 
-	$query = "SELECT MIN(date_valeur) AS dtedeb FROM p67_compte";
+	$query = "SELECT MIN(date_valeur) AS dtedeb FROM ".$MyOpt["tbl"]."_compte";
 	$res=$sql->QueryRow($query);
 
 	$dte1=date("Y",strtotime($res["dtedeb"]));

@@ -43,13 +43,13 @@
 		  {
 			if ($form_id[$k]>0)
 			  {
-			  	$query="UPDATE p67_conso SET idvol='".$form_vid[$k]."', idavion='$idavion', quantite='".$form_qte[$k]."', prix='".$form_prix[$k]."', tiers='".$form_tiers[$k]."', uid_modif=$uid, dte_modif='".now()."' ";
+			  	$query="UPDATE ".$MyOpt["tbl"]."_conso SET idvol='".$form_vid[$k]."', idavion='$idavion', quantite='".$form_qte[$k]."', prix='".$form_prix[$k]."', tiers='".$form_tiers[$k]."', uid_modif=$uid, dte_modif='".now()."' ";
 			  	$query.="WHERE id='".$form_id[$k]."'";
 				$sql->Update($query);
 			  }
 			else if ($form_qte[$k]>0)
 			  {
-			  	$query="INSERT INTO p67_conso SET idvol='".$form_vid[$k]."', idavion='$idavion', quantite='".$form_qte[$k]."', prix='".$form_prix[$k]."', tiers='".$form_tiers[$k]."', uid_creat=$uid, dte_creat='".now()."', uid_modif=$uid, dte_modif='".now()."' ";
+			  	$query="INSERT INTO ".$MyOpt["tbl"]."_conso SET idvol='".$form_vid[$k]."', idavion='$idavion', quantite='".$form_qte[$k]."', prix='".$form_prix[$k]."', tiers='".$form_tiers[$k]."', uid_creat=$uid, dte_creat='".now()."', uid_modif=$uid, dte_modif='".now()."' ";
 				$sql->Insert($query);
 			  }
 		  }
@@ -57,7 +57,7 @@
 
 
 // ---- Affiche la page demandée
-	$query = "SELECT id,immatriculation FROM p67_avion WHERE actif='oui' ORDER BY immatriculation";
+	$query = "SELECT id,immatriculation FROM ".$MyOpt["tbl"]."_avion WHERE actif='oui' ORDER BY immatriculation";
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
 	  { 
@@ -81,9 +81,9 @@
 	  { $t=current($tab_avions); $idavion=$t["id"]; }
 
 	$dte='2006-04-16';
-	$query = "SELECT p67_calendrier.id AS vid, p67_calendrier.dte_deb AS dte_deb, p67_avion.id AS aid, p67_avion.immatriculation AS immatriculation, pilote.nom AS pnom, pilote.prenom AS pprenom, pilote.id AS puid, instructeur.nom AS inom, instructeur.prenom AS iprenom, instructeur.id AS iuid, conso.quantite AS quantite, conso.prix AS prix, conso.tiers AS tiers, conso.id AS id ";
-	$query.= "FROM p67_calendrier, p67_avion, p67_utilisateurs AS pilote LEFT JOIN p67_utilisateurs AS instructeur ON p67_calendrier.uid_instructeur = instructeur.id  LEFT JOIN p67_conso AS conso ON p67_calendrier.id = conso.idvol ";
-	$query.= "WHERE p67_calendrier.uid_avion = p67_avion.id AND p67_calendrier.uid_pilote = pilote.id AND dte_deb>='$dte' AND dte_deb<'".now()."' AND p67_calendrier.actif='oui' AND p67_calendrier.prix<>0 AND p67_avion.id='$idavion' ORDER BY p67_calendrier.dte_deb";
+	$query = "SELECT ".$MyOpt["tbl"]."_calendrier.id AS vid, ".$MyOpt["tbl"]."_calendrier.dte_deb AS dte_deb, ".$MyOpt["tbl"]."_avion.id AS aid, ".$MyOpt["tbl"]."_avion.immatriculation AS immatriculation, pilote.nom AS pnom, pilote.prenom AS pprenom, pilote.id AS puid, instructeur.nom AS inom, instructeur.prenom AS iprenom, instructeur.id AS iuid, conso.quantite AS quantite, conso.prix AS prix, conso.tiers AS tiers, conso.id AS id ";
+	$query.= "FROM ".$MyOpt["tbl"]."_calendrier, ".$MyOpt["tbl"]."_avion, ".$MyOpt["tbl"]."_utilisateurs AS pilote LEFT JOIN ".$MyOpt["tbl"]."_utilisateurs AS instructeur ON ".$MyOpt["tbl"]."_calendrier.uid_instructeur = instructeur.id  LEFT JOIN ".$MyOpt["tbl"]."_conso AS conso ON ".$MyOpt["tbl"]."_calendrier.id = conso.idvol ";
+	$query.= "WHERE ".$MyOpt["tbl"]."_calendrier.uid_avion = ".$MyOpt["tbl"]."_avion.id AND ".$MyOpt["tbl"]."_calendrier.uid_pilote = pilote.id AND dte_deb>='$dte' AND dte_deb<'".now()."' AND ".$MyOpt["tbl"]."_calendrier.actif='oui' AND ".$MyOpt["tbl"]."_calendrier.prix<>0 AND ".$MyOpt["tbl"]."_avion.id='$idavion' ORDER BY ".$MyOpt["tbl"]."_calendrier.dte_deb";
 	
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)

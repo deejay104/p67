@@ -95,9 +95,6 @@
 	$cptusr=new user_class($id,$sql);
 
 // ---- Affiche le compte demandé
-	//$query = "SELECT p67_utilisateurs.id, p67_utilisateurs.nom, p67_utilisateurs.prenom FROM p67_utilisateurs WHERE p67_utilisateurs.actif='oui' AND p67_utilisateurs.id=$id ORDER BY prenom,nom";
-	//$tabuser[$id]=$sql->QueryRow($query);
-
 	// Nom de l'utilisateur
 	$tmpl_x->assign("nom_compte", $cptusr->Aff("prenom")." ".$cptusr->Aff("nom"));
 
@@ -153,7 +150,7 @@
 	
 	
 	// Calcul le nombre ligne totale
-	$query = "SELECT COUNT(*) AS nb FROM ".$MyOpt["tbl"]."_compte WHERE p67_compte.uid=$id";
+	$query = "SELECT COUNT(*) AS nb FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid=$id";
 	$res=$sql->QueryRow($query);
 	$totligne=$res["nb"];
 

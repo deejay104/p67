@@ -9,7 +9,7 @@ $MyOptHelp=array();
 $MyOptHelp[""]="";
 
 // Prefixe des tables
-$MyOptTmpl["tbl"]="p67";
+$MyOptTmpl["tbl"]="ae";
 $MyOptHelp["tbl"]="Prefixe des tables dans la base de données";
 
 // Site en maintenance
@@ -17,7 +17,7 @@ $MyOptTmpl["maintenance"]="off";
 $MyOptHelp["maintenance"]="Mettre le site en maintenance (on=site en maintenance, off=site accessible)";
 
 // path
-$MyOptTmpl["mydir"]=htmlentities(preg_replace("/updatedb\.php/","",$_SERVER["SCRIPT_FILENAME"]));
+$MyOptTmpl["mydir"]=htmlentities(preg_replace("/[a-z]*\.php/","",$_SERVER["SCRIPT_FILENAME"]));
 $MyOptHelp["mydir"]="Chemin de l'installation. Utilisé pour l'exécution des scripts";
 
 // Timezone
@@ -30,11 +30,11 @@ $MyOptTmpl["devise"]="€";
 $MyOptHelp["devise"]="Devise utilisée";
 
 // URL
-$MyOptTmpl["host"]=htmlentities($_SERVER["REQUEST_SCHEME"]."://".$_SERVER["SERVER_NAME"].preg_replace("/\/index\.php/","",$_SERVER["SCRIPT_NAME"]));
+$MyOptTmpl["host"]=htmlentities($_SERVER["REQUEST_SCHEME"]."://".$_SERVER["SERVER_NAME"].preg_replace("/\/[a-z]*\.php/","",$_SERVER["SCRIPT_NAME"]));
 $MyOptHelp["host"]="Chemin complet du site. Utilisé pour générer les url statiques.";
 
 // Titre du site
-$MyOptTmpl["site_title"]="Polygone 67";
+$MyOptTmpl["site_title"]="Easy Aero";
 $MyOptHelp["site_title"]="Titre du site web";
 
 // Logo du site dans le dossier images
@@ -60,17 +60,18 @@ $MyOptHelp["mail"]["username"]="SMTP username";
 $MyOptTmpl["mail"]["password"]="";
 $MyOptHelp["mail"]["password"]="SMTP user password";
 
+// Uid Système
+$MyOptTmpl["uid_system"]=2;
+$MyOptHelp["uid_system"]="ID du compte système";
+
 // Uid Banque
-$MyOptTmpl["uid_banque"]=2;
+$MyOptTmpl["uid_banque"]=3;
 $MyOptHelp["uid_banque"]="ID du compte Banque";
 
 // Uid Club
-$MyOptTmpl["uid_club"]=3;
+$MyOptTmpl["uid_club"]=4;
 $MyOptHelp["uid_club"]="ID du compte club";
 
-// Uid Banque
-$MyOptTmpl["uid_system"]=4;
-$MyOptHelp["uid_system"]="ID du compte système";
 
 // UID Bapteme
 $MyOptTmpl["uid_bapteme"]=53;

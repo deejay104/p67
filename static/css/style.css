@@ -403,17 +403,16 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 /* **** Login Page **** */
 
 .login {
-		position:fixed;
-    top: 50%;
-    left: 50%;
-    margin-top: -200px; /*set to a negative number 1/2 of your height*/
-    margin-left: -250px; /*set to a negative number 1/2 of your width*/
-
-		width: 500px;
-		height: 330px;
-		border: 1px solid #000000;
-		border-radius: 5px;
-		}
+	position:fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -200px; /*set to a negative number 1/2 of your height*/
+	margin-left: -250px; /*set to a negative number 1/2 of your width*/
+	width: 500px;
+	height: 330px;
+	border: 1px solid #000000;
+	border-radius: 5px;
+}
 
 .loginAuthBox { background-color:#75B7E5; border-radius: 5px 5px 0 0; height: 100px;  }
 .loginAuthLogo { margin-top: -16px; font-weight:400; }

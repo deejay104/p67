@@ -25,8 +25,11 @@
 // Class Maintenance
 class maint_class{
 	# Constructor
-	function __construct($id=0,$sql){
+	function __construct($id=0,$sql)
+	{ global $MyOpt;
 		$this->sql=$sql;
+		$this->tbl=$MyOpt["tbl"];
+		
 		$this->actif="oui";
 		$this->dte_deb=date("Y-m-d");
 		$this->dte_fin=date("Y-m-d");
@@ -56,7 +59,7 @@ class maint_class{
 	function load($id){
 		$this->id=$id;
 		$sql=$this->sql;
-		$query = "SELECT maint.*, atelier.nom, atelier.mail FROM p67_maintenance AS maint LEFT JOIN p67_maintatelier AS atelier ON maint.uid_atelier=atelier.id WHERE maint.id='$id'";
+		$query = "SELECT maint.*, atelier.nom, atelier.mail FROM ".$this->tbl."_maintenance AS maint LEFT JOIN ".$this->tbl."_maintatelier AS atelier ON maint.uid_atelier=atelier.id WHERE maint.id='$id'";
 		$res = $sql->QueryRow($query);
 
 		// Charge les variables
@@ -194,16 +197,16 @@ class maint_class{
 
 		if ($this->id==0)
 		  {
-			$query="INSERT INTO p67_maintenance SET uid_creat=$uid, dte_creat='".now()."'";
+			$query="INSERT INTO ".$this->tbl."_maintenance SET uid_creat=$uid, dte_creat='".now()."'";
 			$this->id=$sql->Insert($query);
 
-			$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-			$query.="VALUES (NULL , 'maintenance', 'p67_maintenance', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create maintenance')";
+			$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
+			$query.="VALUES (NULL , 'maintenance', '".$this->tbl."_maintenance', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create maintenance')";
 			$sql->Insert($query);
 		  }
 
 		// Met à jour les infos
-		$query ="UPDATE p67_maintenance SET ";
+		$query ="UPDATE ".$this->tbl."_maintenance SET ";
 		$query.="uid_ressource='$this->uid_ressource',";
 		$query.="uid_atelier='$this->uid_atelier',";
 		$query.="status='$this->status',";
@@ -215,18 +218,18 @@ class maint_class{
 		$query.="WHERE id=$this->id";
 		$sql->Update($query);
 
-		$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'maintenance', 'p67_maintenance', '".$this->id."', '$uid', '".now()."', 'MOD', 'Modifiy maintenance')";
+		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
+		$query.="VALUES (NULL , 'maintenance', '".$this->tbl."_maintenance', '".$this->id."', '$uid', '".now()."', 'MOD', 'Modifiy maintenance')";
 		$sql->Insert($query);
 
 
 		if (($this->uid_lastresa>0) && ($this->status!='planifie'))
 		  {
 //		  	$this->SetIntervention();
-			$query="UPDATE p67_calendrier SET idmaint='0',potentiel='0' WHERE idmaint='".$this->id."'";
+			$query="UPDATE ".$this->tbl."_calendrier SET idmaint='0',potentiel='0' WHERE idmaint='".$this->id."'";
 			$res=$sql->Update($query);
 
-			$query="UPDATE p67_calendrier SET idmaint='".$this->id."',potentiel='".$this->potentiel."' WHERE id='".$this->uid_lastresa."'";
+			$query="UPDATE ".$this->tbl."_calendrier SET idmaint='".$this->id."',potentiel='".$this->potentiel."' WHERE id='".$this->uid_lastresa."'";
 			$res=$sql->Update($query);
 		  }
 		return "";
@@ -235,14 +238,14 @@ class maint_class{
 	function Delete()
 	{ global $uid;
 		$sql=$this->sql;
-		$query="UPDATE p67_maintenance SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE id='$this->id'";
+		$query="UPDATE ".$this->tbl."_maintenance SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE id='$this->id'";
 		$sql->Update($query);
 
-		$query="UPDATE p67_calendrier SET idmaint=0, uid_maj=$uid, dte_maj='".now()."' WHERE idmaint='$this->id'";
+		$query="UPDATE ".$this->tbl."_calendrier SET idmaint=0, uid_maj=$uid, dte_maj='".now()."' WHERE idmaint='$this->id'";
 		$sql->Update($query);
 
-		$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'maintenance', 'p67_maintenance', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete maintenance')";
+		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
+		$query.="VALUES (NULL , 'maintenance', '".$this->tbl."_maintenance', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete maintenance')";
 		$sql->Insert($query);
 	}
 
@@ -250,20 +253,20 @@ class maint_class{
 	{
 		$sql=$this->sql;
 
-		$query="UPDATE p67_calendrier SET idmaint='0' WHERE idmaint='".$this->id."'";
+		$query="UPDATE ".$this->tbl."_calendrier SET idmaint='0' WHERE idmaint='".$this->id."'";
 		$res=$sql->Update($query);
 
-		$query="SELECT dte_deb FROM p67_maintenance WHERE dte_deb>'".$this->dte_fin."' ORDER BY dte_deb LIMIT 0,1";
+		$query="SELECT dte_deb FROM ".$this->tbl."_maintenance WHERE dte_deb>'".$this->dte_fin."' ORDER BY dte_deb LIMIT 0,1";
 		$res=$sql->QueryRow($query);
 		if (sql2date($res["dte_deb"])!=$res["dte_deb"])
 		  { $lastresa="AND dte_fin<'".$res["dte_deb"]."'"; }
 		else
 		  { $lastresa=""; }
 
-		$query="SELECT dte_fin FROM p67_calendrier WHERE id='".$this->uid_lastresa."'";
+		$query="SELECT dte_fin FROM ".$this->tbl."_calendrier WHERE id='".$this->uid_lastresa."'";
 		$res=$sql->QueryRow($query);
 
-		$query="UPDATE p67_calendrier SET idmaint='".$this->id."' WHERE uid_avion='".$this->uid_ressource."' AND dte_deb>='".$res["dte_fin"]."' ".$lastresa;
+		$query="UPDATE ".$this->tbl."_calendrier SET idmaint='".$this->id."' WHERE uid_avion='".$this->uid_ressource."' AND dte_deb>='".$res["dte_fin"]."' ".$lastresa;
 		$res=$sql->Update($query);
 
 		echo "'$query'";
@@ -274,8 +277,8 @@ class maint_class{
 
 
 function GetActiveMaintenace($sql,$ress,$jour="")
-{
-	$query="SELECT id,status FROM p67_maintenance WHERE (status<>'cloture' OR status<>'supprime') AND actif='oui' AND dte_deb<'$jour 23:59:59' AND dte_fin>='$jour' AND uid_ressource='$ress' ORDER BY dte_deb";
+{ global $MyOpt;
+	$query="SELECT id,status FROM ".$MyOpt["tbl"]."_maintenance WHERE (status<>'cloture' OR status<>'supprime') AND actif='oui' AND dte_deb<'$jour 23:59:59' AND dte_fin>='$jour' AND uid_ressource='$ress' ORDER BY dte_deb";
 	$res=array();
 	$sql->Query($query);
 	$status=0;
@@ -303,8 +306,8 @@ function GetActiveMaintenace($sql,$ress,$jour="")
 }
 
 function GetAllMaintenance($sql,$ress)
-{
-	$query="SELECT id FROM p67_maintenance WHERE actif='oui' ".(($ress>0) ? "AND uid_ressource='$ress'" : "" )." ORDER BY dte_deb DESC";
+{ global $MyOpt;
+	$query="SELECT id FROM ".$MyOpt["tbl"]."_maintenance WHERE actif='oui' ".(($ress>0) ? "AND uid_ressource='$ress'" : "" )." ORDER BY dte_deb DESC";
 	$res=array();
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
@@ -321,8 +324,11 @@ function GetAllMaintenance($sql,$ress)
 // Class Fiche
 class fichemaint_class{
 	# Constructor
-	function __construct($id=0,$sql){
+	function __construct($id=0,$sql)
+	{ global $MyOpt;
 		$this->sql=$sql;
+		$this->tbl=$MyOpt["tbl"];
+
 		$this->id=0;
 		$this->uid_avion=0;
 		$this->uid_valid=0;
@@ -344,7 +350,7 @@ class fichemaint_class{
 	function load($id){
 		$this->id=$id;
 		$sql=$this->sql;
-		$query = "SELECT * FROM p67_maintfiche WHERE id='$id'";
+		$query = "SELECT * FROM ".$this->tbl."_maintfiche WHERE id='$id'";
 		$res = $sql->QueryRow($query);
 
 		// Charge les variables
@@ -366,36 +372,35 @@ class fichemaint_class{
 
 
 	function Save()
-	{ global $uid;
+	{ global $gl_uid;
 		$sql=$this->sql;
 
 		if (!is_numeric($this->uid_avion))
 		  { return "Il faut sélectionner un avion.<br />"; }
-
 		if ($this->id==0)
 		  {
-			$query="INSERT INTO p67_maintfiche SET uid_creat=$uid, dte_creat='".now()."'";
+			$query="INSERT INTO ".$this->tbl."_maintfiche SET uid_creat=".$gl_uid.", dte_creat='".now()."'";
 			$this->id=$sql->Insert($query);
 
-			$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-			$query.="VALUES (NULL , 'maintenance', 'p67_maintfiche', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create maintenance sheet')";
+			$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
+			$query.="VALUES (NULL , 'maintenance', '".$this->tbl."_maintfiche', '".$this->id."', '$gl_uid', '".now()."', 'ADD', 'Create maintenance sheet')";
 			$sql->Insert($query);
 		  }
 
 		// Met à jour les infos
-		$query ="UPDATE p67_maintfiche SET ";
+		$query ="UPDATE ".$this->tbl."_maintfiche SET ";
 		$query.="uid_avion='$this->uid_avion',";
 		$query.="description='".addslashes($this->description)."',";
 		$query.="uid_valid='$this->uid_valid',";
 		$query.="dte_valid='$this->dte_valid',";
 		$query.="traite='$this->traite',";
 		$query.="uid_planif='$this->uid_planif',";
-		$query.="uid_maj=$uid, dte_maj='".now()."' ";
+		$query.="uid_maj=$gl_uid, dte_maj='".now()."' ";
 		$query.="WHERE id=$this->id";
 		$sql->Update($query);
 
-		$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'maintenance', 'p67_maintfiche', '".$this->id."', '$uid', '".now()."', 'MOD', 'Modify maintenance sheet')";
+		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
+		$query.="VALUES (NULL , 'maintenance', '".$this->tbl."_maintfiche', '".$this->id."', '$gl_uid', '".now()."', 'MOD', 'Modify maintenance sheet')";
 		$sql->Insert($query);
 
 		return "";
@@ -404,11 +409,11 @@ class fichemaint_class{
 	function Delete()
 	{ global $uid;
 		$sql=$this->sql;
-		$query="UPDATE p67_maintfiche SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE id='$this->id'";
+		$query="UPDATE ".$this->tbl."_maintfiche SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE id='$this->id'";
 		$sql->Update($query);
 
-		$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'maintenance', 'p67_maintfiche', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete maintenance sheet')";
+		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
+		$query.="VALUES (NULL , 'maintenance', '".$this->tbl."_maintfiche', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete maintenance sheet')";
 		$sql->Insert($query);
 	}
 
@@ -426,8 +431,8 @@ class fichemaint_class{
 
 
 function GetActiveFiche($sql,$ress=0,$maint=0)
-{
-	$query="SELECT id FROM p67_maintfiche WHERE uid_valid>0 AND (traite='non' ".(($maint>0) ? " OR uid_planif='$maint'" : "").") ".(($ress>0) ? " AND uid_avion='$ress'" : "")." ORDER BY dte_creat DESC";
+{ global $MyOpt;
+	$query="SELECT id FROM ".$MyOpt["tbl"]."_maintfiche WHERE uid_valid>0 AND (traite='non' ".(($maint>0) ? " OR uid_planif='$maint'" : "").") ".(($ress>0) ? " AND uid_avion='$ress'" : "")." ORDER BY dte_creat DESC";
 	$lstfiche=array();
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
@@ -440,8 +445,8 @@ function GetActiveFiche($sql,$ress=0,$maint=0)
 }
 
 function GetValideFiche($sql,$ress)
-{
-	$query="SELECT id FROM p67_maintfiche WHERE uid_valid=0 ORDER BY dte_creat DESC";
+{ global $MyOpt;
+	$query="SELECT id FROM ".$MyOpt["tbl"]."_maintfiche WHERE uid_valid=0 ORDER BY dte_creat DESC";
 
 	$lstfiche=array();
 	$sql->Query($query);
@@ -457,8 +462,10 @@ function GetValideFiche($sql,$ress)
 
 class atelier_class{
 	# Constructor
-	function __construct($id=0,$sql){
+	function __construct($id=0,$sql)
+	{ global $MyOpt;
 		$this->sql=$sql;
+		$this->tbl=$MyOpt["tbl"];
 
 		$this->nom="";
 		$this->mail="";
@@ -474,7 +481,7 @@ class atelier_class{
 	function load($id){
 		$this->id=$id;
 		$sql=$this->sql;
-		$query = "SELECT * FROM p67_maintatelier WHERE id='$id'";
+		$query = "SELECT * FROM ".$this->tbl."_maintatelier WHERE id='$id'";
 		$res = $sql->QueryRow($query);
 
 		// Charge les variables
@@ -486,8 +493,8 @@ class atelier_class{
 }
 
 function GetActiveAteliers($sql)
-{
-	$query="SELECT id FROM p67_maintatelier WHERE actif='oui' ORDER BY nom";
+{ global $MyOpt;
+	$query="SELECT id FROM ".$MyOpt["tbl"]."_maintatelier WHERE actif='oui' ORDER BY nom";
 	$res=array();
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)

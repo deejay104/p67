@@ -49,7 +49,7 @@
 		}
 	}
 
-	$query="SELECT uid_avion FROM `p67_calendrier` WHERE uid_avion>0 AND YEAR(dte_deb)='".$dte."' GROUP BY uid_avion ORDER BY uid_avion";
+	$query="SELECT uid_avion FROM `".$MyOpt["tbl"]."_calendrier` WHERE uid_avion>0 AND YEAR(dte_deb)='".$dte."' GROUP BY uid_avion ORDER BY uid_avion";
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
 	{ 

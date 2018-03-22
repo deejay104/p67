@@ -25,8 +25,10 @@
 // Class Manifestation
 class manip_class{
 	# Constructor
-	function __construct($id=0,$sql){
+	function __construct($id=0,$sql)
+	{ global $MyOpt;
 		$this->sql=$sql;
+		$this->tbl=$MyOpt["tbl"];
 		if ($id>0)
 		  {
 			$this->load($id);
@@ -37,7 +39,7 @@ class manip_class{
 	function load($id){
 		$this->id=$id;
 		$sql=$this->sql;
-		$query = "SELECT * FROM p67_manips WHERE id='$id'";
+		$query = "SELECT * FROM ".$this->tbl."_manips WHERE id='$id'";
 		$res = $sql->QueryRow($query);
 
 		// Charge les variables
@@ -77,16 +79,16 @@ class manip_class{
 
 		if ($this->id==0)
 		  {
-			$query="INSERT INTO p67_manips SET uid_creat=$uid, dte_creat='".now()."'";
+			$query="INSERT INTO ".$this->tbl."_manips SET uid_creat=$uid, dte_creat='".now()."'";
 			$this->id=$sql->Insert($query);
 
-			$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-			$query.="VALUES (NULL , 'manifestations', 'p67_manips', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create meeting')";
+			$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
+			$query.="VALUES (NULL , 'manifestations', '".$this->tbl."_manips', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create meeting')";
 			$sql->Insert($query);
 		  }
 
 		// Met à jour les infos
-		$query ="UPDATE p67_manips SET ";
+		$query ="UPDATE ".$this->tbl."_manips SET ";
 		$query.="titre='$this->titre',";
 		$query.="comment='$this->comment',";
 		$query.="dte_manip='$this->dte_manip',";
@@ -94,8 +96,8 @@ class manip_class{
 		$query.="WHERE id=$this->id";
 		$sql->Update($query);
 
-		$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'manifestations', 'p67_manips', '".$this->id."', '$uid', '".now()."', 'MOD', 'Modify meeting')";
+		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
+		$query.="VALUES (NULL , 'manifestations', '".$this->tbl."_manips', '".$this->id."', '$uid', '".now()."', 'MOD', 'Modify meeting')";
 		$sql->Insert($query);
 
 		return "";
@@ -104,11 +106,11 @@ class manip_class{
 	function Delete()
 	{ global $uid;
 		$sql=$this->sql;
-		$query="UPDATE p67_manips SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE id='$this->id'";
+		$query="UPDATE ".$this->tbl."_manips SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE id='$this->id'";
 		$sql->Update($query);
 
-		$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'manifestations', 'p67_manips', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete meeting')";
+		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
+		$query.="VALUES (NULL , 'manifestations', '".$this->tbl."_manips', '".$this->id."', '$uid', '".now()."', 'DEL', 'Delete meeting')";
 		$sql->Insert($query);
 	}
 }
@@ -116,8 +118,8 @@ class manip_class{
 
 
 function GetActiveManips($sql,$ress,$jour="")
-{
-	$query="SELECT id FROM p67_manips WHERE actif='oui' AND dte_manip='$jour'";
+{ global $MyOpt;
+	$query="SELECT id FROM ".$MyOpt["tbl"]."_manips WHERE actif='oui' AND dte_manip='$jour'";
 	$res=array();
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
@@ -135,8 +137,8 @@ function GetActiveManips($sql,$ress,$jour="")
 }
 
 function GetManifestation($sql,$start,$end)
-{
-	$query="SELECT id FROM p67_manips WHERE actif='oui' AND dte_manip>='$start' AND dte_manip<='$end'";
+{ global $MyOpt;
+	$query="SELECT id FROM ".$MyOpt["tbl"]."_manips WHERE actif='oui' AND dte_manip>='$start' AND dte_manip<='$end'";
 	$res=array();
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)

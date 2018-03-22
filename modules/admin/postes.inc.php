@@ -50,7 +50,7 @@
 	  	  {
 	  	  	if ($id>0)
 	  	  	  {
-				$query="UPDATE p67_mouvement SET ordre='".substr(trim($form_ordre[$id]),0,4)."', description='".addslashes(trim($description))."', compte='".$form_compte[$id]."', debiteur='".$form_debiteur[$id]."', crediteur='".$form_crediteur[$id]."', montant='".$form_montant[$id]."', ";
+				$query="UPDATE ".$MyOpt["tbl"]."_mouvement SET ordre='".substr(trim($form_ordre[$id]),0,4)."', description='".addslashes(trim($description))."', compte='".$form_compte[$id]."', debiteur='".$form_debiteur[$id]."', crediteur='".$form_crediteur[$id]."', montant='".$form_montant[$id]."', ";
 				$query.=" j0='".$form_j0[$id]."',";
 				$query.=" j1='".$form_j1[$id]."',";
 				$query.=" j2='".$form_j2[$id]."',";
@@ -62,13 +62,13 @@
 				$query.=" WHERE id='$id'";
 				$sql->Update($query);
 
-				$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-				$query.="VALUES (NULL , 'poste', 'p67_mouvement', '$id', '$uid', '".now()."', 'MOD', 'Update movement')";
+				$query ="INSERT INTO ".$MyOpt["tbl"]."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
+				$query.="VALUES (NULL , 'poste', '".$MyOpt["tbl"]."_mouvement', '$id', '$uid', '".now()."', 'MOD', 'Update movement')";
 				$sql->Insert($query);
 			  }
 			else if (trim($description)!="")
 	  	  	  {
-				$query="INSERT p67_mouvement SET ordre='".substr(trim($form_ordre[$id]),0,4)."', description='". addslashes(trim($description))."', compte='".$form_compte[$id]."', debiteur='".$form_debiteur[$id]."', crediteur='".$form_crediteur[$id]."', montant='".$form_montant[$id]."',";
+				$query="INSERT ".$MyOpt["tbl"]."_mouvement SET ordre='".substr(trim($form_ordre[$id]),0,4)."', description='". addslashes(trim($description))."', compte='".$form_compte[$id]."', debiteur='".$form_debiteur[$id]."', crediteur='".$form_crediteur[$id]."', montant='".$form_montant[$id]."',";
 				$query.=" j0='".$form_j0[$id]."',";
 				$query.=" j1='".$form_j1[$id]."',";
 				$query.=" j2='".$form_j2[$id]."',";
@@ -79,8 +79,8 @@
 				$query.=" j7='".$form_j7[$id]."'";
 				$sql->Insert($query);
 
-				$query ="INSERT INTO p67_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-				$query.="VALUES (NULL , 'poste', 'p67_mouvement', '$id', '$uid', '".now()."', 'ADD', 'Create movement')";
+				$query ="INSERT INTO ".$MyOpt["tbl"]."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
+				$query.="VALUES (NULL , 'poste', '".$MyOpt["tbl"]."_mouvement', '$id', '$uid', '".now()."', 'ADD', 'Create movement')";
 				$sql->Insert($query);
 			  }
 	  	  }
@@ -89,7 +89,7 @@
 // ---- Supprime un poste
 	if ($fonc=="delete")
 	  {
-		$query="UPDATE p67_mouvement SET actif='non' WHERE id='$id'";
+		$query="UPDATE ".$MyOpt["tbl"]."_mouvement SET actif='non' WHERE id='$id'";
 		$sql->Delete($query);
 	  }
 

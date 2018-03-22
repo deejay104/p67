@@ -54,7 +54,7 @@
 	  }
 
 // ---- Récupère la liste des mouvements
-	$query = "SELECT * FROM p67_mouvement ORDER BY ordre,description";
+	$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement ORDER BY ordre,description";
 	$sql->Query($query);
 	$tabPoste=array();
 	for($i=0; $i<$sql->rows; $i++)
@@ -97,7 +97,7 @@
 
 		// Défini le type de jour pour la présence
 		$todayNum=date("w",$dtedeb);
-		$query="SELECT id FROM p67_vacances WHERE dtedeb<='$dte' AND dtefin>='$dte'";
+		$query="SELECT id FROM ".$MyOpt["tbl"]."_vacances WHERE dtedeb<='$dte' AND dtefin>='$dte'";
 		$resvac=$sql->QueryRow($query);
 	
 		if (($resvac["id"]>0) && ($tabPresenceJour[$todayNum]!=""))
@@ -119,7 +119,7 @@
 				  { 
 					if ($ligne>0)
 					{
-						$query = "SELECT * FROM p67_mouvement WHERE id=$ligne";
+						$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE id=$ligne";
 						$res=$sql->QueryRow($query);
 	
 						$type=$todayType.$res["j".$todayNum];
@@ -153,7 +153,7 @@
 
 							if ($f=="")
 							  {
-						  		$query ="INSERT p67_compte SET ";
+						  		$query ="INSERT ".$MyOpt["tbl"]."_compte SET ";
 						  		$query.="uid='".$deb."', ";
 						  		$query.="tiers='".$cre."', ";
 						  		$query.="montant='".(-$res["montant"])."', ";
@@ -165,7 +165,7 @@
 						  		$query.="uid_creat=$uid, date_creat='".now()."'";
 						  		$sql->Insert($query);
 
-						  		$query ="INSERT p67_compte SET ";
+						  		$query ="INSERT ".$MyOpt["tbl"]."_compte SET ";
 						  		$query.="uid='".$cre."', ";
 						  		$query.="tiers='".$deb."', ";
 						  		$query.="montant='".($res["montant"])."', ";
@@ -221,7 +221,7 @@
 									  {
 										$st=$tabPlage[$t]["deb"];
 										$et=$tabPlage[$t]["fin"];
-										$query ="INSERT p67_presence SET uid='".$usr->uid."',dte='".date("Ym",strtotime($dte))."',dtedeb='$dte ".$st.":00',dtefin='$dte ".$et.":00',type='".substr($type,0,1).$t."',zone='".$usr->zone."',regime='".$usr->data["regime"]."',tpspaye='".($et-$st)."',tpsreel='".($et-$st)."',age='".$usr->CalcAge($dte)."',handicap='".$usr->data["handicap"]."'";
+										$query ="INSERT ".$MyOpt["tbl"]."_presence SET uid='".$usr->uid."',dte='".date("Ym",strtotime($dte))."',dtedeb='$dte ".$st.":00',dtefin='$dte ".$et.":00',type='".substr($type,0,1).$t."',zone='".$usr->zone."',regime='".$usr->data["regime"]."',tpspaye='".($et-$st)."',tpsreel='".($et-$st)."',age='".$usr->CalcAge($dte)."',handicap='".$usr->data["handicap"]."'";
 										$sql->Insert($query);
 	
 									  }
@@ -230,7 +230,7 @@
 								  {
 									$st=$tabPlage[substr($type,1,1)]["deb"];
 									$et=$tabPlage[substr($type,1,1)]["fin"];
-									$query ="INSERT p67_presence SET uid='".$usr->uid."',dte='".date("Ym",strtotime($dte))."',dtedeb='$dte ".$st.":00',dtefin='$dte ".$et.":00',type='".$type."',zone='".$usr->zone."',regime='".$usr->data["regime"]."',tpspaye='".($et-$st)."',tpsreel='".($et-$st)."',age='".$usr->CalcAge($dte)."',handicap='".$usr->data["handicap"]."'";
+									$query ="INSERT ".$MyOpt["tbl"]."_presence SET uid='".$usr->uid."',dte='".date("Ym",strtotime($dte))."',dtedeb='$dte ".$st.":00',dtefin='$dte ".$et.":00',type='".$type."',zone='".$usr->zone."',regime='".$usr->data["regime"]."',tpspaye='".($et-$st)."',tpsreel='".($et-$st)."',age='".$usr->CalcAge($dte)."',handicap='".$usr->data["handicap"]."'";
 									$sql->Insert($query);
 								  }
 						  	  }

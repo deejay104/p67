@@ -12,7 +12,7 @@
 
 	
 // ---- Affiche les menus
-	if (GetDroit("AccesConfiguration"))
+	if (GetDroit("AccesConfigVar"))
 	{
 		$tmpl_menu->parse("infos.config");
 	}

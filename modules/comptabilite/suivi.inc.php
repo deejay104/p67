@@ -44,7 +44,7 @@
 	if (($fonc=="Enregistrer") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	  {
 		$tabmaj=array();
-		$query = "SELECT * FROM p67_compte WHERE (pointe='' OR pointe='P') AND uid='".$MyOpt["uid_banque"]."'";
+		$query = "SELECT * FROM ".$MyOpt["tbl"]."_compte WHERE (pointe='' OR pointe='P') AND uid='".$MyOpt["uid_banque"]."'";
 		$sql->Query($query);
 		for($i=0; $i<$sql->rows; $i++)
 		  { 
@@ -60,7 +60,7 @@
 
 		foreach ($tabmaj as $k=>$p)
 		  {
-			$query="UPDATE p67_compte SET pointe='$p' WHERE id='$k'";
+			$query="UPDATE ".$MyOpt["tbl"]."_compte SET pointe='$p' WHERE id='$k'";
 			//echo "$query<BR>";
 			$sql->Update($query);
 		  }
@@ -68,7 +68,7 @@
 	  }
 	else if (($fonc=="Clore") && (!isset($_SESSION['tab_checkpost'][$checktime])))
 	  {
-		$query="UPDATE p67_compte SET pointe='R' WHERE pointe='P' AND uid='".$MyOpt["uid_banque"]."'";
+		$query="UPDATE ".$MyOpt["tbl"]."_compte SET pointe='R' WHERE pointe='P' AND uid='".$MyOpt["uid_banque"]."'";
 		$sql->Update($query);
 	  }
 
@@ -77,12 +77,11 @@
 	if (GetModule("aviation"))
 	  {  	$tmpl_x->parse("corps.vols"); }
 
-	$query = "SELECT SUM(montant) AS nb FROM p67_compte WHERE pointe='R' AND uid='".$MyOpt["uid_banque"]."'";
+	$query = "SELECT SUM(montant) AS nb FROM ".$MyOpt["tbl"]."_compte WHERE pointe='R' AND uid='".$MyOpt["uid_banque"]."'";
 	$res=$sql->QueryRow($query);
 	$tmpl_x->assign("ancien_solde", (is_numeric($res["nb"])) ? -$res["nb"] : "0");
 
-	//$query = "SELECT p67_compte.*,p67_utilisateurs.nom, p67_utilisateurs.prenom FROM p67_compte,p67_utilisateurs WHERE p67_compte.uid=p67_utilisateurs.id AND pointe='' AND uid='".$MyOpt["uid_banque"]."'";
-	$query = "SELECT p67_compte.* FROM p67_compte WHERE (pointe='' OR pointe='P') AND uid='".$MyOpt["uid_banque"]."' ORDER BY date_valeur,mouvement,commentaire";
+	$query = "SELECT ".$MyOpt["tbl"]."_compte.* FROM ".$MyOpt["tbl"]."_compte WHERE (pointe='' OR pointe='P') AND uid='".$MyOpt["uid_banque"]."' ORDER BY date_valeur,mouvement,commentaire";
 	$sql->Query($query);
 	$col=50;
 	$myColor[50]="F0F0F0";
@@ -117,11 +116,11 @@
 		$tmpl_x->parse("corps.aff_suivi.lst_suivi");
 	  }
 
-	$query = "SELECT SUM(montant) AS nb FROM p67_compte WHERE uid='".$MyOpt["uid_banque"]."'";
+	$query = "SELECT SUM(montant) AS nb FROM ".$MyOpt["tbl"]."_compte WHERE uid='".$MyOpt["uid_banque"]."'";
 	$res=$sql->QueryRow($query);
 	$tmpl_x->assign("nouveau_solde", (is_numeric($res["nb"])) ? AffMontant(-$res["nb"]) : "-");
 
-	$query = "SELECT SUM(montant) AS nb FROM p67_compte WHERE (pointe='R' OR pointe='P') AND uid='".$MyOpt["uid_banque"]."'";
+	$query = "SELECT SUM(montant) AS nb FROM ".$MyOpt["tbl"]."_compte WHERE (pointe='R' OR pointe='P') AND uid='".$MyOpt["uid_banque"]."'";
 	$res=$sql->QueryRow($query);
 	$tmpl_x->assign("pointe_solde", (is_numeric($res["nb"])) ? AffMontant(-$res["nb"]) : "-");
 

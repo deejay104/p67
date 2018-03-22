@@ -53,7 +53,7 @@
 // ---- Charge les informations sur le chargement
 	if ($id>0)
 	  {
-		$query="SELECT cal.dte_deb, cal.dte_fin,avion.immatriculation,avion.tolerance,avion.centrage FROM p67_calendrier AS cal LEFT JOIN p67_ressources AS avion ON cal.uid_avion=avion.id WHERE cal.id='$id'";
+		$query="SELECT cal.dte_deb, cal.dte_fin,avion.immatriculation,avion.tolerance,avion.centrage FROM ".$MyOpt["tbl"]."_calendrier AS cal LEFT JOIN ".$MyOpt["tbl"]."_ressources AS avion ON cal.uid_avion=avion.id WHERE cal.id='$id'";
 		$resvol=$sql->QueryRow($query);
 
 		// Décode les données de l'avion
@@ -89,7 +89,7 @@
 		  }
 
 		// Récupère la liste des passagers
-		$query = "SELECT * FROM p67_masses WHERE uid_vol='$id'";
+		$query = "SELECT * FROM ".$MyOpt["tbl"]."_masses WHERE uid_vol='$id'";
 		$sql->Query($query);
 		for($i=0; $i<$sql->rows; $i++)
 		  { 

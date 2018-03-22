@@ -83,17 +83,68 @@
 			<p><label for="login">Utilisateur</label> <input name="username" value="{username}" id="login" maxlength=256></p>
 			<p><label for="pwd">Mot de passe</label> <input name="mypassword" value="" type=password id="pwd" maxlength=256 /></p>
 		</div>
-		<div class="loginSubmit">
+
+		<div id="loginSubmit" class="loginSubmit">
 			<input type="submit" id="fonc" name="fonc" value="Connecter">
 		</div>
 	</div>
 
+<!-- BEGIN: configdb -->
+		<script>
+			document.getElementById("loginSubmit").style.visibility="hidden";
+		</script>
+		<div id='configdb' style='border: 1px solid #000000; margin-top: 70px; padding: 4px; '>
+		Vous devez creer le fichier de connexion à la base de données.
+		</div>
+<!-- END: configdb -->
+<!-- BEGIN: createdb -->
+		<script type="text/javascript" src="external/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="external/jquery/jquery-ui.min.js"></script>
 
-  <div class='footer'>
-		<div class='helplink'>&nbsp;</div>
+		<div id='createdb' style='width: 450px; border: 1px solid #000000; margin-left:10px; margin-top: 60px; margin-bottom:40px; padding: 4px;'>
+		Mise à jour de l'installation...
+		</div>
+		
+		<script>
+			document.getElementById("loginSubmit").style.visibility="hidden";
+
+			$(function() {
+				$.ajax({
+					url:'api.php?mod=admin&rub=update',
+					type: 'html',
+					dataType: 'JSON',
+					success: function(response)
+					{
+
+						if (response.result=="OK")
+						{
+							document.getElementById("createdb").style.backgroundColor = "#BBFFAA";
+							document.getElementById("loginSubmit").style.visibility="visible";
+						}
+						else
+						{
+							document.getElementById("createdb").style.backgroundColor = "#FFBBAA";
+						}
+						document.getElementById("createdb").innerHTML = response.data;
+					},
+					error : function(response)
+					{
+						console.log(response);
+						document.getElementById("createdb").style.backgroundColor = "#FF8877";
+						document.getElementById("createdb").innerHTML = "Erreur";
+					}
+				});
+			})
+
+		</script>
+		
+<!-- END: createdb -->
+
+	
+	<div class='footer'>
 		<div class='lastmod'>Version {version}&nbsp;&nbsp;</div>
-  </div>
-
+	</div>
+  
 </form>
 </body>
 </html>

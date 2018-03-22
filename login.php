@@ -41,8 +41,15 @@
 	require ("class/mysql.inc.php");
 
 // ---- Charge les variables
-	require ("config/config.inc.php");
-	require ("config/variables.inc.php");
+
+	if (file_exists("config/config.inc.php"))
+	{
+		require ("config/config.inc.php");
+	}
+	if (file_exists("config/variables.inc.php"))
+	{
+		require ("config/variables.inc.php");
+	}
 	require ("modules/fonctions.inc.php");
 
 	if ($MyOpt["timezone"]!="")
@@ -79,9 +86,8 @@
 	$ok=0;
 	$errmsg="";
 	
-	if ($fonc == "Connecter")
-//	if ($username!="")
-	  {
+	if (($fonc == "Connecter") && ($mysqluser!="") && ($MyOpt["tbl"]!=""))
+	{
 		if ($password=="") { $password="nok"; }
 		$username=strtolower($username);
 		$username=preg_replace("/[\"'<>\\\;]/i","",$username);
@@ -89,35 +95,35 @@
 		//preg_match("/^([^ ]*) (.*?)$/",$username,$t);
 
 		$sql   = new mysql_class($mysqluser, $mysqlpassword, $hostname, $db,$port);
-		$query = "SELECT id,prenom,nom,mail,password FROM p67_utilisateurs WHERE ((mail='$username' AND mail<>'') OR (initiales='$username' AND initiales<>'')) AND actif='oui' AND virtuel='non'";
+		$query = "SELECT id,prenom,nom,mail,password FROM ".$MyOpt["tbl"]."_utilisateurs WHERE ((mail='$username' AND mail<>'') OR (initiales='$username' AND initiales<>'')) AND actif='oui' AND virtuel='non'";
 
 		$res   = $sql->QueryRow($query);
 
 		if (($res["id"]>0) && (md5($res["password"].md5(session_id()))==$password))
-		  {
+		{
 				$query="INSERT INTO ".$MyOpt["tbl"]."_login (username,dte_maj,header) VALUES ('".addslashes($res["prenom"])." ".addslashes($res["nom"])."','".now()."','".substr(addslashes($_SERVER["HTTP_USER_AGENT"]),0,200)."')";
 				$sql->Insert($query);
 				$_SESSION['uid']=$res["id"];
 
-				$query="UPDATE p67_utilisateurs SET dte_login='".now()."' WHERE id='".$res["id"]."'";
+				$query="UPDATE ".$MyOpt["tbl"]."_utilisateurs SET dte_login='".now()."' WHERE id='".$res["id"]."'";
 				$sql->Update($query);
 
 	
 				echo "<HTML><HEAD><SCRIPT language=\"JavaScript\">function go() { document.location=\"$var\"; }</SCRIPT></HEAD><BODY onload=\"go();\"></BODY></HTML>";
 				exit;
 
-		  }
+		}
 		else
-		  {
+		{
 			$errmsg="Votre mot de passe est incorrect.";
-		  }
-	  }
+		}
+	}
 	else if ($fonc == "logout")
-	  {
+	{
 		$_SESSION['uid']="";
 		echo "<HTML><HEAD><SCRIPT language=\"JavaScript\">function go() { document.location=\"index.php\"; }</SCRIPT></HEAD><BODY onload=\"go();\"></BODY></HTML>";
 		exit;
-	  }
+	}
 
 // ---- Charge les templates
 	$module="modules";
@@ -144,7 +150,31 @@
 	{
 		$tmpl_prg->assign("site_logo", "static/images/logo.png");
 	}
+
+// ---- Test si l'installation est faite
+
+
+	if (($mysqluser=="") || (!file_exists("config/config.inc.php")))
+	{
+		$tmpl_prg->parse("main.configdb");
+	}
+	else
+	{
+		$sql   = new mysql_class($mysqluser, $mysqlpassword, $hostname, $db,$port);
+		$sql->show=false;
+		$query = "SELECT * FROM ".$MyOpt["tbl"]."_config";
+		$res  = $sql->QueryRow($query);
 		
+		if (!is_array($res))
+		{
+			$tmpl_prg->parse("main.createdb");
+		}
+		else
+		{
+			$tmpl_prg->parse("main.submit");
+		}
+	}
+	
 	$tmpl_prg->parse("main");
 	echo $tmpl_prg->text("main");
 

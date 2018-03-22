@@ -1,16 +1,46 @@
 <?
 // ---- Autorisation d'accès
 	session_start();
+	require ("class/mysql.inc.php");
 
-	if ((isset($_SESSION['uid'])) && ($_SESSION['uid']>0))
+	if (file_exists("config/config.inc.php"))
 	{
-		$uid = $_SESSION['uid'];
+		require ("config/config.inc.php"); 
 	}
 	else
 	{
 		header("HTTP/1.0 401 Unauthorized"); exit;
 	}
+	if (file_exists("config/variables.inc.php"))
+	  { require ("config/variables.inc.php"); }
 
+	if ((isset($_SESSION['uid'])) && ($_SESSION['uid']>0))
+	{
+		$uid = $_SESSION['uid'];
+	}
+	else if (($_REQUEST["mod"]=="admin") && ($_REQUEST["rub"]=="update"))
+	{
+ 		$sql = new mysql_class($mysqluser, $mysqlpassword, $hostname, $db,$port);
+		$sql->show=false;
+		$query = "SELECT * FROM ".$MyOpt["tbl"]."_config";
+		$res  = $sql->QueryRow($query);
+		
+		if (!is_array($res))
+		{
+			$uid=0;
+			$token="sys";
+		}
+		else
+		{
+			header("HTTP/1.0 401 Unauthorized"); exit;
+		}
+
+	}
+	else
+	{
+		header("HTTP/1.0 401 Unauthorized"); exit;
+	}
+	
 // ---- Header
   	// HTTP/1.1
 	header("Cache-Control: no-store, no-cache, must-revalidate");
@@ -31,21 +61,21 @@
 	}
 
   	require ("modules/fonctions.inc.php");
-  	require ("config/config.inc.php");
-  	require ("config/variables.inc.php");
 
 	if ($MyOpt["timezone"]!="")
 	  { date_default_timezone_set($MyOpt["timezone"]); }
 
 // ---- Se connecte à  la base MySQL
-	require ("class/mysql.inc.php");
 	$sql = new mysql_class($mysqluser, $mysqlpassword, $hostname, $db,$port);
 
 // ---- Charge les informations de l'utilisateur connecté
 	require ("class/user.inc.php");
-	$myuser = new user_class($uid,$sql,true);
+	if ($uid>0)
+	{
+		$myuser = new user_class($uid,$sql,true);
+		$token=$uid;
+	}
 
-	$token=$uid;
 	$module="modules";
 	$gl_mode="api";
 
