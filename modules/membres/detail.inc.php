@@ -71,9 +71,9 @@
 		if (count($form_info)>0)
 		{
 			foreach($form_info as $k=>$v)
-		  	  {
+		  	{
 		  		$msg_erreur.=$usr->Valid($k,$v);
-		  	  }
+		  	}
 		}
 
 		$usr->Save();
@@ -381,9 +381,14 @@
 			}
 		}
 
-		
-		if (count($usr->data["donnees"])>0)
+
+		if (count($usr->donnees)>0)
 		{
+			foreach($usr->donnees as $i=>$d)
+			{
+				$tmpl_x->assign("form_donnees",$usr->AffDonnees($i,$typeaff));
+				$tmpl_x->parse("corps.aff_donnees.lst_donnees");
+			}
 			$tmpl_x->parse("corps.aff_donnees");
 		}
 	}

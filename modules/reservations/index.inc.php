@@ -39,6 +39,11 @@
 
   
 // ---- Définition des constantes
+	if ((!isset($ress)) || (!is_numeric($ress)))
+	{
+	  	$ress=0;
+	}
+
 	$h=30;
 	$debjour=($MyOpt["debjour"]!="") ? $MyOpt["debjour"] : "6";
 	$finjour=($MyOpt["finjour"]!="") ? $MyOpt["finjour"] : "22";
@@ -61,12 +66,6 @@
 		$tmpl_x->parse("infos.lst_ress");
 		$ii=$ii+1;
 	  }
-
-	if (!is_numeric($ress))
-	{
-	  	// $ress=$tress[1]->id;
-	  	$ress=0;
-	}
 
 
 

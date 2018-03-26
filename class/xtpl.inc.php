@@ -84,6 +84,10 @@ function assign ($name,$val="") {
 */
 
 function parse ($bname) {
+	if (!isset($this->blocks[$bname]))
+	{
+		$this->blocks[$bname]="";
+	}
 	$copy=$this->blocks[$bname];
 	if (!isset($this->blocks[$bname]))
 		$this->set_error ("parse: blockname [$bname] does not exist");
@@ -94,7 +98,7 @@ function parse ($bname) {
 		if ($sub[0]=="_BLOCK_") {
 			unset($sub[0]);
 			$bname2=implode(".",$sub);
-			$var=$this->parsed_blocks[$bname2];
+			$var=(isset($this->parsed_blocks[$bname2])) ? $this->parsed_blocks[$bname2] : "";
 			$nul=(!isset($this->NULL_BLOCK[$bname2])) ? $this->NULL_BLOCK[""] : $this->NULL_BLOCK[$bname2];
 			$var=(empty($var))?$nul:trim($var);
 //			$copy=preg_replace("/\{".$v."\}/",$var,$copy);
@@ -102,13 +106,22 @@ function parse ($bname) {
 		} else {
 			$var=$this->VARS;
 			while(list($k1,$v1)=each($sub))
-			  { $var=$var[$v1]; }
+			{
+				if (!isset($var[$v1]))
+				{ $var[$v1]=""; }
+				$var=$var[$v1];
+			}
 			$nul=(!isset($this->NULL_STRING[$v])) ? ($this->NULL_STRING[""]) : ($this->NULL_STRING[$v]);
 			$var=(!isset($var))?$nul:$var;
 			$copy=str_replace("{".$v."}","$var",$copy);
 //			$copy=preg_replace("/\{$v\}/",$var,$copy);
 		}
-	} 	
+	}
+	if (!isset($this->parsed_blocks[$bname]))
+	{
+		$this->parsed_blocks[$bname]="";
+	}
+
 	$this->parsed_blocks[$bname].=$copy;
 	// reset sub-blocks 
 	if ($this->AUTORESET && (!empty($this->sub_blocks[$bname]))) {
@@ -263,12 +276,19 @@ function maketree($con,$block) {
 			// $res[0][1] = BEGIN or END
 			// $res[0][2] = block name
 			// $res[0][3] = kinda content
-			if ($res[0][1]==$this->block_start_word) {
+			if ($res[0][1]==$this->block_start_word)
+			{
 				$parent_name=implode(".",$block_names);
 				$block_names[++$level]=$res[0][2];							/* add one level - array("main","table","row")*/
 				$cur_block_name=implode(".",$block_names);	/* make block name (main.table.row) */
 				$this->block_parse_order[]=$cur_block_name;	/* build block parsing order (reverse) */
+
+				if (!isset($blocks[$cur_block_name]))
+				{
+					$blocks[$cur_block_name]="";
+				}
 				$blocks[$cur_block_name].=$res[0][3];					/* add contents */
+
 				$blocks[$parent_name].="{_BLOCK_.$cur_block_name}";	/* add {_BLOCK_.blockname} string to parent block */
 				$this->sub_blocks[$parent_name][]=$cur_block_name;		/* store sub block names for autoresetting and recursive parsing */
 				$this->sub_blocks[$cur_block_name][]="";		/* store sub block names for autoresetting */
@@ -279,6 +299,10 @@ function maketree($con,$block) {
   			}
 		} else {
 			 /* no block delimiters found */
+			if (!isset($blocks[implode(".",$block_names)]))
+			{
+				$blocks[implode(".",$block_names)]="";
+			}
 			$blocks[implode(".",$block_names)].=$this->block_start_delim.$v;
 		}
 	}

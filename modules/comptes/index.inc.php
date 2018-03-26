@@ -39,7 +39,8 @@
 	if (!isset($id))
 	  { $id=$myuser->idcpt; }
 
-	if ((GetDroit("ListeComptes")) && ($liste==""))
+	// if ((GetDroit("ListeComptes")) && ($liste==""))
+	if (GetDroit("ListeComptes"))
 	  {
 			$lst=ListActiveUsers($sql,"std",$MyOpt["restrict"]["comptes"],"");
 		
@@ -94,14 +95,22 @@
 
 	$cptusr=new user_class($id,$sql);
 
+
 // ---- Affiche le compte demandé
+	if ((!isset($order)) || ($order==""))
+	{ $order="date_valeur"; }
+
+	if (!isset($trie))
+	{ $trie=""; }
+
+
 	// Nom de l'utilisateur
 	$tmpl_x->assign("nom_compte", $cptusr->Aff("prenom")." ".$cptusr->Aff("nom"));
 
 	// Définition des variables
 	$myColor[50]="F0F0F0";
 	$myColor[60]="F7F7F7";
-	if (!is_numeric($ts))
+	if ((!isset($ts)) || (!is_numeric($ts)))
 	  { $ts = 0; }
 
 	// Entete du tableau d'affichage
@@ -154,9 +163,6 @@
 	$res=$sql->QueryRow($query);
 	$totligne=$res["nb"];
 
-	if ($order=="")
-	{ $order="date_valeur"; }
-
 	// Calcul le solde du compte au début de l'affichage
 	$query = "SELECT SUM(lignes.montant) AS solde FROM (SELECT montant FROM ".$MyOpt["tbl"]."_compte WHERE ".$MyOpt["tbl"]."_compte.uid=$id ORDER BY $order ".((($trie=="i") || ($trie=="")) ? "DESC" : "").", id DESC LIMIT $ts,$totligne) AS lignes";
 	$res=$sql->QueryRow($query);
@@ -182,7 +188,7 @@
 		$tabValeur[$i]["montant"]["align"]="right";
 		$tabValeur[$i]["montant"]["aff"]=AffMontant($sql->data["montant"])."&nbsp;&nbsp;";
 
-		if ($trie=="")
+		if ((!isset($trie)) || ($trie==""))
 		  {
 			$afftotal=round($solde,2);
 			$tabValeur[$i]["solde"]["val"]=(($afftotal==0) ? "0" : $afftotal);
@@ -207,7 +213,7 @@
 	{
 		foreach($tabValeur as $i=>$d)
 		{
-			$tabValeur[$i]["signature"]["val"]=AfficheSignatureCompte($d[lid]["val"]);
+			$tabValeur[$i]["signature"]["val"]=AfficheSignatureCompte($d["lid"]["val"]);
 			$tabValeur[$i]["signature"]["aff"]=($tabValeur[$i]["signature"]["val"]=="ok") ? "<a title='Signature de la transaction confirmée'><img src='static/images/icn16_signed.png' /></a>" : "<a title='Transaction potentiellement altérée'><img src='static/images/icn16_warning.png' /></a>";
 		}
 	}

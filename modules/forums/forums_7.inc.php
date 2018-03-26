@@ -7,8 +7,8 @@
 //		  $critere - Transmet les criteres de recherches s'il y en a
 // ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.0
-    Copyright (C) 2008 Matthieu Isorez
+    Easy-Aero v2.14
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -120,6 +120,10 @@
 
 	$msg=preg_replace("/<\/?SCRIPT[^>]*>/i","",$msg);
 
+	$msg=preg_replace("/((http|https|ftp):\/\/[^ |<]*)/si","<a href='$1' target='_blank'>$1</a>",$msg);
+	$msg=preg_replace("/ (www\.[^ |\/]*)/si","<a href='http://$1' target='_blank'>$1</a>",$msg);
+
+	
 // ---- Mets en relief les critères de recherche
 	$critere = trim($critere);
 	if ($critere!="")

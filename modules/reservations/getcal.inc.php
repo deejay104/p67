@@ -59,7 +59,7 @@
 				}
 			
 				$col="";
-				if (($resa["instructeur"]->type=="instructeur") && ($resa["instructeur"]->uid==$myuser->uid))
+				if (($resa["instructeur"]->data["type"]=="instructeur") && ($resa["instructeur"]->uid==$myuser->uid))
 				{
 					$col=$MyOpt["tabcolresa"]["own"];
 				}
@@ -155,6 +155,7 @@
 function CalculSoleil($jour,$lo,$la)
   {
 	// Constantes
+	$fh=0;
 	$k = 0.0172024;
 	$jm = 308.67;
 	$jl = 21.55;
@@ -183,11 +184,11 @@ function CalculSoleil($jour,$lo,$la)
 	$l = $k * ($j - $jl);
 	// Longitude vrai
 	$s = $l + 2 * $e * sin($m) + 1.25 * $e * $e * sin(2 * $m);
-	// CoordonnÃ©es rectangulaires du soleil dans le repÃ¨re Ã©quatorial
+	// Coordonnées rectangulaires du soleil dans le repère équatorial
 	$x = cos($s);
 	$y = cos($ob) * sin($s);
 	$z = sin($ob) * sin($s);
-	// equation du temps et dÃ©clinaison
+	// equation du temps et déclinaison
 	$r = $l;
 	$rx = cos($r) * $x + sin($r) * $y;
 	$ry = -sin($r) * $x + cos($r) * $y;
@@ -195,7 +196,7 @@ function CalculSoleil($jour,$lo,$la)
 	$y = $ry;
 	$et = atan($y / $x);
 	$dc = atan($z / sqrt(1 - $z * $z)) ;
-	// Heure de passage au mÃ©ridien
+	// Heure de passage au méridien
 	$pm = $h + $fh + $et / $hr;
 	$hs = floor($pm);
 	$pm = 60 * ($pm - $hs);
@@ -203,10 +204,10 @@ function CalculSoleil($jour,$lo,$la)
 	$pm = 60 * ($pm - $ms);
 	// Angle horaire au lever et au coucher
 	$cs = (SIN($ht) - SIN($la) * SIN($dc)) / COS($la) / COS($dc);
-	if ($cs > 1)
-	  { echo "Le soleil ne se leve pas<BR>"; }
-	if ($cs < -1)
-	  { echo "Le soleil ne se couche pas<BR>"; }
+	// if ($cs > 1)
+	  // { echo "Le soleil ne se leve pas<BR>"; }
+	// if ($cs < -1)
+	  // { echo "Le soleil ne se couche pas<BR>"; }
 	if ($cs == 0)
 	  { $ah = $pi / 2; }
 	else

@@ -78,6 +78,9 @@
 		if (GetDroit("CreeUser"))
 		  { $tmpl_x->parse("infos.ajout"); }
 
+		if (!isset($aff))
+		{ $aff=""; }
+	  
 		$lstusr=ListActiveUsers($sql,"std","",($aff=="virtuel") ? "oui" : "non");
 
 		if ($theme=="phone")
@@ -136,8 +139,8 @@
 				$tabValeur[$i]["type"]["aff"]=$usr->aff("type");
 			  }
 
-			if ($order=="") { $order="nom"; }
-			if ($trie=="") { $trie="d"; }
+			if ((!isset($order)) || ($order=="")) { $order="nom"; }
+			if ((!isset($trie)) || ($trie=="")) { $trie="d"; }
 
 			$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 		  }

@@ -138,58 +138,83 @@
 // ---- Affiche la page demandée
 	if ($fonc!="Enregistrer")
 	{
-			// Liste des mouvements
-			$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE actif='oui' ORDER BY ordre,description";
-			$sql->Query($query);
-			$montant=0;
+		if (!isset($form_tiers))
+		{
+			$form_tiers=0;
+		}
+		if (!isset($form_id))
+		{
+			$form_id=0;
+		}
+		if (!isset($form_poste))
+		{
+			$form_poste=0;
+		}			
+		if (!isset($form_date))
+		{
+			$form_date=date("Y-m-d");
+		}		
+		if (!isset($form_montant))
+		{
+			$form_montant=0;
+		}		
+		if (!isset($form_commentaire))
+		{
+			$form_commentaire=0;
+		}		
 
-			for($i=0; $i<$sql->rows; $i++)
-			  { 
-				$sql->GetRow($i);
-			
-				$tmpl_x->assign("id_mouvement", $sql->data["id"]);
-				$tmpl_x->assign("nom_mouvement", $sql->data["description"].((($sql->data["debiteur"]=="0") || ($sql->data["crediteur"]=="0")) ? "" : " (sans tiers)"));
-				$tmpl_x->assign("chk_mouvement", (($form_id==$sql->data["id"]) || ($form_poste==$sql->data["id"])) ? "selected" : "");
-				$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_mouvement");
-				$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_ventilation.lst_mouvement");
-				if (($form_id==$sql->data["id"]) || ($form_poste==$sql->data["id"]))
-				  { $montant=$sql->data["montant"]; }
-			  }
-	
-			// Liste des tiers
-			$lst=ListActiveUsers($sql,"std",$MyOpt["restrict"]["comptes"],"");
+		// Liste des mouvements
+		$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE actif='oui' ORDER BY ordre,description";
+		$sql->Query($query);
+		$montant=0;
+
+		for($i=0; $i<$sql->rows; $i++)
+		  { 
+			$sql->GetRow($i);
 		
-			foreach($lst as $i=>$tmpuid)
-			  {
-			  	$resusr=new user_class($tmpuid,$sql);
-			
-				$tmpl_x->assign("id_tiers", $resusr->data["idcpt"]);
-				$tmpl_x->assign("nom_tiers", $resusr->fullname);
-				$tmpl_x->assign("chk_tiers", ($form_tiers==$tmpuid) ? "selected" : "");
-				$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_tiers");
-				$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_ventilation.lst_tiers");
-			  }
+			$tmpl_x->assign("id_mouvement", $sql->data["id"]);
+			$tmpl_x->assign("nom_mouvement", $sql->data["description"].((($sql->data["debiteur"]=="0") || ($sql->data["crediteur"]=="0")) ? "" : " (sans tiers)"));
+			$tmpl_x->assign("chk_mouvement", (($form_id==$sql->data["id"]) || ($form_poste==$sql->data["id"])) ? "selected" : "");
+			$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_mouvement");
+			$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_ventilation.lst_mouvement");
+			if (($form_id==$sql->data["id"]) || ($form_poste==$sql->data["id"]))
+			  { $montant=$sql->data["montant"]; }
+		  }
 
-			$dte=sql2date($form_date);
-
-			if ($_REQUEST["form_dte"]!='')
-			  { $dte=$_REQUEST["form_dte"]; }
-			if ($dte=="")
-			  { $dte=date("d/m/Y"); }
+		// Liste des tiers
+		$lst=ListActiveUsers($sql,"std",$MyOpt["restrict"]["comptes"],"");
 	
-			$tmpl_x->assign("date_mouvement", $dte);
-			$tmpl_x->assign("form_montant", (($form_montant<>0) ? $form_montant : $montant));
-			$tmpl_x->assign("form_commentaire", $form_commentaire);
-
-			$tmpl_x->AUTORESET=0;
-			for ($iii=1; $iii<=$MyOpt["ventilationNbLigne"]; $iii++)
-			{
-				$tmpl_x->assign("ventilid",$iii);
-				$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_ventilation");
-			}
-			$tmpl_x->AUTORESET=1;
+		foreach($lst as $i=>$tmpuid)
+		  {
+			$resusr=new user_class($tmpuid,$sql);
 		
-			$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement");
+			$tmpl_x->assign("id_tiers", $resusr->data["idcpt"]);
+			$tmpl_x->assign("nom_tiers", $resusr->fullname);
+			$tmpl_x->assign("chk_tiers", ($form_tiers==$tmpuid) ? "selected" : "");
+			$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_tiers");
+			$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_ventilation.lst_tiers");
+		  }
+
+		$dte=sql2date($form_date);
+
+		if ((isset($_REQUEST["form_dte"])) && ($_REQUEST["form_dte"]!=''))
+		  { $dte=$_REQUEST["form_dte"]; }
+		if ($dte=="")
+		  { $dte=date("d/m/Y"); }
+
+		$tmpl_x->assign("date_mouvement", $dte);
+		$tmpl_x->assign("form_montant", (($form_montant<>0) ? $form_montant : $montant));
+		$tmpl_x->assign("form_commentaire", $form_commentaire);
+
+		$tmpl_x->AUTORESET=0;
+		for ($iii=1; $iii<=$MyOpt["ventilationNbLigne"]; $iii++)
+		{
+			$tmpl_x->assign("ventilid",$iii);
+			$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement.lst_ventilation");
+		}
+		$tmpl_x->AUTORESET=1;
+	
+		$tmpl_x->parse("corps.aff_mouvement.lst_aff_mouvement");
 
 		$tmpl_x->assign("form_page", "mvt");
 	  	$tmpl_x->parse("corps.aff_mouvement");

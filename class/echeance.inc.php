@@ -143,7 +143,7 @@ class echeance_class
 		$sql->Insert($query);
 	}
 
-	function Affiche($type) 
+	function Affiche($type="") 
 	{ global $MyOpt;
 		$ret="";
 

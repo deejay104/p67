@@ -21,13 +21,14 @@
 <!-- BEGIN: lst_msg -->
 	<div class="forum_Liste">
 		<div class="forum_Liste_Titre">
-			<p class="{msg_class}"><A href="index.php?mod=forums&rub=forums_7&fid={id_forum}&mid={id_msg}&critere={crit}">{msg_titre}</A></p>
-			<span>par {msg_auteur}, {msg_dte}</span>
 <!-- BEGIN: aff_supprimer -->
 			<div class="forum_Liste_Icones">
-				<a href="index.php?mod=forums&rub=forums_1&fid={id_forum}&opt={id_msg}&anc=visu"><img src="{path_module}/img/icn24_supprimer.png"></a>
+				<a href="index.php?mod=forums&rub=forums_1&fid={id_forum}&opt={id_msg}&anc=visu"  class='imgDelete'><img src="{path_module}/img/icn16_supprimer.png"></a>
 			</div>
 <!-- END: aff_supprimer -->
+			<p class="{msg_class}"><A href="index.php?mod=forums&rub=forums_7&fid={id_forum}&mid={id_msg}&critere={crit}">{msg_titre}</A></p>
+
+			<span>par {msg_auteur}, {msg_dte}</span>
 <!-- BEGIN: aff_reponse -->
 			<div class="forum_Liste_Reponse">{msg_reponse}</div>
 <!-- END: aff_reponse -->

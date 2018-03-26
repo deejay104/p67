@@ -510,7 +510,7 @@ function AfficheTableauFiltre($tabValeur,$tabTitre="",$order="",$trie="",$url=""
 	  {
 		if ($name==$order)
 		  {
-			$ret.="<th width='".$v["width"]."'".(($v["align"]!="") ? " align='".$v["align"]."'" : "").">";
+			$ret.="<th width='".$v["width"]."'".(((isset($v["align"])) && ($v["align"]!="")) ? " align='".$v["align"]."'" : "").">";
 			$ret.="<b><a href='$page&order=$name&trie=".(($trie=="d") ? "i" : "d").(($url!="") ? "&$url" : "")."&ts=0'>".$v["aff"]."</a></b>";
 		  	$ret.=" <img src='static/images/sens_$trie.gif' border=0>";
 		  }
@@ -520,7 +520,7 @@ function AfficheTableauFiltre($tabValeur,$tabTitre="",$order="",$trie="",$url=""
 		  }
 		else
 		  {
-			$ret.="<th width='".$v["width"]."'".(($v["align"]!="") ? " align='".$v["align"]."'" : "").">";
+			$ret.="<th width='".$v["width"]."'".(((isset($v["align"])) && ($v["align"]!="")) ? " align='".$v["align"]."'" : "").">";
 			$ret.="<b><a href='$page&order=$name&trie=d".(($url!="") ? "&$url" : "")."&ts=0'>".$v["aff"]."</a></b>";
 		  }
 		$ret.="</th>";
@@ -562,7 +562,7 @@ function AfficheTableauFiltre($tabValeur,$tabTitre="",$order="",$trie="",$url=""
 					  }
 					else
 					  {
-						$ret.="<td ".(($val[$name]["align"]!="") ? " align='".$val[$name]["align"]."'" : "").">".(($val[$name]["aff"]=="") ? $val[$name]["val"] : $val[$name]["aff"])."</td>";
+						$ret.="<td ".(((isset($val[$name]["align"])) && ($val[$name]["align"]!="")) ? " align='".$val[$name]["align"]."'" : "").">".(((!isset($val[$name]["aff"])) || ($val[$name]["aff"]=="")) ? $val[$name]["val"] : $val[$name]["aff"])."</td>";
 					  }
 				  }
 				$ret.="</tr>\n";

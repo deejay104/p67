@@ -7,8 +7,8 @@
 //		  $fonc - [fonctions optionnelles]
 // ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.0
-    Copyright (C) 2008 Matthieu Isorez
+    Easy-Aero v2.14
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -116,22 +116,22 @@
 	$query.="WHERE forum.actif='oui' ";
 
 	if ($fonc=="Rechercher")
-	  {
-			$tabcrit=explode(" ",$critere);
+	{
+		$tabcrit=explode(" ",$critere);
   		foreach($tabcrit as $i=>$t)
-	  	  {
-					 $query.=" AND (forum.titre LIKE '%".$t."%' OR  forum.message LIKE '%".$t."%') ";
-				}
-
-			if ($fid>0)
-				{
-						$query.="AND forum.fil = $fid ";
-				}
+	  	{
+			$query.=" AND (forum.titre LIKE '%".$t."%' OR  forum.message LIKE '%".$t."%') ";
 		}
-	else
-	  {
+
+		if ($fid>0)
+		{
 			$query.="AND forum.fil = $fid ";
 		}
+	}
+	else
+	{
+		$query.="AND forum.fil = $fid ";
+	}
 	$query.="GROUP BY forum.id ORDER BY forum.dte_creat DESC ";
 	$query.="LIMIT 0,$max";
 	$sql->Query($query);
@@ -149,83 +149,82 @@
 	$col = 50;
 
 	foreach ($tabmsg as $id=>$msg)
-	  {
-			if ($msg["nbrep"]==1)
-			  {
-					$tmpl_x->assign("msg_reponse","(1 réponse)");
-					$tmpl_x->parse("corps.lst_msg.aff_reponse");
-			  }
-			else if ($msg["nbrep"]>1)
-			  {
-					$tmpl_x->assign("msg_reponse","(".$msg["nbrep"]." réponses)");
-					$tmpl_x->parse("corps.lst_msg.aff_reponse");
-			  }
-			else
-			  {
-					$tmpl_x->assign("msg_reponse","&nbsp;");
-			  }
-	
-			// Etoile si non lu
-			if (($msg["lu"]>0) || ($uid==0))
-			  {
-					$tmpl_x->assign("img_nonlu","icn24_vide.png");
-					$tmpl_x->assign("msg_class","forum_Liste_TitreLu");
-			  }
-			else
-			  {
-					$tmpl_x->assign("img_nonlu","icn24_nonlu.png");
-					$tmpl_x->assign("msg_class","forum_Liste_TitreNonlu");
-			  }
-	
-			// Affiche les pièces jointes au message
-			$lstdoc=ListDocument($sql,$msg["id"],"forum");
-	  	
-			if ((is_array($lstdoc)) && (count($lstdoc)>0))
+	{
+		if ($msg["nbrep"]==1)
+		{
+			$tmpl_x->assign("msg_reponse","(1 réponse)");
+			$tmpl_x->parse("corps.lst_msg.aff_reponse");
+		}
+		else if ($msg["nbrep"]>1)
+		{
+			$tmpl_x->assign("msg_reponse","(".$msg["nbrep"]." réponses)");
+			$tmpl_x->parse("corps.lst_msg.aff_reponse");
+		}
+		else
+		{
+			$tmpl_x->assign("msg_reponse","&nbsp;");
+		}
+
+		// Etoile si non lu
+		if (($msg["lu"]>0) || ($uid==0))
+		{
+			$tmpl_x->assign("msg_class","forum_Liste_TitreLu");
+		}
+		else
+		{
+			$tmpl_x->assign("msg_class","forum_Liste_TitreNonlu");
+		}
+
+		// Affiche les pièces jointes au message
+		$lstdoc=ListDocument($sql,$msg["id"],"forum");
+
+		if ((is_array($lstdoc)) && (count($lstdoc)>0))
+		{
+			foreach($lstdoc as $i=>$did)
 			{
-				$tmpl_x->assign("img_piecejointe","icn16_pj.png");
-				foreach($lstdoc as $i=>$did)
-				{
-					$doc = new document_class($did,$sql);
-					$tmpl_x->assign("form_document",$doc->Affiche());
-					$tmpl_x->parse("corps.lst_msg.aff_piecejointe.lst_document");
-				}
-				$tmpl_x->parse("corps.lst_msg.aff_piecejointe");
+				$doc = new document_class($did,$sql);
+				$tmpl_x->assign("form_document",$doc->Affiche());
+				$tmpl_x->parse("corps.lst_msg.aff_piecejointe.lst_document");
 			}
-			else
-			  {	$tmpl_x->assign("img_piecejointe","icn16_vide.png"); }
+			$tmpl_x->parse("corps.lst_msg.aff_piecejointe");
+		}
 
 
-			// Mets en relief les critères de recherche
-//			$txt=GetFirstLine(nl2br(strip_tags($msg["message"], "<br>")));
-			$txt=nl2br($msg["message"]);
+		// Mets en relief les critères de recherche
+		//			$txt=GetFirstLine(nl2br(strip_tags($msg["message"], "<br>")));
+		$txt=nl2br(strip_tags($msg["message"], '<br>'));
+		$txt=preg_replace("/((http|https|ftp):\/\/[^ |<]*)/si","<a href='$1' target='_blank'>$1</a>",$txt);
+		$txt=preg_replace("/ (www\.[^ |\/]*)/si","<a href='http://$1' target='_blank'>$1</a>",$txt);
 
-			$critere = trim($critere);
-			if ($critere!="")
-			  {
-					$tabcrit=explode(" ",$critere);
-					foreach($tabcrit as $crit)
-					  { $txt=preg_replace("/".$crit."/si","<span class='forum_Message_Selection'>$crit</span>",$txt); }
-			  }
-			
-			// Paramètres du message
-			$usr = new user_class($msg["usr_id"],$sql,false);
-			$tmpl_x->assign("id_msg",$msg["id"]);
-			$tmpl_x->assign("id_forum",$msg["fid"]);
-			$tmpl_x->assign("msg_titre",htmlentities(($msg["titre"]!="") ? $msg["titre"] : " - ",ENT_HTML5,"ISO-8859-1"));
-			$tmpl_x->assign("msg_auteur",$usr->fullname);
-			$tmpl_x->assign("msg_texte",$txt);
-			$tmpl_x->assign("msg_dte",DisplayDate($msg["date_maj"]));
-			$tmpl_x->assign("crit",$critere);
-	
-	
-			// Affiche l'icone de suppression
-			if (GetDroit("SupprimeMessage"))
-			  {
-					$tmpl_x->parse("corps.lst_msg.aff_supprimer");
-			  }
+		$critere = trim($critere);
+		if ($critere!="")
+		{
+			$tabcrit=explode(" ",$critere);
+			foreach($tabcrit as $crit)
+			{
+				$txt=preg_replace("/".$crit."/si","<span class='forum_Message_Selection'>$crit</span>",$txt);
+			}
+		}
 
-			$tmpl_x->parse("corps.lst_msg");
-	  }
+		// Paramètres du message
+		$usr = new user_class($msg["usr_id"],$sql,false);
+		$tmpl_x->assign("id_msg",$msg["id"]);
+		$tmpl_x->assign("id_forum",$msg["fid"]);
+		$tmpl_x->assign("msg_titre",htmlentities(($msg["titre"]!="") ? $msg["titre"] : " - ",ENT_HTML5,"ISO-8859-1"));
+		$tmpl_x->assign("msg_auteur",$usr->fullname);
+		$tmpl_x->assign("msg_texte",$txt);
+		$tmpl_x->assign("msg_dte",DisplayDate($msg["date_maj"]));
+		$tmpl_x->assign("crit",$critere);
+
+
+		// Affiche l'icone de suppression
+		if (GetDroit("SupprimeMessage"))
+		{
+			$tmpl_x->parse("corps.lst_msg.aff_supprimer");
+		}
+
+		$tmpl_x->parse("corps.lst_msg");
+	}
 
 
 	$tmpl_x->assign("fid_forum",$fid);

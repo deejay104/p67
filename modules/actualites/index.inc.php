@@ -49,7 +49,7 @@
 	$txtnewmsg="Ecrivez votre message...";
 
 
-	if (!is_numeric($id))
+	if ((!isset($id)) || (!is_numeric($id)))
 	  { $id=0; }
 
 	if ( ($fonc=="Poster") && (!isset($_SESSION['tab_checkpost'][$checktime])) )
@@ -118,7 +118,7 @@
 			foreach($lstdte as $i=>$did)
 			  {
 				$dte = new echeance_class($did,$sql,$gl_uid);
-				$dte->editmode=($typeaff=="form") ? "edit" : "html";
+				$dte->editmode="html";
 				$tmpl_x->assign("form_echeance",$dte->Affiche());
 				$tmpl_x->parse("corps.lst_echeance");
 			  }
@@ -139,7 +139,7 @@
 	$res = $sql->QueryRow($query);
 
 	if ($res["id"]>0)
-	  {
+	{
 	  	$res["creat"]=new user_class($res["uid_creat"],$sql,false,false);
 
 			$tmpl_x->assign("manip_id", $res["id"]);
@@ -147,7 +147,7 @@
 			$tmpl_x->assign("manip_date", sql2date($res["dte_manip"]));
 			$tmpl_x->assign("manip_creat",$res["creat"]->Aff("prenom")." ".$res["creat"]->Aff("nom"));
 		
-			$msg.= preg_replace("/<\/?SCRIPT[^>]*>/i","",nl2br($res["comment"]))."<br />";
+			$msg= preg_replace("/<\/?SCRIPT[^>]*>/i","",nl2br($res["comment"]))."<br />";
 			//$msg.= "<p align=right><a href=\"manips.php?rub=detail&id=".$res["id"]."\">-Voir les participants-</a></p>";
 		
 			$tmpl_x->assign("manip_txt", $msg);	
@@ -192,12 +192,12 @@
 
 
 // ---- Actualités
-	if ( (!is_numeric($limit)) || ($limit==0) )
+	if ( (!isset($limit)) || (!is_numeric($limit)) || ($limit==0) )
 	  { $limit=10; }
 	$tmpl_x->assign("aff_limit", $limit+5);	
 
 	$q="";
-	if ($search!="")
+	if ((isset($search)) && ($search!=""))
 	  {
 	  	$q=" AND (titre LIKE '%".$search."%' OR message LIKE '%".$search."%') ";
 			$tmpl_x->assign("aff_search", $search);
@@ -220,7 +220,7 @@
 	{
 		$resusr=new user_class($d["uid_creat"],$sql,false,false);
 
-		$txt=nl2br(htmlentities($d["message"],ENT_HTML5,"ISO-8859-1"));
+		// $txt=nl2br(htmlentities($d["message"],ENT_HTML5,"ISO-8859-1"));
 		$txt=nl2br($d["message"]);
 		$txt=preg_replace("/((http|https|ftp):\/\/[^ |<]*)/si","<a href='$1' target='_blank'>$1</a>",$txt);
 		$txt=preg_replace("/ (www\.[^ |\/]*)/si","<a href='http://$1' target='_blank'>$1</a>",$txt);

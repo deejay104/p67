@@ -48,8 +48,8 @@ class manip_class{
 		$this->dte_manip=$res["dte_manip"];
 		$this->uid_creat=$res["uid_creat"];
 		$this->dte_creat=$res["dte_creat"];
-		$this->uid_maj=$res["uid_maj"];
-		$this->dte_maj=$res["dte_maj"];
+		$this->uid_maj=$res["uid_modif"];
+		$this->dte_maj=$res["dte_modif"];
 	}
 
 	function Valid($k,$v) 

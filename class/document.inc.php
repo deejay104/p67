@@ -478,7 +478,7 @@ function ListDocument($sql,$id,$type)
 	for($i=0; $i<$sql->rows; $i++)
 	  {
 		$sql->GetRow($i);
-		if ( ($gl_uid==$sql->data["uid"]) || (($sql->data["droit"]!="") && ($myuser->role[$sql->data["droit"]])) || ($sql->data["droit"]=="ALL") || (GetDroit("VisuDocument")) )
+		if ( ($gl_uid==$sql->data["uid"]) || (($sql->data["droit"]!="") && ((isset($myuser->role[$sql->data["droit"]])) && ($myuser->role[$sql->data["droit"]])) ) || ($sql->data["droit"]=="ALL") || (GetDroit("VisuDocument")) )
 		{
 			$lstdoc[$i]=$sql->data["id"];
 		}

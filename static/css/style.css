@@ -32,21 +32,24 @@ h6 { font-size:100%; }
 .visible-xs,.visible-sm,.visible-md,.visible-lg { display:none!important; }
 
 
-input {	border: 1px solid #888888; padding: 2px 2px 2px 2px; height: 24px; -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: inherit; font-family: inherit; }
 select { height: 24px; font-size: inherit; font-family: inherit; }
 textarea { width:90%; font-size: inherit; font-family: inherit; }
 option { -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: inherit; font-family: inherit; }
 
+input {	border: 1px solid #888888; padding: 2px 2px 2px 2px; height: 24px; -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: inherit; font-family: inherit; }
 input:not([type]) { border: 1px solid #888888; line-height: 16px; padding: 2px 5px 2px 5px; }
 input[type=tel] { border: 1px solid #888888; line-height: 16px; padding: 2px 5px 2px 5px; }
 input[type=email] { border: 1px solid #888888; line-height: 16px; padding: 2px 5px 2px 5px; }
-input[type=number] { border: 1px solid #888888; line-height: 16px; padding: 2px 5px 2px 5px; }
-input[type=date] { border: 1px solid #888888; line-height: 16px; padding: 2px 5px 2px 5px; }
+input[type=number] { border: 1px solid #888888; line-height: 16px; padding: 2px 5px 2px 5px; width:80px; }
+input[type=date] { border: 1px solid #888888; line-height: 16px; padding: 2px 5px 2px 5px; width:155px; }
 input[type=submit] { height: 36px; padding:5px 15px 5px 15px;  background:#eeeeee; border: 1px solid #888888; cursor:pointer; border-radius: 5px; }
 input[type=submit]:hover { background:#dddddd; }
 input[type=radio] {-webkit-appearance: radio; }
 input[type=file] { height:30px; background-color: #ffffff; border: 0px; }
-input[type=checkbox] { border: 0px; line-height: 16px; padding: 0px; }
+input[type=checkbox] { width:24px; border: 0px; line-height: 16px; padding: 0px; -webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5); -moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5); width: 20px; height: 20px; background: #ffffff; }
+input[type=checkbox]:checked { background: #dddddd; border-color: #000000; }
+input[type=checkbox]:after { content: " "; padding-left: 6px; }
+input[type=checkbox]:checked:after { content: "x"; }
 
 p { margin-top: 4px; }
 
@@ -56,30 +59,41 @@ tr, td { border-width: 0px; border-spacing: 0px; border-padding: 0px; padding: 0
 img { color: #FFFFFF; border: 0px; }
 img:hover { color: #FF6600; }
 
-input[type=checkbox] { -webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5); -moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5); width: 20px; height: 20px; background: #ffffff; }
-input[type=checkbox]:checked { background: #dddddd; border-color: #000000; }
-input[type=checkbox]:after { content: " "; padding-left: 6px; }
-input[type=checkbox]:checked:after { content: "x"; }
 
 
 /* **** Block principaux **** */
 #main-content { position: relative; left: 0%; width: 100%; }
-#main-sidebar { display: none; float: left; width: 240px; height: 100%; position: fixed; background-color: #888e91; color: white; }
+#main-sidebar { display: none; float: left; height: 100%; position: fixed; background-color: #888e91; color: white; }
 #responsive-navigation { position: relative; width: 100%; display: block; z-index: 9999; }
 
 /* **** Style Responsive **** */
 
-@media (min-width: 1024px) and (min-device-width: 1024px) {
+@media (min-width: 1200px) and (min-device-width: 1200px) {
 	body { font-size:16px; }
+	.formulaire input { width:250px!important; } /* Overlapped by responsive */
+	.formulaire span { width:260px!important; }
+	.formulaire input[type=number] { width:80px!important; }
+	.formulaire input[type=date] { width:155px!important; }
+	.formulaire input[type=checkbox] { width:20px!important; }
+    #main-content { padding-left: 240px!important;  }
+    #main-sidebar { width: 240px!important; }
+}
+@media (min-width: 1024px) and (min-device-width: 1024px) {
     #responsive-navigation { display: none; }
-    #main-content { width: 100%; padding-left: 240px;  }
-    #main-sidebar { top: 0px; display: block; }
+    #main-content { width: 100%; padding-left: 200px;  }
+    #main-sidebar { top: 0px; display: block; width: 200px; }
 }
 @media print {
     #responsive-navigation { display: none; }
     #main-content { width: 100%; left: 0px; }
     #main-sidebar { display: none; }
 }
+
+.formulaire input { width:155px; } /* Overlapped by responsive */
+.formulaire input[type=number] { width:50px; }
+.formulaire input[type=date] { width:155px; }
+.formulaire input[type=checkbox] { width:20px; }
+
 
 /* **** Menu **** */
 .main-menu { text-align: left; background-color: #888e91;  }
@@ -349,54 +363,65 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 
 /* **** FORUMS **** */
 
-#forum_Index_Liste { border-top:1px solid #013366; border-bottom:1px solid #013366; background-color: #dddddd; margin: 5px 20px 0px 20px; padding: 5px 0px 0px 15px; }
-#forum_Index_Nom { font-size: 20px; }
-#forum_Index_Nom a {  }
-#forum_Index_Nom a:hover { color:#FF6600; }
-#forum_Index_Nombre {  font-size: 10px; margin-left: 20px; }
-#forum_Index_Intitule { color: #777777; margin-bottom: 10px;}
-#forum_Index_Edite { display: inline-block; float: right; margin-top: -70px; margin-right: 20px; font-size: 10px;  }
-#forum_Index_Edite a { display: inline-block; height:34px; padding: 4px; border-radius: 4px; margin: 0px; background-color: #75b7e5; border-radius: 5px; border: 1px solid #013366; }
-#forum_Index_Edite a:hover { background-color: #1799c3; height:34px; }
+.forum_Index_Liste { width:950px; border-top:1px solid #013366; border-bottom:1px solid #013366; background-color: #efefef; margin: 0px; padding: 5px 0px 0px 15px; }
+.forum_Index_Nom { font-size: 20px; }
+.forum_Index_Nom a {  }
+.forum_Index_Nom a:hover { color:#FF6600; }
+.forum_Index_Nombre {  font-size: 10px; margin-left: 20px; }
+.forum_Index_Intitule { color: #777777; margin-bottom: 10px;}
+.forum_Index_Edite { display: inline-block; float: right; margin-top: -20px; margin-right: 5px; font-size: 10px;  }
 .forum_Index_Message { margin-left: 20px; padding-left: 15px; }
-.forum_Index_NouveauMessage { font-weight: bold; margin-left: 20px; padding-left: 15px; }
+.forum_Index_NouveauMessage { margin-left: 20px; padding-left: 15px; border-bottom: 1px solid #efefef; }
 
 
 
-.forum_Liste_Description { color: #777777; border-top:1px solid #013366; border-bottom:1px solid #013366; background-color: #dddddd; margin: 5px 20px 20px 20px ; padding-left: 15px; }
+.forum_Liste_Description { width:950px; color: #777777; border-top:1px solid #013366; border-bottom:1px solid #013366; background-color: #efefef; margin: 0px ; padding-left: 15px; }
 .forum_Liste_DescriptionTitre { color: #000000; font-weight: bold; }
 
-.forum_Liste { margin: 5px 20px 20px 20px; }
-.forum_Liste_Titre { background-color: #dddddd; padding-left: 15px;  border-top:1px solid #013366;  border-bottom:1px solid #013366; }
-.forum_Liste_Titre p { margin: 0px 0px 0px 0px; }
-.forum_Liste_Titre span { font-size: 10px; font-weight: normal; padding-left:20px;  }
+.forum_Liste { width:950px;  margin: 0px; background-color: #fefefe; border-bottom:7px solid #efefef; border-top:1px solid #cccccc; padding-bottom:5px; }
+.forum_Liste:hover { background-color: #FFE1E1; }
+.forum_Liste_Titre { padding-left: 15px; padding-top:5px; padding-bottom:0px; }
+.forum_Liste_Titre p { margin: 0px; font-weight: bold; }
+.forum_Liste_Titre span { font-size: 10px; line-height:12px; font-weight: normal; padding-left:0px; }
 .forum_Liste_Titre a:hover { color:#FF6600; }
 .forum_Liste_TitreLu { }
-.forum_Liste_TitreLu a { }
-.forum_Liste_TitreNonlu a { color:#ffffff; }
+.forum_Liste_TitreLu a { color: #777777; }
+.forum_Liste_TitreNonlu { }
+.forum_Liste_TitreNonlu a { color:#FFBBAA; }
 .forum_Liste_Indent { float: left; width: 24px; }
-.forum_Liste_Reponse { display: inline-block;  float: right; margin-right: 10px; }
-.forum_Liste_Icones { display: inline-block; height:30px; position:relative; margin-right: 10px; float:right; background-color: #75b7e5; border: 1px solid #013366; border-radius: 4px; }
-.forum_Liste_Icones a { display: inline-block; height:30px; padding: 2px; border-radius: 4px; margin: 0px; }
-.forum_Liste_Icones a:hover { background-color: #1799c3; }
-.forum_Liste_Texte { padding: 0px 5px 0px 35px; margin-bottom:0px; max-height: 78px; overflow:hidden; }
-.forum_Liste_PieceJointe { margin-left: 35px; margin-top: 10px; padding-top:4px; padding-bottom: 5px; border-top: 1px dashed #888888; }
+.forum_Liste_Reponse { font-size: 10px; display: inline-block;  float: right; margin-right: 10px; }
 
-#forum_Message_Reponses { width: 50%; float: right; }
-#forum_Message_Reponse { border:1px solid #013366; border-radius: 5px; margin: 5px 20px 20px 20px; }
-#forum_Message_Reponse p {padding: 5px 15px 5px 90px; }
-#forum_Message_ReponseTitre { background-color: #DDDDDD; font-weight: bold; margin: 0px; border-radius: 5px 5px 0px 0px; padding: 5px 15px 5px 150px;}
-#forum_Message_ReponseModif { font-size: 10px; margin:0px; margin-left: 20px; margin-top: -8px; }
-#forum_Message_Modif { font-size: 10px; }
-#forum_Message_Message { margin: 5px 20px 20px 20px; padding-left: 15px; }
-#forum_Message_PJ { margin: 5px 20px 20px 20px; padding: 0px 0px 15px 15px; border-bottom: 1px solid #013366; }
-#forum_Message_PJ p { margin: 0px; }
+.forum_Liste_Icones { display: inline-block; position: relative; float: right; margin-right: 5px; margin-right: 5px; }
+.forum_Liste_Icones2 { display: inline-block; height:30px; position:relative; margin-right: 10px; float:right; background-color: #75b7e5; border: 1px solid #013366; border-radius: 4px; }
+.forum_Liste_Icones2 a { display: inline-block; height:30px; padding: 2px; border-radius: 4px; margin: 0px; }
+.forum_Liste_Icones2 a:hover { background-color: #1799c3; }
+
+.forum_Liste_Texte { margin-left: 35px; margin-bottom:0px; padding-top:4px;  max-height: 82px; overflow:hidden; border-top:1px solid #efefef; }
+.forum_Liste_Texte a { text-decoration: underline; }
+.forum_Liste_PieceJointe { margin-left: 35px; margin-top: 10px; padding-top:4px; padding-bottom: 5px; border-top: 1px solid #efefef; }
+
+.forum_Message_Description { width:950px; color: #777777; border-top:1px solid #013366; border-bottom:1px solid #013366; background-color: #dddddd; margin: 0px ; padding-left: 15px;  padding-bottom:5px; }
+.forum_Message_Description p { margin:0px;  }
+.forum_Message_DescriptionTitre { color: #000000; font-weight: bold; padding-top:5px;}
+.forum_Message_DescriptionModif { font-size:10px;}
+
+.forum_Message_Message { width:950px; margin: 0px; padding-left: 15px; }
+.forum_Message_Message a { text-decoration: underline; }
+
+
+.forum_Message_PJ_Liste { width: 950px; position: relative; border-top: 1px solid #efefef; border-bottom: 1px solid #efefef;}
+.forum_Message_PJ_Description p { margin:0px; padding-left: 15px; font-weight:bold; }
+.forum_Message_PJ { border-top: 1px solid #efefef; padding-top:5px;  }
+.forum_Message_PJ p { margin:0px; padding-left: 15px; }
+
+.forum_Message_Reponses { margin-left:100px;  width:850px; margin-top:15px;}
+.forum_Message_Reponse { border-top:1px solid #efefef; border:1px solid #efefef; border-radius: 5px; }
+.forum_Message_Reponse p {padding: 5px 15px 5px 90px; }
+.forum_Message_ReponseTitre { background-color: #DDDDDD; font-weight: bold; margin: 0px; padding: 5px 15px 5px 150px;}
+.forum_Message_ReponseModif { font-size: 10px; margin:0px; margin-left: 20px; margin-top: -8px; }
 .forum_Message_Selection { background-color: #95d7f5; border: 1px dashed #013366; border-radius: 3px; padding: 2px; }
 
-#forum_Message_listePJ { width: 50%; position: relative; float: left; }
 
-#forum_Message_Description { border-top:1px solid #013366; border-bottom:1px solid #013366; background-color: #F5F5F5; margin: 5px 20px 20px 20px ; padding-left: 15px; }
-#forum_Message_DescriptionTitre { background-color: #DDDDDD; font-weight: bold; 	margin: 0px 0px 0px -15px; padding: 5px 15px 5px 15px; }
 
 
 
@@ -434,7 +459,7 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 
 .formulaire p { margin: 4px;  }
 .formulaire label { display: inline-block; width: 180px; margin-right: 10px; text-align: left; vertical-align: top; }
-.formulaire span { display: inline-block; width:450px; }
+.formulaire span { display: inline-block; width:160px; } /* Overlapped by responsive */
 .formulaire2 span { display: inline-block; width:450px; border: 1px solid #013366; border-radius: 4px; padding: 4px; }
 
 .formulaireTitre { background-color: #dddddd; border-bottom: 1px solid #013366; margin-bottom: 15px; margin-top:20px; padding-left: 20px; }
@@ -446,7 +471,7 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 .formulaireTextarea { padding: 0px 20px 5px 20px; }
 
 .formulaireMulti { list-style-type: none; vertical-align:top; }
-.formulaireMulti li { padding: 4px; 0px 4px 0px;  }
+.formulaireMulti li { padding: 4px 0px 4px 0px;  }
 .formulaireMulti label { width:150px; }
 .formulaireMulti span { width:200px; vertical-align:top; margin-left: 5px; }
 .formulaireMulti li:hover { background-color: #FFE1E1!important; }

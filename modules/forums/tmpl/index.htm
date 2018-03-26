@@ -12,20 +12,20 @@
 <!-- BEGIN: corps -->
 	<br />
   <!-- BEGIN: nomforum -->
-	<div id="forum_Index_Liste">
-		<div id="forum_Index_Nom"><a href="index.php?mod=forums&rub=forums_1&fid={numsforum}&prec=forums">{titreforum}</a></div>
-		<div id="forum_Index_Nombre">({nbmessages} messages)</div>
-		<div id="forum_Index_Intitule">{intitule}</div>
+	<div class="forum_Index_Liste">
+		<div class="forum_Index_Nom"><a href="index.php?mod=forums&rub=forums_1&fid={numsforum}&prec=forums">{titreforum}</a></div>
 <!-- BEGIN: editforum -->
-		<div id="forum_Index_Edite">
-			<a href="index.php?mod=forums&rub=forums_2&fid={numsforum}&fpars={numsforum}&mid={numsforum}&fprec=forums_1&fonc=edit"><img src="{path_module}/img/icn24_modifier.png"/></a>
-			<a href="index.php?mod=forums&fid={numsforum}&fonc=delete"><img src="{path_module}/img/icn24_supprimer.png"/></a>
+		<div class="forum_Index_Edite">
+			<a href="index.php?mod=forums&rub=forums_2&fid={numsforum}&fpars={numsforum}&mid={numsforum}&fprec=forums_1&fonc=edit" class='imgDelete'><img src="{path_module}/img/icn16_editer.png"/></a>
+			<a href="index.php?mod=forums&fid={numsforum}&fonc=delete" class='imgDelete'><img src="{path_module}/img/icn16_supprimer.png"/></a>
 		</div>
 <!-- END: editforum -->
+		<div class="forum_Index_Nombre">({nbmessages} messages)</div>
+		<div class="forum_Index_Intitule">{intitule}</div>
 	</div>
 		
 	<!-- BEGIN: msgnonlu -->
-	<div class="forum_Index_Message forum_Index_NouveauMessage">* <a href="index.php?mod=forums&rub=forums_7&fid={id_forum}&mid={id_msg}">{usertxt}&nbsp;:&nbsp;{titremsg} ({datemsg})</a></div>
+	<div class="forum_Index_Message forum_Index_NouveauMessage"><a href="index.php?mod=forums&rub=forums_7&fid={id_forum}&mid={id_msg}">{titremsg} <i>(par {usertxt} {datemsg})</i></a></div>
 	<!-- END: msgnonlu -->
 	
 	<!-- BEGIN: msgnonlu2 -->

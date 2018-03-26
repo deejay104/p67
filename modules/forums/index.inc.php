@@ -104,40 +104,42 @@
 		  }
 
 	  	if ( (GetDroit($sql->data["droit"])) || ($sql->data["droit"]=="ALL") )
-	  	  {
-				 	$query = "SELECT forums.id AS id, forums.fid AS fid FROM ".$MyOpt["tbl"]."_forums AS forums LEFT JOIN ".$MyOpt["tbl"]."_forums_lus AS forums_lus ON forums.id=forums_lus.forum_msg AND forums_lus.forum_usr=$uid WHERE forums_lus.forum_msg IS NULL AND forums.fid=".$sql->data["id"]." AND forums.actif='oui'";
-					$sqlb->Query($query);
-					if ($sqlb->rows>0)
-					  {
-						$tabmsg=array();
-				  		for($ii=0; $ii<$sqlb->rows; $ii++)
-						  {
-							$sqlb->GetRow($ii);
-							$tabmsg[$ii]=$sqlb->data["id"];
-						  }
-		
-						foreach ($tabmsg as $id)
-						  {
-							$query="SELECT forum.id AS id, forum.fid AS fid, forum.uid_creat, forum.dte_creat AS date, forum.titre AS titre FROM ".$MyOpt["tbl"]."_forums AS forum WHERE forum.id=".$id;
-							$res=$sqlb->QueryRow($query);
-						
-							$tmpl_x->assign("id_forum", $res["fid"]);
-							$tmpl_x->assign("id_msg", $id);
-							$usr = new user_class($res["uid_creat"],$sqlb,false);
-		
-							$tmpl_x->assign("usertxt", $usr->fullname);
-							$tmpl_x->assign("titremsg", htmlentities($res["titre"]));
-							$tmpl_x->assign("datemsg", sql2date($res["date"]));
-						
-							$tmpl_x->parse("corps.nomforum.msgnonlu");
-						  }
-		
-					  }
-					else
-					  { 	$tmpl_x->parse("corps.nomforum.msgnonlu2"); }
+	  	{
+			$query = "SELECT forums.id AS id, forums.fid AS fid FROM ".$MyOpt["tbl"]."_forums AS forums LEFT JOIN ".$MyOpt["tbl"]."_forums_lus AS forums_lus ON forums.id=forums_lus.forum_msg AND forums_lus.forum_usr=$uid WHERE forums_lus.forum_msg IS NULL AND forums.fid=".$sql->data["id"]." AND forums.actif='oui'";
+			$sqlb->Query($query);
+			if ($sqlb->rows>0)
+			{
+				$tabmsg=array();
+				for($ii=0; $ii<$sqlb->rows; $ii++)
+				  {
+					$sqlb->GetRow($ii);
+					$tabmsg[$ii]=$sqlb->data["id"];
+				  }
 
-					$tmpl_x->parse("corps.nomforum");
-		  }
+				foreach ($tabmsg as $id)
+				  {
+					$query="SELECT forum.id AS id, forum.fid AS fid, forum.uid_creat, forum.dte_creat AS date, forum.titre AS titre FROM ".$MyOpt["tbl"]."_forums AS forum WHERE forum.id=".$id;
+					$res=$sqlb->QueryRow($query);
+				
+					$tmpl_x->assign("id_forum", $res["fid"]);
+					$tmpl_x->assign("id_msg", $id);
+					$usr = new user_class($res["uid_creat"],$sqlb,false);
+
+					$tmpl_x->assign("usertxt", $usr->fullname);
+					$tmpl_x->assign("titremsg", htmlentities($res["titre"]));
+					$tmpl_x->assign("datemsg", DisplayDate($res["date"]));
+				
+					$tmpl_x->parse("corps.nomforum.msgnonlu");
+				  }
+
+			}
+			else
+			{
+				$tmpl_x->parse("corps.nomforum.msgnonlu2");
+			}
+
+			$tmpl_x->parse("corps.nomforum");
+		}
 	}
 
 // ---- Affecte les variables d'affichage

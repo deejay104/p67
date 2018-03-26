@@ -43,7 +43,7 @@
 	  }
 
 // ---- Liste des status
-	if (!is_numeric($form_status))
+	if ((!isset($form_status)) || (!is_numeric($form_status)))
 	  { $form_status=-2; }
 
 	$tabStatus=ListeStatus();
@@ -134,7 +134,7 @@
 
 		$usr = new user_class($btm->id_pilote,$sql,true);
 
-		$tabValeur[$i]["pilote"]["val"]=$usr->id_pilote;
+		$tabValeur[$i]["pilote"]["val"]=$btm->id_pilote;
 		$tabValeur[$i]["pilote"]["aff"]=($btm->id_pilote>0) ? $usr->Aff("fullname") : "-";
 
 		if ($btm->id_avion>0)
@@ -153,8 +153,8 @@
 
 	  }
 
-	if ($order=="") { $order="status"; }
-	if ($trie=="") { $trie="d"; }
+	if ((!isset($order)) || ($order=="")) { $order="nom"; }
+	if ((!isset($trie)) || ($trie=="")) { $trie="d"; }
 
 	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie,"form_status=".$form_status));
 

@@ -9,6 +9,7 @@
 		// Créé le type d'échéances
 		// - Médicale
 		// - PPL
+		$q=array();
 		$q[]="INSERT INTO ".$MyOpt["tbl"]."_echeancetype SET id=1,description='SEP', resa='instructeur',multi='non';";
 		$q[]="INSERT INTO ".$MyOpt["tbl"]."_echeancetype SET id=2,description='Certificat Médical', resa='instructeur',multi='non';";
 		foreach($q as $i=>$query)

@@ -173,7 +173,7 @@ function reloadImg2() {
 	<!-- END: aff_instructeur -->
 		<p>
 			<label for="destination" title="Préciser la destination ou LOCAL pour un vol local.">Destination</label>
-			<INPUT id="destination" name="form_destination" value="{form_destination}" style='width: 220px;'>
+			<INPUT id="destination" name="form_destination" value="{form_destination}" style='width: 220px!important;'>
 		  </p>
 
 		<p>
@@ -188,7 +188,7 @@ function reloadImg2() {
 
 		<p>
 			<label for="tpsestime" title="Le temps de vol estimé correspond au temps durant lequel vous avez prévu de voler. Ce champs est obligatoire.">Temps de vol estimé</label>
-			 <INPUT id="tpsestime" name="form_tpsestime" value="{form_tpsestime}" style='width: 60px;'> (en minutes)
+			 <INPUT id="tpsestime" name="form_tpsestime" value="{form_tpsestime}" type="number" style='width: 60px!important;'> (en minutes)
 		</p>
 
 		<p>
@@ -202,11 +202,11 @@ function reloadImg2() {
 		<p>&nbsp;</p>
 		<p>
 			<label for="form_dte_deb">Du</label>
-			<INPUT id="form_dte_deb" name="form_dte_deb" value="{form_dte_deb}" style='width: 100px;' > à <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" style='width: 60px;'> <FONT color=red>{msg_dtedeb}</FONT>
+			<INPUT id="form_dte_deb" name="form_dte_deb" value="{form_dte_deb}" style='width: 100px!important;' > à <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" style='width: 60px!important;'> <FONT color=red>{msg_dtedeb}</FONT>
 		</p>
 		<p>
 			<label for="form_dte_fin">Au</label>
-		  	<INPUT id="form_dte_fin" name="form_dte_fin" value="{form_dte_fin}" style='width: 100px;'> à <INPUT name="form_hor_fin" id="form_hor_fin" value="{form_hor_fin}" style='width: 60px;'> <FONT color=red>{msg_dtefin}</FONT>
+		  	<INPUT id="form_dte_fin" name="form_dte_fin" value="{form_dte_fin}" style='width: 100px!important;'> à <INPUT name="form_hor_fin" id="form_hor_fin" value="{form_hor_fin}" style='width: 60px!important;'> <FONT color=red>{msg_dtefin}</FONT>
 		</p>
 		<p>&nbsp;</p>
 	
@@ -242,7 +242,7 @@ function reloadImg2() {
 		</p>
 		<p>
 			<label for="carburant">Total Carburant</label>
-			<INPUT name="form_prixcarbu" value="{form_prixcarbu}" style='width: 50px;'> €
+			<INPUT name="form_prixcarbu" value="{form_prixcarbu}" type="number"> €
 		</p>
 		</div>
 	</div>

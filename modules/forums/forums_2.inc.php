@@ -8,7 +8,7 @@
 //		  $fpars - Numéro du message parent
 // ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v1.0
+    Easy-Aero v2.14
     Copyright (C) 2005 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
@@ -44,11 +44,11 @@
 
 
 // ---- Info de la page
-	if ($error!="")
-	  {
-			$tmpl_x->assign("msg_error", $error);
-			$tmpl_x->parse("corps.msg_error");
-		}
+	// if ($error!="")
+	  // {
+			// $tmpl_x->assign("msg_error", $error);
+			// $tmpl_x->parse("corps.msg_error");
+		// }
 
 	if ($error!="")
 	  {
