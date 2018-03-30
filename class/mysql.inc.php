@@ -114,7 +114,45 @@ class mysql_class{
 		else return 0;
 	}
 
+	# Add/Update a line in the table
+	function Edit($class,$tab,$id,$val,$comment="")
+	{ global $MyOpt,$uid;
+		$v="";
+		$c="";
+		$s="";
+		foreach($val as $f=>$d)
+		{
+			$v.=$s.$f."='".$d."'";
+			$c.=$s.$f."->".$d;
+			$s=",";
+		}
 
+		$res["id"]=0;
+		if ($id>0)
+		{
+			$query="SELECT id FROM ".$tab." WHERE id='".$id."'";
+			$res=$this->QueryRow($query);
+		}
+
+		if ($res["id"]>0)
+		{
+			$query="UPDATE ".$tab." SET ".$v." WHERE id='".$id."'";
+			$this->Update($query);
+
+			$query ="INSERT INTO ".$MyOpt["tbl"]."_historique (`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
+			$query.="VALUES ('".$class."', '".$tab."', '$id', '$uid', '".now()."', 'MOD', '".(($comment!="") ? $comment : $c)."')";
+			$this->Insert($query);
+		}
+		else
+		{
+			$query="INSERT INTO ".$tab." SET ".$v;
+			$id=$this->Insert($query);
+
+			$query ="INSERT INTO ".$MyOpt["tbl"]."_historique (`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
+			$query.="VALUES ('".$class."', '".$tab."', '$id', '$uid', '".now()."', 'ADD', '".(($comment!="") ? $comment : $c)."')";
+			$this->Insert($query);
+		}
+	}
 
 	# MySQL error message function
 	function mysql_ErrorMsg($msg,$show=true){

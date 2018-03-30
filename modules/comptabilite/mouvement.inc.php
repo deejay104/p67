@@ -88,6 +88,7 @@
 		  	$tmpl_x->assign("form_poste", $form_poste);
 		  	$tmpl_x->assign("form_commentaire", $form_commentaire);
 		  	$tmpl_x->assign("form_montant", $form_montant);
+		  	$tmpl_x->assign("form_tiers", $form_tiers);
 
 		  	$tmpl_x->assign("msg_resultat", "");
 			$tmpl_x->parse("corps.enregistre");
@@ -113,12 +114,8 @@
 			}
 		}
 
-		// $tmpl_x->assign("msg_confirmation", $nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret);
-		// $tmpl_x->assign("msg_confirmation_class", ($ret!="") ? "msgerror" : "msgok");
+		$form_tiers=0;
 		affInformation($nbmvt." Mouvement".(($nbmvt>1) ? "s" : "")." enregistré".(($nbmvt>1) ? "s" : "")."<br />".$ret,($ret!="") ? "error" : "ok");
-		
-		// $tmpl_x->parse("corps.msg_enregistre");
-		
 		$tmpl_x->assign("form_page", "vols");
 	  }
 
@@ -160,7 +157,7 @@
 		}		
 		if (!isset($form_commentaire))
 		{
-			$form_commentaire=0;
+			$form_commentaire="";
 		}		
 
 		// Liste des mouvements
@@ -184,6 +181,7 @@
 		// Liste des tiers
 		$lst=ListActiveUsers($sql,"std",$MyOpt["restrict"]["comptes"],"");
 	
+
 		foreach($lst as $i=>$tmpuid)
 		  {
 			$resusr=new user_class($tmpuid,$sql);

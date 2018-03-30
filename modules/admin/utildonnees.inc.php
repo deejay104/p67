@@ -18,17 +18,10 @@
 		{
 			foreach($form_nom as $id=>$n)
 			{
-				if ($id>0)
+				if ($n!="")
 				{
-					$q="UPDATE ".$MyOpt["tbl"]."_utildonneesdef SET nom='".$n."', type='".$form_type[$id]."' WHERE id='".$id."'";
-					$sql->Update($q);
+					$sql->Edit("user",$MyOpt["tbl"]."_utildonneesdef",$id,array("nom"=>$n,"type"=>$form_type[$id]));
 				}
-				else if ($n!="")
-				{
-					$q="INSERT ".$MyOpt["tbl"]."_utildonneesdef SET nom='".$n."', type='".$form_type[$id]."'";
-					$sql->Insert($q);
-				}
-
 			}
 		}
 	}

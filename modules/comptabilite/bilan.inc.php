@@ -73,11 +73,15 @@
 	$tabTitre=array();
 	$tabTitre["compte"]["aff"]="Compte";
 	$tabTitre["compte"]["width"]=150;
+	$tabTitre["description"]["aff"]="Description";
+	$tabTitre["description"]["width"]=250;
 	$tabTitre["total"]["aff"]="Total";
 	$tabTitre["total"]["width"]=150;
 	
 // ---- Récupère la liste
-	$query = "SELECT compte,SUM(montant) AS total FROM ".$MyOpt["tbl"]."_compte WHERE uid=".$MyOpt["uid_club"]." AND date_valeur>='$annee-01-01' AND date_valeur<'".($annee+1)."-01-01' GROUP BY compte ORDER BY compte";
+	$query = "SELECT num.description, cpt.compte,SUM(cpt.montant) AS total FROM ".$MyOpt["tbl"]."_compte AS cpt ";
+	$query.= "LEFT JOIN ".$MyOpt["tbl"]."_numcompte AS num ON num.numcpt=cpt.compte ";
+	$query.= "WHERE uid=".$MyOpt["uid_club"]." AND date_valeur>='$annee-01-01' AND date_valeur<'".($annee+1)."-01-01' GROUP BY compte ORDER BY compte";
 
 	$total=0;
 
@@ -88,6 +92,8 @@
 
 		$tabValeur[$i]["compte"]["val"]=$sql->data["compte"];
 		$tabValeur[$i]["compte"]["aff"]=$sql->data["compte"];
+		$tabValeur[$i]["description"]["val"]=$sql->data["description"];
+		$tabValeur[$i]["description"]["aff"]=$sql->data["description"];
 		$tabValeur[$i]["total"]["val"]=$sql->data["total"];
 		$tabValeur[$i]["total"]["aff"]=AffMontant($sql->data["total"]);
 		$total=$total+$sql->data["total"];

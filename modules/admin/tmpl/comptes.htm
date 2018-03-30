@@ -1,0 +1,52 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+<!-- BEGIN: infos -->
+{aff_menu}
+<!-- END: infos -->
+
+<!-- BEGIN: corps -->
+
+
+<FORM name="reservation" method="post" action="index.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<input type="hidden" name="mod" value="admin">
+	<INPUT type="hidden" name="rub" value="comptes">
+
+	<BR>
+
+	<!-- BEGIN: msg_enregistre -->
+	<div class="msgok">{msg_resultat}</div>
+	<!-- END: msg_enregistre -->
+
+
+	<TABLE class="tableauAff tableauAffLight">
+	  <TR>
+		<th width=110>Compte</th>
+		<th width="410">Description</th>
+		<th>&nbsp;</th>
+	  </TR>
+
+	<!-- BEGIN: lst_mouvement -->
+	  <TR>
+		<TD>
+			<INPUT type="text" name="form_numcpt[{form_id}]" style="width:100px;" value="{form_numcpt}" maxlength="10">
+		</TD>
+		<TD>
+			<INPUT type="text" name="form_description[{form_id}]" style="width:400px;" value="{form_description}">
+		</TD>
+		<TD>
+			<a href="index.php?mod=admin&rub=comptes&fonc=delete&id={form_id}" class='imgDelete'><img src="{path_module}/img/icn16_supprimer.png" border=0 /></a>
+		</TD>
+
+	  </TR>
+	<!-- END: lst_mouvement -->
+	</TABLE>
+	<br />
+	<INPUT type="submit" name="fonc" value="Enregistrer"> <INPUT type="submit" name="fonc" value="Annuler">
+
+</FORM>
+
+
+
+<!-- END: corps -->

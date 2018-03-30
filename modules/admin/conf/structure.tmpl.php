@@ -24,7 +24,7 @@ $tabTmpl=Array
 	"actualites" => Array
 	(
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
-		"titre" => Array("Type" => "varchar(150)", ),
+		"titre" => Array("Type" => "varchar(150)", "Default" => "Titre" ),
 		"message" => Array("Type" => "text", ),
 		"dte_mail" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
 		"mail" => Array("Type" => "enum('oui','non')", "Default" => "non", ),
@@ -272,7 +272,7 @@ $tabTmpl=Array
 		"uid_maj" => Array("Type" => "int(10) unsigned", "Default" => "0", "Index" => "1", ),
 		"dte_maj" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00"),
 		"type" => Array("Type" => "varchar(3)", ),
-		"comment" => Array("Type" => "varchar(50)", ),
+		"comment" => Array("Type" => "text", ),
 	),
 	"lache" => Array
 	(
@@ -400,6 +400,13 @@ $tabTmpl=Array
 		"idnav" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
 		"ordre" => Array("Type" => "int(10) unsigned", ),
 		"nom" => Array("Type" => "varchar(20)", "Index" => "1", ),
+	),
+	"numcompte" => Array
+	(
+		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
+		"numcpt" => Array("Type" => "varchar(10)", "Index" => "1", ),
+		"description" => Array("Type" => "varchar(40)"),
+		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", ),
 	),
 	"participants" => Array
 	(

@@ -29,6 +29,7 @@
 		<th width="90">Débiteur</th>
 		<th width="90">Créditeur</th>
 		<th width="90">Montant</th>
+	<!-- BEGIN: aff_jour -->
 		<th align='center'>Di</th>
 		<th align='center'>Lu</th>
 		<th align='center'>Ma</th>
@@ -37,6 +38,7 @@
 		<th align='center'>Ve</th>
 		<th align='center'>Sa</th>
 		<th align='center'>Vac</th>
+	<!-- END: aff_jour -->
 		<th>&nbsp;</th>
 	  </TR>
 
@@ -50,7 +52,12 @@
 			<INPUT type="text" name="form_poste[{form_id}]" style="width:400px;" value="{nom_poste}">
 		</TD>
 		<TD>
-			<INPUT type="text" name="form_compte[{form_id}]" style="width:80px;" value="{nom_compte}" maxlength="10">
+			<SELECT name="form_compte[{form_id}]">
+			<OPTION value="">Aucun</OPTION>
+	<!-- BEGIN: lst_compte -->
+			<OPTION value="{form_numcpt}" {chk_compte}>{form_compte}</OPTION>
+	<!-- END: lst_compte -->
+	        </SELECT>
 		</TD>
 		<TD>
 			<SELECT name="form_debiteur[{form_id}]">
@@ -69,6 +76,7 @@
 		<TD>
 			<INPUT type="text" name="form_montant[{form_id}]" style="width:80px;" value="{montant_poste}">
 		</TD>
+	<!-- BEGIN: aff_jour_ligne -->
 		<TD align='right'>
 			<INPUT type="text" name="form_j0[{form_id}]" style="width:30px;" value="{j0_poste}">
 		</TD>
@@ -93,6 +101,7 @@
 		<TD>
 			<INPUT type="text" name="form_j7[{form_id}]" style="width:30px;" value="{j7_poste}">
 		</TD>
+	<!-- END: aff_jour_ligne -->
 		<TD>
 			<a href="index.php?mod=admin&rub=postes&fonc=delete&id={form_id}" class='imgDelete'><img src="{path_module}/img/icn16_supprimer.png" border=0 /></a>
 		</TD>

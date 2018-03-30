@@ -28,6 +28,10 @@
 	{
 		$tmpl_menu->parse("infos.echeances");
 	}
+	if (GetDroit("AccesConfigComptes"))
+	{
+		$tmpl_menu->parse("infos.comptes");
+	}
 	if (GetDroit("AccesConfigPostes"))
 	{
 		$tmpl_menu->parse("infos.postes");

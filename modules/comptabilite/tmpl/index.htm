@@ -27,7 +27,8 @@ function Recharge()
   	var form_poste = document.getElementById("form_poste").value;
   	var form_tiers = document.getElementById("form_tiers").value;
   	var form_date = document.getElementById("form_date").value;
-	document.location='index.php?mod=comptabilite&rub=mouvement&form_poste='+form_poste+'&form_tiers='+form_tiers+'&form_dte='+form_date;
+  	var form_commentaire = document.getElementById("form_commentaire").value;
+	document.location='index.php?mod=comptabilite&rub=mouvement&form_poste='+form_poste+'&form_tiers='+form_tiers+'&form_dte='+form_date+'&form_commentaire='+form_commentaire;
 }
 
 function AffVentilation()
@@ -61,6 +62,7 @@ function AffVentilation()
 		<!-- END: lst_visualisation -->
 		<INPUT type="hidden" name="form_date" id="form_date" value="{form_date}">
 		<INPUT type="hidden" name="form_poste" id="form_poste" value="{form_poste}">
+		<INPUT type="hidden" name="form_tiers" id="form_tiers" value="{form_tiers}">
 		<INPUT type="hidden" name="form_commentaire" id="form_commentaire" value="{form_commentaire}">
 		<INPUT type="hidden" name="form_montant" id="form_montant" value="{form_montant}">
 		<br />
@@ -109,7 +111,7 @@ function AffVentilation()
 		<TD style="padding-top:10px;">&nbsp;</TD>
 		<TD>Commentaire</TD>
 		<TD colspan=3>
-			<INPUT name="form_commentaire" value="{form_commentaire}" style="width:777px;">
+			<INPUT id="form_commentaire" name="form_commentaire" value="{form_commentaire}" style="width:777px;">
 		</TD>
 	  </TR>
 

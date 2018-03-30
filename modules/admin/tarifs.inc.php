@@ -47,49 +47,23 @@
 	  {
 		foreach($tarif_pilote as $i=>$t)
 		{
-			if ($i==0)
-			  {
-				if ($tarif_code[$i]!="")
-				  {
-					$query="INSERT ".$MyOpt["tbl"]."_tarifs SET ";
-					$query.="ress_id='".$idavion."', ";
-					if (is_numeric($tarif_pilote[$i]))
-					  { $query.="pilote='".$tarif_pilote[$i]."', "; }
-					if (is_numeric($tarif_instructeur[$i]))
-					  { $query.="instructeur='".$tarif_instructeur[$i]."', "; }
-					if (is_numeric($tarif_reduction[$i]))
-					  { $query.="reduction='".$tarif_reduction[$i]."', "; }
-					$query.="code='".substr($tarif_code[$i],0,2)."', ";
-					$query.="nom='".substr($tarif_nom[$i],0,20)."', ";
-					$query.="defaut_pil='non', ";
-					$query.="defaut_ins='non' ";
-					$sql->Insert($query);
-				  }
-			  }
-			else
-			  {
-				if ($tarif_code[$i]!="")
-				  {
-					$query="UPDATE ".$MyOpt["tbl"]."_tarifs SET ";
-					if (is_numeric($tarif_pilote[$i]))
-					  { $query.="pilote='".$tarif_pilote[$i]."', "; }
-					if (is_numeric($tarif_instructeur[$i]))
-					  { $query.="instructeur='".$tarif_instructeur[$i]."', "; }
-					if (is_numeric($tarif_reduction[$i]))
-					  { $query.="reduction='".$tarif_reduction[$i]."', "; }
-					$query.="code='".substr($tarif_code[$i],0,2)."', ";
-					$query.="nom='".substr($tarif_nom[$i],0,20)."', ";
-					$query.="defaut_pil='non', ";
-					$query.="defaut_ins='non' ";
-					$query.="WHERE id=$i";
-					$sql->Update($query);
-				  }
-				else
-				  {
-					$query="DELETE FROM ".$MyOpt["tbl"]."_tarifs WHERE id='$i'";
-					$sql->Delete($query);
-				  }  	
-			  }
+			if ($tarif_code[$i]!="")
+			{
+				$t=array(
+					"pilote"=>(is_numeric($tarif_pilote[$i])) ? $tarif_pilote[$i] : 0,
+					"instructeur"=>(is_numeric($tarif_instructeur[$i])) ? $tarif_instructeur[$i] : 0,
+					"reduction"=>(is_numeric($tarif_reduction[$i])) ? $tarif_reduction[$i] : 0,
+					"code"=>substr($tarif_code[$i],0,2),
+					"nom"=>substr($tarif_nom[$i],0,20),
+					"defaut_pil"=>'non',
+					"defaut_ins"=>'non'
+				);
+				if ($i==0)
+				{
+					$t["ress_id"]=$idavion;
+				}
+				$sql->Edit("tarifs",$MyOpt["tbl"]."_tarifs",$i,$t);
+			}
 		}
 
 		if (is_array($tarif_defaut_pil))
@@ -117,10 +91,10 @@
 	}
 // ---- Supprime un tarif
 	if (($fonc=="delete") && ($id>0))
-	  {
+	{
 		$query="DELETE FROM ".$MyOpt["tbl"]."_tarifs WHERE id='$id'";
 		$sql->Delete($query);
-	  }
+	}
 
 
 // ---- Affiche les modules

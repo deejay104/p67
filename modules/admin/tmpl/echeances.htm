@@ -16,14 +16,15 @@
 	<table class="tableauAff tableauAffLight">
 	  <TR>
 		<th width="20">&nbsp;</th>
-		<th width="260"><B>Description</B></th>
-		<th width="120"><B>Réservation</B></th>
-		<th width="410"><B>Poste</B></th>
-		<th width="90"><B>Cout</B></th>
-		<th width="60"><B>Droit</B></th>
-		<th width="60"><B>Multi</B></th>
-		<th width="60"><B>Notif</B></th>
-		<th width="60"><B>Délai</B></th>
+		<th width="260">Description</th>
+		<th width="120">Réservation</th>
+		<th width="410"Poste</th>
+		<th width="90">Cout</th>
+		<th width="60">Droit</th>
+		<th width="60">Multi</th>
+		<th width="60">Notif</th>
+		<th width="60">Délai</th>
+		<th>&nbsp;</th>
 	  </TR>
 	<!-- BEGIN: lst_echeance -->
 	<tr>
@@ -67,6 +68,9 @@
 		<td>
 			<INPUT type="text" name="form_delai[{form_id}]" style="width:50px;" value="{form_delai}" maxlength="3">
 		</td>
+		<td>
+			<a href="index.php?mod=admin&rub=echeances&fonc=delete&id={form_id}" class='imgDelete'><img src="{path_module}/img/icn16_supprimer.png" border=0 /></a>
+		</td>
 	</tr>
 	<!-- END: lst_echeance -->
 	<tr>
@@ -109,6 +113,9 @@
 		</td>
 		<td>
 			<INPUT type="text" name="form_delai[0]" style="width:50px;" value="30" maxlength="3">
+		</td>
+		<td>
+			<a href="index.php?mod=admin&rub=echeances&fonc=delete&id=0" class='imgDelete'><img src="{path_module}/img/icn16_supprimer.png" border=0 /></a>
 		</td>
 	</tr>
 	</table>

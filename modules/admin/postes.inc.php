@@ -1,15 +1,12 @@
 <?
 // ---------------------------------------------------------------------------------------------
-//   Edition des postes
-//     ($Author: miniroot $)
-//     ($Date: 2016-02-14 23:17:30 +0100 (dim., 14 fÃ©vr. 2016) $)
-//     ($Revision: 445 $)
+//   Edition des comptes
 // ---------------------------------------------------------------------------------------------
 //   Variables  : 
 // ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.2
-    Copyright (C) 2012 Matthieu Isorez
+    Easy Aero v2.4
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -45,57 +42,41 @@
 
 // ---- Enregistre les modifications
 	if (($fonc=="Enregistrer") && (is_array($form_poste)) && (!isset($_SESSION['tab_checkpost'][$checktime])))
-	  {
+	{
 	  	foreach($form_poste as $id=>$description)
-	  	  {
-	  	  	if ($id>0)
-	  	  	  {
-				$query="UPDATE ".$MyOpt["tbl"]."_mouvement SET ordre='".substr(trim($form_ordre[$id]),0,4)."', description='".addslashes(trim($description))."', compte='".$form_compte[$id]."', debiteur='".$form_debiteur[$id]."', crediteur='".$form_crediteur[$id]."', montant='".$form_montant[$id]."', ";
-				$query.=" j0='".$form_j0[$id]."',";
-				$query.=" j1='".$form_j1[$id]."',";
-				$query.=" j2='".$form_j2[$id]."',";
-				$query.=" j3='".$form_j3[$id]."',";
-				$query.=" j4='".$form_j4[$id]."',";
-				$query.=" j5='".$form_j5[$id]."',";
-				$query.=" j6='".$form_j6[$id]."',";
-				$query.=" j7='".$form_j7[$id]."'";
-				$query.=" WHERE id='$id'";
-				$sql->Update($query);
-
-				$query ="INSERT INTO ".$MyOpt["tbl"]."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-				$query.="VALUES (NULL , 'poste', '".$MyOpt["tbl"]."_mouvement', '$id', '$uid', '".now()."', 'MOD', 'Update movement')";
-				$sql->Insert($query);
-			  }
-			else if (trim($description)!="")
-	  	  	  {
-				$query="INSERT ".$MyOpt["tbl"]."_mouvement SET ordre='".substr(trim($form_ordre[$id]),0,4)."', description='". addslashes(trim($description))."', compte='".$form_compte[$id]."', debiteur='".$form_debiteur[$id]."', crediteur='".$form_crediteur[$id]."', montant='".$form_montant[$id]."',";
-				$query.=" j0='".$form_j0[$id]."',";
-				$query.=" j1='".$form_j1[$id]."',";
-				$query.=" j2='".$form_j2[$id]."',";
-				$query.=" j3='".$form_j3[$id]."',";
-				$query.=" j4='".$form_j4[$id]."',";
-				$query.=" j5='".$form_j5[$id]."',";
-				$query.=" j6='".$form_j6[$id]."',";
-				$query.=" j7='".$form_j7[$id]."'";
-				$sql->Insert($query);
-
-				$query ="INSERT INTO ".$MyOpt["tbl"]."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-				$query.="VALUES (NULL , 'poste', '".$MyOpt["tbl"]."_mouvement', '$id', '$uid', '".now()."', 'ADD', 'Create movement')";
-				$sql->Insert($query);
-			  }
-	  	  }
-	  }
+	  	{
+			if (trim($description)!="")
+			{
+				$t=array(
+					"ordre"=>substr(trim($form_ordre[$id]),0,4),
+					"description"=>addslashes(trim($description)),
+					"compte"=>$form_compte[$id],
+					"debiteur"=>$form_debiteur[$id],
+					"crediteur"=>$form_crediteur[$id],
+					"montant"=>$form_montant[$id]
+				);
+				$sql->Edit("mouvement",$MyOpt["tbl"]."_mouvement",$id,$t);
+			}
+	  	}
+	}
 
 // ---- Supprime un poste
 	if ($fonc=="delete")
-	  {
-		$query="UPDATE ".$MyOpt["tbl"]."_mouvement SET actif='non' WHERE id='$id'";
-		$sql->Delete($query);
-	  }
+	{
+		$sql->Edit("mouvement",$MyOpt["tbl"]."_mouvement",$id,array("actif"=>"non"));		
+	}
 
 // ---- Affiche la page demandée
+	$tabcompte=array();
+	$query = "SELECT * FROM ".$MyOpt["tbl"]."_numcompte WHERE actif='oui' ORDER BY numcpt";
+	$sql->Query($query);
+	for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+		$tabcompte[$sql->data["numcpt"]]=$sql->data["description"];
+	}
 
-	// Liste des mouvements
+	  // Liste des mouvements
 	$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE actif='oui' ORDER BY ordre,description";
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
@@ -105,7 +86,6 @@
 		$tmpl_x->assign("form_id", $sql->data["id"]);
 		$tmpl_x->assign("ordre_poste", $sql->data["ordre"]);
 		$tmpl_x->assign("nom_poste", $sql->data["description"]);
-		$tmpl_x->assign("nom_compte", $sql->data["compte"]);
 
 		$tmpl_x->assign("chk_debiteur_0", "");
 		$tmpl_x->assign("chk_debiteur_B", "");
@@ -129,6 +109,17 @@
 
 		$tmpl_x->assign("j7_poste", $sql->data["j7"]);
 
+		foreach($tabcompte as $numcpt=>$desc)
+		{
+			$tmpl_x->assign("form_numcpt", $numcpt);
+			$tmpl_x->assign("form_compte", $numcpt."-".$desc);
+			$tmpl_x->assign("chk_compte", "");
+			if ($sql->data["compte"]==$numcpt)
+			{
+				$tmpl_x->assign("chk_compte", "selected");
+			}
+			$tmpl_x->parse("corps.lst_mouvement.lst_compte");
+		}
 		$tmpl_x->parse("corps.lst_mouvement");
 	  }
 

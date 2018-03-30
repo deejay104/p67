@@ -72,36 +72,59 @@
 
 	
 // ---- Update la valeur
+	$sql->show=false;
+
 	$q="SELECT id FROM ".$MyOpt["tbl"]."_prevision WHERE annee='".$dte."' AND mois='".$mois."' AND avion='".$ress."'";
 	$res=$sql->QueryRow($q);
 
 	if ($res["id"]>0)
 	{
-		$q="UPDATE ".$MyOpt["tbl"]."_prevision SET heures='".$var."' WHERE id='".$res["id"]."'";
-		$nb=$sql->Update($q);
-		if ($sql->mysql_ErrorMsg=="")
-		{
-			$ret["result"]=utf8_encode("OK");
-		}
-		else
-		{
-			$ret["result"]=utf8_encode("NOK");
-		}
+		$r=$sql->Edit("_prevision",$MyOpt["tbl"]."_prevision",$res["id"],array("heures"=>$var));
 	}
 	else
 	{
-		$q="INSERT ".$MyOpt["tbl"]."_prevision SET annee='".$dte."', mois='".$mois."', avion='".$ress."', heures='".$var."'";
-		$id=$sql->Insert($q);
-		if ($id>0)
-		{
-			$ret["result"]=utf8_encode("OK");
-		}
-		else
-		{
-			$ret["result"]=utf8_encode("NOK");
-		}
+		$r=$sql->Edit("_prevision",$MyOpt["tbl"]."_prevision",$res["id"],array("annee"=>$dte,"mois"=>$mois,"avion"=>$ress,"heures"=>$var));
 	}
-		error_log($q);
+
+	if ($r=="NOK")
+	{
+		$ret["result"]="NOK";
+	}
+	else
+	{
+		$ret["result"]="OK";
+	}
+		
+	// $q="SELECT id FROM ".$MyOpt["tbl"]."_prevision WHERE annee='".$dte."' AND mois='".$mois."' AND avion='".$ress."'";
+	// $res=$sql->QueryRow($q);
+
+	// if ($res["id"]>0)
+	// {
+		// $q="UPDATE ".$MyOpt["tbl"]."_prevision SET heures='".$var."' WHERE id='".$res["id"]."'";
+		// $nb=$sql->Update($q);
+		// if ($sql->mysql_ErrorMsg=="")
+		// {
+			// $ret["result"]=utf8_encode("OK");
+		// }
+		// else
+		// {
+			// $ret["result"]=utf8_encode("NOK");
+		// }
+	// }
+	// else
+	// {
+		// $q="INSERT ".$MyOpt["tbl"]."_prevision SET annee='".$dte."', mois='".$mois."', avion='".$ress."', heures='".$var."'";
+		// $id=$sql->Insert($q);
+		// if ($id>0)
+		// {
+			// $ret["result"]=utf8_encode("OK");
+		// }
+		// else
+		// {
+			// $ret["result"]=utf8_encode("NOK");
+		// }
+	// }
+		// error_log($q);
 
 	echo json_encode($ret);
 

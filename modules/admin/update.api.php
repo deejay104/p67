@@ -158,7 +158,7 @@ function AjoutLog($txt)
 		// Tester si la table n'existe pas
 		if (!isset($tabProd[$MyOpt["tbl"]."_".$tab]))
 		{
-			$q="CREATE TABLE `".$MyOpt["tbl"]."_".$tab."` (`id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, PRIMARY KEY (`id`)) ENGINE=InnoDB; ";
+			$q="CREATE TABLE `".$MyOpt["tbl"]."_".$tab."` (`id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, PRIMARY KEY (`id`)) ENGINE=InnoDB COLLATE=latin1_general_ci;";
 			$res=$sql->Update($q);
 			if ($res==-1)
 			{
@@ -173,7 +173,7 @@ function AjoutLog($txt)
 			}
 		}
 
-		// Si la table existe ou quelle a pu être créée
+		// Si la table existe ou qu'elle a pu être créée
 		if (isset($tabProd[$MyOpt["tbl"]."_".$tab]))
 		{
 			foreach($fields as $field=>$d)
@@ -181,7 +181,7 @@ function AjoutLog($txt)
 				// Le champ n'existe pas
 				if (!isset($tabProd[$MyOpt["tbl"]."_".$tab][$field]))
 				{
-					$q="ALTER TABLE `".$MyOpt["tbl"]."_".$tab."` ADD `".$field."` ".$tabTmpl[$tab][$field]["Type"]." NOT NULL ".(isset($tabTmpl[$tab][$field]["Default"]) ? "DEFAULT '".$tabTmpl[$tab][$field]["Default"]."'" : "");
+					$q="ALTER TABLE `".$MyOpt["tbl"]."_".$tab."` ADD `".$field."` ".$tabTmpl[$tab][$field]["Type"]." DEFAULT ".(isset($tabTmpl[$tab][$field]["Default"]) ? " '".$tabTmpl[$tab][$field]["Default"]."'" : "NULL");
 					$res=$sql->Update($q);
 					if ($res==-1)
 					{

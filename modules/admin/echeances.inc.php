@@ -16,23 +16,29 @@
 	{
 		foreach($form_description as $id=>$d)
 		{
-			if ($id>0)
+			if(trim($d)!="")
 			{
-				$query="UPDATE ".$MyOpt["tbl"]."_echeancetype SET description='".$d."',poste='".$form_poste[$id]."', droit='".$form_droit[$id]."',resa='".$form_resa[$id]."',multi='".$form_multi[$id]."',cout='".$form_cout[$id]."',notif='".$form_notif[$id]."',delai='".$form_delai[$id]."' WHERE id='".$id."'";
-				$sql->Update($query);
-			}
-			else
-			{
-				if (trim($d)!="")
-				{
-					$query="INSERT INTO ".$MyOpt["tbl"]."_echeancetype SET description='".$d."',poste='".$form_poste[$id]."',droit='".$form_droit[$id]."',resa='".$form_resa[$id]."',multi='".$form_multi[$id]."',cout='".$form_cout[$id]."',notif='".$form_notif[$id]."',delai='".$form_delai[$id]."'";
-					$sql->Insert($query);
-				}
+				$t=array(
+					"description"=>$d,
+					"poste"=>$form_poste[$id],
+					"droit"=>$form_droit[$id],
+					"resa"=>$form_resa[$id],
+					"multi"=>$form_multi[$id],
+					"cout"=>$form_cout[$id],
+					"notif"=>$form_notif[$id],
+					"delai"=>$form_delai[$id]
+				);
+				$sql->Edit("echeance",$MyOpt["tbl"]."_echeancetype",$id,$t);
 			}
 		}
 	}
+// ---- Supprime une échéance
+	if (($fonc=="delete") && ($id>0))
+	{
+		$sql->Edit("echeance",$MyOpt["tbl"]."_echeancetype",$id,array("actif"=>"non"));		
+	}
 
-// List des postes
+// ---- Liste des postes
 	$query = "SELECT * FROM ".$MyOpt["tbl"]."_mouvement WHERE actif='oui' ORDER BY ordre,description";
 	$sql->Query($query);
 	$tabposte=array();
