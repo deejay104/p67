@@ -1,7 +1,7 @@
 <?
 /*
-    SoceIt v2.10
-    Copyright (C) 2016 Matthieu Isorez
+    Easy Aero v2.4
+    Copyright (C) 2018 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,9 +21,6 @@
     ($Date: 2016-04-22 22:08:32 +0200 (ven., 22 avr. 2016) $)
     ($Revision: 460 $)
 */
-
-//if (file_exists("config/roles.inc.php"))
-//  { require ("config/roles.inc.php"); }
 
 // Valeur d'affichage des types
 $tabTypeNom["pilote"]="Pilote";
@@ -103,6 +100,9 @@ class user_class{
 		// Données utilisateurs
 		$this->donnees=array();
 
+		// Droits utilisateurs
+		$this->groupe=array();
+
 		// Obsolète
 		$this->data["dte_naissance"]="";
 		$this->data["dte_licence"]="";
@@ -121,102 +121,105 @@ class user_class{
 
 	# Load user informations
 	function load($uid,$setdata=true,$me)
-	  { global $Droits;
+	{ global $Droits;
 
-			$this->uid=$uid;
-			$sql=$this->sql;
-			if ($setdata)
-			  { $query = "SELECT * FROM ".$this->tbl."_utilisateurs WHERE id='$uid'"; }
-			else
-			  { $query = "SELECT id,prenom,nom,actif,virtuel,type,mail,idcpt,zone,dte_naissance,uid_maj,dte_maj,droits FROM ".$this->tbl."_utilisateurs WHERE id='$uid'"; }
-			$res = $sql->QueryRow($query);
-			if (!is_array($res))
-			  {
-			  	return "";
-			  }
-	
-			// Charge les variables
-			$this->prenom=($res["prenom"]!="")?ucwords($res["prenom"]):"";
-			$this->nom=($res["nom"]!="")?strtoupper($res["nom"]):"";
-			$this->actif=$res["actif"];
-			$this->virtuel=$res["virtuel"];
-			$this->type=$res["type"];
-			$this->mail=$res["mail"];
-			$this->dte_naissance=$res["dte_naissance"];
-			$this->zone=$res["zone"];
-			$this->uidmaj=$res["uid_maj"];
-			$this->dtemaj=$res["dte_maj"];
-			$this->idcpt=$res["idcpt"];
-	
-			if ($setdata)
-			{ 
-				foreach($res as $k=>$v)
-				{
-					if (!is_numeric($k))
-					{
-						$this->data[$k]=$v;
-					}
-				}
+		$this->uid=$uid;
+		$sql=$this->sql;
+		if ($setdata)
+		  { $query = "SELECT * FROM ".$this->tbl."_utilisateurs WHERE id='$uid'"; }
+		else
+		  { $query = "SELECT id,prenom,nom,actif,virtuel,type,mail,idcpt,zone,dte_naissance,uid_maj,dte_maj,droits FROM ".$this->tbl."_utilisateurs WHERE id='$uid'"; }
+		$res = $sql->QueryRow($query);
+		if (!is_array($res))
+		  {
+			return "";
+		  }
 
-				// Charge les droits
-				$query = "SELECT groupe FROM ".$this->tbl."_droits WHERE uid='$uid'";
-				$sql->Query($query);
-				$this->data["droits"]="";
-				$s="";
-				for($i=0; $i<$sql->rows; $i++)
-				{ 
-					$sql->GetRow($i);
-				 	$this->groupe[$sql->data["groupe"]]=true;
-					$this->data["droits"].=$s.$sql->data["groupe"];
-					$s=",";
-				}
-			}
+		// Charge les variables
+		$this->prenom=($res["prenom"]!="")?ucwords($res["prenom"]):"";
+		$this->nom=($res["nom"]!="")?strtoupper($res["nom"]):"";
+		$this->actif=$res["actif"];
+		$this->virtuel=$res["virtuel"];
+		$this->type=$res["type"];
+		$this->mail=$res["mail"];
+		$this->dte_naissance=$res["dte_naissance"];
+		$this->zone=$res["zone"];
+		$this->uidmaj=$res["uid_maj"];
+		$this->dtemaj=$res["dte_maj"];
+		$this->idcpt=$res["idcpt"];
 
-			$this->data["fullname"]=AffFullName($this->prenom,$this->nom);
-			$this->fullname=$this->data["fullname"];
-
-			if ($me)
+		if ($setdata)
+		{ 
+			foreach($res as $k=>$v)
 			{
-				$this->loadRoles();
+				if (!is_numeric($k))
+				{
+					$this->data[$k]=$v;
+				}
 			}
-		}
 
-	function loadRoles(){
-			// Charge les roles
-			$this->role=array();
-			$this->role[""]=true;
-			$sql=$this->sql;
-			$query = "SELECT roles.role FROM ".$this->tbl."_roles AS roles LEFT JOIN ".$this->tbl."_droits AS droits ON droits.groupe=roles.groupe  WHERE (uid='".$this->uid."' OR roles.groupe='ALL') AND roles.role IS NOT NULL GROUP BY roles.role";
+			// Charge les droits
+			$query = "SELECT groupe FROM ".$this->tbl."_droits WHERE uid='$uid' ORDER BY groupe";
 			$sql->Query($query);
-
+			$this->data["droits"]="";
+			$s="";
+			$this->groupe=array();
 			for($i=0; $i<$sql->rows; $i++)
 			{ 
 				$sql->GetRow($i);
-				$this->role[$sql->data["role"]]=true;
+				$this->groupe[$sql->data["groupe"]]=true;
+				$this->data["droits"].=$s.$sql->data["groupe"];
+				$s=",";
 			}
+		}
 
+		$this->data["fullname"]=AffFullName($this->prenom,$this->nom);
+		$this->fullname=$this->data["fullname"];
 
-/*	
-			if (isset($Droits[$sql->data["groupe"]]))
-			  {
-					foreach($Droits[$sql->data["groupe"]] as $droit=>$val)
-					  { $this->role[$droit]=true; }
-			  }
-			if (is_array($Droits["ALL"]))
-			  {
-					foreach($Droits["ALL"] as $droit=>$val)
-					  { $this->role[$droit]=true; }
-			  }
-*/
-//print_r($this->role);
+		if ($me)
+		{
+			$this->loadRoles();
+		}
 	}
 
+	function loadRoles()
+	{
+		// Charge les roles
+		$this->role=array();
+		$this->role[""]=true;
+		$sql=$this->sql;
+		$query = "SELECT roles.role FROM ".$this->tbl."_roles AS roles LEFT JOIN ".$this->tbl."_droits AS droits ON droits.groupe=roles.groupe  WHERE (uid='".$this->uid."' OR roles.groupe='ALL') AND roles.role IS NOT NULL GROUP BY roles.role";
+		$sql->Query($query);
+
+		for($i=0; $i<$sql->rows; $i++)
+		{ 
+			$sql->GetRow($i);
+			$this->role[$sql->data["role"]]=true;
+		}
+	}
+
+	function LoadDonneesComp()
+	{
+		$sql=$this->sql;
+		$query = "SELECT donnees.id,def.id AS did,def.nom,donnees.valeur FROM ".$this->tbl."_utildonneesdef AS def LEFT JOIN ".$this->tbl."_utildonnees AS donnees ON donnees.did=def.id AND (donnees.uid='$this->uid' OR donnees.uid IS NULL) WHERE def.actif='oui' ORDER BY ordre, nom";
+
+		$sql->Query($query);
+		for($i=0; $i<$sql->rows; $i++)
+		{ 
+			$sql->GetRow($i);
+			$this->donnees[$sql->data["did"]]["id"]=$sql->data["id"];
+			$this->donnees[$sql->data["did"]]["nom"]=$sql->data["nom"];
+			$this->donnees[$sql->data["did"]]["valeur"]=$sql->data["valeur"];
+		}
+	}
+	
 	# Load user informations
-	function loadLache(){
-		$query = "SELECT avion.id AS aid, ".$this->tbl."_lache.id AS lid, ".$this->tbl."_lache.uid_creat AS uid FROM ".$this->tbl."_utilisateurs AS usr ";
+	function loadLache()
+	{
+		$query = "SELECT avion.id AS aid, lache.id AS lid, lache.uid_creat AS uid FROM ".$this->tbl."_utilisateurs AS usr ";
 		$query.= "LEFT JOIN ".$this->tbl."_ressources AS avion ON 1=1 ";
-		$query.= "LEFT JOIN ".$this->tbl."_lache ON avion.id=".$this->tbl."_lache.id_avion AND usr.id=".$this->tbl."_lache.uid_pilote ";
-		$query.= "WHERE usr.id='$this->uid' AND avion.actif='oui'";
+		$query.= "LEFT JOIN ".$this->tbl."_lache AS lache ON avion.id=lache.id_avion AND usr.id=lache.uid_pilote  AND lache.actif='oui' ";
+		$query.= "WHERE usr.id='".$this->uid."' AND avion.actif='oui'";
 
 		$sql=$this->sql;
 		$sql->Query($query);
@@ -243,19 +246,14 @@ class user_class{
 	function LoadEnfants()
 	{
 		$sql=$this->sql;
-		// if ($this->data["type"]=="enfant")
-		  // {
-		  	if ($this->data["pere"]>0)
-			  { $this->data["pere"]=new user_class($this->data["pere"],$sql,false,false); }
-			else
-			  { $this->data["pere"]=array(); }
-		  	if ($this->data["mere"]>0)
-			  { $this->data["mere"]=new user_class($this->data["mere"],$sql,false,false); }
-			else
-			  { $this->data["mere"]=array(); }
-		  // }
-		// else
-		  // {
+		if ($this->data["pere"]>0)
+		  { $this->data["pere"]=new user_class($this->data["pere"],$sql,false,false); }
+		else
+		  { $this->data["pere"]=array(); }
+		if ($this->data["mere"]>0)
+		  { $this->data["mere"]=new user_class($this->data["mere"],$sql,false,false); }
+		else
+		  { $this->data["mere"]=array(); }
 
 
 		$query = "SELECT id FROM ".$this->tbl."_utilisateurs WHERE (pere='".$this->uid."' OR mere='".$this->uid."') AND actif='oui'";
@@ -281,7 +279,7 @@ class user_class{
 
 	# Charge les lachés avions
 	function CheckLache($ress){
-		$query = "SELECT * FROM ".$this->tbl."_lache WHERE uid_pilote='$this->uid' AND id_avion='$ress'";
+		$query = "SELECT * FROM ".$this->tbl."_lache WHERE uid_pilote='$this->uid' AND id_avion='$ress' AND actif='oui'";
 		$sql=$this->sql;
 		$res=$sql->QueryRow($query);
 
@@ -319,8 +317,7 @@ class user_class{
 		else
 		{
 			return $zero;
-		}
-		
+		}	
 	}
 
 	# Show user informations
@@ -569,12 +566,12 @@ class user_class{
  			else if ($key=="pere")
 		    {
 					$sql=$this->sql;
-					$ret=AffListeMembres($sql,$txt->uid,$formname."[".$key."]","","M","std","non");
+					$ret=AffListeMembres($sql,$this->uid,$formname."[".$key."]","","M","std","non");
 			  }			
 			else if ($key=="mere")
 		    {
 					$sql=$this->sql;
-					$ret=AffListeMembres($sql,$txt->uid,$formname."[".$key."]","","F","std","non");
+					$ret=AffListeMembres($sql,$this->uid,$formname."[".$key."]","","F","std","non");
 			  }			
 			else if ($key=="enfant")
 		  	 {
@@ -702,12 +699,12 @@ class user_class{
 			else if ($key=="pere")
 			{
 				$t=$this->data[$key];
-				$ret="<a href=\"index.php?mod=membres&rub=detail&id=".$t->uid."\">".$t->fullname."</a>";
+				$ret="<a href=\"index.php?mod=membres&rub=detail&id=".$this->uid."\">".$t->fullname."</a>";
 			}
 			else if ($key=="mere")
 			{
 				$t=$this->data[$key];
-				$ret="<a href=\"index.php?mod=membres&rub=detail&id=".$t->uid."\">".$t->fullname."</a>";
+				$ret="<a href=\"index.php?mod=membres&rub=detail&id=".$this->uid."\">".$t->fullname."</a>";
 			}
 			else if ( ($key=="fullname") && ($this->actif=="off"))
 			{
@@ -752,7 +749,7 @@ class user_class{
 			else if ($key=="droits")
 			{
 				$sql=$this->sql;
-				$query="SELECT droits.groupe, groupe.description FROM ".$this->tbl."_droits AS droits LEFT JOIN ".$this->tbl."_groupe AS groupe ON droits.groupe=groupe.groupe WHERE uid='".$this->uid."'";
+				$query="SELECT droits.groupe, groupe.description FROM ".$this->tbl."_droits AS droits LEFT JOIN ".$this->tbl."_groupe AS groupe ON droits.groupe=groupe.groupe WHERE uid='".$this->uid."' ORDER BY description";
 				$sql->Query($query);
 		
 				$ret="";
@@ -910,8 +907,6 @@ class user_class{
 		if ($this->type=="eleve")
 		  {
 			// Dernier vol en DC
-//			$query="SELECT dte_deb AS dte, uid_instructeur AS ins FROM `".$this->tbl."_calendrier` WHERE uid_pilote = ".$this->uid." AND prix>0 ORDER BY dte_deb DESC LIMIT 0,1";
-//			$res=$sql->QueryRow($query);
 			$res=$this->DernierVol("",0);
 
 			$dc = (($res["ins"]>0) ? "(DC)" : "");
@@ -922,8 +917,6 @@ class user_class{
 		  }
 		else if (($this->type!="invite") && ($this->type!="membre"))
 		  {
-//			$query="SELECT dte_deb AS dte FROM `".$this->tbl."_calendrier` WHERE uid_pilote = ".$this->uid." AND prix>0 ORDER BY dte_deb DESC LIMIT 0,1";
-//			$res=$sql->QueryRow($query);
 			$res=$this->DernierVol("",0);
 
 			$d=sql2date($res["dte"],"jour");
@@ -1035,25 +1028,18 @@ class user_class{
 	function SaveMdp($mdp){
 		$sql=$this->sql;
 		$this->data["password"]=$mdp;
-		$query = "UPDATE ".$this->tbl."_utilisateurs SET password='$mdp' WHERE id='$this->uid'";
-		$sql->Update($query);
 
-		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$uid', '".now()."', 'MOD', 'Modify password')";
-		$sql->Insert($query);
+		$sql->Edit("user",$this->tbl."_utilisateurs",$this->uid,array("password"=>$mdp));		
+
 		return "";
 	}
 
 	function Create(){
 		global $uid;
 		$sql=$this->sql;
-		$query="INSERT INTO ".$this->tbl."_utilisateurs SET uid_maj='$uid', dte_maj='".now()."'";
-		$this->uid=$sql->Insert($query);
-		$this->data["idcpt"]=$this->uid;
 
-		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$uid', '".now()."', 'ADD', 'Create user')";
-		$sql->Insert($query);
+		$this->uid=$sql->Edit("user",$this->tbl."_utilisateurs",$this->uid,array("uid_maj"=>$uid, "dte_maj"=>now()));		
+		$this->data["idcpt"]=$this->uid;
 		
 		return $this->uid;
 	}
@@ -1171,42 +1157,47 @@ class user_class{
 		global $uid;
 		$sql=$this->sql;
 
-		$query ="UPDATE ".$this->tbl."_utilisateurs SET ";
+		$td=array();
 		foreach($this->data as $k=>$v)
-		  { 
+		{ 
 			if ((!is_numeric($k)) && ($k!="fullname") && ($k!="password"))
-			  {
+			{
 				$vv=$this->Valid($k,$v,true);
-			  	$query.="$k='$vv',";
-			  }
-		  }
-		$query.="uid_maj=$uid, dte_maj='".now()."' ";
-		$query.="WHERE id='$this->uid'";
-		$sql->Update($query);
+			  	$td[$k]=$vv;
+			}
+		}
+		$td["uid_maj"]=$uid;
+		$td["dte_maj"]=now();
+		$sql->Edit("user",$this->tbl."_utilisateurs",$this->uid,$td);
 
 		$this->RazGroupe();
 
 		$trole=preg_split("/,/",$this->data["droits"]);
+		$this->data["droits"]="";
+		$s="";
 		foreach ($trole AS $grp)
-		  {
-				$this->AddGroupe($grp);
-		  }
-
-		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$uid', '".now()."', 'MOD', 'Modify user')";
-		$sql->Insert($query);
+		{
+			$this->data["droits"].=$s.$this->AddGroupe($grp);
+			$s=",";
+		}
 	}
 
 	function AddGroupe($grp) {
 		global $uid;
 		$sql=$this->sql;
-
-		if (trim($grp)!="")
-		  {	
-				$query ="INSERT INTO ".$this->tbl."_droits (`groupe` ,`uid` ,`uid_creat` ,`dte_creat`) ";
-				$query.="VALUES ('".trim($grp)."' , '".$this->uid."', '$uid', '".now()."')";
-				$sql->Insert($query);
-			}
+		$grp=trim($grp);
+		
+		if (($grp!="") && (($grp!="SYS") || (($grp=="SYS") && (GetDroit("SYS")))))
+		{	
+			$query ="INSERT INTO ".$this->tbl."_droits (`groupe` ,`uid` ,`uid_creat` ,`dte_creat`) ";
+			$query.="VALUES ('".trim($grp)."' , '".$this->uid."', '$uid', '".now()."')";
+			$sql->Insert($query);
+		}
+		else
+		{
+			$grp="";
+		}
+		return $grp;
 	}
 
 	function DelGroupe($grp) {
@@ -1256,48 +1247,28 @@ class user_class{
 		  }
 		// Vérifie la différence
 		foreach($tlache as $avion=>$v)
-		  {
+		{
 			if (($v["bd"]=="") && ($v["new"]=="N"))
-			  {
-				$query="INSERT INTO ".$this->tbl."_lache SET uid_pilote='$this->uid', id_avion='$avion', uid_creat='$uid', dte_creat='".now()."'";
-				$sql->Insert($query);
-			  }
+			{
+				$sql->Edit("user",$this->tbl."_lache",0,array("id_avion"=>$avion, "uid_pilote"=>$this->uid, actif=>"oui","uid_creat"=>$uid, "dte_creat"=>now()));
+			}
 			else if (($v["bd"]>0) && ($v["new"]==""))
-			  {
-				$query="DELETE FROM ".$this->tbl."_lache WHERE id='".$v["bd"]."'";
-				$sql->Delete($query);
-			  }
-		  }
-
-		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$uid', '".now()."', 'MOD', 'Modify ressource access')";
-		$sql->Insert($query);
+			{
+				$sql->Edit("user",$this->tbl."_lache",$v["bd"],array("actif"=>"non"));
+			}
+		}
 	}
 
-	function SaveDonnees($form_donnees)
+	function SaveDonnees()
 	{ 
 		global $uid;
 		$sql=$this->sql;
 		
-		foreach($form_donnees as $did=>$d)
+		foreach($this->donnees as $did=>$d)
 		{
-			$query = "SELECT id FROM ".$this->tbl."_utildonnees WHERE uid='".$this->uid."' AND did='".$did."'";
-			$res=$sql->QueryRow($query);
-			if ($res["id"]>0)
-			{
-				$query="UPDATE ".$this->tbl."_utildonnees SET valeur='".$d."' WHERE uid='".$this->uid."' AND did='".$did."'";
-				$sql->Update($query);
-			}
-			else
-			{
-				$query="INSERT INTO ".$this->tbl."_utildonnees SET valeur='".$d."', uid='".$this->uid."', did='".$did."'";
-				$sql->Insert($query);
-			}
+			$td=array("valeur"=>$d["valeur"], "uid"=>$this->uid, "did"=>$did);
+			$sql->Edit("user",$this->tbl."_utildonnees",$d["id"],$td);
 		}
-		
-		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'user', '".$this->tbl."_utildonnees', '".$this->uid."', '$uid', '".now()."', 'MOD', 'Modify user data')";
-		$sql->Insert($query);
 	}
 
 	function Desactive(){
@@ -1305,18 +1276,10 @@ class user_class{
 		$sql=$this->sql;
 		$this->actif="off";
 
-		$query="UPDATE ".$this->tbl."_utilisateurs SET actif='off', uid_maj=$gl_uid, dte_maj='".now()."' WHERE id=$this->uid";
-		$sql->Update($query);
+		$sql->Edit("user",$this->tbl."_utilisateurs",$this->uid,array("actif"=>'off', "uid_maj"=>$gl_uid, "dte_maj"=>now()));
 
 		$query="UPDATE ".$this->tbl."_abonnement SET actif='non', uid_maj=$gl_uid, dte_maj='".now()."' WHERE uid=$this->uid";
 		$sql->Update($query);
-
-		$query="UPDATE ".$this->tbl."_calendrier SET actif='non', uid_maj=$gl_uid, dte_maj='".now()."' WHERE uid_pilote=$this->uid AND dte_deb>'".now()."'";
-		$sql->Update($query);
-
-		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$gl_uid', '".now()."', 'DEL', 'Disable user')";
-		$sql->Insert($query);
 	}
 
 	function Active(){
@@ -1324,12 +1287,7 @@ class user_class{
 		$sql=$this->sql;
 		$this->actif="oui";
 
-		$query="UPDATE ".$this->tbl."_utilisateurs SET actif='oui', uid_maj=$gl_uid, dte_maj='".now()."' WHERE id=$this->uid";
-		$sql->Update($query);
-
-		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$gl_uid', '".now()."', 'DEL', 'Enable user')";
-		$sql->Insert($query);
+		$sql->Edit("user",$this->tbl."_utilisateurs",$this->uid,array("actif"=>'oui', "uid_maj"=>$gl_uid, "dte_maj"=>now()));
 	}
 	
 	function Delete(){
@@ -1337,31 +1295,10 @@ class user_class{
 		$sql=$this->sql;
 		$this->actif="non";
 
-		$query="UPDATE ".$this->tbl."_utilisateurs SET actif='non', uid_maj=$uid, dte_maj='".now()."' WHERE id=$this->uid";
-		$sql->Update($query);
-
-		// $query="UPDATE ".$this->tbl."_document SET actif='non' WHERE uid=$this->uid";
-		// $sql->Update($query);
-
-		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'user', '".$this->tbl."_utilisateurs', '".$this->uid."', '$uid', '".now()."', 'DEL', 'Delete user')";
-		$sql->Insert($query);
+		$sql->Edit("user",$this->tbl."_utilisateurs",$this->uid,array("actif"=>'non', "uid_maj"=>$gl_uid, "dte_maj"=>now()));
 	}	
 
-	function LoadDonneesComp()
-	{
-		$sql=$this->sql;
-		$query = "SELECT def.id,def.nom,donnees.valeur FROM ".$this->tbl."_utildonneesdef AS def LEFT JOIN ".$this->tbl."_utildonnees AS donnees ON donnees.did=def.id AND (donnees.uid='$this->uid' OR donnees.uid IS NULL) WHERE def.actif='oui' ORDER BY ordre, nom";
 
-		$sql->Query($query);
-		for($i=0; $i<$sql->rows; $i++)
-		{ 
-			$sql->GetRow($i);
-
-			$this->donnees[$sql->data["id"]]["nom"]=$sql->data["nom"];
-			$this->donnees[$sql->data["id"]]["valeur"]=$sql->data["valeur"];
-		}
-	}
 } # End of class
 
 
@@ -1493,7 +1430,7 @@ function AffFullname($prenom,$nom)
 		  }		
 	return $fullname;
   }
-  
+ 
 // ---- Liste les personnes d'un groupe
 function ListGroupUser($sql, $grp)
   {

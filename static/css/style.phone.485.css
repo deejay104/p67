@@ -1,0 +1,399 @@
+/* CSS file for maze layout*/
+/* ($Author: miniroot $) */
+/* ($Date: 2016-04-22 20:48:24 +0200 (ven., 22 avr. 2016) $) */
+/* ($Revision: 456 $) */
+
+html { -ms-text-size-adjust:100%; -webkit-text-size-adjust:100%}
+[hidden],template {display:none}
+a {background:0 0}
+a:active,a:hover {outline:0}
+
+body { margin:0; font: 16px/1.85em Arial, Helvetice Neue, sans-serif; color: #000000; font-weight: 300; font-style: normal; -webkit-font-smoothing: antialiased; /* Fix for webkit rendering */ -webkit-text-size-adjust: 100%; }
+
+a, a:hover, a:focus { text-decoration: none; -webkit-transition: all 150ms ease-in; -moz-transition: all 150ms ease-in; -o-transition: all 150ms ease-in; transition: all 150ms ease-in; }
+a:link { color: black; }
+a:visited { color: black; }
+a:hover { color: #FF6600; }
+
+h1, h2, h3, h4, h5, h6 { font-family: inherit; }
+
+
+*, *:before, *:after { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+.main-menu, .responsive-menu ul, .social-member, .progess-bars, .first-footer .social-footer ul { padding: 0; margin: 0; list-style: none; }
+.visible-xs,.visible-sm,.visible-md,.visible-lg {display:none!important}
+
+input {	-webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: 20px; width: 285px; font-family: inherit; height:30px; }
+select { font-size: 20px; font-family: inherit; width: 285px; height:30px; -webkit-appearance: none; background-color: #ffffff; background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");  background-repeat: no-repeat; background-position-x: 100%; background-position-y: 5px;  }
+textarea { width:420px; font-size: 20px; font-family: inherit; }
+
+
+p { margin-top: 0px; line-height:18px;}
+
+table { border-width: 0px; border-spacing: 0px; border-padding: 0px; border-collapse: collapse; border-style: solid; color: #000000; text-decoration: none; padding: 0px; margin: 0px; }
+tr, td { border-width: 0px; border-spacing: 0px; border-padding: 0px; padding: 0px; margin: 0px; }
+
+img { color: #FFFFFF; border: 0px; }
+img:hover { color: #FF6600; }
+
+
+
+input[type=radio] { width: 25px; height: 25px; background: #ffffff; }
+input[type=radio]:checked { background: #38a9e3; border-color: #000000; }
+input[type=checkbox] { -webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5); -moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5); width: 25px; height: 25px; background: #ffffff; }
+input[type=checkbox]:checked { background: #dddddd; border-color: #000000; }
+input[type=checkbox]:after { content: " "; padding-left: 6px; }
+input[type=checkbox]:checked:after { content: "x"; }
+
+input[type=submit] { -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: 20px; background-color: #dddddd; border: 1px solid #888e91; width: 170px; height: 36px;	}
+
+
+/* **** Haut de page **** */
+.head {	position:fixed; top:0; padding: 0px 0px; background-color: #38a9e3; width: 100%; height: 60px; z-index:5; display: inline-box; }
+.icone { display: inline-block; margin-top:2px; margin-left: 3px; margin-right: 3px; background-color: #1799c3; border-radius: 28px; width:56px; height:56px; }
+.icone img { margin-left: 4px; margin-top: 4px; }
+
+.pagetitle { padding-left:10px; display: inline-block; text-transform: uppercase; font-size: 25px; color: white; }
+.pagetitle img {  vertical-align:middle; }
+
+.pagetitle a { position:relative; top:-20px; display: inline-block; height:48px; background-color: #1799c3; font-size: 0px; text-transform: none; padding: 10px; border-radius: 5px; margin: 0px; }
+.pagetitle a:hover { background-color: #585e61; }
+
+.navigation { margin-top: 60px; margin-bottom: 0px; background-color: #dddddd;  display: inline-block; width:100%; font-size: 0px; }
+.navigation p { margin-left:10px; margin-bottom: 0px; background-color: #888e91; width:40px; height:40px; float:left; text-align: center; border-radius: 20px; padding: 0px; }
+.navigation img { width: 32px; height:32px; margin-top:2px; margin-left: 0px; }
+
+
+/* **** Corps de la page **** */
+.main { /* display of the text area */
+	background-color: #FFFFFF;
+	background-repeat: no-repeat;
+	margin-top: -9px;
+}
+
+
+
+.logout {
+	position: relative;
+	float:right;
+	left: -5px;
+	margin-top: 10px;
+}
+
+/* **** Bas de Page **** */
+.footer { /* general settings for footer*/
+	float: left;
+	border-top: 1px solid #cccccc;
+	margin-top: 15px;
+	background-color: #F5F5F5;
+	width: 450px;
+	height: 20px;
+	}
+
+.lastmod { /* last modified information */
+	float: right;
+	position: relative;
+	text-align: right;
+	top: 0px;
+	font: 10px "Trebuchet MS", arial, sans-serif;
+	}
+
+.helplink {
+	height: 32px;
+	}
+
+/* **** Login Page **** */
+
+.login {}
+
+.loginLogo { background-color:#38a9e3;  }
+
+.loginAuthBox { background-color:#38a9e3; height: 100px; }
+.loginAuthTitre { text-decoration: none; vertical-align: middle; color: white; }
+.loginAuthTitre label { padding-left:20px; display: inline-block; width:100px; }
+.loginAuthTitre p { font-size:200%; font-weight:600; }
+.loginAuthDesc { background-color:#ffffff; padding-top: 10px; padding-left: 20px; padding-right:20px; height: 80px; line-height:20px; }
+
+.loginIdent { padding-top:10px; }
+.loginIdent p { line-height:12px;  margin: 5px 0px 0px 0px; ; }
+.loginIdent label { display: inline-block; width: 120px; margin-right: 10px; text-align: right; }
+.loginIdent input { width:200px; }
+
+.loginSubmit { padding-left: 135px; padding-top: 40px; }
+
+
+/* **** Menu **** */
+.main-menu { text-align: center; background-color: #888e91;  }
+.main-menu a:hover { background-color: #585e61; }
+.main-menu a { padding-right: 10px; padding-left: 10px; }
+
+
+/* **** Message d'erreur **** */
+@-webkit-keyframes seconds {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    left: -9999px; 
+  }
+}
+@keyframes seconds {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    left: -9999px; 
+  }
+}
+
+.msgbox {
+	width: 100%;
+	position:fixed;
+	bottom:0;
+	clear:both;
+	font-size: 14px;
+	line-height: 16px;
+	color: #000000; 
+	font-weight: normal;
+	text-decoration: none;
+}
+
+.msgbox-std {
+	border: 1px solid #000000;
+	border-radius: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding-top: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+	margin-bottom: 4px;
+	-webkit-animation: seconds 1.0s forwards;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-delay: 5s;
+	animation: seconds 1.0s forwards;
+	animation-iteration-count: 1;
+	animation-delay: 5s;
+}
+
+.msgbox-ok { background-color: #BBFFAA; }
+.msgbox-warning { background-color: #ffe49c; }
+.msgbox-error { background-color: #FFBBAA; }
+
+.msgok {
+}
+
+.msgerror {
+}
+
+.msgwarning {
+}
+
+.msgaff {
+	width: 420px;
+	padding: 4px 4px 4px 4px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	font-size: 14px; 
+	color: #000000; 
+	font-weight: normal;
+	text-decoration: none;
+	background-color: #FFBBAA;
+	border: 1px solid #000000;
+	border-radius: 5px;
+	text-align: center;
+}
+
+.imgDelete img { width: 16px; height: 16px;  }
+.imgDelete img:hover { background-color: #1799c3; border-radius: 2px; }
+
+/* **** Actualités **** */
+.cadreinfos { width:100%; }
+.encadreInfos { min-width: 300px; padding: 0px 0px 10px 0px; margin-bottom:10px; }
+.encadreInfos label { display: inline-block; width: 325px; text-align: left; vertical-align: top; padding-left: 21px; }
+.encadreInfos p { line-height: 16px; margin: 1px 10px;  }
+.encadreTitre { min-width: 300px; background-color: #dddddd; padding: 0px 10px 30px 10px; font-size:20px; height:22px; margin-bottom: 10px; }
+
+.encadreInfos input[type=text] { width: 100%; min-width: 150px; margin-top:4px;  font-size:20px; }
+
+.actualitesSepare { width:100%; margin-top:15px; border-top: 1px solid #013366; padding-left:2%; padding-top:4px; }
+
+#actualites { width: 100%; }
+
+#actualitesNouveau { width: 96%; margin-left:2%; }
+
+#actualitesNouveau p { width: 100%; padding-right:2%; min-width: 100px;  text-align: right; }
+
+#actualitesNouveau input[type=text] { width: 100%; min-width: 270px; margin-top:4px;  font-size:20px; }
+
+#actualitesNouveau textarea {
+    min-width: 270px;
+    width: 100%;
+    height: 20px;
+    min-height: 16px;
+    overflow-y: hidden; /* fixes scrollbar flash - kudos to @brettjonesdev */
+    padding-top: 1.1em; /* fixes text jump on Enter keypress */
+    margin-top:4px;
+    font-family: Arial, Helvetice Neue, sans-serif;
+    font-size:20px;
+}
+
+
+#actualitesMessage { width: 100%; min-width: 300px; border-top: 4px solid #dddddd; }
+
+.actualitesTitre { display: inline-block; background-color: #f5f5f5; color: #000000; font-size:18px; border-radius: 4px 4px 0px 0px; width: 100%; }
+
+.actualitesPhoto { float: left; margin-left:10px; margin-top:5px; }
+.actualitesPhoto img { border-radius: 32px; width:64px; height:64px; }
+
+.actualitesTitreMsg { display: inline-block; float: left; }
+.actualitesTitreMsg p { margin:0px; padding:0px 0px; line-height:16px; padding-left:10px; padding-top:10px; font-size:16px; }
+.actualitesTitreMsg span { margin:0px; padding:0px; font-size:10px; padding-left:30px; }
+
+.actualitesIcones { display: inline-block; position:relative; top:15px; margin-right:5px; float:right;  }
+.actualitesIcones a { height:28px; padding: 6px; border-radius: 4px; margin: 0px; background-color: #dddddd;}
+.actualitesIcones a:hover { background-color: #1799c3; }
+.actualitesIcones img { vertical-align:middle; }
+
+.actualitesTexte p { padding:10px; font-size:14px; }
+.actualitesTexte a { text-decoration: underline; }
+
+.actualitesSuivant { width:100%; background-color: #dddddd; text-align:center; }
+.actualitesSuivant a { display:block; }
+.actualitesSuivant a:hover { background-color: #1799c3; color: white; }
+
+#actualitesMail { display: none; width: 100%; border: 1px solid #013366; margin-bottom:10px; border-radius: 4px; padding-left:5px; }
+
+/* **** MEMBRES **** */
+
+.membreLigne { border-bottom: 1px solid #dddddd; margin:2px 10px 0px 10px; clear: both; min-height:72px; }
+.membrePhoto { float: left; margin-left:10px; margin-top:10px; }
+.membrePhoto img { border-radius: 32px; width:64px; height:64px; }
+.membreInfos { display: inline-block; margin-left: 20px; }
+.membreInfos p { margin:0px; padding:8px 0px 12px 30px; line-height:16px; font-size:24px; color:#888e91; }
+.membreInfos a { color:#888e91; }
+.membreFullname { font-size:20px; }
+.membreFullname a { color:#000000; }
+.membreTel  { font-size:24px; padding-left: 20px; }
+.membreMail { font-size:20px;  padding-left: 20px; }
+
+
+/* **** FORUMS **** */
+
+.forum_Index_Liste { width:450px; border-top:1px solid #013366; border-bottom:1px solid #013366; background-color: #f5f5f5; margin: 0px; padding: 5px 0px 0px 15px; }
+.forum_Index_Nom { font-size: 20px; }
+.forum_Index_Nom a {  }
+.forum_Index_Nom a:hover { color:#FF6600; }
+.forum_Index_Nombre {  font-size: 10px; line-height:12px; margin-left: 20px; }
+.forum_Index_Intitule { color: #888e91; margin-bottom: 10px;line-height: 18px; padding-top:10px; }
+.forum_Index_Edite { display: inline-block; float: right; margin-top: -20px; margin-right: 5px; font-size: 10px;  }
+.forum_Index_Message { margin-left: 20px; padding-left: 15px; }
+.forum_Index_NouveauMessage { margin-left: 20px; padding-left: 15px; border-bottom: 1px solid #efefef; }
+
+
+
+.forum_Liste_Description { width:450px; color: #888e91; border-top:1px solid #013366; border-bottom:1px solid #013366; background-color: #f5f5f5; margin: 0px ; padding-left: 15px; line-height:12px; }
+.forum_Liste_DescriptionTitre { color: #000000; font-weight: bold; padding-top:10px; line-height:12px;  }
+
+.forum_Liste { width:450px;  margin: 0px; background-color: #ffffff; border-bottom:7px solid #f5f5f5; border-top:1px solid #dddddd; padding-bottom:5px; }
+.forum_Liste:hover { background-color: #FFE1E1; }
+.forum_Liste_Titre { padding-left: 15px; padding-top:5px; padding-bottom:0px; }
+.forum_Liste_Titre p { margin: 0px; font-weight: bold; line-height:18px; padding: 0px;}
+.forum_Liste_Titre span { font-size: 10px; line-height:12px; font-weight: normal; padding-left:0px; border-top:0px; }
+.forum_Liste_Titre a:hover { color:#FF6600; }
+.forum_Liste_TitreLu { }
+.forum_Liste_TitreLu a { color: #585e61; }
+.forum_Liste_TitreNonlu { }
+.forum_Liste_TitreNonlu a { color:#FFBBAA; }
+.forum_Liste_Indent { float: left; width: 24px; }
+.forum_Liste_Reponse { font-size: 10px; display: inline-block;  float: right; margin-right: 10px; }
+
+.forum_Liste_Icones { display: inline-block; position: relative; float: right; margin-right: 5px; margin-right: 5px; }
+
+.forum_Liste_Texte { display: none; }
+.forum_Liste_PieceJointe { margin-left: 35px; margin-top: 10px; padding-top:4px; padding-bottom: 5px; border-top: 1px solid #efefef; }
+
+.forum_Message_Description { width:450px; color: #888e91; border-top:1px solid #013366; border-bottom:1px solid #013366; background-color: #ffffff; margin: 0px ; padding-left: 15px;  padding-bottom:5px; }
+.forum_Message_Description p { margin:0px;  }
+.forum_Message_DescriptionTitre { color: #000000; font-weight: bold; padding-top:5px;}
+.forum_Message_DescriptionModif { font-size:10px;}
+
+.forum_Message_Message { width:450px; margin: 0px; padding-left: 15px; padding-top:10px; }
+.forum_Message_Message a { text-decoration: underline; }
+
+
+.forum_Message_PJ_Liste { width: 450px; position: relative; border-top: 1px solid #efefef; border-bottom: 1px solid #efefef;}
+.forum_Message_PJ_Description p { margin:0px; padding-left: 15px; font-weight:bold; }
+.forum_Message_PJ { border-top: 1px solid #efefef; padding-top:5px;  }
+.forum_Message_PJ p { margin:0px; padding-left: 15px; }
+
+.forum_Message_Reponses { margin-left:100px;  width:850px; margin-top:15px;}
+.forum_Message_Reponse { border-top:1px solid #efefef; border:1px solid #efefef; border-radius: 5px; }
+.forum_Message_Reponse p {padding: 5px 15px 5px 90px; }
+.forum_Message_ReponseTitre { background-color: #DDDDDD; font-weight: bold; margin: 0px; padding: 5px 15px 5px 150px;}
+.forum_Message_ReponseModif { font-size: 10px; margin:0px; margin-left: 20px; margin-top: -8px; }
+.forum_Message_Selection { background-color: #38a9e3	; border: 1px dashed #013366; border-radius: 3px; padding: 2px; }
+
+
+
+/* **** Formulaire **** */
+.lastupdate { font-size: 10px;  font-style: italic; border-bottom: 1px solid #013366; }
+
+.resaInfos { width:450px; border: 1px solid #013366; border-radius: 4px; padding: 4px; }
+
+.tableauTitre { background-color: #dddddd; border-bottom: 1px solid black; height: 20px; }
+.tableauBorderLeft { border-left: 1px solid black; width:1 px; }
+.tableauBas { background-color: #dddddd; border-top: 1px solid black; height: 20px; }
+
+.formulaire p { margin: 4px 15px 4px 10px;  }
+.formulaire label { display: inline-block; width: 100px; margin-left: 10px; margin-right: 10px; text-align: left; vertical-align: middle; }
+.formulaire span { display: inline-block;  }
+.formulaire2 span { display: inline-block; width:450px; border: 1px solid #013366; border-radius: 4px; padding: 4px; }
+
+
+
+.formulaireTitre { background-color: #dddddd;  margin-bottom: 15px; margin-top:20px; padding-left: 20px; font-size: 20px; }
+.formulairePhoto img { border: 1px solid #013366; border-radius: 5px; }
+.formulaireSubmit { margin-left: 20px; margin-top: 20px; }
+.formulaireListe p { margin: 0px; padding-left:20px; }
+
+.formulaireListe p a:hover {  background-color: #dddddd; border-radius: 2px; }
+
+.formulaireTextarea { padding: 0px 20px 5px 20px; }
+
+/* **** Tableau **** */
+.tableauAff { border-bottom: 1px solid #cccccc; }
+.tableauAff th { background-color: #dddddd; height: 30px; border-bottom: 1px solid #cccccc; }
+.tableauAff tr { border-bottom: 1px dashed #dddddd; height: 25px; }
+.tableauAff tr:nth-child(even) { background-color: #f8f8f8; }
+
+/* **** Comptes **** */
+.soldeCompte { margin: 5px; border: 1px solid #000000; border-radius: 4px; display: inline-block; position:relative; width:98%; height: 30px; text-align: center;}
+
+/* **** FullCalendar **** */
+	#script-warning {
+		display: none;
+		background: #eee;
+		border-bottom: 1px solid #ddd;
+		padding: 0 10px;
+		line-height: 40px;
+		text-align: center;
+		font-weight: bold;
+		font-size: 12px;
+		color: red;
+	}
+
+	#loading {
+		display: none;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+
+	#calendar {
+		width: 90%;
+		padding: 0 10px;
+	}
+	

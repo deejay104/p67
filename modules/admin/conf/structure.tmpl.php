@@ -279,6 +279,7 @@ $tabTmpl=Array
 		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
 		"id_avion" => Array("Type" => "smallint(5) unsigned", "Index" => "1", ),
 		"uid_pilote" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
+		"actif" => Array("Type" => "enum('oui','non')", "Default" => "oui", ),
 		"uid_creat" => Array("Type" => "int(10) unsigned", "Default" => "0", ),
 		"dte_creat" => Array("Type" => "datetime", "Default" => "0000-00-00 00:00:00", ),
 	),

@@ -121,7 +121,7 @@
 					$dte->typeid=$form_echeance_type;
 					$dte->uid=$id;
 				}
-				if ($d!='')
+				if (($d!='') && ($d!='0000-00-00'))
 				{
 					$dte->dte_echeance=$d;
 					$dte->Save();
@@ -141,12 +141,17 @@
 
 	}
 
-	// Sauvegarde le lache
+	// Sauvegarde les données utilisateurs
 	if (($fonc=="Enregistrer") && ($id>0) && (GetDroit("ModifUserDonnees")))
-	  {
-		$msg_erreur.=$usr->SaveDonnees($form_donnees,$uid);
+	{
+		$usr->LoadDonneesComp();
 
-	  }
+		foreach($form_donnees as $did=>$d)
+		{
+			$usr->donnees[$did]["valeur"]=$d;
+		}
+		$msg_erreur.=$usr->SaveDonnees();
+	}
 
 // ---- Supprimer l'utilisateur
 	if (($fonc=="delete") && ($id>0) && (GetDroit("SupprimeUser")))

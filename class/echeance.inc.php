@@ -103,21 +103,24 @@ class echeance_class
 	function Create()
 	{
 		$sql=$this->sql;
-		$query="INSERT INTO ".$this->tbl."_echeance SET uid_create='".$this->myuid."', dte_create='".now()."', uid_maj='".$this->myuid."', dte_maj='".now()."'";
-		$this->id=$sql->Insert($query);
+		// $query="INSERT INTO ".$this->tbl."_echeance SET uid_create='".$this->myuid."', dte_create='".now()."', uid_maj='".$this->myuid."', dte_maj='".now()."'";
+		// $this->id=$sql->Insert($query);
 
-		$query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'echeance', '".$this->tbl."_echeance', '".$this->id."', '".$this->myuid."', '".now()."', 'ADD', 'Create echeance')";
-		$sql->Insert($query);
+		// $query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'echeance', '".$this->tbl."_echeance', '".$this->id."', '".$this->myuid."', '".now()."', 'ADD', 'Create echeance')";
+		// $sql->Insert($query);
+		$this->id=$sql->Edit("echeance",$this->tbl."_echeance",0,array("uid_create"=>$this->myuid, "dte_create"=>now(), "uid_maj"=>$this->myuid, "dte_maj"=>now()));		
+
 	}
 
 	function Delete()
 	{
 		$sql=$this->sql;
-		$query="UPDATE ".$this->tbl."_echeance SET actif='non', uid_maj='".$this->myuid."', dte_maj='".now()."' WHERE id='$this->id'";
-		$this->id=$sql->Update($query);
+		// $query="UPDATE ".$this->tbl."_echeance SET actif='non', uid_maj='".$this->myuid."', dte_maj='".now()."' WHERE id='$this->id'";
+		// $this->id=$sql->Update($query);
 
-		$query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'echeance', '".$this->tbl."_echeance', '".$this->id."', '".$this->myuid."', '".now()."', 'DEL', 'Delete echeance')";
-		$sql->Insert($query);
+		// $query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'echeance', '".$this->tbl."_echeance', '".$this->id."', '".$this->myuid."', '".now()."', 'DEL', 'Delete echeance')";
+		// $sql->Insert($query);
+		$sql->Edit("echeance",$this->tbl."_echeance",$this->id,array("actif"=>"non", "uid_maj"=>$this->myuid, "dte_maj"=>now()));
 	}
 
 	function Save()
@@ -128,19 +131,18 @@ class echeance_class
 			$this->Create();
 		}
 
-		$query ="UPDATE ".$this->tbl."_echeance SET ";
+		// $query ="UPDATE ".$this->tbl."_echeance SET ";
+	  	// $query.="typeid='".$this->Valid("typeid",$this->typeid)."',";
+	  	// $query.="uid='".$this->Valid("uid",$this->uid)."',";
+	  	// $query.="dte_echeance='".$this->Valid("dte_echeance",$this->dte_echeance)."',";
+	  	// $query.="paye='".$this->Valid("paye",$this->paye)."',";
+		// $query.="uid_maj=".$this->myuid.", dte_maj='".now()."' ";
+		// $query.="WHERE id='$this->id'";
+		// $sql->Update($query);
+		// $query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'echeance', '".$this->tbl."_echeance', '".$this->id."', '".$this->myuid."', '".now()."', 'MOD', 'Modify echeance')";
+		// $sql->Insert($query);
 
-	  	$query.="typeid='".$this->Valid("typeid",$this->typeid)."',";
-	  	$query.="uid='".$this->Valid("uid",$this->uid)."',";
-	  	$query.="dte_echeance='".$this->Valid("dte_echeance",$this->dte_echeance)."',";
-	  	$query.="paye='".$this->Valid("paye",$this->paye)."',";
-
-		$query.="uid_maj=".$this->myuid.", dte_maj='".now()."' ";
-		$query.="WHERE id='$this->id'";
-
-		$sql->Update($query);
-		$query="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) VALUES (NULL , 'echeance', '".$this->tbl."_echeance', '".$this->id."', '".$this->myuid."', '".now()."', 'MOD', 'Modify echeance')";
-		$sql->Insert($query);
+		$sql->Edit("echeance",$this->tbl."_echeance",$this->id,array("typeid"=>$this->Valid("typeid",$this->typeid),"uid"=>$this->Valid("uid",$this->uid),"dte_echeance"=>$this->Valid("dte_echeance",$this->dte_echeance),"paye"=>$this->Valid("paye",$this->paye),"uid_maj"=>$this->myuid, "dte_maj"=>now()));		
 	}
 
 	function Affiche($type="") 

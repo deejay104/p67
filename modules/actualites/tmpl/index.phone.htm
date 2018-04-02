@@ -57,11 +57,6 @@
 	<div class="encadreInfos">
 		<div class="encadreTitre">Informations Personnelles</div>
   
-<!-- BEGIN: mod_aviation_detail -->
-		<p><label>Solde du compte pilote</label>{solde}</p>
-		<p><label>Nombre de vols dans les 3 derniers mois</label>{nb_vols} vols</p>
-<!-- END: mod_aviation_detail -->
-		<p><label><A href="index.php?mod=forums">Nombre de documents non lus</A></label><A href="index.php?mod=forums" class="{color_nonlus}">{nb_nonlus}</A></p>
 		<div style="height: 4px;"></div>
 		<!-- BEGIN: lst_echeance -->
 		<p>{form_echeance}</p>
@@ -71,7 +66,6 @@
 <!-- BEGIN: aff_manips -->
 	<div class="encadreInfos">
 		<div class="encadreTitre">{manip_titre} le {manip_date}</div>
-	 	<p align="justify">{manip_txt}</p>
 	 	<p align="right"><a href="index.php?mod=manifestations&rub=detail&id={manip_id}">-Voir les participants-</a></p>
 	</div>
 <!-- END: aff_manips -->
@@ -79,8 +73,7 @@
 
 	<div class="encadreInfos">
 		<div class="encadreTitre">Poster un nouveau message</div>
-			<div id="actualitesNouveau">
-		
+			<div id="actualitesNouveau">		
 				<form name="actualites" method="post" action="index.php#poster" enctype="multipart/form-data">
 					<input type="hidden" name="mod" value="actualites">
 					<input type="hidden" name="id" value="{form_id}">
@@ -94,8 +87,6 @@
 				</form>
 			</div>
 	</div>
-
-	<div id="actualitesMail"></div>
 
 </div>
 
