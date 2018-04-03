@@ -415,15 +415,15 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 	margin-top: -200px; /*set to a negative number 1/2 of your height*/
 	margin-left: -250px; /*set to a negative number 1/2 of your width*/
 	width: 500px;
-	height: 300px;
 	border: 1px solid #000000;
 	border-radius: 5px;
+	padding-bottom: 15px;
 }
 
-.loginAuthBox { background-color:#38a9e3; border-radius: 5px 5px 0 0; height: 100px;  }
+.loginAuthBox { background-color:#38a9e3; border-radius: 5px 5px 0 0; }
 .loginAuthLogo { margin-top: -16px; font-weight:400; }
 .loginAuthLogo ul li { margin-top: 20px; display: inline-block; text-decoration: none; vertical-align: middle; color: white; }
-.loginAuthDesc { height: 50px; padding: 10px 0px 0px 135px; height: 40px; line-height:20px; }
+.loginAuthDesc { padding: 0px 0px 0px 135px; line-height:20px; }
 
 .loginIdent { padding-top:10px; }
 .loginIdent p { line-height:12px;  margin: 5px 0px 0px 0px; ; }

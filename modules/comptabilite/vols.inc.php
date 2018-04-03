@@ -442,22 +442,24 @@
 				$tmpl_x->parse("corps.aff_vols.lst2_vols.lst_instructeur");
 			}
 
-			foreach ($tabTarif[$idavion] as $c=>$t)
-			{ 
-				$tmpl_x->assign("tarif_code", $c);
-				$tmpl_x->assign("tarif_nom", $t["nom"]);
+			if (is_array($tabTarif[$idavion]))
+			{
+				foreach ($tabTarif[$idavion] as $c=>$t)
+				{ 
+					$tmpl_x->assign("tarif_code", $c);
+					$tmpl_x->assign("tarif_nom", $t["nom"]);
 
-				if ( ($t["defaut_pil"]=="oui") && ($resa["resa"]->tarif=="") )
-				{
-					$tmpl_x->assign("tarif_selected", "selected");
+					if ( ($t["defaut_pil"]=="oui") && ($resa["resa"]->tarif=="") )
+					{
+						$tmpl_x->assign("tarif_selected", "selected");
+					}
+					else
+					{
+						$tmpl_x->assign("tarif_selected", "");
+					}
+					$tmpl_x->parse("corps.aff_vols.lst2_vols.lst_tarifs");	
 				}
-				else
-				{
-					$tmpl_x->assign("tarif_selected", "");
-				}
-				$tmpl_x->parse("corps.aff_vols.lst2_vols.lst_tarifs");	
 			}
-
 			$tmpl_x->assign("id_new", "N$ii");
 			$tmpl_x->parse("corps.aff_vols.lst2_vols");
 		}

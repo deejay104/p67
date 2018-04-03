@@ -9,7 +9,7 @@ $MyOptHelp=array();
 $MyOptHelp[""]="";
 
 // Prefixe des tables
-$MyOptTmpl["tbl"]="ae";
+$MyOptTmpl["tbl"]="ea";
 $MyOptHelp["tbl"]="Prefixe des tables dans la base de données";
 
 // Site en maintenance

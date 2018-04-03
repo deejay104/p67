@@ -21,6 +21,10 @@
 
 	$query="SELECT MIN(annee) AS deb FROM ".$MyOpt["tbl"]."_prevision GROUP BY annee";
 	$res=$sql->QueryRow($query);
+	if ($res["deb"]=="")
+	{
+		$res["deb"]=date("Y");
+	}
 	for($d=$res["deb"]; $d<=date("Y"); $d++)
 	{ 
 		$tmpl_x->assign("form_dte", $d);

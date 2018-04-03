@@ -146,11 +146,14 @@
 	{
 		$usr->LoadDonneesComp();
 
-		foreach($form_donnees as $did=>$d)
+		if (is_array($form_donnees))
 		{
-			$usr->donnees[$did]["valeur"]=$d;
+			foreach($form_donnees as $did=>$d)
+			{
+				$usr->donnees[$did]["valeur"]=$d;
+			}
+			$msg_erreur.=$usr->SaveDonnees();
 		}
-		$msg_erreur.=$usr->SaveDonnees();
 	}
 
 // ---- Supprimer l'utilisateur
