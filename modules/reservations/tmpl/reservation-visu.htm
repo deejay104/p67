@@ -2,11 +2,11 @@
 	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
 <!-- END: icone -->
 <!-- BEGIN: infos -->
-			<a href="index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=Annuler"><IMG src="{path_module}/img/icn32_retour.png">Retour</a>
+	<p><a href="index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=Annuler"><IMG src="{path_module}/img/icn32_retour.png">Retour</a></p>
 	<!-- BEGIN: supprimer -->
-			<a href="#" OnClick="ConfirmeClick('index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette réservation ?');"><IMG src="{path_module}/img/icn32_supprimer.png">Supprimer</a>
+	<p><a href="#" OnClick="ConfirmeClick('index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=delete','Souhaitez-vous supprimer cette réservation ?');"><IMG src="{path_module}/img/icn32_supprimer.png">Supprimer</a></p>
 	<!-- END: supprimer -->
-			<a href="index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=Devis masse">Devis masse</a>
+	<p><a href="index.php?mod=reservations&rub=reservation_sauve&id={id}&fonc=Devis masse"><img src="{path_module}/img/icn32_devismasse.png">Devis masse</a></p>
 
 <!-- END: infos -->
 
@@ -15,7 +15,7 @@
 
 
 	<p class="lastupdate">Dernière mise à jour : <a href="" OnMouseOver="ShowPopup('{info_historique}');" OnMouseOut="HidePopup();">{info_maj}</a></p>
-	<p>Estimation du temps de vol réalisé à la prise en charge : {potentiel}</p>
+	<p>Potentiel restant à la prise en charge : {potentiel}</p>
 
 	<!-- BEGIN: texte_erreur -->
 	<p class="msgerror">{texte_date}</p>

@@ -95,7 +95,8 @@
 	else
 	  {
 			if ($jour=="-")
-			  { $myuser->Valid("aff_jour",date("Y-m")."-".(floor((date("d")-1)/7)*7+1)); }
+			  // { $myuser->Valid("aff_jour",date("Y-m")."-".(floor((date("d")-1)/7)*7+1)); }
+			  { $myuser->Valid("aff_jour",date("Y-m-d")); }
 			else if ($jour!="")
 			  { $myuser->Valid("aff_jour",$jour); }
 		

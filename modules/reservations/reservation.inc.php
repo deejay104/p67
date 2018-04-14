@@ -260,7 +260,6 @@
 	$tmpl_x->assign("info_historique",$txtmaj);
 
 	
-	$tmpl_x->assign("potentiel", $resa["resa"]->AffPotentiel("prev"));
 
 // **************************************
 
@@ -427,6 +426,8 @@
 	$tmpl_x->assign("form_description", $resa["resa"]->description);
 
 	// Potentiel restant
+	$tmpl_x->assign("potentiel", $resa["resa"]->AffPotentiel("prev"));
+	
 	$tmpl_x->assign("form_potentiel", $resa["resa"]->AffPotentiel("fin"));
 	$tmpl_x->assign("form_potentielh", $resa["resa"]->potentielh);
 	$tmpl_x->assign("form_potentielm", $resa["resa"]->potentielm);

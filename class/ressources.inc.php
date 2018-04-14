@@ -352,17 +352,35 @@ class ress_class{
 
 		$t=$respot["tot"]+$resreel["tot"];
 
-		return $t;
+		return $this->maxpotentiel*60-$t;
 	}
 
 	function AffPotentiel()
 	{
 		$t=$this->Potentiel();
+		if (floor($t/60)<0)
+		{
+			$ret="<font color=red>".AffTemps($t)."</font>";
+		}
+		else if (floor($t/60)<$this->alertpotentiel)
+		{
+			$ret="<font color=orange>".AffTemps($t)."</font>";
+		}
+		else
+		{
+			$ret=AffTemps($t);
+		}
+		return $ret;
+	}
+
+	function AffTempsVol()
+	{
+		$t=$this->maxpotentiel*60-$this->Potentiel();
 		if (floor($t/60)>$this->maxpotentiel)
 		{
 			$ret="<font color=red>".AffTemps($t)."</font>";
 		}
-		else if (floor($t/60)>$this->alertpotentiel)
+		else if (floor($t/60)>$this->maxpotentiel-$this->alertpotentiel)
 		{
 			$ret="<font color=orange>".AffTemps($t)."</font>";
 		}

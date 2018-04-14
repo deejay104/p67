@@ -40,6 +40,8 @@
 	$tabTitre["nom"]["width"]=150;
 	$tabTitre["hora"]["aff"]="Temps Vol";
 	$tabTitre["hora"]["width"]=150;
+	$tabTitre["potentiel"]["aff"]="Potentiel";
+	$tabTitre["potentiel"]["width"]=150;
 	$tabTitre["estimemaint"]["aff"]="Estimation Prochaine maintenance";
 	$tabTitre["estimemaint"]["width"]=150;
 
@@ -55,9 +57,13 @@
 		$tabValeur[$i]["nom"]["aff"]=$usr->aff("nom");
 
 
-		$t=$usr->AffPotentiel();
-		$tabValeur[$i]["hora"]["val"]=(($t>0) ? $t : "0");
-		$tabValeur[$i]["hora"]["aff"]="<A href='index.php?mod=ressources&rub=detail&id=$id'>".$t."</a>";
+		$tv=$usr->AffTempsVol();
+		$tabValeur[$i]["hora"]["val"]=(($tv>0) ? $tv : "0");
+		$tabValeur[$i]["hora"]["aff"]="<A href='index.php?mod=ressources&rub=detail&id=$id'>".$tv."</a>";
+
+		$tp=$usr->AffPotentiel();
+		$tabValeur[$i]["potentiel"]["val"]=(($tp>0) ? $tp : "0");
+		$tabValeur[$i]["potentiel"]["aff"]="<A href='index.php?mod=ressources&rub=detail&id=$id'>".$tp."</a>";
 
 		$t=$usr->EstimeMaintenance();		
 		if (strtotime($t)<time())

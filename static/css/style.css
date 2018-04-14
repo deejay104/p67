@@ -124,7 +124,7 @@ img { color: #FFFFFF; border: 0px; }
 .responsive-menu { display: none; background-color: #888e91; border: 0px; line-height: 30px; padding: 1px; margin:0px; }
 .responsive-menulink a { width: 200px;  color: white; display: inline-block;  padding: 0px 0px 0px 10px; -webkit-transition: all 150ms ease-in; -moz-transition: all 150ms ease-in; -o-transition: all 150ms ease-in; transition: all 150ms ease-in; }
 .responsive-menulink a:hover { background-color: #585e61; }
-.responsive-extend { width:100%;  background-color: #888e91; text-align: center; margin:0px; }
+.responsive-extend { width:100%;  background-color: #38a9e3; text-align: center; margin:0px; }
 
 /* **** Haut de page **** */
 

@@ -147,12 +147,12 @@ class resa_class{
 		$query="SELECT alertpotentiel,maxpotentiel FROM ".$this->tbl."_ressources WHERE id='".$this->uid_ressource."'";
 		$res=$sql->QueryRow($query);
 
-		$t=$this->Potentiel($affvol);
-		if (floor($t/60)>$res["maxpotentiel"])
+		$t=$res["maxpotentiel"]*60-$this->Potentiel($affvol);
+		if (floor($t/60)<0)
 		{
 			$ret="<font color=red>".AffTemps($t)."</font>";
 		}
-		else if (floor($t/60)>$res["alertpotentiel"])
+		else if (floor($t/60)<$res["alertpotentiel"])
 		{
 			$ret="<font color=orange>".AffTemps($t)."</font>";
 		}
