@@ -1,0 +1,61 @@
+<!-- BEGIN: icone -->
+	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
+<!-- END: icone -->
+
+<!-- BEGIN: infos -->
+{aff_menu}
+<!-- END: infos -->
+
+
+<!-- BEGIN: corps -->
+<div class="pagetitle pagemenu">
+	<p><A href="index.php?mod=ressources&rub=rex"><IMG src="{path_module}/img/icn32_retour.png" border=0 alt="">Liste</A></p>
+	<p><A href="index.php?mod=ressources&rub=rexdetail&fonc=editer&id={id}"><IMG src="{path_module}/img/icn32_groupeadd.png" border=0 alt="">Modifier</A></p>
+</div>
+
+<FORM name="rex" method="post" action="index.php" enctype="multipart/form-data">
+	<INPUT type="hidden" name="checktime" value="{form_checktime}">
+	<INPUT type="hidden" name="mod" value="ressources">
+	<INPUT type="hidden" name="rub" value="rexdetail">
+	<INPUT type="hidden" name="id" value="{id}">
+
+
+	<div class="formulaire">
+	<div class="formulaireTitre">Informations</div>
+	<label>Titre</label> : {form_titre}<br />
+	<label>Date de création</label> : {form_dte_rex}<br />
+	<label>Status</label> : {form_status}<br />
+	</div>
+
+	<div class="formulaire">
+	<div class="formulaireTitre">Descriptif</div>
+	Descriptif de l'événement :<br />
+	<p>{form_description}</p>
+	Commentaire :<br />
+	<p>{form_commentaire}</p>
+	</div>
+
+	<div class="formulaire">
+	<div class="formulaireTitre">Classification</div>
+	<label>Catégorie</label>{form_categorie}<br />
+	<label>Nature du vol</label>{form_nature}<br />
+	<label>Condition Météo</label>{form_mto}<br />
+	<label>Environnement</label>{form_environnement}<br />
+	<label>Phase du vol</label>{form_phase}<br />
+	<label>Type de vol</label>{form_typevol}<br />
+	<label>Type d'événement</label>{form_typeevt}<br />
+	<label>Avion</label>{form_avion}<br />
+	</div>
+
+	<div class="formulaire">
+	<div class="formulaireTitre">Conclusion</div>
+	Synthèse :<br />
+	<p>{form_synthese}</p>
+	Plan d'action :<br />
+	<p>{form_planaction}</p>
+	</div>
+
+	<input type="submit" name="fonc" value="Enregistrer">
+	<input type="submit" name="fonc" value="Annuler">
+</form>
+<!-- END: corps -->

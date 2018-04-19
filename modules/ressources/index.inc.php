@@ -1,12 +1,6 @@
 <?
-// ---------------------------------------------------------------------------------------------
-//   Liste des membres
-//     ($Author: miniroot $)
-// ---------------------------------------------------------------------------------------------
-//   Variables  : 
-// ---------------------------------------------------------------------------------------------
 /*
-    SoceIt v2.0
+   Easy Aero v2.4
     Copyright (C) 2009 Matthieu Isorez
 
     This program is free software; you can redistribute it and/or modify
@@ -31,6 +25,11 @@
 	$tmpl_x->assign("path_module","$module/$mod");
 
 	require_once ("class/ressources.inc.php");
+
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once("modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Liste des ressources
 	$tabTitre=array();
@@ -79,9 +78,10 @@
 
 	$tmpl_x->assign("aff_tableau",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
 
-// ---- Menu
 	if (GetDroit("CreeRessource"))
-	  { $tmpl_x->parse("infos.ajout"); }
+	{
+		$tmpl_x->parse("corps.ajout");
+	}
 
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");

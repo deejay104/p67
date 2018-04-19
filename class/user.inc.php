@@ -389,40 +389,22 @@ class user_class{
 		// Défini les droits de modification des utilisateurs
 		$mycond=$this->me;	// Le user a le droit de modifier toutes ses données
 
-		// Si on a le droit de modif on autorise
-		if (GetDroit("ModifUser"))
-		  { $mycond=true; }
-
 		// Test les exceptions
 		if ($key=="prenom")
 		  {
-			if (!GetDroit("ModifUser"))
+			if (!GetDroit("ModifUserAll"))
 			  { $mycond=false; }
 		  }
 		else if ($key=="nom")
 		  {
-			if (!GetDroit("ModifUser"))
+			if (!GetDroit("ModifUserAll"))
 			  { $mycond=false; }
 		  }
-		else if ($key=="zone")
+		else if ($key=="droits")
 		  {
-			if (!GetDroit("ModifUser"))
+			if (!GetDroit("ModifUserDroits"))
 			  { $mycond=false; }
 		  }
-		else if ($key=="dte_medicale")
-		  {
-			if (GetDroit("ModifUserDteMedicale"))
- 		  	  { $mycond=true; }
-			else
- 		  	  { $mycond=false; }
- 		  }
-		else if ($key=="dte_licence")
-		  {
-			if (GetDroit("ModifUserDteLicence"))
- 		  	  { $mycond=true; }
-			else
- 		  	  { $mycond=false; }
- 		  }
 		else if ($key=="dte_inscription")
 		  {
 			if (GetDroit("ModifUserDteInscription"))
@@ -480,7 +462,7 @@ class user_class{
  		  	  { $mycond=false; }
 		  }
 
-		// Si l'utilisateur a le droit de tout modifier alors on force
+		// Si on a le droit de modif on autorise
 		if (GetDroit("ModifUserAll"))
 		  { $mycond=true; }
 
@@ -1170,7 +1152,11 @@ class user_class{
 		$td["dte_maj"]=now();
 		$sql->Edit("user",$this->tbl."_utilisateurs",$this->uid,$td);
 
-		$this->RazGroupe();
+		
+// Ne pas supprimer tous les groupes.
+// Charger la liste en base et comparer avec ce qui est demander
+// Ignorer SYS si on est pas SYS (pas ajouter, pas retirer)
+//		$this->RazGroupe();
 
 		$trole=preg_split("/,/",$this->data["droits"]);
 		$this->data["droits"]="";
