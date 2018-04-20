@@ -84,11 +84,25 @@
 	  	$form_description="";
 	  }
 
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once("modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+
 // ---- Charge les templates
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-	$tmpl_x->assign("msg_ok", $msg_ok);
-	$tmpl_x->assign("msg_erreur", $msg_erreur);
 
+// ---- Messages
+	if ($msg_erreur!="")
+	{
+		affInformation($msg_erreur,"error");
+	}		
+
+	if ($msg_ok!="")
+	{
+		affInformation($msg_ok,"ok");
+	}
+	
 // ---- Liste les avions
 	$lst=ListeRessources($sql);
 

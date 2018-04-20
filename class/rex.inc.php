@@ -22,6 +22,13 @@
     ($Revision: 460 $)
 */
 
+$tabValeurRex=array();
+$tabValeurRex["new"]="Nouveau";
+$tabValeurRex["inprg"]="En cours";
+$tabValeurRex["close"]="Cloturé";
+$tabValeurRex["cancel"]="Annulé";
+
+
 // Class Utilisateur
 class rex_class{
 	# Constructor
@@ -50,9 +57,10 @@ class rex_class{
 		$this->data["typeevt"] = "";
 		$this->data["uid_avion"] = 0;
 		$this->data["dte_rex"] = date("Y-m-d");
-		$this->data["uid_creat"] = 0;
+		$this->data["actif"] = "oui";
+		$this->data["uid_creat"] = $gl_uid;
 		$this->data["dte_creat"] = date("Y-m-d H:i:s");
-		$this->data["uid_modif"] = 0;
+		$this->data["uid_modif"] = $gl_uid;
 		$this->data["dte_modif"] = date("Y-m-d H:i:s");
 
 
@@ -87,7 +95,7 @@ class rex_class{
 
 	# Show user informations
 	function aff($key,$typeaff="html",$formname="form_rex")
-	{ global $MyOpt,$gl_uid;
+	{ global $MyOpt,$gl_uid,$tabValeurRex;
 
 		$txt=$this->data[$key];
 
@@ -110,7 +118,12 @@ class rex_class{
 		}
 		
 		// Test les exceptions
-		if ($key=="planaction")
+		if ($key=="status")
+		{
+			if (!GetDroit("ModifRexStatus"))
+			  { $mycond=false; }
+		}
+		if (($key=="planaction") || ($key=="synthese"))
 		{
 			if (!GetDroit("ModifRexSynthese"))
 			  { $mycond=false; }
@@ -145,10 +158,10 @@ class rex_class{
 			else if ($key=="status")
 		  	{
 				$ret="<SELECT id='".$key."' name=\"".$formname."[$key]\">";
-				$ret.="<option value='new' ".(($txt=="new") ? "selected" : "").">Nouveau</option>";
-				$ret.="<option value='inprg' ".(($txt=="inprg") ? "selected" : "").">En cours</option>";
-				$ret.="<option value='close' ".(($txt=="close") ? "selected" : "").">Cloturé</option>";
-				$ret.="<option value='delete' ".(($txt=="delete") ? "selected" : "").">Supprimé</option>";
+				foreach ($tabValeurRex as $vv=>$dd)
+				{
+					$ret.="<option value='".$vv."' ".(($txt==$vv) ? "selected" : "").">".$dd."</option>";
+				}
 				$ret.="</select>";
 			}
 			else
@@ -183,6 +196,10 @@ class rex_class{
 			  { $ret=nl2br(htmlentities($ret,ENT_HTML5,"ISO-8859-1")); }
 			else if ($key=="planaction")
 			  { $ret=nl2br(htmlentities($ret,ENT_HTML5,"ISO-8859-1")); }
+			else if ($key=="status")
+			{
+				$ret=$tabValeurRex[$txt];
+			}
 			else if (($key=="dte_creat") || ($key=="dte_modif"))
 			{
 				$ret=sql2date($ret);
@@ -225,7 +242,7 @@ class rex_class{
 	}
 
 	function Save()
-	{
+	{ global $gl_uid;
 		$sql=$this->sql;
 
 		$td=array();
@@ -236,7 +253,7 @@ class rex_class{
 				$td[$k]=$this->Valid($k,$v,true);
 			}
 		}
-		$td["uid_modif"]=$uid;
+		$td["uid_modif"]=$gl_uid;
 		$td["dte_modif"]=now();
 		$id=$sql->Edit("rex",$this->tbl."_rex",$this->id,$td);
 
@@ -247,11 +264,11 @@ class rex_class{
 	}
 	
 	function Delete(){
-		global $uid;
+		global $gl_uid;
 		$sql=$this->sql;
-		$this->status="delete";
+		$this->actif="non";
 
-		$sql->Edit("rex",$this->tbl."_rex",$this->id,array("status"=>'delete', "uid_maj"=>$gl_uid, "dte_maj"=>now()));
+		$sql->Edit("rex",$this->tbl."_rex",$this->id,array("actif"=>'non', "uid_modif"=>$gl_uid, "dte_modif"=>now()));
 	}	
 
 
@@ -266,7 +283,7 @@ function ListRex($sql,$fields=array())
 	$f=implode(",",$fields);
 	$lst=array();
  
-	$query="SELECT id".((count($fields)>0) ? ",".$f : "")." FROM ".$MyOpt["tbl"]."_rex ";
+	$query="SELECT id".((count($fields)>0) ? ",".$f : "")." FROM ".$MyOpt["tbl"]."_rex WHERE actif='oui'";
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
 	  { 

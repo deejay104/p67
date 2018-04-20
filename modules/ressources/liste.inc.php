@@ -34,7 +34,14 @@
 	$tmpl_x->assign("path_module","$module/$mod");
 
 
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once("modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+
 // ---- Affiche les liens
+	if (GetDroit("CreeMaintenance"))
+	  { $tmpl_x->parse("corps.creemaint"); }
 
 // ---- Affiche la liste des maintenances
 
@@ -69,10 +76,10 @@
 			$tabValeur[$i]["dte_deb"]["val"]=strtotime($maint->dte_deb);
 			$tabValeur[$i]["dte_deb"]["aff"]="<a href='index.php?mod=ressources&rub=detailmaint&id=$id'>".$maint->aff("dte_deb")."</a>";
 			$tabValeur[$i]["dte_fin"]["val"]=strtotime($maint->dte_fin);
-			$tabValeur[$i]["dte_fin"]["aff"]="<a href=''index.php?mod=ressources&rub=detailmaint&id=$id'>".$maint->aff("dte_fin")."</a>";
+			$tabValeur[$i]["dte_fin"]["aff"]="<a href='index.php?mod=ressources&rub=detailmaint&id=$id'>".$maint->aff("dte_fin")."</a>";
 
 			$tabValeur[$i]["status"]["val"]=$maint->aff("status");
-			$tabValeur[$i]["status"]["aff"]="<a href=''index.php?mod=ressources&rub=detailmaint&id=$id'>".$maint->aff("status")."</a>";
+			$tabValeur[$i]["status"]["aff"]="<a href='index.php?mod=ressources&rub=detailmaint&id=$id'>".$maint->aff("status")."</a>";
 
 			$tabValeur[$i]["atelier"]["val"]=$maint->nom_atelier;
 			$tabValeur[$i]["atelier"]["aff"]=$maint->nom_atelier;
@@ -89,8 +96,6 @@
 		$tmpl_x->assign("aff_tableau","-Aucune maintenance de saisie-");
 	  }
 
-	if (GetDroit("CreeMaintenance"))
-	  { $tmpl_x->parse("infos.creemaint"); }
 
 
 // ---- Affecte les variables d'affichage

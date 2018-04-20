@@ -48,6 +48,7 @@ class maint_class{
 		$this->data["potentiel"]=$this->potentiel;
 		$this->data["uid_lastresa"]=$this->uid_lastresa;
 		$this->data["status"]=$this->status;
+		$this->data["commentaire"]="";
 
 		if ($id>0)
 		  {
@@ -117,6 +118,10 @@ class maint_class{
 			  {
 			  	$ret="<INPUT name=\"form_potentiel\" value=\"$ret\">";
 			  }
+			else if ($key=="commentaire")
+			{
+				$ret="<TEXTAREA id='".$key."'  name=\"form_commentaire\" rows=5>$ret</TEXTAREA>";
+			}
 			else
 			  {
 			  	$ret="<INPUT name=\"form_info[$key]\" value=\"$ret\">";
@@ -210,6 +215,7 @@ class maint_class{
 		$query.="uid_ressource='$this->uid_ressource',";
 		$query.="uid_atelier='$this->uid_atelier',";
 		$query.="status='$this->status',";
+		$query.="commentaire='".addslashes($this->data["commentaire"])."',";
 		$query.="dte_deb='$this->dte_deb',";
 		$query.="dte_fin='$this->dte_fin',";
 		$query.="potentiel='$this->potentiel',";

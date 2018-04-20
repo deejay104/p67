@@ -69,6 +69,10 @@
 			$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	  }
 
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once("modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Charge les templates
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
@@ -79,11 +83,11 @@
 		$tabTitre["valid"]["aff"]=" ";
 		$tabTitre["valid"]["width"]=30;
 		$tabTitre["ress"]["aff"]="Avion";
-		$tabTitre["ress"]["width"]=60;
+		$tabTitre["ress"]["width"]=100;
 		$tabTitre["auteur"]["aff"]="Auteur";
 		$tabTitre["auteur"]["width"]=150;
 		$tabTitre["dtecreat"]["aff"]="Date";
-		$tabTitre["dtecreat"]["width"]=80;
+		$tabTitre["dtecreat"]["width"]=120;
 		$tabTitre["description"]["aff"]="Description";
 		$tabTitre["description"]["width"]=400;
 	

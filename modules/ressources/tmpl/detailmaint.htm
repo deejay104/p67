@@ -3,8 +3,9 @@
 <!-- END: icone -->
 <!-- BEGIN: infos -->
 	<!-- BEGIN: supprimemaint -->
-	<a href="index.php?mod=ressources&rub=detailmaint&id={id}&fonc=Supprimer"><img src="{path_module}/img/icn32_supprimer.png" alt=""> Supprimer la maintenance</a>&nbsp;
+	<p><a href="index.php?mod=ressources&rub=detailmaint&id={id}&fonc=Supprimer"><img src="{path_module}/img/icn32_supprimer.png" alt=""> Supprimer la maintenance</a></p>
 	<!-- END: supprimemaint -->
+	<p><a href="index.php?mod=ressources&rub=detailmaint&id={id}&fonc=imprimer"><img src="{path_module}/img/icn32_printer.png" alt="">Imprimer</a></p>
 	
 <!-- END: infos -->
 
@@ -43,14 +44,9 @@
 	<INPUT type="hidden" name="id" value="{id}">
 
 	<p class="lastupdate">Dernière mise à jour : {info_maj}</p>
-	<BR>
-
-	
-
-				<FONT color="red"><B>{msg_erreur}</B></FONT>
-				<FONT color="green"><B>{msg_ok}</B></FONT><BR>
 
 <div class="formulaire">
+	<div class="formulaireTitre">Informations</div>
 	<p>
 			<label>Avion</label>
       <!-- BEGIN: aff_ressource -->
@@ -95,21 +91,36 @@
 			<label>Temps consommé</label>
 			{form_potentiel} (nombre minutes réportées à la fin de l'intervention)
 	</p>
-	<p><br />Dernier vol effectué avant la maintenance</p>
+</div>
+<br />
+<div style='width:100%; display: inline-block;'>
+  <div style='width:50%; display: inline-block; padding-bottom: 0px; '>
+	<div class="formulaireTitre">Dernier vol effectué avant la maintenance</div>
 	{aff_resa}
-	<p><br />Liste des fiches associées</p>
+  </div>
+  <div style='width:50%; display: inline-block; float:right; padding-bottom: 0px; '>
+	<div class="formulaireTitre">Commentaire</div>
+	{form_commentaire}
+  </div>
+</div>
+
+<br />
+<br />
+
+<div class="formulaire">
+	<div class="formulaireTitre">Liste des fiches associées</div>
 	{aff_fiche}
 </div>
 
+<!-- BEGIN: form_submit -->
 <div class="formulaireSubmit">
+	<!-- BEGIN: aff_bouttons -->
+	<INPUT type="submit" name="fonc" value="Enregistrer">
+	<!-- END: aff_bouttons -->
 
-				<!-- BEGIN: aff_bouttons -->
-				<INPUT type="submit" name="fonc" value="Enregistrer">
-				<!-- END: aff_bouttons -->
-
-				<INPUT type="submit" name="fonc" value="Imprimer">
-				<INPUT type="submit" name="fonc" value="Retour">
+	<INPUT type="submit" name="fonc" value="Retour">
 </div>
+<!-- END: form_submit -->
 
 </FORM>
 

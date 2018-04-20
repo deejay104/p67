@@ -82,6 +82,13 @@ $tabRoles["ModifNavigation"]="Modification d'une navigation";
 $tabRoles["ModifMaintenance"]="Modification d'une fiche de maintenance";
 $tabRoles["ModifWeb"]="Modification de la partie publique";
 
+$tabRoles["ModifRex"]="Modification des REX";
+$tabRoles["ModifRexAll"]="Modification REX e tous les champs";
+$tabRoles["ModifRexSynthese"]="Modification de la synthèse d'un REX";
+$tabRoles["ModifRexStatus"]="Modication du status d'un REX";
+
+$tabRoles["SupprimeRex"]="Suppression d'un REX";
+
 $tabRoles["CreeFacture"]="Créer une nouvelle facture";
 $tabRoles["CreeForum"]="Créer un nouveau forum";
 $tabRoles["CreeMaintenance"]="Création d'une fiche de maintenance";

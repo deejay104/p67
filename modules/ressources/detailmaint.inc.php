@@ -33,10 +33,10 @@
 	$tmpl_x = new XTemplate (MyRep("detailmaint.htm"));
 	$tmpl_x->assign("path_module","$module/$mod");
 
-	if ($fonc=="Imprimer")
-	  {
+	if ($fonc=="imprimer")
+	{
 		$tmpl_prg = new XTemplate (MyRep("print.htm"));
-	  }
+	}
 
 // ---- Vérification des données
 	if (!is_numeric($uid_ressource))
@@ -54,6 +54,8 @@
 	  { $maint->uid_atelier=$form_atelier; }
 	if ($form_status!="")
 	  { $maint->status=$form_status; }
+	if ($form_commentaire!="")
+	  { $maint->data["commentaire"]=$form_commentaire; }
 	if ($form_dte_deb!="")
 	  { $maint->dte_deb=date2sql($form_dte_deb); }
 	if ($form_dte_fin!="")
@@ -109,11 +111,19 @@
 			$mod="ressources";
 			$affrub="liste";
 	  }
+// ---- Messages
+	if ($msg_erreur!="")
+	{
+		affInformation($msg_erreur,"error");
+	}		
 
+	if ($msg_ok!="")
+	{
+		affInformation($msg_ok,"ok");
+	}
+	
 // ---- Charge les templates
 	$tmpl_x->assign("form_checktime",$_SESSION['checkpost']);
-	$tmpl_x->assign("msg_ok", $msg_ok);
-	$tmpl_x->assign("msg_erreur", $msg_erreur);
 	$tmpl_x->assign("id", $maint->id);
 
 	if (($maint->status!="cloture") && ($maint->actif=="oui"))
@@ -319,14 +329,18 @@
 
 	if (($maint->status!="cloture") && (GetDroit("EnregistreMaintenance")) && ($maint->actif=="oui"))
 	  {
-			$tmpl_x->parse("corps.aff_bouttons");
+			$tmpl_x->parse("corps.form_submit.aff_bouttons");
 	  }
 	if (GetDroit("SupprimeMaintenance"))
 	  {
 			$tmpl_x->parse("infos.supprimemaint");
 	  }
 
-
+// ---- Bouttons du formulaire
+	if ($fonc!="imprimer")
+	{
+		$tmpl_x->parse("corps.form_submit");
+	}
 
 // ---- Affecte les variables d'affichage
 	if (($fonc!="Retour") && ($fonc!="Supprimer"))

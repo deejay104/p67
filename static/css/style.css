@@ -143,7 +143,7 @@ img { color: #FFFFFF; border: 0px; }
 .pagetitle a:hover { background-color: #38a9e3; border-radius: 8px; border: 1px solid #1799c3; color: #ffffff;  }
 .pagetitle img { vertical-align:middle; margin-right: 5px; }
 
-.pagemenu { background-color: #dddddd; height: 40px; width: 100%; padding-top:0px; }
+.pagemenu { background-color: #dddddd; height: 20px; width: 100%; padding-top:0px; margin-bottom: 30px;  margin-top: -10px; }
 
 .pageTitleSelected { background-color: #38a9e3!important; border: 1px solid #076983!important; color: #ffffff!important; box-shadow: 2px 2px #1799c3; }
 
@@ -437,13 +437,13 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 
 .resaInfos { border: 1px solid #013366; border-radius: 4px; padding: 4px; }
 
-
-.formulaire p { margin: 4px;  }
+.formulaire { margin-bottom: 10px;  }
+.formulaire p { margin: 0px;  }
 .formulaire label { display: inline-block; width: 180px; margin-right: 10px; text-align: left; vertical-align: top; }
 .formulaire span { display: inline-block; width:160px; } /* Overlapped by responsive */
 .formulaire2 span { display: inline-block; width:450px; border: 1px solid #013366; border-radius: 4px; padding: 4px; }
 
-.formulaireTitre { background-color: #dddddd; border-bottom: 1px solid #013366; margin-bottom: 15px; margin-top:20px; padding-left: 20px; line-height:24px; }
+.formulaireTitre { background-color: #dddddd; border-bottom: 1px solid #013366; margin-bottom: 15px; padding-left: 20px; padding-top:7px; padding-bottom:7px; line-height:24px; }
 .formulairePhoto img { border: 1px solid #013366; border-radius: 5px; }
 .formulaireSubmit { margin-left: 20px; margin-top: 20px; }
 .formulaireListe p { margin: 0px; padding-left:20px; }
@@ -458,6 +458,9 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 .formulaireMulti li:hover { background-color: #FFE1E1!important; }
 
 .formulaireSep { border-top: 1px dashed #cccccc; }
+
+
+.formulaireCadre { border: 1px solid #dddddd; padding:5px; min-height:50px; margin-bottom:10px!important; }
 
 
 /* **** Boutton de suppression */

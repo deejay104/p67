@@ -28,7 +28,7 @@
 
 // ---- Affiche le menu
 	$aff_menu="";
-	require_once("modules/".$mod."/menu.inc.php");
+	require("modules/".$mod."/menu.inc.php");
 	$tmpl_x->assign("aff_menu",$aff_menu);
 
 // ---- Liste des ressources
@@ -52,7 +52,7 @@
 		$tabValeur[$i]["titre"]["val"]=$d["titre"];
 		$tabValeur[$i]["titre"]["aff"]=$d["titre"];
 		$tabValeur[$i]["status"]["val"]=$d["status"];
-		$tabValeur[$i]["status"]["aff"]=$d["status"];
+		$tabValeur[$i]["status"]["aff"]=$tabValeurRex[$d["status"]];
 		$tabValeur[$i]["categorie"]["val"]=$d["categorie"];
 		$tabValeur[$i]["categorie"]["aff"]=$d["categorie"];
 	}

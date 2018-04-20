@@ -7,26 +7,6 @@
 	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
 	<link rel='stylesheet' href='static/css/print.css' type='text/css' />
 	<link rel="shortcut icon" href="favicon.png" />
-
-    <script language="javascript">
-	function GoTo()
-	  {
-		var code = event.keyCode;
-		key=String.fromCharCode(code) ;
-		//alert("'"+code+"' "+key); 
-		if (code==222) { key='*'; }
-		if ((key=='*') || ((key>='A') && (key<='Z'))) { document.location="#"+key; }
-	
-	  }
-
-	function ConfirmeClick(url,texte)
-	  {
-		var is_confirmed = confirm(texte);
-		if (is_confirmed) { document.location=url; }
-	  }
-      //-->
-    </script>
-
   </head>
 <body>
 
@@ -38,28 +18,13 @@
 <!--PageHeaderFmt-->
 
   <!--PageTitleFmt-->
-  <div id='pagetitle'>
-	{infos}
-  </div>
   <div id='main'>
     <br />
     {corps}  
     <!--PageText-->
   </div>
 <!--PageFooterFmt-->
-  <div id='footer'>
-  
-	<div id='helplink'>&nbsp;
-  	<!-- BEGIN: help -->
-	<a href="{helplink}" target="_blank"><img src="static/images/icn32_help.gif" alt="aide" border="0" /> Aide en ligne</a>
-	<!-- END: help-->
-	</div>
 
-  
-    <div id='lastmod'>
-    Aéroclub POLYGONE67&nbsp;-&nbsp;{username}&nbsp;-&nbsp;Version {version}&nbsp;&nbsp;
-    </div>
-  </div>
 <!--/PageFooterFmt-->
 
 </body>

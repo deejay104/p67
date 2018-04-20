@@ -1,25 +1,29 @@
 <!-- BEGIN: icone -->
 	<img src="{path_module}/img/icn48_titre.png" alt="" border=0 />
 <!-- END: icone -->
+
 <!-- BEGIN: infos -->
-<A href="index.php?mod=ressources"><IMG src="{path_module}/img/icn32_liste.png" border=0 alt="">Liste des avions</A>
-<!-- BEGIN: ajout -->
-<A href="index.php?mod=ressources&rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt="">Ajouter</A>
-<!-- END: ajout -->
-<!-- BEGIN: modification -->
-<A href="index.php?mod=ressources&rub=detail&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_modifier.png" border=0 alt="">Modifier</A>
-<!-- END: modification -->
-<!-- BEGIN: desactive -->
-<A href="#" OnClick="ConfirmeClick('index.php?mod=ressources&rub=detail&id={id}&fonc=desactive','Voulez-vous désactiver cet avion ?');"><IMG src="{path_module}/img/icn32_desactive.png" border=0 alt="">Désactiver</A>
-<!-- END: desactive -->
-<!-- BEGIN: suppression -->
-<A href="#" OnClick="ConfirmeClick('index.php?mod=ressources&rub=detail&id={id}&fonc=delete','Voulez-vous supprimer cet avion ?');"><IMG src="{path_module}/img/icn32_supprime.png" border=0 alt="">Supprimer</A>
-<!-- END: suppression -->
-<A href="index.php?mod=ressources&rub=fiche&uid_avion={id}"><IMG src="{path_module}/img/icn32_fiche.png" border=0 alt="">Fiches</A>
+{aff_menu}
 <!-- END: infos -->
 
 
 <!-- BEGIN: corps -->
+
+<div class="pagetitle pagemenu">
+	<!-- BEGIN: ajout -->
+	<A href="index.php?mod=ressources&rub=detail&id="><IMG src="{path_module}/img/icn32_ajouter.png" border=0 alt="">Ajouter</A>
+	<!-- END: ajout -->
+	<!-- BEGIN: modification -->
+	<A href="index.php?mod=ressources&rub=detail&id={id}&fonc=modifier"><IMG src="{path_module}/img/icn32_modifier.png" border=0 alt="">Modifier</A>
+	<!-- END: modification -->
+	<!-- BEGIN: desactive -->
+	<A href="#" OnClick="ConfirmeClick('index.php?mod=ressources&rub=detail&id={id}&fonc=desactive','Voulez-vous désactiver cet avion ?');"><IMG src="{path_module}/img/icn32_desactive.png" border=0 alt="">Désactiver</A>
+	<!-- END: desactive -->
+	<!-- BEGIN: suppression -->
+	<A href="#" OnClick="ConfirmeClick('index.php?mod=ressources&rub=detail&id={id}&fonc=delete','Voulez-vous supprimer cet avion ?');"><IMG src="{path_module}/img/icn32_supprime.png" border=0 alt="">Supprimer</A>
+	<!-- END: suppression -->
+	<A href="index.php?mod=ressources&rub=fiche&uid_avion={id}"><IMG src="{path_module}/img/icn32_fiche.png" border=0 alt="">Fiches</A>
+</div>
 
 <FORM name="form_detail" method="post" action="index.php" enctype="multipart/form-data">
 <INPUT type="hidden" name="mod" value="ressources">

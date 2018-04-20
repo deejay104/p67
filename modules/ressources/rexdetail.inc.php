@@ -61,13 +61,21 @@
 
 		$_SESSION['tab_checkpost'][$checktime]=$checktime;
 	}
-	
+
+// ---- Suppression
+	if ($fonc=="supprimer")
+	{
+		$rex=new rex_class($id,$sql);
+		$rex->Delete();
+		$affrub="rex";
+	}
 // ---- Type d'affichage
 
 	$typeaff="aff";
 	if (($id==0) || ($fonc=="editer"))
 	{
 		$typeaff="form";
+		$tmpl_x->parse("corps.form_submit");
 	}
 	
 // ---- Affiche les informations
@@ -78,7 +86,6 @@
 	{
 		$tmpl_x->assign("form_".$k,$rex->Aff($k,$typeaff));
 	}
-
 	
 	$ress=new ress_class($rex->data["uid_avion"],$sql);
 	$tmpl_x->assign("form_avion",$ress->Aff("Immat","html"));
@@ -93,7 +100,21 @@
 	{
 		affInformation($msg_confirmation,"ok");
 	}
-	
+
+// ---- Menu
+	if ((GetDroit("ModifRex")) || ($gl_uid==$rex->data["uid_creat"]))
+	{
+		$tmpl_x->parse("corps.editer");
+	}
+	if (GetDroit("SupprimeRex"))
+	{
+		$tmpl_x->parse("corps.supprimer");
+	}
+
+// ---- Infos de dernières maj
+	$usrmaj = new user_class($rex->data["uid_modif"],$sql);
+	$tmpl_x->assign("info_maj", $usrmaj->aff("fullname")." le ".sql2date($rex->data["dte_modif"]));
+
 // ---- Affecte les variables d'affichage
 	$tmpl_x->parse("icone");
 	$icone=$tmpl_x->text("icone");

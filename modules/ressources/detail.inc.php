@@ -38,6 +38,11 @@
 	$msg_erreur="";
 	$msg_confirmation="";
 
+// ---- Affiche le menu
+	$aff_menu="";
+	require_once("modules/".$mod."/menu.inc.php");
+	$tmpl_x->assign("aff_menu",$aff_menu);
+
 // ---- Modifie les infos
 	if (($fonc=="modifier") && GetDroit("ModifRessource"))
 	  {
@@ -133,16 +138,16 @@
 	  { $tmpl_x->assign("form_$k", $ress->aff($k,$typeaff)); }
 
 	if (($id==$uid) || (GetDroit("ModifRessource")))
-	  { $tmpl_x->parse("infos.modification"); }
+	  { $tmpl_x->parse("corps.modification"); }
 
 	if (GetDroit("CreeRessource"))
-	  { $tmpl_x->parse("infos.ajout"); }
+	  { $tmpl_x->parse("corps.ajout"); }
 
 	if ((GetDroit("DesactiveRessource")) && ($ress->actif=="oui"))
-	  { $tmpl_x->parse("infos.desactive"); }
+	  { $tmpl_x->parse("corps.desactive"); }
 
 	if ((GetDroit("SupprimeRessource")) && ($ress->actif=="off"))
-	  { $tmpl_x->parse("infos.suppression"); }
+	  { $tmpl_x->parse("corps.suppression"); }
 
 	if ($typeaff=="form")
 	  {
