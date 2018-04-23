@@ -49,210 +49,112 @@
 
 // ---- Affiche la courbe des heures
 	if ((!isset($dte)) && (!preg_match("/[0-9]{4}/",$dte)))
-	  {
+	{
 	  	$dte=date("Y");
-			$dte2=(date("Y")+1)."-01-01";
-			$tmpl_x->assign("aff_annee", date("Y"));
-	  }
+		$dte2=(date("Y")+1);
+	}
 	else
-	  {
-			$dte2=($dte+1)."-01-01";
-			$tmpl_x->assign("aff_annee", $dte);
-	  }
+	{
+		$dte2=($dte+1);
+	}
+	$tmpl_x->assign("aff_annee", $dte);
+	  
+// ---- Tableau des heures
+	$tabHeures=array();
 
-	$tabprev=array();
-	$tabaff=array();
-	$tabtot=array();
-
-
-// ---- Vérifie s'il existe des prévisions pour l'année demandée
-	$query="SELECT * FROM ".$MyOpt["tbl"]."_prevision WHERE annee='$dte'";
-	$sql->Query($query);
-	if ($sql->rows==0)
-	  {
-		$dte=$dte-1;
-		$dte2=($dte+1)."-01-01";
-		$tmpl_x->assign("aff_annee", $dte);
-	  }
-
-  	$dte=date("$dte-01-01");
-
-// ---- Récupère l'échelle max
-	
-	if ($scale=="yes")
-	  {
-		$query="SELECT MAX(heures) AS heures FROM ".$MyOpt["tbl"]."_prevision";
-		$res=$sql->QueryRow($query);
-		$mdte1=$res["heures"];
-
-		$query="SELECT YEAR(dte_deb), MONTH(dte_deb),SUM(temps)/60 AS heures FROM ".$MyOpt["tbl"]."_calendrier GROUP BY uid_avion, YEAR(dte_deb), MONTH(dte_deb) ORDER BY heures DESC";
-		$res=$sql->QueryRow($query);
-		$mdte2=floor($res["heures"])+1;
-
-		$maxp=(($mdte1>$mdte2) ? $mdte1 : $mdte2);
-
-		$query="SELECT annee,SUM(heures)*60 AS heures FROM ".$MyOpt["tbl"]."_prevision GROUP BY avion, annee ORDER BY heures DESC";
-		$res=$sql->QueryRow($query);
-		$mdte1=$res["heures"];
-
-		$query="SELECT YEAR(dte_deb),SUM(temps) AS heures FROM ".$MyOpt["tbl"]."_calendrier GROUP BY uid_avion, YEAR(dte_deb) ORDER BY heures DESC";
-		$res=$sql->QueryRow($query);
-		$mdte2=$res["heures"];
-
-		$maxptot=(($mdte1>$mdte2) ? $mdte1 : $mdte2);;
-	  }
-	else
-	  {
-		$maxp=0;
-		$maxptot=0;
-	  }
-
-// ---- Récupère les prévisions
-	$tress=array();
-
-	$query="SELECT * FROM ".$MyOpt["tbl"]."_prevision WHERE annee='$dte'";
-	$sql->Query($query);
-	for($i=0; $i<$sql->rows; $i++)
-	  { 
-		$sql->GetRow($i);
-		$tabprev[$sql->data["avion"]][$sql->data["mois"]]=$sql->data["heures"];
-		$tabprev[$sql->data["avion"]]["_tot"]=$tabprev[$sql->data["avion"]]["_tot"]+$sql->data["heures"];
-
-		$tress[$sql->data["avion"]]["id"]=$sql->data["avion"];
-
-		if ($sql->data["heures"]>$maxp)
-		  { $maxp=$sql->data["heures"]; }
-	  }
-
-	$chart=array();
-	$chartcol="";
-	$cs="";
-	
-// ---- Récupère la liste des ressources
-
-//	$t=ListeRessources($sql);
-
-	foreach ($tress as $id=>$k)
-	  {
-	  	$ress = new ress_class($id,$sql);
-	  	$tress[$id]["couleur"]=$ress->couleur;
-	  	$tress[$id]["immat"]=$ress->immatriculation;
-
-			$chart[$id]["immat"]=$ress->immatriculation;
-
-			$chartcol=$chartcol.$cs."'#".$ress->couleur."','#".$ress->couleur."'";
-			$cs=",";
-	  }
-
-// ---- Récupère les heures de vols
-
-	$query ="SELECT ".$MyOpt["tbl"]."_calendrier.uid_avion AS id, date_format(".$MyOpt["tbl"]."_calendrier.dte_deb,'%c') AS dte2, SUM(".$MyOpt["tbl"]."_calendrier.temps) AS nb ";
+	$query ="SELECT uid_avion AS id, date_format(dte_deb,'%c') AS dte, SUM(temps) AS nb ";
 	$query.="FROM ".$MyOpt["tbl"]."_calendrier ";
-	$query.="WHERE ".$MyOpt["tbl"]."_calendrier.dte_deb>='$dte' AND ".$MyOpt["tbl"]."_calendrier.dte_deb<'$dte2' AND ".$MyOpt["tbl"]."_calendrier.prix<>0 ";
-	$query.="GROUP BY ".$MyOpt["tbl"]."_calendrier.uid_avion, date_format(".$MyOpt["tbl"]."_calendrier.dte_deb,'%Y%m') ORDER BY dte_deb";
+	$query.="WHERE dte_deb>='$dte-01-01' AND dte_deb<'$dte2-01-01' AND temps<>0 ";
+	$query.="GROUP BY uid_avion, date_format(dte_deb,'%Y%m')";
 	$sql->Query($query);
-
-	$tabval=array();
 	for($i=0; $i<$sql->rows; $i++)
-	  { 
+	{ 
 		$sql->GetRow($i);
-		$tabval[$sql->data["id"]][$sql->data["dte2"]]=$sql->data;
-	  }
+		$tabHeures[$sql->data["id"]]["nb"][$sql->data["dte"]]=$sql->data["nb"];
+	}
 
-	$id=1;
-	$h=400;
-	
+	$query="SELECT * FROM ".$MyOpt["tbl"]."_prevision WHERE annee='$dte'";
+	$sql->Query($query);
+	for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+		$tabHeures[$sql->data["avion"]]["prev"][$sql->data["mois"]]=$sql->data["heures"];	
+	}
 
-	$max=$maxp*60;
-	$tabaff[0]=0;
+	$col="";
+	$s="";
+	foreach($tabHeures as $id=>$md)
+	{
+	  	$ress = new ress_class($id,$sql);
+		$tabHeures[$id]["avion"]=$ress->immatriculation;
+		$tabHeures[$id]["couleur"]=(($ress->couleur=="") ? dechex(rand(0x000000, 0xFFFFFF)) : $ress->couleur);
+		$col.=$s."'#".$tabHeures[$id]["couleur"]."','#".$tabHeures[$id]["couleur"]."'";
+		$s=",";
+		for($i=1; $i<=12; $i++)
+		{
+			if (!isset($tabHeures[$id]["nb"][$i]))
+			{
+				$tabHeures[$id]["nb"][$i]=0;
+			}
+			if (!isset($tabHeures[$id]["prev"][$i]))
+			{
+				$tabHeures[$id]["prev"][$i]=0;
+			}
+			$tabHeures[$id]["total"][$i]=$tabHeures[$id]["total"][$i-1]+$tabHeures[$id]["nb"][$i];
+		}
+	}
 
-	$tabtot=array();
+// ---- Affiche le tableau des heures
+	$tabTitre=array();
+	$tabTitre["avion"]["aff"]="Avion";
+	$tabTitre["avion"]["width"]=150;
+	for ($i=1;$i<=12;$i++)
+	{
+		$tabTitre["m".$i]["aff"]=$tabm[$i];
+		$tabTitre["m".$i]["width"]=80;
+		$tabTitre["m".$i]["bottom"]=0;
+	}
+	$tabTitre["total"]["aff"]="Total";
+	$tabTitre["total"]["width"]=100;
+	$tabTitre["total"]["align"]="center";
 
-	foreach ($tress as $id=>$k)
-	  {
-		$tabtot[$id][0]=0;
+	$tabValeur=array();
 
-		for($i=1;$i<=12;$i++)
-		  {
-			if ($tabval[$id][$i]["nb"]=="")
-			  { $tabval[$id][$i]["nb"]=0; }
-	
-			$tabaff[$id][$i]=$tabval[$id][$i]["nb"];
-			$tabtot[$id][$i]=$tabtot[$id][$i-1]+$tabval[$id][$i]["nb"];
-	
-			if ($tabaff[$id][$i]>$max)
-			  { $max=$tabaff[$id][$i]; }
-		  }
-	
+	foreach($tabHeures as $id=>$md)
+	{
+		$tabValeur[$id]["avion"]["val"]=$tabHeures[$id]["avion"];
+		$tabValeur[$id]["avion"]["aff"]=$tabHeures[$id]["avion"];
+		$tabValeur[$id]["avion"]["align"]="center";
+		$tot=0;
+		for ($i=1;$i<=12;$i++)
+		{
+			$tabValeur[$id]["m".$i]["val"]=$tabHeures[$id]["nb"][$i]."0";
+			$tabValeur[$id]["m".$i]["aff"]=AffTemps($tabHeures[$id]["nb"][$i],"no");
+			$tabValeur[$id]["m".$i]["align"]="center";
+			$tot=$tot+$tabHeures[$id][$i]["nb"];
+			
+			$tabTitre["m".$i]["bottom"]=$tabTitre["m".$i]["bottom"]+$tabHeures[$id]["nb"][$i];
+		}
+		$tabValeur[$id]["total"]["val"]=$tot."0";
+		$tabValeur[$id]["total"]["aff"]=AffTemps($tot,"no");
+		$tabValeur[$id]["total"]["align"]="center";
+	}
+	$tot=0;
+	foreach($tabTitre as $i=>$md)
+	{
+		$tot=$tot+$tabTitre[$i]["bottom"];
+		$tabTitre[$i]["bottom"]=AffTemps($tabTitre[$i]["bottom"],"no");
+	}
+	$tabTitre["avion"]["bottom"]="Total";
+	$tabTitre["total"]["bottom"]=AffTemps($tot,"no");
 
-	  }
+	if ($order=="") { $order="nom"; }
+	if ($trie=="") { $trie="d"; }
+
+	$tmpl_x->assign("aff_heures",AfficheTableau($tabValeur,$tabTitre,$order,$trie));
+
 
 // ---- Affiche la courbe par mois
-
-  	$x=0;
-
-	$cs=array();
-	for($i=1;$i<=12;$i++)
-	{
-		$tmpl_x->assign("aff_leftm", $x);
-		$tmpl_x->assign("aff_widthm", count($tress)*25);
-		
-		foreach ($tress as $id=>$k)
-		{
-			if ($max>0)
-			  { $hh=floor($tabaff[$id][$i]*$h/$max); }
-			else
-			  { $hh=1; }
-
-			$tabprev[$id][$i]=(is_numeric($tabprev[$id][$i])) ? $tabprev[$id][$i] : "0";
-			$pp=$tabprev[$id][$i]*60*$h/$max;
-
-			$tot=($tabaff[$id][$i]/60);
-
-			$chart[$id]["val"]=$chart[$id]["val"].$cs[$id]."{y:".$tot.", color:'#".$tress[$id]["couleur"]."'}";
-			$chart[$id]["prev"]=$chart[$id]["prev"].$cs[$id]."{y:".$tabprev[$id][$i].", color:'#".(($tot<$tabprev[$id][$i]) ? "ff0000" : "00ff00" )."'}";
-			$chart[$id]["cumul"]=$chart[$id]["cumul"]+$tot;
-			$chart[$id]["cumulp"]=$chart[$id]["cumulp"]+$tabprev[$id][$i];
-
-			$chart[$id]["cumulval"]=$chart[$id]["cumulval"].$cs[$id]."{y:".$chart[$id]["cumul"].", color:'#".$tress[$id]["couleur"]."'}";
-			$chart[$id]["cumulpval"]=$chart[$id]["cumulpval"].$cs[$id]."{y:".$chart[$id]["cumulp"].", color:'#".(($chart[$id]["cumul"]<$chart[$id]["cumulp"]) ? "ff0000" : "00ff00" )."'}";
-			$cs[$id]=", ";
-
-			$tmpl_x->assign("aff_left", $x);
-			$tmpl_x->assign("h_width", 20);
-			$tmpl_x->assign("h_plein", $hh);
-			$tmpl_x->assign("h_vide", $h-$hh);
-			$tmpl_x->assign("h_text", $h-$hh-15);
-			$tmpl_x->assign("aff_couleur", $tress[$id]["couleur"]);
-			$tmpl_x->assign("aff_val", ($tot<100) ? (($tot<10) ? "&nbsp;&nbsp;".$tot : "&nbsp;".$tot) : $tot);
-	
-			$tmpl_x->assign("prev_left", $x+5);
-			$tmpl_x->assign("prev_aff", $tabprev[$id][$i]);
-			$tmpl_x->assign("prev_width", ($hh-$pp>0) ? 5 : 5);
-			$tmpl_x->assign("prev_text",$h-$pp);
-			$tmpl_x->assign("prev_vide", ($hh-$pp>0) ? $h-$hh : $h-$pp);
-			$tmpl_x->assign("prev_plein", ($hh-$pp>0) ? $hh-$pp : $pp-$hh);
-	
-			if ($tabaff[$id][$i]<$tabprev[$id][$i]*60)
-			  { $tmpl_x->assign("prev_color","FF0000"); }
-			else
-			  { $tmpl_x->assign("prev_color","00FF00"); }
-
-			$tmpl_x->parse("corps.tableau.lst_tableau.lst_ressource");
-			$x=$x+25;
-		}
-
-		$x=$x+5;
-		$tmpl_x->assign("nbress", count($tress)*2);
-		$tmpl_x->assign("mois", $tabm[$i]);
-
-		$tmpl_x->parse("corps.tableau.lst_tableau");
-		$tmpl_x->parse("corps.tableau.lst_mois");
-	}
-	
-	$tmpl_x->assign("titre","Total des heures de vols par avion et par mois");
-	$tmpl_x->parse("corps.tableau");
-
 /*
        {
             name: 'ZT',
@@ -265,133 +167,76 @@
         },
         */
         
+
 	$txt="";
-	$col="";
-	foreach ($tress as $id=>$k)
-	  {
-			$txt.="{ type: 'column', name: '".$chart[$id]["immat"]."', data: [".$chart[$id]["val"]."] },";
-			$txt.="{ type: 'line', name: 'Prévision ".$chart[$id]["immat"]."', data: [".$chart[$id]["prev"]."] },";
+	$cs="";
+	foreach ($tabHeures as $id=>$k)
+	{
+		$txt.=$cs."{ type: 'column', name: '".$tabHeures[$id]["avion"]."', data: [";
+		$s="";
+		for ($m=1; $m<=12; $m++)
+		{
+			$txt.=$s."{y:".floor($tabHeures[$id]["nb"][$m]/60).",color:'#".$tabHeures[$id]["couleur"]."'}";!
+			$s=",";
 		}
+		$txt.="] }";
+		$txt.=",{ type: 'line', name: 'Prévision ".$tabHeures[$id]["avion"]."', data: [";
+		$s="";
+		for ($m=1; $m<=12; $m++)
+		{
+			$txt.=$s."{y:".$tabHeures[$id]["prev"][$m].",color:'#".(($tabHeures[$id]["prev"][$m]<=floor($tabHeures[$id]["nb"][$m]/60)) ? "00ff00" : "ff0000")."'}";
+			$s=",";
+		}
+		$txt.="] }";
+		$cs=",";
+	}
 
 	$tmpl_x->assign("aff_charttotal",$txt);
-	$tmpl_x->assign("aff_colortotal",$chartcol);
+	$tmpl_x->assign("aff_chartcolor",$col);
 
 	$tmpl_x->assign("seriesname","\{series.name\}");
 	$tmpl_x->assign("seriescolor","\{series.color\}");
 
 
 	$txt="";
-	foreach ($tress as $id=>$k)
-	  {
-			$txt.="{ type: 'column', name: '".$chart[$id]["immat"]."', data: [".$chart[$id]["cumulval"]."] },";
-			$txt.="{ type: 'line', name: 'Prévision ".$chart[$id]["immat"]."', data: [".$chart[$id]["cumulpval"]."] },";
+	$cs="";
+	foreach ($tabHeures as $id=>$k)
+	{
+		$txt.=$cs."{ type: 'column', name: '".$tabHeures[$id]["avion"]."', data: [";
+		$s="";
+		for ($m=1; $m<=12; $m++)
+			{
+			$txt.=$s."{y:".floor($tabHeures[$id]["total"][$m]/60).",color:'#".$tabHeures[$id]["couleur"]."'}";!
+			$s=",";
 		}
+		$txt.="] }";
+		$txt.=",{ type: 'line', name: 'Prévision ".$tabHeures[$id]["avion"]."', data: [";
+		$s="";
+		$tot=0;
+		for ($m=1; $m<=12; $m++)
+		{
+			$tot=$tot+$tabHeures[$id]["prev"][$m];
+			$txt.=$s."{y:".$tot.",color:'#".(($tot<=floor($tabHeures[$id]["total"][$m]/60)) ? "00ff00" : "ff0000")."'}";
+			$s=",";
+		}
+		$txt.="] }";
+		$cs=",";
+		// $txt.="{ type: 'line', name: 'Prévision ".$tabHeures[$id]["immat"]."', data: [".$chart[$id]["prev"]."] },";
+	}
 
 	$tmpl_x->assign("aff_chartcumul",$txt);
-	$tmpl_x->assign("aff_colorcumul",$chartcol);
 
 
-// ---- Affiche l'évolution
-	$max=$maxptot;
-
-	$prev=array();
-	foreach ($tress as $id=>$k)
-	  {
-		$prev[$id]=0;
-		for($i=1;$i<=12;$i++)
-		  {
-			$prev[$id]=$prev[$id]+$tabprev[$id][$i];
-		  }
-
-		if ($tabtot[$id][12]>$max)
-		  {	$max=$tabtot[$id][12]; }
-		if ($prev[$id]*60>$max)
-		  {	$max=$prev[$id]*60; }
-
-	  }
-
-	$prev=array();
-  	$x=0;
-	for($i=1;$i<=12;$i++)
-	  {
-		$tmpl_x->assign("aff_leftm", $x);
-		$tmpl_x->assign("aff_widthm", count($tress)*25);
-
-		foreach ($tress as $id=>$k)
-		  {
-			if ($max>0)
-			  { $hh=floor($tabtot[$id][$i]*$h/$max); }
-			else
-			  { $hh=1; $max=1; }
-/*
-			if ($hh<16)
-			  { $hh=16; }
-*/
-			$prev[$id]=(is_numeric($prev[$id])) ? $prev[$id] : "0";
-
-			$tot=floor($tabtot[$id][$i]/60);
-			$prev[$id]=$prev[$id]+$tabprev[$id][$i];
-
-			$pp=$prev[$id]*60*$h/$max;
-			  
-			$tmpl_x->assign("aff_left", $x);
-			$tmpl_x->assign("h_width", 20);
-			$tmpl_x->assign("h_plein", $hh);
-			$tmpl_x->assign("h_vide", $h-$hh);
-			$tmpl_x->assign("h_text", $h-$hh-15);
-			$tmpl_x->assign("aff_couleur", $tress[$id]["couleur"]);
-			$tmpl_x->assign("aff_val", ($tot<100) ? (($tot<10) ? "&nbsp;&nbsp;".$tot : "&nbsp;".$tot) : $tot);
-	
-	
-			$tmpl_x->assign("prev_left", ($hh-$pp>0) ? $x : $x+5);
-
-			$tmpl_x->assign("prev_aff", $prev[$id]);
-			$tmpl_x->assign("prev_width", ($hh-$pp>0) ? 10 : 5);
-			$tmpl_x->assign("prev_text",$h-$pp);
-			$tmpl_x->assign("prev_vide", ($hh-$pp>0) ? $h-$hh : $h-$pp);
-			$tmpl_x->assign("prev_plein", ($hh-$pp>0) ? $hh-$pp : $pp-$hh);
-	
-			if ($tabtot[$id][$i]<$prev[$id]*60)
-			  { $tmpl_x->assign("prev_color","FF0000"); }
-			else
-			  { $tmpl_x->assign("prev_color","00FF00"); }
-	
-
-			$tmpl_x->parse("corps.tableau.lst_tableau.lst_ressource");
-			$x=$x+25;
-		  }
-
-		$x=$x+5;
-		$tmpl_x->assign("nbress", count($tress)*2);
-		$tmpl_x->assign("mois", $tabm[$i]);
-
-		$tmpl_x->parse("corps.tableau.lst_tableau");
-		$tmpl_x->parse("corps.tableau.lst_mois");
-	  }
-	$tmpl_x->assign("titre","Cumul des heures de vols par avion sur l'année");
-	$tmpl_x->parse("corps.tableau");
-
-// ---- Affiche le total des heures
-
-	foreach ($tress as $id=>$k)
-	  {
-		$tmpl_x->assign("tot", floor($tabtot[$id][12]/60));
-		$tmpl_x->assign("prev", ($tabprev[$id]["_tot"]>0) ? $tabprev[$id]["_tot"] : "0");
-
-		$tmpl_x->assign("ress_couleur", $tress[$id]["couleur"]);
-		$tmpl_x->assign("ress_immat", $tress[$id]["immat"]);
-		$tmpl_x->parse("corps.lst_ress_tot");
-	  }
 // ---- Affiche les années
 
-	$query="SELECT annee FROM ".$MyOpt["tbl"]."_prevision GROUP BY annee";
+	$query="SELECT DATE_FORMAT(dte_deb,'%Y') AS annee FROM ".$MyOpt["tbl"]."_calendrier GROUP BY DATE_FORMAT(dte_deb,'%Y') ORDER BY DATE_FORMAT(dte_deb,'%Y')";
 	$sql->Query($query);
 	for($i=0; $i<$sql->rows; $i++)
 	  { 
 		$sql->GetRow($i);
 
 		$tmpl_x->assign("form_dte", $sql->data["annee"]);
-		$tmpl_x->assign("form_selected", (($sql->data["annee"]."-01-01"==$dte) ? "selected" : "") );
+		$tmpl_x->assign("form_selected", (($sql->data["annee"]==$dte) ? "selected" : "") );
 		$tmpl_x->parse("infos.lst_date");
 	  }
 

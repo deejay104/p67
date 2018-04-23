@@ -34,15 +34,8 @@
 		  }
 	</script>
 
-<div class="formulaire">
-	<p class="tableauTitre">
-		<span style="width:20px;">&nbsp;</span><label><b>Avion</b></label><b>Total d'heures</b>
-	</p>
-		<!-- BEGIN: lst_ress_tot -->
-  <p><span style="width:20px;">&nbsp;</span><label>{ress_immat}</label>{tot}/{prev}</p>
-		<!-- END: lst_ress_tot -->
-</div>
-
+{aff_heures}
+<br />
 <div class="formulaireTitre">Evolution</div>
 
 
@@ -98,14 +91,13 @@ $(function () {
                 borderWidth: 0
             }
         },
-				credits: {
-				      enabled: false
-				  },
+		credits: {
+		    enabled: false
+		},
         series: [
-        				{aff_charttotal}
-				],
-				colors: [{aff_colortotal}]
-
+        	{aff_charttotal}
+		],
+		colors: [{aff_chartcolor}]
     });
 
 
@@ -153,14 +145,13 @@ $(function () {
                 borderWidth: 0
             }
         },
-				credits: {
-				      enabled: false
-				  },
+		credits: {
+			enabled: false
+		},
         series: [
-        
-        				{aff_chartcumul}
+			{aff_chartcumul}
         ],
-		 		colors: [{aff_colorcumul}]
+		colors: [{aff_chartcolor}]
 
     });
 

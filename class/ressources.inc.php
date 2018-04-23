@@ -69,7 +69,7 @@ class ress_class{
 		$this->data["alertpotentiel"]=45;
 		$this->data["marque"]="";
 		$this->data["modele"]="";
-		$this->data["couleur"]="A9D7FE";
+		$this->data["couleur"]=dechex(rand(0x000000, 0xFFFFFF));
 		$this->data["description"]="";
 
 		$this->data["places"]="0";
@@ -261,7 +261,13 @@ class ress_class{
 	  	else if ($k=="tolerance")
 	  	  { $vv=$v; }
 	  	else if ($k=="couleur")
-	  	  { $vv=strtoupper($v); }
+	  	{
+			if ($v=="")
+			{
+				$v=dechex(rand(0x000000, 0xFFFFFF));
+			}
+			$vv=strtoupper($v);
+		}
 	  	else
 	  	  { $vv=strtolower($v); }
 

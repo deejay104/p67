@@ -326,14 +326,8 @@ function SendMail($From,$To,$Cc,$Subject,$Text,$Html,$AttmFiles)
 */
 
 
-function AfficheTableau($tabValeur,$tabTitre="",$order="",$trie="",$url="",$start=0,$limit="",$nbline=0)
+function AfficheTableau($tabValeur,$tabTitre=array(),$order="",$trie="",$url="",$start=0,$limit="",$nbline=0)
   {global $mod,$rub;
-	$myColor[50]="E7E7E7";
-	$myColor[55]="FFB1B1";
-	$myColor[60]="F7F7F7";
-	$myColor[65]="FFB1B1";
-	$col=50;
-
 	$ret ="\n<table class='tableauAff'>\n";
 
 	$ret.="<tr>";
@@ -350,32 +344,62 @@ function AfficheTableau($tabValeur,$tabTitre="",$order="",$trie="",$url="",$star
 	  	  	$tabTitre[$name]["aff"]=$name;
 	  	}
 	}
+	$sub="<tr><th></th>";
+	$affsub=0;
+	$subb="<tr><th></th>";
+	$affsubb=0;
   	foreach($tabTitre as $name=>$v)
 	{
 		if (!isset($v["align"]))
 		{
-			$v["align"]="left";
+			$v["align"]="center";
 		}
 		if ($name==$order)
 		{
 			$ret.="<th width='".$v["width"]."'".(($v["align"]!="") ? " align='".$v["align"]."'" : "").">";
 			$ret.="<b><a href='$page&order=$name&trie=".(($trie=="d") ? "i" : "d").(($url!="") ? "&$url" : "")."&ts=0'>".$v["aff"]."</a></b>";
 		  	$ret.=" <img src='static/images/sens_$trie.gif' border=0>";
+			$sub.="<th align='".$v["align"]."'>".((isset($v["sub"])) ? $v["sub"] : "")."</th>";
+			$subb.="<th align='".$v["align"]."'>".((isset($v["bottom"])) ? $v["bottom"] : "")."</th>";
 		}
 		else if ($v["aff"]=="<line>")
 		{
-			$ret.="<th style='width:".$v["width"]."px; background-color:black;'>";
+			if ((!isset($v["width"])) || (!is_numeric($v["width"])))
+			{
+				$v["width"]=1;
+			}
+			$ret.="<th style='width:".$v["width"]."px; border-left: 1px solid black;'>";
+			$sub.="<th style='border-left: 1px solid black;'></th>";
+			$subb.="<th style='border-left: 1px solid black;'></th>";
 		}
 		else
 		{
 			$ret.="<th width='".$v["width"]."'".(($v["align"]!="") ? " align='".$v["align"]."'" : "").">";
 			$ret.="<b><a href='$page&order=$name&trie=d".(($url!="") ? "&$url" : "")."&ts=0'>".$v["aff"]."</a></b>";
+			$sub.="<th align='".$v["align"]."'>".((isset($v["sub"])) ? $v["sub"] : "")."</th>";
+			$subb.="<th align='".$v["align"]."'>".((isset($v["bottom"])) ? $v["bottom"] : "")."</th>";
 		}
+		if (isset($v["sub"]))
+		{
+			$affsub=1;
+		}
+		if (isset($v["bottom"]))
+		{
+			$affsubb=1;
+		}
+		
 		$ret.="</th>";
 		$nb++;
 	}
 	$ret.="</tr>\n";
+	$sub.="</tr>";
+	$subb.="</tr>";
 
+	if ($affsub==1)
+	{
+		$ret.=$sub;
+	}
+	
 	if (is_array($tabValeur))
 	  {
 		if ($trie=="d")
@@ -405,7 +429,7 @@ function AfficheTableau($tabValeur,$tabTitre="",$order="",$trie="",$url="",$star
 					}
 					if ($val[$name]["val"]=="<line>")
 					  {
-						$ret.="<td style='background-color:black;'></td>";
+						$ret.="<td style='border-left: 1px solid black;'></td>";
 					  }
 					else
 					  {
@@ -418,6 +442,11 @@ function AfficheTableau($tabValeur,$tabTitre="",$order="",$trie="",$url="",$star
 		  }
 	  }
 	
+	if ($affsubb==1)
+	{
+		$ret.=$subb;
+	}
+
 	$ret.="</table>\n";
 
 	// Affiche la liste des pages
