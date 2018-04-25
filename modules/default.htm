@@ -71,27 +71,8 @@
 	   		<a href="login.php?fonc=logout"><img src="static/images/icn32_logout.png" /> Se déconnecter</A><br />
 			</p>
 			<p style="text-align:center;"><a href="index.php?settheme=phone" style=" color:white;">-Affichage smartphone-</a></p>
-    </div> <!-- /.main_menu -->
-
+		</div> <!-- /.main_menu -->
 	</div> <!-- /responsive_navigation -->
-
-	<div id="main-content">
-		<div class='headbox'>
-		<div class='head'>
-			<div class='icone'>{icone}</div>
-			<div class='pagetitle'>{infos}</div>
-		</div>
-		</div>
-		<div class="msgbox">
-		<!-- BEGIN: aff_infos -->
-		<div class="msgbox-std msgbox-{msg_class}">{msg_infos}</div>
-		<!-- END: aff_infos-->
-		</div>
-		<div id='popup'></div>
-		<div class='main'>
-			{corps}
-		</div>
-	</div>
 
 	<div id="main-sidebar">
 		<div class="logo">
@@ -99,7 +80,7 @@
 		</div> <!-- /.logo -->
 
 		<div class="navigation">
-			<ul class="main-menu">
+		  <ul class="main-menu">
      		<li><a href="index.php"><img src="static/modules/actualites/img/icn32_titre.png" /> Accueil</a></li>
 <!-- BEGIN: menu_membres -->
      		<li><a href="index.php?mod=membres"><img src="static/modules/membres/img/icn32_membres.png" /> Membres</a></li>
@@ -147,18 +128,31 @@
 	   		<li><a href="index.php?mod=admin"><img src="static/modules/admin/img/icn32_titre.png" /> Configuration</a></li>
 <!-- END: menu_configuration -->
      		<li><a href="login.php?fonc=logout"><img src="static/images/icn32_logout.png" /> Se déconnecter</A></li>
-       </ul> <!-- /.main_menu -->
+		  </ul> <!-- /.main_menu -->
 		</div> <!-- /.navigation -->
 	</div> <!-- /#main-sidebar -->
 
+	<div id="main-content">
+		<div class='headbox'>
+		<div class='head'>
+			<div class='icone'>{icone}</div>
+			<div class='pagetitle'>{infos}</div>
+		</div>
+		</div>
+		<div class="msgbox">
+		<!-- BEGIN: aff_infos -->
+		<div class="msgbox-std msgbox-{msg_class}">{msg_infos}</div>
+		<!-- END: aff_infos-->
+		</div>
+		<div id='popup'></div>
+		<div class='main'>
+			{corps}
+		</div>
+	</div>
+
+
 
   <div class='footer'>
-  
-  	<!-- BEGIN: help -->
-		<div class='helplink'>&nbsp;
-			<a href="{helplink}" target="_blank"><img src="static/images/icn32_help.gif" alt="aide" border="0" /> Aide en ligne</a>
-		</div>
-	<!-- END: help-->
     <div class='lastmod'>{username}&nbsp;-&nbsp;Version {version}&nbsp;&nbsp;</div>
   </div>
 <!--/PageFooterFmt-->

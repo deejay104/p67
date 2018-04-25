@@ -81,8 +81,8 @@ img { color: #FFFFFF; border: 0px; }
 
 
 /* **** Block principaux **** */
-#main-content { position: relative; left: 0%; width: 100%; }
-#main-sidebar { display: none; float: left; height: 100%; position: fixed; background-color: #888e91; color: white; }
+#main-content { width: 100%; height: 100%; }
+#main-sidebar { display: none; height: 100%; position: fixed; background-color: #888e91; color: white; }
 #responsive-navigation { position: relative; width: 100%; display: block; z-index: 9999; }
 
 /* **** Style Responsive **** */
@@ -96,12 +96,12 @@ img { color: #FFFFFF; border: 0px; }
 	.formulaire input[type=checkbox] { width:20px!important; }
 	.formulaire input[type=radio] { width:20px!important; }
     #main-content { padding-left: 240px!important;  }
-    #main-sidebar { width: 240px!important; }
+    #main-sidebar { width: 240px!important; z-index: 9000; }
 }
 @media (min-width: 1024px) and (min-device-width: 1024px) {
     #responsive-navigation { display: none; }
-    #main-content { width: 100%; padding-left: 200px;  }
-    #main-sidebar { top: 0px; display: block; width: 200px; }
+    #main-content { padding-left: 200px;  }
+    #main-sidebar { display: block; width: 200px;  z-index: 9000; }
 }
 @media print {
     #responsive-navigation { display: none; }
@@ -157,8 +157,8 @@ img { color: #FFFFFF; border: 0px; }
 	padding-top: 10px;
 	padding-bottom: 50px;
 	line-height:20px;
+}
 
-	}
 body>.main { /* hack necessary for correct display of the height with IE and Mozilla */
 	height: auto;
 	}
@@ -173,7 +173,8 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 	background-color: #F5F5F5;
 	width: 100%;
 	height: 24px;
-	}
+	z-index: 9999;
+}
 
 .lastmod { /* last modified information */
 	float: right;
@@ -438,7 +439,7 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 .resaInfos { border: 1px solid #013366; border-radius: 4px; padding: 4px; }
 
 .formulaire { margin-bottom: 10px;  }
-.formulaire p { margin: 0px;  }
+.formulaire p { margin: 0px; }
 .formulaire label { display: inline-block; width: 180px; margin-right: 10px; text-align: left; vertical-align: top; }
 .formulaire span { display: inline-block; width:160px; } /* Overlapped by responsive */
 .formulaire2 span { display: inline-block; width:450px; border: 1px solid #013366; border-radius: 4px; padding: 4px; }

@@ -108,12 +108,14 @@
 	$tabTitre=array();
 	$tabTitre["avion"]["aff"]="Avion";
 	$tabTitre["avion"]["width"]=150;
+	$tabTitre["line1"]["aff"]="<line>";
 	for ($i=1;$i<=12;$i++)
 	{
 		$tabTitre["m".$i]["aff"]=$tabm[$i];
 		$tabTitre["m".$i]["width"]=80;
 		$tabTitre["m".$i]["bottom"]=0;
 	}
+	$tabTitre["line2"]["aff"]="<line>";
 	$tabTitre["total"]["aff"]="Total";
 	$tabTitre["total"]["width"]=100;
 	$tabTitre["total"]["align"]="center";
@@ -125,16 +127,18 @@
 		$tabValeur[$id]["avion"]["val"]=$tabHeures[$id]["avion"];
 		$tabValeur[$id]["avion"]["aff"]=$tabHeures[$id]["avion"];
 		$tabValeur[$id]["avion"]["align"]="center";
+		$tabValeur[$id]["line1"]["val"]="<line>";
 		$tot=0;
 		for ($i=1;$i<=12;$i++)
 		{
 			$tabValeur[$id]["m".$i]["val"]=$tabHeures[$id]["nb"][$i]."0";
 			$tabValeur[$id]["m".$i]["aff"]=AffTemps($tabHeures[$id]["nb"][$i],"no");
 			$tabValeur[$id]["m".$i]["align"]="center";
-			$tot=$tot+$tabHeures[$id][$i]["nb"];
+			$tot=$tot+$tabHeures[$id]["nb"][$i];
 			
 			$tabTitre["m".$i]["bottom"]=$tabTitre["m".$i]["bottom"]+$tabHeures[$id]["nb"][$i];
 		}
+		$tabValeur[$id]["line2"]["val"]="<line>";
 		$tabValeur[$id]["total"]["val"]=$tot."0";
 		$tabValeur[$id]["total"]["aff"]=AffTemps($tot,"no");
 		$tabValeur[$id]["total"]["align"]="center";

@@ -42,7 +42,7 @@ class ress_class{
 		$this->alertpotentiel=45;
 		$this->marque="";
 		$this->modele="";
-		$this->couleur="A9D7FE";
+		$this->couleur=dechex(rand(0x000000, 0xFFFFFF));
 		$this->description="";
 
 		$this->places="0";
@@ -69,7 +69,7 @@ class ress_class{
 		$this->data["alertpotentiel"]=45;
 		$this->data["marque"]="";
 		$this->data["modele"]="";
-		$this->data["couleur"]=dechex(rand(0x000000, 0xFFFFFF));
+		$this->data["couleur"]=$this->couleur;
 		$this->data["description"]="";
 
 		$this->data["places"]="0";
@@ -217,6 +217,8 @@ class ress_class{
 				}
 		  	  	$ret.="</SELECT>";
 			}
+			else if ($key=="couleur")
+		  	  { $ret="<INPUT id='ress_col' name=\"form_ress[$key]\" value=\"$ret\" style=\"display: inline-block;\" OnKeyUp=\"document.getElementById('ress_showcol').style.backgroundColor='#'+document.getElementById('ress_col').value;\"><div id='ress_showcol' style='margin-left:10px; display: inline-block; width:24px; height:24px; border: 1px solid black; background-color:#".$ret.";'></div>"; }
 			else
 		  	  { $ret="<INPUT name=\"form_ress[$key]\" value=\"$ret\">"; }
 		  }
@@ -230,6 +232,8 @@ class ress_class{
 			  { $ret=nl2br(htmlentities($ret)); }
 			else if ($key=="centrage")
 			  { $ret=nl2br(htmlentities($ret)); }
+			else if ($key=="couleur")
+			  { $ret="<div style='display: inline-block; width:80px;'>".$ret."</div><div style='display: inline-block; width:24px; height:24px; border: 1px solid black; background-color:#".$ret.";'></div>"; }
 			else if ($key=="poste")
 			{
 				$query = "SELECT id,description FROM ".$this->tbl."_mouvement WHERE id='".$ret."'";

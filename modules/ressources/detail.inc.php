@@ -137,6 +137,8 @@
 	foreach($ress->data as $k=>$v)
 	  { $tmpl_x->assign("form_$k", $ress->aff($k,$typeaff)); }
 
+	 $tmpl_x->assign("bk_couleur",$ress->data["couleur"]);
+	  
 	if (($id==$uid) || (GetDroit("ModifRessource")))
 	  { $tmpl_x->parse("corps.modification"); }
 
