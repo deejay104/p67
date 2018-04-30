@@ -75,12 +75,9 @@
 
 		<p>
 			<label for="pob">POB</label>
-			<SELECT id="pob" name="form_nbpersonne" title="Entrez le nombre de personne à bord, pilote compris (POB)">
-				<OPTION value="1" {chk_passager1}>1</OPTION>
-				<OPTION value="2" {chk_passager2}>2</OPTION>
-				<OPTION value="3" {chk_passager3}>3</OPTION>
-				<OPTION value="4" {chk_passager4}>4</OPTION>
-			</SELECT>
+			<!-- BEGIN: lst_pob -->
+			<input type="radio" name="form_nbpersonne" value="{pob}" {chk_pob}>{pob}
+			<!-- END: lst_pob -->
 		</p>
 		<p>
 			<label for="tpsestime">Tps estimée</label>

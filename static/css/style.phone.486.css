@@ -38,7 +38,7 @@ img:hover { color: #FF6600; }
 
 
 
-input[type=radio] { width: 25px; height: 25px; background: #ffffff; }
+input[type=radio] { -webkit-appearance: radio; width: 25px; height: 25px; background: #ffffff; }
 input[type=radio]:checked { background: #38a9e3; border-color: #000000; }
 input[type=checkbox] { -webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5); -moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5); width: 25px; height: 25px; background: #ffffff; }
 input[type=checkbox]:checked { background: #dddddd; border-color: #000000; }

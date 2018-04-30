@@ -360,6 +360,12 @@
 		{
 			$tmpl_x->assign("chk_instructeur", "");
 		}
+		
+		if (($ok_inst==1) && ($resa["resa"]->uid_instructeur==0))
+		{
+			$resa["resa"]->uid_instructeur=$tmpuid;
+		}
+
 		$tmpl_x->parse("corps.aff_reservation.aff_instructeur.lst_instructeur");
 	}
 	$tmpl_x->assign("aff_nom_instructeur", $txt);
@@ -412,6 +418,19 @@
 	$tmpl_x->parse("corps.aff_reservation.aff_tarif");
 
 	
+	// POB
+	if (($resa["resa"]->uid_instructeur>0) && ($resa["resa"]->nbpersonne<2))
+	{
+		$resa["resa"]->nbpersonne=2;
+	}
+	
+	$resr=new ress_class($resa["resa"]->uid_ressource,$sql);
+	for ($i=1;$i<=$resr->places;$i++)
+	{
+		$tmpl_x->assign("pob", $i);
+		$tmpl_x->assign("chk_pob", ($resa["resa"]->nbpersonne==$i) ? "checked='checked'" : "");
+		$tmpl_x->parse("corps.aff_reservation.lst_pob");
+	}
 	
 	// Horaires
 	if ($ok==2)
@@ -436,9 +455,8 @@
 	  }
 
 	$tmpl_x->assign("form_destination", $resa["resa"]->destination);
-	$tmpl_x->assign("chk_passager".$resa["resa"]->nbpersonne, "selected");
 	$tmpl_x->assign("form_nbpassager", $resa["resa"]->nbpersonne);
-	$tmpl_x->assign("chk_invite_".$resa["resa"]->invite, "selected");
+	$tmpl_x->assign("chk_invite_".$resa["resa"]->invite, "checked='checked'");
 
 	$tmpl_x->assign("form_tpsestime", $resa["resa"]->tpsestime);
 

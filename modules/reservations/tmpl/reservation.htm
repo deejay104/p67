@@ -134,13 +134,11 @@ function reloadImg2() {
 				<OPTION value="{uid_avion}" {chk_avion}>{nom_avion}</OPTION>
 				<!-- END: lst_avion -->
 				</SELECT>
-				<span class="resaInfos" style="width:240px;">
+				<span class="resaInfos">
 					<a href="index.php?mod=ressources&rub=fiche&uid_avion={uid_avionrmq}">Fiches en cours sur cet avion</a>
 				</span>
 	  	</p>
-
-		<p>&nbsp;</p>
-			
+		
 		<p>
 			<label for="pilote">Pilote</label>
 			<SELECT id="pilote" name="form_uid_pilote" OnChange="reservation.submit();" style='width: 220px;'>
@@ -186,33 +184,31 @@ function reloadImg2() {
 		<p>
 			<label for="destination" title="Préciser la destination ou LOCAL pour un vol local.">Destination</label>
 			<INPUT id="destination" name="form_destination" value="{form_destination}" style='width: 220px!important;'>
-		  </p>
-
-		<p>
-			<label for="pob" title="Entrez le nombre de personne à bord, pilote compris (POB)">Nb de personnes</label>
-			<SELECT id="pob" name="form_nbpersonne" style='width: 60px;'>
-				<OPTION value="1" {chk_passager1}>1</OPTION>
-				<OPTION value="2" {chk_passager2}>2</OPTION>
-				<OPTION value="3" {chk_passager3}>3</OPTION>
-				<OPTION value="4" {chk_passager4}>4</OPTION>
-			</SELECT>
 		</p>
-
 		<p>
 			<label for="tpsestime" title="Le temps de vol estimé correspond au temps durant lequel vous avez prévu de voler. Ce champs est obligatoire.">Temps de vol estimé</label>
-			 <INPUT id="tpsestime" name="form_tpsestime" value="{form_tpsestime}" type="number" style='width: 60px!important;'> (en minutes)
+			 <INPUT id="tpsestime" name="form_tpsestime" value="{form_tpsestime}" type="number" style='width: 70px!important;'> (en minutes)
 		</p>
+
+		<p style='padding-top:10px;'>
+			<label for="pob" title="Entrez le nombre de personne à bord, pilote compris (POB)">Nb de personnes</label>
+			<!-- BEGIN: lst_pob -->
+			<input type="radio" name="form_nbpersonne" value="{pob}" {chk_pob}>{pob}
+			<!-- END: lst_pob -->
+		</p>
+
 
 		<p>
 			<label for="invite" title="Indique aux membres que l'avion n'est pas plein et qu'il est possible de s'y rajouter. Contacter le pilote pour vérifier s'il reste des places.">Inviter les membres</label>
-			<SELECT id="invite" name="form_invite" style='width: 60px;'>
-				<OPTION value="non" {chk_invite_non}>Non</OPTION>
-				<OPTION value="oui" {chk_invite_oui}>Oui</OPTION>
-			</SELECT>
+			<!-- <SELECT id="invite" name="form_invite" style='width: 60px;'> -->
+				<!-- <OPTION value="non" {chk_invite_non}>Non</OPTION> -->
+				<!-- <OPTION value="oui" {chk_invite_oui}>Oui</OPTION> -->
+			<!-- </SELECT> -->
+			<input type="radio" name="form_invite" value="non" {chk_invite_non}>Non
+			<input type="radio" name="form_invite" value="oui" {chk_invite_oui}>Oui
 		</p>
 
-		<p>&nbsp;</p>
-		<p>
+		<p style='padding-top:10px;'>
 			<label for="form_dte_deb">Du</label>
 			<INPUT id="form_dte_deb" name="form_dte_deb" value="{form_dte_deb}" style='width: 100px!important;' > à <INPUT name="form_hor_deb" id="form_hor_deb" value="{form_hor_deb}" style='width: 60px!important;'> <FONT color=red>{msg_dtedeb}</FONT>
 		</p>
@@ -252,8 +248,8 @@ function reloadImg2() {
 
 		<p>
 			<label for="carburant">Carburant ajouté</label>
-			<INPUT type="number" name="form_carbavant" value="{form_carbavant}" style='width: 60px!important;'> Litres Avant,
-			<INPUT type="number" name="form_carbapres" value="{form_carbapres}" style='width: 60px!important;'> Litres Après
+			<INPUT type="number" name="form_carbavant" value="{form_carbavant}" style='width: 60px!important;'> L Avant,
+			<INPUT type="number" name="form_carbapres" value="{form_carbapres}" style='width: 60px!important;'> L Après
 		</p>
 		<p>
 			<label for="carburant">Total Carburant</label>
