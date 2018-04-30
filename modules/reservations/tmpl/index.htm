@@ -83,7 +83,8 @@
 </style>
 
 <script>
-
+	var oldView="old";
+	
 	$(document).ready(function() {
 		$('#calendar').fullCalendar({
 			defaultDate: '{form_jour}',
@@ -123,7 +124,7 @@
 					type: 'agenda',
 					duration: { days: 1 },
 					buttonText: 'Jour',
-					dateIncrement: { weeks: 1 },
+					dateIncrement: { days: 1 },
 					eventLimit: 5
 				},
 				agendaWeek: {
@@ -186,19 +187,23 @@
 
 			viewRender: function(view,element) {
 				var d = new Date();
-				var strDate = moment().format("YYYY/MM/DD");
-				if (view.type=="agendaDay")
+				var strDate = moment().format("YYYY-MM-DD");
+console.log(view.name+" "+oldView);
+
+				if ((view.type=="agendaDay") && (oldView!=view.type))
 				{
 					$('#calendar').fullCalendar('gotoDate', strDate);
 				}
-				else if (view.type=="agendaWeek")
+				else if ((view.type=="agendaWeek") && (oldView!=view.type))
 				{
 					$('#calendar').fullCalendar('gotoDate', strDate);
 				}
-				else
+				else if (oldView!=view.type)
 				{
 					$('#calendar').fullCalendar('gotoDate', '{form_jour}');
 				}
+				oldView=view.name;
+
 			},
 
 			<!-- BEGIN: aff_tooltips -->
