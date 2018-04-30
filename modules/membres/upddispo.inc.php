@@ -16,26 +16,44 @@
 	$jstart=date("Y-m-d H:i:s",floor($jstart)/1000-$fh*3600);
 	$fh=date("O",floor($jend)/1000+4*3600)/100;
 	$jend=date("Y-m-d H:i:s",floor($jend)/1000-$fh*3600);
-	
-	
-	if ($_GET["id"]==0)
-	{
-		if (!isset($_GET['mid']) || !is_numeric($_GET['mid'])) {
-			die("Please provide a member id.");
-		}
-		$mid=$_GET['mid'];
-		$query="INSERT ".$MyOpt["tbl"]."_disponibilite SET uid='".$mid."', dte_deb='".$jstart."',dte_fin='".$jend."', uid_maj='".$gl_uid."', dte_maj='".now()."'";
-		$sql->Insert($query);
-	}
-	else
-	{
-		if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-			die("Please provide an event id.");
-		}
+	$id=(!is_numeric($_GET['id'])) ? 0 : $_GET["id"];
+	$mid=(!is_numeric($_GET['mid'])) ? 0 : $_GET["mid"];
 
-		$id=$_GET['id'];
-
-		$query="UPDATE ".$MyOpt["tbl"]."_disponibilite SET dte_deb='".$jstart."',dte_fin='".$jend."' WHERE id='".$id."'";
-		$sql->Update($query);
+	if (($id==0) && ($mid==0))
+	{
+		die("Error with variables.");
 	}
+
+	$t=array(
+		"dte_deb"=>$jstart,
+		"dte_fin"=>$jend,
+		"uid_maj"=>$gl_uid,
+		"dte_maj"=>now()
+	);
+	
+	if ($mid>0)
+	{
+		$t["uid"]=$mid;
+	}
+	
+	$sql->Edit("disponibilite",$MyOpt["tbl"]."_disponibilite",$id,$t);
+
+	
+	// if ($_GET["id"]==0)
+	// {
+		// $query="INSERT ".$MyOpt["tbl"]."_disponibilite SET uid='".$mid."', dte_deb='".$jstart."',dte_fin='".$jend."', uid_maj='".$gl_uid."', dte_maj='".now()."'";
+		// $sql->Insert($query);
+	// }
+	// else
+	// {
+		// if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+			// die("Please provide an event id.");
+		// }
+
+
+		// $query="UPDATE ".$MyOpt["tbl"]."_disponibilite SET dte_deb='".$jstart."',dte_fin='".$jend."' WHERE id='".$id."'";
+		// $sql->Update($query);
+	// }
+echo json_encode(array('updated' => true));
+
 ?>

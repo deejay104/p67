@@ -70,29 +70,7 @@
     });
   });
 
-function reloadImg() {
-alert("ok");
-}
   
-</script>
-
-<script type="text/javascript">
-
-function reloadImg2() {
-	var mid=document.getElementById("instructeur").value;
-	var deb_j=document.getElementById("form_dte_deb").value;
-	var deb_h=document.getElementById("form_hor_deb").value;
-	console.log("deb="+deb_j+" "+deb_h);
-	var deb=new Date(deb_j+" "+deb_h);
-
-	var fin_j=document.getElementById("form_dte_fin").value;
-	var fin_h=document.getElementById("form_hor_fin").value;
-	console.log("fin="+fin_j+" "+fin_h);
-	var fin=new Date(fin_j+" "+fin_h);
-
-	document.getElementById("imgdispo").src="api.php?mod=membres&rub=checkdispo&mid="+mid&deb="+Math.round(deb.getTime()/1000)+"&fin="+Math.round(fin.getTime()/1000+45*60);
-}
-	
 </script>
 
 
@@ -247,9 +225,9 @@ function reloadImg2() {
 		</p>
 
 		<p>
-			<label for="carburant">Carburant ajouté</label>
-			<INPUT type="number" name="form_carbavant" value="{form_carbavant}" style='width: 60px!important;'> L Avant,
-			<INPUT type="number" name="form_carbapres" value="{form_carbapres}" style='width: 60px!important;'> L Après
+			<label for="carburant">Carburant ajouté Avant</label>
+			<INPUT type="number" name="form_carbavant" value="{form_carbavant}" style='width: 60px!important;'> L, Après
+			<INPUT type="number" name="form_carbapres" value="{form_carbapres}" style='width: 60px!important;'> L
 		</p>
 		<p>
 			<label for="carburant">Total Carburant</label>

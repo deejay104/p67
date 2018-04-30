@@ -130,9 +130,15 @@
 				}
 			},
 
-			select: function(start, end) {
-				//document.location="api.php?rub=uptdispo&jstart="+start+"&jend="+end;
-				$.ajax({ url: "api.php?mod=membres&rub=upddispo&fonc=select&id=0&mid={mid}&jstart="+start+"&jend="+end });
+			select: function(start, end, allDay) {
+				$.ajax({ 
+					url: "api.php?mod=membres&rub=upddispo&fonc=select&id=0&mid={mid}&jstart="+start+"&jend="+end,
+					error:function(e) {
+						console.log(e.responseText);
+					}
+				});
+				$('#calendar').fullCalendar('unselect');
+				$('#calendar').fullCalendar('refetchEvents');
 			},
 
 			eventClick: function(event, element) {

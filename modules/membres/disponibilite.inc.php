@@ -34,6 +34,9 @@
 	if ( (!GetDroit("AccesMembre")) && (!GetMyId($id)) )
 	  { FatalError("Accès non autorisé (AccesMembre)"); }
 
+  	if ($id>0)
+	  { $usr = new user_class($id,$sql,((GetMyId($id)) ? true : false)); }
+
 
 // ---- Charge le template
 	$tmpl_x = new XTemplate (MyRep("disponibilite.htm"));
