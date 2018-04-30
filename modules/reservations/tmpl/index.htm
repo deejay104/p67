@@ -184,7 +184,24 @@
 				title.html( title.text() );
 			},
 
-	<!-- BEGIN: aff_tooltips -->
+			viewRender: function(view,element) {
+				var d = new Date();
+				var strDate = moment().format("YYYY/MM/DD");
+				if (view.type=="agendaDay")
+				{
+					$('#calendar').fullCalendar('gotoDate', strDate);
+				}
+				else if (view.type=="agendaWeek")
+				{
+					$('#calendar').fullCalendar('gotoDate', strDate);
+				}
+				else
+				{
+					$('#calendar').fullCalendar('gotoDate', '{form_jour}');
+				}
+			},
+
+			<!-- BEGIN: aff_tooltips -->
 			eventMouseover: function(event, jsEvent) {
 			    var tooltip = '<div class="calendarDesc" style="position:absolute;z-index:10001;left:0px;top:0px;display:none">' + event.description + '</div>';
 			    $("body").append(tooltip);
