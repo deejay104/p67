@@ -38,9 +38,9 @@
 	}
 	
 	// Affichage des réservations	
-	foreach ($lstres as $i=>$r)
+	foreach ($lstres as $i=>$rid)
 	{
-		$tresa=GetReservation($sql,$start,$end,$r);
+		$tresa=GetReservation($sql,$start,$end,$rid);
 
 		$d=floor(date_diff_txt($start,$end)/86400);
 		$affnom=($d<=7) ? "fullname" : "initiales";
@@ -49,14 +49,11 @@
 		{
 			foreach($tresa as $r)
 			{
+				$resa=array();
 				$resa["resa"]=new resa_class($r["id"],$sql);
 				$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql,false,true);
 				$resa["instructeur"]=new user_class($resa["resa"]->uid_instructeur,$sql,false,true);
-
-				if ($ress==0)
-				{
-					$resa["ress"]=new ress_class($resa["resa"]->uid_ressource,$sql);
-				}
+				$resa["ress"]=new ress_class($resa["resa"]->uid_ressource,$sql);
 			
 				$col="";
 				if (($resa["instructeur"]->data["type"]=="instructeur") && ($resa["instructeur"]->uid==$myuser->uid))

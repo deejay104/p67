@@ -58,6 +58,16 @@
 			</SELECT>
 		</p>
 <!-- END: aff_instructeur -->
+	<!-- BEGIN: aff_tarif -->
+		<p>
+			<label for="tarif">Tarif</label>
+			<SELECT id="tarif" name="form_tarif">
+				<!-- BEGIN: lst_tarif -->
+				<OPTION value="{tarif}" {chk_tarif}>{nom_tarif}</OPTION>
+				<!-- END: lst_tarif -->
+			</SELECT>
+		</p>
+	<!-- END: aff_tarif -->
 		<p>
 			<label for="destination">Destination</label>
 			<INPUT id="destination" name="form_destination" value="{form_destination}" style="width: 287px;" title="Préciser la destination ou LOCAL pour un vol local.">

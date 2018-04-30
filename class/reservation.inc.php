@@ -311,7 +311,7 @@ class resa_class{
 		if ($this->accept!="oui")
 		  { $this->accept="non"; }
 
-		if (($MyOpt["ChkValidResa"]=="oui") && ($this->accept!="oui") && ($ValidResa==false))
+		if (($MyOpt["ChkValidResa"]=="on") && ($this->accept!="oui") && ($ValidResa==false))
 		  { return "Vous devez accepter les conditions de vol.<br />"; }
 
 
