@@ -40,6 +40,7 @@ class resa_class{
 		$this->horafin="0";
 		$this->tpsestime="";
 		$this->destination="LOCAL";
+		$this->nbpersonne=1;
 		$this->invite="non";
 		$this->carburant="";
 		$this->prixcarbu="";
