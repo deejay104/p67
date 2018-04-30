@@ -29,8 +29,8 @@
 		
 					$input_arrays[$ii]["id"]=$m->id;
 					$input_arrays[$ii]["title"]=utf8_encode($m->titre);
-					$input_arrays[$ii]["start"]=date("c",strtotime($m->dte_manip." 00:00:00"));
-					$input_arrays[$ii]["end"]=date("c",strtotime($m->dte_manip." 23:59:59"));
+					$input_arrays[$ii]["start"]=date("c",strtotime($m->dte_manip));
+					$input_arrays[$ii]["end"]=date("c",strtotime($m->dte_manip));
 					$input_arrays[$ii]["color"]='#38a9e3';
 					$ii=$ii+1;
 			  }

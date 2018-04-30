@@ -260,7 +260,8 @@ $tabTmpl=Array
 	),
 	"groupe" => Array
 	(
-		"groupe" => Array("Type" => "varchar(5)", "Index" => "PRIMARY", ),
+		"id" => Array("Type" => "int(10) unsigned", "Index" => "PRIMARY", ),
+		"groupe" => Array("Type" => "varchar(5)" ),
 		"description" => Array("Type" => "varchar(200)", ),
 	),
 	"historique" => Array

@@ -34,12 +34,12 @@
 	  }
 </SCRIPT>
 
-<link href='external/fullcalendar/fullcalendar.css' rel='stylesheet' />
-<link href='external/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<link href='external/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
 
+<script src='external/fullcalendar/lib/jquery.min.js'></script>
 <script src='external/fullcalendar/lib/moment.min.js'></script>
 <script src='external/fullcalendar/fullcalendar.min.js'></script>
-<script src='external/fullcalendar/lang/fr.js'></script>
+<script src='external/fullcalendar/locale/fr.js'></script>
 
 <style>
 	#script-warning {
@@ -66,15 +66,19 @@
 		padding: 0 10px;
 	}
 
-.fc-time-grid .fc-slats td {
-	height: 16px;
-    line-height: 16px;
-    font-size: 10px;
-	}
+	.fc-time-grid .fc-slats td {
+		height: 16px;
+		line-height: 16px;
+		font-size: 10px;
+		}
 
-.fc-time {	color: #000000; }
-.fc-title {	color: black; }
-.fc-end-resizer { color: #777777; }
+	.fc-time {	color: #000000; }
+	.fc-title {	color: black; }
+	.fc-end-resizer { color: #777777; }
+
+	.fc-week {
+		height: 100px!important;
+	}
 		
 </style>
 
@@ -84,9 +88,10 @@
 		$('#calendar').fullCalendar({
 			defaultDate: '{form_jour}',
 			defaultView: '{defaultView}',
+			locale: 'fr',
+			lang: 'fr',
 			defaultEventMinutes: 60,
 			timeFormat: 'H:mm',
-			lang: 'fr',
 			editable: true,
 			eventLimit: true,
 			selectable: true,
@@ -99,6 +104,7 @@
 			slotEventOverlap: false,
 			allDaySlot: false,
 
+		
 			header: {
 				left: 'prev,next today',
 				center: 'title',
@@ -113,11 +119,27 @@
 			},
 
 			views: {
+				agendaDay: {
+					type: 'agenda',
+					duration: { days: 1 },
+					buttonText: 'Jour',
+					dateIncrement: { weeks: 1 },
+					eventLimit: 5
+				},
+				agendaWeek: {
+					type: 'agenda',
+					duration: { weeks: 1 },
+					buttonText: 'Semaine',
+					columnFormat: 'DD',
+					dateIncrement: { weeks: 1 },
+					eventLimit: 5
+				},
 				agendaTwoWeeks: {
 					type: 'agenda',
-					duration: {weeks: 2},
+					duration: { weeks: 2 },
 					buttonText: '2 Semaines',
 					columnFormat: 'DD',
+					dateIncrement: { weeks: 1 },
 					eventLimit: 5
 				},
 				agendaFourWeeks: {
@@ -125,7 +147,14 @@
 					duration: {weeks: 4},
 					buttonText: '4 Semaines',
 					columnFormat: 'DD',
+					dateIncrement: { weeks: 1 },
 					eventLimit: 3
+				},
+				agendaMonth: {
+					type: 'month',
+					buttonText: 'Mois',
+					eventLimit: 5,
+					height: 700
 				}
 			},
 

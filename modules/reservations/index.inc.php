@@ -76,41 +76,38 @@
 // ---- Affichage pour la journée
 	
 	if ($theme=="phone")
-	  {
-
-			if ($jour=="-")
-			  { $myuser->Valid("aff_jour",date("Y-m-d")); }
-			else if ($jour!="")
-			  { $myuser->Valid("aff_jour",$jour); }
-		
-			if (($myuser->data["aff_jour"]=="") || ($myuser->data["aff_jour"]=="0000-00-00"))
-			  { $myuser->Valid("aff_jour",date("Y-m-d")); }
-		
-			$jour=$myuser->data["aff_jour"];
-			$tmpl_x->assign("defaultView","agendaDay");
-			$tmpl_x->assign("headerListe","agendaWeek,agendaDay");
-			$tmpl_x->assign("TexteTitre","");
-			
-	  }
+	{
+		if ($jour=="-")
+		  { $myuser->Valid("aff_jour",date("Y-m-d")); }
+		else if ($jour!="")
+		  { $myuser->Valid("aff_jour",$jour); }
+	
+		if (($myuser->data["aff_jour"]=="") || ($myuser->data["aff_jour"]=="0000-00-00"))
+		  { $myuser->Valid("aff_jour",date("Y-m-d")); }
+	
+		$jour=$myuser->data["aff_jour"];
+		$tmpl_x->assign("defaultView","agendaDay");
+		$tmpl_x->assign("headerListe","agendaWeek,agendaDay");
+		$tmpl_x->assign("TexteTitre","");
+	}
 	else
-	  {
-			if ($jour=="-")
-			  // { $myuser->Valid("aff_jour",date("Y-m")."-".(floor((date("d")-1)/7)*7+1)); }
-			  { $myuser->Valid("aff_jour",date("Y-m-d")); }
-			else if ($jour!="")
-			  { $myuser->Valid("aff_jour",$jour); }
-		
-			if (($myuser->data["aff_jour"]=="") || ($myuser->data["aff_jour"]=="0000-00-00"))
-			  { $myuser->Valid("aff_jour",date("Y-m-d")); }
-		
-			$jour=$myuser->data["aff_jour"];
+	{
+		if ($jour=="-")
+		  { $myuser->Valid("aff_jour",date("Y-m-d",time()-24*3600*2)); }
+		  // { $myuser->Valid("aff_jour",date("Y-m-d")); }
+		else if ($jour!="")
+		  { $myuser->Valid("aff_jour",$jour); }
+	
+		if (($myuser->data["aff_jour"]=="") || ($myuser->data["aff_jour"]=="0000-00-00"))
+		  { $myuser->Valid("aff_jour",date("Y-m-d")); }
+	
+		$jour=$myuser->data["aff_jour"];
 
-			$tmpl_x->assign("defaultView","agendaTwoWeeks");
-			$tmpl_x->assign("headerListe","month,agendaFourWeeks,agendaTwoWeeks,agendaWeek,agendaDay");
-			$tmpl_x->assign("TexteTitre","Calendrier pour");
-			$tmpl_x->parse("corps.aff_tooltips");
-
-	  }
+		$tmpl_x->assign("defaultView","agendaTwoWeeks");
+		$tmpl_x->assign("headerListe","agendaMonth,agendaFourWeeks,agendaTwoWeeks,agendaWeek,agendaDay");
+		$tmpl_x->assign("TexteTitre","Calendrier pour");
+		$tmpl_x->parse("corps.aff_tooltips");
+	}
 
 	$tmpl_x->assign("maintconf",$MyOpt["tabcolresa"]["maintconf"]);
 	$tmpl_x->assign("maintplan",$MyOpt["tabcolresa"]["maintplan"]);
