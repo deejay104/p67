@@ -47,6 +47,16 @@
 		$sql->GetRow($i);
 		$tabposte[$sql->data["id"]]=$sql->data;
 	}
+
+// ---- Liste des groupes
+	$query = "SELECT groupe FROM ".$MyOpt["tbl"]."_groupe ORDER BY description";
+	$sql->Query($query);
+	$tabgrp=array();
+	for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+		$tabgrp[$sql->data["groupe"]]=$sql->data["groupe"];
+	}
 	
 // ---- Affiche les types d'échéance
 	$query="SELECT * FROM ".$MyOpt["tbl"]."_echeancetype ORDER BY description";
@@ -81,6 +91,14 @@
 			$tmpl_x->assign("select_poste",($sql->data["poste"]==$id) ? "selected" : "");
 			
 			$tmpl_x->parse("corps.lst_echeance.lst_poste");
+		}
+
+		foreach($tabgrp as $grp=>$d)
+		{
+			$tmpl_x->assign("form_groupe",$grp);
+			$tmpl_x->assign("select_groupe",($sql->data["droit"]==$grp) ? "selected" : "");
+			
+			$tmpl_x->parse("corps.lst_echeance.lst_groupe");
 		}
 		
 		$tmpl_x->parse("corps.lst_echeance");

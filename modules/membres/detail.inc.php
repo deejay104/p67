@@ -135,25 +135,22 @@
 	}
 
 	// Sauvegarde le lache
-	if (($fonc=="Enregistrer") && ($id>0) && (GetDroit("ModifUserLache")))
+	if (($fonc=="Enregistrer") && ($id>0) && (GetDroit("ModifUserLache")) && (is_array($form_lache)))
 	{
-		$msg_erreur.=$usr->SaveLache($form_lache,$uid);
+		$msg_erreur.=$usr->SaveLache($form_lache);
 
 	}
 
-	// Sauvegarde les données utilisateurs
-	if (($fonc=="Enregistrer") && ($id>0) && (GetDroit("ModifUserDonnees")))
+	// Sauvegarde les droits
+	if (($fonc=="Enregistrer") && ($id>0) && (GetDroit("ModifUserDroits")) && (is_array($form_droits)))
 	{
-		$usr->LoadDonneesComp();
+		$msg_erreur.=$usr->SaveDroits($form_droits);
 
-		if (is_array($form_donnees))
-		{
-			foreach($form_donnees as $did=>$d)
-			{
-				$usr->donnees[$did]["valeur"]=$d;
-			}
-			$msg_erreur.=$usr->SaveDonnees();
-		}
+	}
+	// Sauvegarde les données utilisateurs
+	if (($fonc=="Enregistrer") && ($id>0) && (GetDroit("ModifUserDonnees")) && (is_array($form_donnees)))
+	{
+		$msg_erreur.=$usr->SaveDonnees($form_donnees);
 	}
 
 // ---- Supprimer l'utilisateur

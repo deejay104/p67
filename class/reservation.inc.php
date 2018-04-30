@@ -32,7 +32,7 @@ class resa_class{
 		$this->sql=$sql;
 		$this->id=0;
 		$this->destination="LOCAL";
-		$this->tarif="P";
+		$this->tarif="";
 		$this->actif="oui";
 		$this->reel="oui";
 		$this->edite="oui";
@@ -398,58 +398,46 @@ class resa_class{
 		  	return $msg_err_t;
 		  }
 
-		if ($this->id==0)
-		  {
-			$query="INSERT INTO ".$this->tbl."_calendrier SET uid_maj=$uid, description='', edite='$this->edite'";
-			$this->id=$sql->Insert($query);
+		$t=array(
+			"edite"=>$this->edite,
+			"description"=>addslashes($this->description),
+			"dte_deb"=>$this->dte_deb,
+			"dte_fin"=>$this->dte_fin,
+			"uid_pilote"=>$this->uid_pilote,
+			"uid_debite"=>$this->uid_debite,
+			"uid_instructeur"=>$this->uid_instructeur,
+			"uid_avion"=>$this->uid_ressource,
+			"destination"=>$this->destination,
+			"nbpersonne"=>$this->nbpersonne,
+			"invite"=>$this->invite,
+			"accept"=>$this->accept,
+			"reel"=>$this->reel,
+			"temps"=>$this->temps,
+			"tarif"=>$this->tarif,
+			"tpsestime"=>$this->tpsestime,
+			"tpsreel"=>$this->tpsreel,
+			"horadeb"=>$this->horadeb,
+			"horafin"=>$this->horafin,
+			"potentiel"=>$this->potentiel,
+			"carbavant"=>$this->carbavant,
+			"carbapres"=>$this->carbapres,
+			"prixcarbu"=>$this->prixcarbu,
+			"uid_maj"=>$uid,
+			"dte_maj"=>now()
+		);
 
-			$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-			$query.="VALUES (NULL , 'reservation', '".$this->tbl."_calendrier', '".$this->id."', '$uid', '".now()."', 'ADD', 'Create schedule')";
-			$sql->Insert($query);
-		  }
-
-		// Met à jour les infos
-		$query ="UPDATE ".$this->tbl."_calendrier SET ";
-		$query.="description='".addslashes($this->description)."',";
-		$query.="dte_deb='$this->dte_deb',";
-		$query.="dte_fin='$this->dte_fin',";
-		$query.="uid_pilote='$this->uid_pilote',";
-		$query.="uid_debite='$this->uid_debite',";
-		$query.="uid_instructeur='$this->uid_instructeur',";
-		$query.="uid_avion='$this->uid_ressource',";
-		$query.="destination='$this->destination',";
-		$query.="nbpersonne='$this->nbpersonne',";
-		$query.="invite='$this->invite',";
-		$query.="accept='$this->accept',";
-		$query.="reel='$this->reel',";
-		$query.="temps='$this->temps',";
-		$query.="tarif='$this->tarif',";
-		$query.="tpsestime='$this->tpsestime',";
-		$query.="tpsreel='$this->tpsreel',";
-		$query.="horadeb='$this->horadeb',";
-		$query.="horafin='$this->horafin',";
-		$query.="potentiel='$this->potentiel',";
-		$query.="carbavant='$this->carbavant',";
-		$query.="carbapres='$this->carbapres',";
-		$query.="prixcarbu='$this->prixcarbu',";
-		$query.="uid_maj=$uid, dte_maj='".now()."' ";
-		$query.="WHERE id=$this->id";
-		$sql->Update($query);
-
-		$query ="INSERT INTO ".$this->tbl."_historique (`id` ,`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-		$query.="VALUES (NULL , 'reservation', '".$this->tbl."_calendrier', '".$this->id."', '$uid', '".now()."', 'MOD', 'Modify schedule')";
-		$sql->Insert($query);
-
-		$query ="DELETE FROM ".$this->tbl."_masses ";
+		$this->id=$sql->Edit("reservation",$MyOpt["tbl"]."_calendrier",$this->id,$t);
+		
+		$query ="UPDATE ".$this->tbl."_masses SET uid_pilote=".$this->uid_pilote." ";
 		$query.="WHERE uid_vol='$this->id' AND uid_place=1";
 		$sql->Delete($query);
 
 		if ($this->uid_instructeur>0)
-		  {
-			$query ="DELETE FROM ".$this->tbl."_masses ";
+		{
+			$query ="UPDATE ".$this->tbl."_masses SET uid_pilote=".$this->uid_instructeur." ";
 			$query.="WHERE uid_vol='$this->id' AND uid_place=2";
 			$sql->Delete($query);
-		  }
+		}
 
 		return "";
 	}

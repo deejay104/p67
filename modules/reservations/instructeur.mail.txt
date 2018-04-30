@@ -1,0 +1,10 @@
+Bonjour,
+
+Je t'ai ajouté en tant qu'instructeur sur la réservation suivante :
+
+{avion} du {dte_deb} au {dte_fin}
+
+<a href="{url}">Détail</a>
+
+A bientôt au club
+{pilote}

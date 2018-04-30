@@ -45,7 +45,7 @@
 
 // ---- Variables d'affichage
 	$l = 100;
-	$h = 20;
+	$h = 16;
 
 // ---- Récupère les paramètres
 	$mid=(is_numeric($_REQUEST["mid"]) ? $_REQUEST["mid"] : 0);

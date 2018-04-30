@@ -90,6 +90,8 @@ class rex_class{
 				$this->data[$k]=$v;
 			}
 		}
+		
+		$this->avion=new ress_class($this->data["uid_avion"],$sql);
 	}
 
 
@@ -164,6 +166,18 @@ class rex_class{
 				}
 				$ret.="</select>";
 			}
+			else if ($key=="uid_avion")
+		  	{
+				$ret="<select id='".$key."' name=\"".$formname."[$key]\">";
+				$lstress=ListeRessources($this->sql);
+
+				foreach($lstress as $i=>$rid)
+				{
+					$resr=new ress_class($rid,$this->sql);
+					$ret.="<option value='".$rid."' ".(($txt==$rid) ? "selected" : "").">".$resr->immatriculation."</option>";
+				}
+				$ret.="</select>";
+			}
 			else
 			{
 				$ret="<INPUT id='".$key."'  name=\"".$formname."[$key]\" id=\"$key\" value=\"$ret\" ".(($type!="") ? "type=\"".$type."\"" : "").">";
@@ -199,6 +213,10 @@ class rex_class{
 			else if ($key=="status")
 			{
 				$ret=$tabValeurRex[$txt];
+			}
+			else if ($key=="uid_avion")
+			{
+				$ret=$this->avion->immatriculation;
 			}
 			else if (($key=="dte_creat") || ($key=="dte_modif"))
 			{

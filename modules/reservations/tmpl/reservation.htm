@@ -122,12 +122,12 @@ function reloadImg2() {
 
 	<!-- BEGIN: aff_reservation -->
 
-		<div class="formulaireTitre">
+	<div class="formulaireTitre">
 	  	Réservation
-	  </div>
+	</div>
 
-		<div class="formulaire">
-			<p>
+	<div class="formulaire">
+		<p>
 				<label for="avion">Avion</label> 
 				<SELECT id="avion" name="form_uid_ress" OnChange="reservation.submit();" style='width: 220px;'>
 				<!-- BEGIN: lst_avion -->
@@ -168,9 +168,21 @@ function reloadImg2() {
 				<OPTION value="{uid_instructeur}" {chk_instructeur}>{nom_instructeur}</OPTION>
 				<!-- END: lst_instructeur -->
 			</SELECT>
-			<img id="imgdispo" src="api.php?mod=membres&rub=checkdispo&mid={form_uid_instructeur}&deb={deb}&fin={fin}">
+			<img id="imgdispo" src="api.php?mod=membres&rub=checkdispo&mid={form_uid_instructeur}&deb={deb}&fin={fin}" style='height:16px;'>
 		</p>
 	<!-- END: aff_instructeur -->
+
+	<!-- BEGIN: aff_tarif -->
+		<p>
+			<label for="tarif">Tarif</label>
+			<SELECT id="tarif" name="form_tarif" style='width: 220px;'>
+				<!-- BEGIN: lst_tarif -->
+				<OPTION value="{tarif}" {chk_tarif}>{nom_tarif}</OPTION>
+				<!-- END: lst_tarif -->
+			</SELECT>
+		</p>
+	<!-- END: aff_tarif -->
+
 		<p>
 			<label for="destination" title="Préciser la destination ou LOCAL pour un vol local.">Destination</label>
 			<INPUT id="destination" name="form_destination" value="{form_destination}" style='width: 220px!important;'>

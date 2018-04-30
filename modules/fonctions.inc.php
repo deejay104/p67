@@ -55,7 +55,7 @@ function myPrint($txt)
 	}
 	else
 	{
-		$gl_myprint_txt.=$txt."<br />";
+		$gl_myprint_txt.=utf8_encode($txt);
 	}
 }
 

@@ -439,7 +439,7 @@ body>.main { /* hack necessary for correct display of the height with IE and Moz
 .resaInfos { border: 1px solid #013366; border-radius: 4px; padding: 4px; }
 
 .formulaire { margin-bottom: 10px;  }
-.formulaire p { margin: 0px; }
+.formulaire p { margin: 0px; padding-bottom: 2px;}
 .formulaire label { display: inline-block; width: 180px; margin-right: 10px; text-align: left; vertical-align: top; }
 .formulaire span { display: inline-block; width:160px; } /* Overlapped by responsive */
 .formulaire2 span { display: inline-block; width:450px; border: 1px solid #013366; border-radius: 4px; padding: 4px; }

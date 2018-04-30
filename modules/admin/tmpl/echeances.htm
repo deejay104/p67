@@ -51,7 +51,12 @@
 			<INPUT type="text" name="form_cout[{form_id}]" style="width:80px;" value="{form_cout}">
 		</td>
 		<td>
-			<INPUT type="text" name="form_droit[{form_id}]" style="width:50px;" value="{form_droit}" maxlength="3">
+			<select name="form_droit[{form_id}]">
+				<option value="">Tout le monde</option>
+	<!-- BEGIN: lst_groupe -->
+				<option value="{form_groupe}" {select_groupe}>{form_groupe}</option>
+	<!-- END: lst_groupe -->
+			</select>
 		</td>
 		<td>
 			<select name="form_multi[{form_id}]">

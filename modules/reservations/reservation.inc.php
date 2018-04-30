@@ -378,6 +378,39 @@
 
 	$tmpl_x->parse("corps.aff_reservation.aff_instructeur");
 
+
+	// Tarif
+
+	$query="SELECT * FROM ".$MyOpt["tbl"]."_tarifs WHERE reservation<>'' AND ress_id='".$resa["resa"]->uid_ressource."'";		
+	$sql->Query($query);		
+	for($i=0; $i<$sql->rows; $i++)
+	{ 
+		$sql->GetRow($i);
+
+		$tmpl_x->assign("tarif", $sql->data["code"]);
+		$tmpl_x->assign("nom_tarif", $sql->data["reservation"]);
+		if ($sql->data["code"]==$resa["resa"]->tarif)
+		{
+			$tmpl_x->assign("chk_tarif", "selected");
+		}
+		else if ( ($sql->data["defaut_ins"]=="oui") && ($resa["resa"]->uid_instructeur>0) && ($resa["resa"]->tarif=="") )
+		{
+			$tmpl_x->assign("chk_tarif", "selected");
+		}
+		else if ( ($sql->data["defaut_pil"]=="oui") && ($resa["resa"]->tarif=="") )
+		{
+			$tmpl_x->assign("chk_tarif", "selected");
+		}
+		else
+		{
+			$tmpl_x->assign("chk_tarif", "");
+		}
+
+		$tmpl_x->parse("corps.aff_reservation.aff_tarif.lst_tarif");
+
+	}
+	$tmpl_x->parse("corps.aff_reservation.aff_tarif");
+
 	
 	
 	// Horaires

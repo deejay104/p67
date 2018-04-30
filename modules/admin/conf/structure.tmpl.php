@@ -521,6 +521,7 @@ $tabTmpl=Array
 		"ress_id" => Array("Type" => "int(10) unsigned", "Index" => "1", ),
 		"code" => Array("Type" => "varchar(2)", "Index" => "1", ),
 		"nom" => Array("Type" => "varchar(20)", ),
+		"reservation" => Array("Type" => "varchar(20)", ),
 		"pilote" => Array("Type" => "varchar(6)", ),
 		"instructeur" => Array("Type" => "varchar(6)", ),
 		"reduction" => Array("Type" => "int(11)", ),

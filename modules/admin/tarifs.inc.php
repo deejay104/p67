@@ -55,6 +55,7 @@
 					"reduction"=>(is_numeric($tarif_reduction[$i])) ? $tarif_reduction[$i] : 0,
 					"code"=>substr($tarif_code[$i],0,2),
 					"nom"=>substr($tarif_nom[$i],0,20),
+					"reservation"=>substr($tarif_reservation[$i],0,20),
 					"defaut_pil"=>'non',
 					"defaut_ins"=>'non'
 				);
@@ -128,6 +129,7 @@
 		$tmpl_x->assign("tarif_immat", strtoupper($sql->data["immatriculation"]));
 		$tmpl_x->assign("tarif_code", $sql->data["code"]);
 		$tmpl_x->assign("tarif_nom", $sql->data["nom"]);
+		$tmpl_x->assign("tarif_reservation", $sql->data["reservation"]);
 		$tmpl_x->assign("tarif_pilote", $sql->data["pilote"]);
 		$tmpl_x->assign("tarif_instructeur", $sql->data["instructeur"]);
 		$tmpl_x->assign("tarif_reduction", $sql->data["reduction"]);

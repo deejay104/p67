@@ -138,7 +138,7 @@
 // ---- Charge les templates
 	require ("class/xtpl.inc.php");
 
-// ---- Charge les class
+// ---- Charge les classes
 	require ("class/user.inc.php");
 	require ("class/ressources.inc.php");
 

@@ -159,7 +159,7 @@ class user_class{
 			}
 
 			// Charge les droits
-			$query = "SELECT groupe FROM ".$this->tbl."_droits WHERE uid='$uid' ORDER BY groupe";
+			$query = "SELECT id,groupe FROM ".$this->tbl."_droits WHERE uid='$uid' ORDER BY groupe";
 			$sql->Query($query);
 			$this->data["droits"]="";
 			$s="";
@@ -167,7 +167,7 @@ class user_class{
 			for($i=0; $i<$sql->rows; $i++)
 			{ 
 				$sql->GetRow($i);
-				$this->groupe[$sql->data["groupe"]]=true;
+				$this->groupe[$sql->data["groupe"]]=$sql->data["id"];
 				$this->data["droits"].=$s.$sql->data["groupe"];
 				$s=",";
 			}
@@ -545,6 +545,25 @@ class user_class{
 		  	  		$ret.="<input type='checkbox' name='form_lache[".$avion["idavion"]."]' ".(($avion["idlache"]>0) ? "checked" : "")." value='".(($avion["idlache"]>0) ? $avion["idlache"] : "N")."' /> ".$avion["avion"]->immatriculation."<br />";
 		  	  	  }
 			  }
+ 			else if ($key=="droits")
+		  	{
+				$ret="";
+				$sql=$this->sql;
+				$query="SELECT id,groupe, description FROM ".$this->tbl."_groupe ORDER BY description";
+				$sql->Query($query);
+		
+				for($i=0; $i<$sql->rows; $i++)
+				{ 
+					$sql->GetRow($i);
+					// $ret.=(($sql->data["description"]!="") ? $sql->data["description"]." (".$sql->data["groupe"].")" : $sql->data["groupe"])."<br/>";
+		  	  		$ret.="<input type='checkbox' name='form_droits[".$sql->data["groupe"]."]' ".(($this->groupe[$sql->data["groupe"]]>0) ? "checked" : "")." value='".$sql->data["groupe"]."' /> ".$sql->data["description"]." (".$sql->data["groupe"].")<br />";
+				}
+
+				if (GetDroit("SYS"))
+				{
+					$ret.="<input type='checkbox' name='form_droits[SYS]' ".(($this->groupe["SYS"]>0) ? "checked" : "")." value='SYS' /> Super Administrateur (SYS)<br />";
+				}
+			}
  			else if ($key=="pere")
 		    {
 					$sql=$this->sql;
@@ -738,10 +757,12 @@ class user_class{
 				for($i=0; $i<$sql->rows; $i++)
 				{ 
 					$sql->GetRow($i);
-					$ret.=(($sql->data["description"]!="") ? $sql->data["description"]." (".$sql->data["groupe"].")" : $sql->data["groupe"])."<br/>";
+					if (($sql->data["groupe"]!="SYS") || GetDroit("SYS"))
+					{
+						$ret.=(($sql->data["description"]!="") ? $sql->data["description"]." (".$sql->data["groupe"].")" : $sql->data["groupe"])."<br/>";
+					}
 				}
 			}
-//				$ret="<span  id='".$key."'>".$ret."</span>";
 		}
 	
 		return $ret;
@@ -1152,22 +1173,75 @@ class user_class{
 		$td["dte_maj"]=now();
 		$sql->Edit("user",$this->tbl."_utilisateurs",$this->uid,$td);
 
-		
-// Ne pas supprimer tous les groupes.
-// Charger la liste en base et comparer avec ce qui est demander
-// Ignorer SYS si on est pas SYS (pas ajouter, pas retirer)
-//		$this->RazGroupe();
-
-		$trole=preg_split("/,/",$this->data["droits"]);
-		$this->data["droits"]="";
-		$s="";
-		foreach ($trole AS $grp)
-		{
-			$this->data["droits"].=$s.$this->AddGroupe($grp);
-			$s=",";
-		}
 	}
 
+	function SaveDroits($tabDroits)
+	{
+		global $uid;
+
+		$sql=$this->sql;
+
+		// Charge les enregistrements
+		$query = "SELECT * FROM ".$this->tbl."_groupe";
+		$sql->Query($query);
+		$tabgrp=array();
+		for($i=0; $i<$sql->rows; $i++)
+		{ 
+			$sql->GetRow($i);
+			if (($sql->data["groupe"]!="SYS") || (GetDroit("SYS")))
+			{
+				$tabgrp[$sql->data["groupe"]]["bd"]=$sql->data["id"];
+				$tabgrp[$sql->data["groupe"]]["new"]=0;
+				$tabgrp[$sql->data["groupe"]]["old"]=0;
+			}
+		}
+		
+		// Charge les nouvelles valeurs
+		if (is_array($tabDroits))
+		{
+			foreach($tabDroits as $g=>$d)
+			{
+				if (($g!="SYS") || (GetDroit("SYS")))
+				{
+					$tabgrp[$g]["new"]=1;
+				}
+			}
+		}
+
+		// Charge les anciennnes
+		if (is_array($this->groupe))
+		{
+			foreach($this->groupe as $g=>$id)
+			{
+				if (($g!="SYS") || (GetDroit("SYS")))
+				{
+					$tabgrp[$g]["old"]=$id;
+				}
+			}
+		}
+		
+		// Vérifie la différence
+		foreach($tabgrp as $grp=>$v)
+		{
+			if (($v["new"]==1) && ($v["old"]>0))
+			{
+				// On ne fait rien
+			}
+			else if (($v["new"]==0) && ($v["old"]>0))
+			{
+				// Suppression du groupe
+				$this->DelGroupe($grp);
+			}
+			else if (($v["new"]==1) && ($v["old"]==0))
+			{
+				// Ajout du groupe
+				$this->AddGroupe($grp);
+			}
+		}
+		
+		return "";
+	}
+	
 	function AddGroupe($grp) {
 		global $uid;
 		$sql=$this->sql;
@@ -1179,11 +1253,6 @@ class user_class{
 			$query.="VALUES ('".trim($grp)."' , '".$this->uid."', '$uid', '".now()."')";
 			$sql->Insert($query);
 		}
-		else
-		{
-			$grp="";
-		}
-		return $grp;
 	}
 
 	function DelGroupe($grp) {
@@ -1199,16 +1268,6 @@ class user_class{
 	}
 
 
-	function UpdateResa(){
-		global $uid;
-		$sql=$this->sql;
-
-		$query ="UPDATE ".$this->tbl."_utilisateurs SET aff_jour='".$this->data["aff_jour"]."', aff_mois='".$this->data["aff_mois"]."'";
-		$query.="WHERE id='$this->uid'";
-		$sql->Update($query);
-	}
-
-	
 	function SaveLache($tablache)
 	{
 		global $uid;
@@ -1243,13 +1302,21 @@ class user_class{
 				$sql->Edit("user",$this->tbl."_lache",$v["bd"],array("actif"=>"non"));
 			}
 		}
+		return "";
 	}
 
-	function SaveDonnees()
+	function SaveDonnees($tabDonnees)
 	{ 
 		global $uid;
 		$sql=$this->sql;
-		
+
+		$this->LoadDonneesComp();
+
+		foreach($tabDonnees as $did=>$d)
+		{
+			$this->donnees[$did]["valeur"]=$d;
+		}
+			
 		foreach($this->donnees as $did=>$d)
 		{
 			$td=array("valeur"=>$d["valeur"], "uid"=>$this->uid, "did"=>$did);
@@ -1283,6 +1350,15 @@ class user_class{
 
 		$sql->Edit("user",$this->tbl."_utilisateurs",$this->uid,array("actif"=>'non', "uid_maj"=>$gl_uid, "dte_maj"=>now()));
 	}	
+
+	function UpdateResa(){
+		global $uid;
+		$sql=$this->sql;
+
+		$query ="UPDATE ".$this->tbl."_utilisateurs SET aff_jour='".$this->data["aff_jour"]."', aff_mois='".$this->data["aff_mois"]."'";
+		$query.="WHERE id='$this->uid'";
+		$sql->Update($query);
+	}
 
 
 } # End of class

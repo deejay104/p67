@@ -137,8 +137,8 @@ class mysql_class{
 		if ($res["id"]>0)
 		{
 			$query="UPDATE ".$tab." SET ".$v." WHERE id='".$id."'";
-			$ret=$this->Update($query);
-
+			$this->Update($query);
+			
 			$query ="INSERT INTO ".$MyOpt["tbl"]."_historique (`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
 			$query.="VALUES ('".$class."', '".$tab."', '$id', '$uid', '".now()."', 'MOD', '".(($comment!="") ? $comment : $c)."')";
 			$this->Insert($query);
@@ -146,13 +146,13 @@ class mysql_class{
 		else
 		{
 			$query="INSERT INTO ".$tab." SET ".$v;
-			$ret=$this->Insert($query);
+			$id=$this->Insert($query);
 
 			$query ="INSERT INTO ".$MyOpt["tbl"]."_historique (`class` ,`table` ,`idtable` ,`uid_maj` ,`dte_maj` ,`type` ,`comment`) ";
-			$query.="VALUES ('".$class."', '".$tab."', '$ret', '$uid', '".now()."', 'ADD', '".(($comment!="") ? $comment : $c)."')";
+			$query.="VALUES ('".$class."', '".$tab."', '$id', '$uid', '".now()."', 'ADD', '".(($comment!="") ? $comment : $c)."')";
 			$this->Insert($query);
 		}
-		return $ret;
+		return $id;
 	}
 
 	# MySQL error message function

@@ -110,6 +110,7 @@
 				$resa["resa"]->uid_debite=$form_uid_debite;
 				$resa["resa"]->uid_instructeur=$form_uid_instructeur;
 				$resa["resa"]->uid_ressource=$form_uid_ress;
+				$resa["resa"]->tarif=$form_tarif;
 				$resa["resa"]->destination=$form_destination;
 				$resa["resa"]->nbpersonne=$form_nbpersonne;
 				$resa["resa"]->invite=$form_invite;
@@ -168,31 +169,50 @@
 	  {
 		$msg_err2.=$resa["resa"]->Save();
 
+		$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql);
+
 		if (($id==0) && ($resa["resa"]->invite=='oui'))
 		{
-			$resa["pilote"]=new user_class($resa["resa"]->uid_pilote,$sql);
+			$t=array(
+				"titre"=>"Recherche passager(s)",
+				"message"=>addslashes("Bonjour,\n\nIl me reste des places dans mon vol du ".sql2date($resa["resa"]->dte_deb).". Faites moi savoir si cela vous interresse.\n\n".$resa["pilote"]->Aff("fullname","val")),
+				"mail" =>"non",
+				"uid_creat"=>$resa["resa"]->uid_pilote,
+				"dte_creat"=>now(),
+				"uid_modif"=>$gl_uid,
+				"dte_modif"=>now(),
+			);
 
-			$query="INSERT INTO ".$MyOpt["tbl"]."_actualites SET ";
-			$query.="titre='Recherche passager(s)',";
-			$query.="message='".addslashes("Bonjour,\n\nIl me reste des places dans mon vol du ".sql2date($resa["resa"]->dte_deb).". Faites moi savoir si cela vous interresse.\n\n".$resa["pilote"]->Aff("fullname","val"))."',";
-			$query.="uid_creat='".$resa["resa"]->uid_pilote."',";
-			$query.="dte_creat='".now()."',";
-			$query.="uid_modif='".$resa["resa"]->uid_pilote."',";
-			$query.="dte_modif='".now()."'";
-
-			$id=$sql->Insert($query);
+			$sql->Edit("actualites",$MyOpt["tbl"]."_actualites",0,$t);
 		}
 		
 		if ($id==0)
 		  {	$id=$resa["resa"]->id; }
 
 		if (($msg_err2=="") && ($msg_err==""))
-		  {
+		{
+			// Email l'instructeur
+			if ($resa["resa"]->uid_instructeur>0)
+			{
+				$resi=new user_class($resa["resa"]->uid_instructeur,$sql);
+				$resr=new ress_class($resa["resa"]->uid_ressource,$sql);
+				
+				$tabvar=array();
+				$tabvar["pilote"]=$resa["pilote"]->Aff("fullname","val");
+				$tabvar["avion"]=strtoupper($resr->immatriculation);
+				$tabvar["dte_deb"]=sql2date($resa["resa"]->dte_deb);
+				$tabvar["dte_fin"]=sql2date($resa["resa"]->dte_fin);
+				$tabvar["url"]=$MyOpt["host"]."/index.php?mod=reservations&rub=reservation&id=".$resa["resa"]->id;
+
+				SendMailFromFile($resa["pilote"]->mail,$resi->mail,array(),"[".$MyOpt["site_title"]."] : Notification de réservation",$tabvar,"instructeur");
+			}
+			
+			// Valide la page
 			$_SESSION['tab_checkpost'][$checktime]=$checktime;
 			$affrub="index";
 			$ress=$form_uid_ress;
 			$ok=0;
-		  }
+		}
 		else
 		  {
 		  	$msg_err.=$msg_err2;
