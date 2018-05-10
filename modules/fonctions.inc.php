@@ -61,15 +61,22 @@ function myPrint($txt)
 
 
 // Affiche un temps en minute en heures/minutes
-function AffTemps($tps,$short="yes") {
+function AffTemps($tps,$short="yes")
+{
+	if ($tps<0)
+	{
+		$s="-";
+		$tps=-$tps;
+	}
+	
 	$th=floor($tps/60);
 	$tm=$tps-$th*60;
 	$tm=substr("00",0,2-strlen($tm)).$tm;
 
 	if (($th>0) || ($short=="no"))
-	  { return $th."h ".$tm; }
+	  { return $s.$th."h ".$tm; }
 	else
-	  { return $tm."min"; }
+	  { return $s.$tm."min"; }
 }
 
 // Transforme une date en format SQL

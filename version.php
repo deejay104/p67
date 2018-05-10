@@ -1,6 +1,6 @@
 <?
 
-$myrev = 486;
+$myrev = 487;
 $version = "2.14.".$myrev;
 
 ?>
