@@ -101,9 +101,35 @@ class rex_class{
 
 		$txt=$this->data[$key];
 
+		// Variables
+		$tabCol=array();
+		$tabLig=array();
+		$tabBg=array();
 
-		// Ne prend que ceux qui sont activÃ©s
+		$tabCol[1]="Très Probable";
+		$tabCol[2]="Probable";
+		$tabCol[3]="Très improbable";
+		$tabCol[4]="Improbable";
+		$tabCol[5]="Non défini";
 
+		$tabLig[1]="Accident matériel et corporel";
+		$tabLig[2]="Accident corporel";
+		$tabLig[3]="Accident matériel";
+		$tabLig[4]="Incident grave";
+		$tabLig[5]="Incident";
+		$tabLig[6]="Annomalie";
+		$tabLig[7]="Non défini";
+
+		$tabBg["11"]="#ff0000"; $tabBg["12"]="#ff0000"; $tabBg["13"]="#ff0000"; $tabBg["14"]="#ffff00"; $tabBg["15"]="#ffffff";
+		$tabBg["21"]="#ff0000"; $tabBg["22"]="#ff0000"; $tabBg["23"]="#ff0000"; $tabBg["24"]="#ffff00"; $tabBg["25"]="#ffffff";
+		$tabBg["31"]="#ff0000"; $tabBg["32"]="#ff0000"; $tabBg["33"]="#ffc529"; $tabBg["34"]="#ffff00"; $tabBg["35"]="#ffffff";
+		$tabBg["41"]="#ff0000"; $tabBg["42"]="#ffc529"; $tabBg["43"]="#ffff00"; $tabBg["44"]="#00ff00"; $tabBg["45"]="#ffffff";
+		$tabBg["51"]="#ffc529"; $tabBg["52"]="#ffff00"; $tabBg["53"]="#ffff00"; $tabBg["54"]="#00ff00"; $tabBg["55"]="#ffffff";
+		$tabBg["61"]="#ffff00"; $tabBg["62"]="#00ff00"; $tabBg["63"]="#00ff00"; $tabBg["64"]="#00ff00"; $tabBg["65"]="#ffffff";
+		$tabBg["71"]="#ffffff"; $tabBg["72"]="#ffffff"; $tabBg["73"]="#ffffff"; $tabBg["74"]="#ffffff"; $tabBg["75"]="#ffffff";
+
+
+		
 		$type="";
 		if (is_numeric($key))
 		  { $ret="******"; }
@@ -178,6 +204,30 @@ class rex_class{
 				}
 				$ret.="</select>";
 			}
+			else if ($key=="risque")
+			{
+				$ret ="<style>.risqueREX td { width:140px; text-align: center; border: 1px solid #000000; font-weight: bold; }</style>";
+
+				$ret.="<table class='risqueREX'>";
+				$ret.="<tr><th></th>";
+				foreach($tabCol as $i=>$d)
+				{
+					$ret.="<th>".$d."</th>";
+				}
+				$ret.="</tr>";
+
+				foreach($tabLig as $l=>$ln)
+				{
+					$ret.="<tr><th>".$ln."</th>";
+					foreach($tabCol as $c=>$cn)
+					{
+						$ret.="<td style='background-color:".$tabBg[$l.$c].";'>"."<input type='radio' name='".$formname."[$key]' value='".$l.$c."' ".(($txt==$l.$c) ? "checked='checked'" : "")."></td>";
+					}
+					$ret.="</tr>";
+				}
+
+				$ret.="</table>";
+			}
 			else
 			{
 				$ret="<INPUT id='".$key."'  name=\"".$formname."[$key]\" id=\"$key\" value=\"$ret\" ".(($type!="") ? "type=\"".$type."\"" : "").">";
@@ -221,6 +271,30 @@ class rex_class{
 			else if (($key=="dte_creat") || ($key=="dte_modif"))
 			{
 				$ret=sql2date($ret);
+			}
+			else if ($key=="risque")
+			{
+				$ret ="<style>.risqueREX td { width:140px; text-align: center; border: 1px solid #000000; font-weight: bold; }</style>";
+
+				$ret.="<table class='risqueREX'>";
+				$ret.="<tr><th></th>";
+				foreach($tabCol as $i=>$d)
+				{
+					$ret.="<th>".$d."</th>";
+				}
+				$ret.="</tr>";
+
+				foreach($tabLig as $l=>$ln)
+				{
+					$ret.="<tr><th>".$ln."</th>";
+					foreach($tabCol as $c=>$cn)
+					{
+						$ret.="<td style='background-color:".$tabBg[$l.$c].";'>".(($txt==$l.$c) ? "x" : "")."</td>";
+					}
+					$ret.="</tr>";
+				}
+
+				$ret.="</table>";
 			}
 		}
 	

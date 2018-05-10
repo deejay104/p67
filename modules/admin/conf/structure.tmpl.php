@@ -503,6 +503,7 @@ $tabTmpl=Array
 		"typevol" => Array("Type" => "varchar(30)" ),
 		"typeevt" => Array("Type" => "varchar(30)" ),
 		"uid_avion" => Array("Type" => "int(10) unsigned", "Index"=>1 ),
+		"risque" => Array("Type" => "varchar(2)" ),
 		"actif" => Array("Type" => "enum('oui','non')","Index"=>1, "Default"=>"oui" ),
 		"dte_rex" => Array("Type" => "date", "Default" => "0000-00-00" ),
 		"uid_creat" => Array("Type" => "int(10) unsigned","Index"=>1 ),

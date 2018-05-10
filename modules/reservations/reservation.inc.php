@@ -101,7 +101,6 @@
 	  	$resa["resa"]->uid_ressource=$form_uid_ress;
 	  	$resa["resa"]->tpsestime=$form_tpsestime;
 	  	$resa["resa"]->tpsreel=$form_tpsreel;
-	  	$resa["resa"]->tpsreel=$form_tpsreel;
 	  	$resa["resa"]->horadeb=$form_horadeb;
 	  	$resa["resa"]->horafin=$form_horafin;
 	  	$resa["resa"]->potentielh=$form_potentielh;
@@ -479,7 +478,7 @@
 	// Potentiel restant
 	$tmpl_x->assign("potentiel", $resa["resa"]->AffPotentiel("prev"));
 	
-	$tmpl_x->assign("form_potentiel", $resa["resa"]->AffPotentiel("fin"));
+	$tmpl_x->assign("form_potentiel", $resa["resa"]->AffPotentiel("estime"));
 	$tmpl_x->assign("form_potentielh", $resa["resa"]->potentielh);
 	$tmpl_x->assign("form_potentielm", $resa["resa"]->potentielm);
 

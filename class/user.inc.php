@@ -934,16 +934,16 @@ class user_class{
 	function DernierVol($type="",$tps=0) {
 		$sql=$this->sql;
 		if ($type=="DC")
-		  {
-				// Dernier vol en DC
-				$query="SELECT id, tpsreel, dte_deb AS dte, uid_instructeur AS ins FROM `".$this->tbl."_calendrier` WHERE uid_pilote = ".$this->uid." AND uid_instructeur>0 AND ".(($tps>0) ? "tpsreel>='".$tps."'" : "tpsreel>0")." ORDER BY dte_deb DESC LIMIT 0,1";
-				$res=$sql->QueryRow($query);
-		  }
+		{
+			// Dernier vol en DC
+			$query="SELECT id, tpsreel, dte_deb AS dte, uid_instructeur AS ins FROM `".$this->tbl."_calendrier` WHERE uid_pilote = ".$this->uid." AND uid_instructeur>0 AND ".(($tps>0) ? "tpsreel>='".$tps."'" : "tpsreel>0")." ORDER BY dte_deb DESC LIMIT 0,1";
+			$res=$sql->QueryRow($query);
+		}
 		else
-		  {
-				$query="SELECT id, tpsreel, dte_deb AS dte, uid_instructeur AS ins FROM `".$this->tbl."_calendrier` WHERE uid_pilote = ".$this->uid." AND ".(($tps>0) ? "tpsreel>='".$tps."'" : "tpsreel>0")." ORDER BY dte_deb DESC LIMIT 0,1";
-				$res=$sql->QueryRow($query);
-		  }
+		{
+			$query="SELECT id, tpsreel, dte_deb AS dte, uid_instructeur AS ins FROM `".$this->tbl."_calendrier` WHERE (uid_pilote=".$this->uid." OR uid_instructeur=".$this->uid.") AND ".(($tps>0) ? "tpsreel>='".$tps."'" : "tpsreel>0")." ORDER BY dte_deb DESC LIMIT 0,1";
+			$res=$sql->QueryRow($query);
+		}
 
 		return $res;
 	}

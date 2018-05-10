@@ -148,7 +148,7 @@ class resa_class{
 		$query="SELECT alertpotentiel,maxpotentiel FROM ".$this->tbl."_ressources WHERE id='".$this->uid_ressource."'";
 		$res=$sql->QueryRow($query);
 
-		$t=$res["maxpotentiel"]*60-$this->Potentiel($affvol);
+		$t=$res["maxpotentiel"]*60-$this->TempsVols($affvol);
 		if (floor($t/60)<0)
 		{
 			$ret="<font color=red>".AffTemps($t)."</font>";
@@ -164,7 +164,7 @@ class resa_class{
 		return $ret;
 	}
 
-	function Potentiel($affvol="deb")
+	function TempsVols($affvol="deb")
 	{ global $MyOpt;
 		$sql=$this->sql;
 		if (($affvol!="prev") && ($this->potentiel>0))
@@ -180,7 +180,7 @@ class resa_class{
 
 		$t=$respot["tot"]+$resreel["tot"];
 
-		if ($affvol=="prev")
+		if (($affvol=="prev") || ($affvol=="estime"))
 		{
 			$query="SELECT dte_fin FROM ".$this->tbl."_calendrier WHERE tpsreel<>0 AND dte_deb>='".$respot["dte_fin"]."' AND dte_fin<='".$this->dte_deb."' AND uid_avion='".$this->uid_ressource."' ORDER BY dte_fin DESC LIMIT 0,1";
 			$reslast=$sql->QueryRow($query);
@@ -196,7 +196,12 @@ class resa_class{
 			$t=$t+$resestim["tot"];
 		}
 
-		if (($affvol=="fin") && ($this->tpsreel>0))
+		if (($affvol=="estime") && ($this->tpsestime>0) && ($this->tpsreel==0))
+		{
+			$t=$t+$this->tpsestime;
+		}		
+
+		if ((($affvol=="fin") || ($affvol=="estime")) && ($this->tpsreel>0))
 		{
 			$t=$t+$this->tpsreel;
 		}		
