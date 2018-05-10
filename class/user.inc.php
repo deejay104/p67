@@ -413,54 +413,54 @@ class user_class{
  		  	  { $mycond=false; }
  		  }
 		else if ($key=="lache")
-		  {
-				if (GetDroit("ModifUserLache"))
+		{
+			if (GetDroit("ModifUserLache"))
  		  	  { $mycond=true; }
 				else
  		  	  { $mycond=false; }
- 		  }
+ 		}
 		else if ($key=="decouvert")
-		  {
+		{
 			if (GetDroit("ModifUserDecouvert"))
  		  	  { $mycond=true; }
 			else
  		  	  { $mycond=false; }
-		  }
+		}
 		else if ($key=="idcpt")
-		  {
+		{
 			if (GetDroit("ModifUserIdCpt"))
  		  	  { $mycond=true; }
 			else
  		  	  { $mycond=false; }
- 		  }
+ 		}
 		else if ($key=="tarif")
-		  {
+		{
 			if (GetDroit("ModifUserTarif"))
  		  	  { $mycond=true; }
 			else
  		  	  { $mycond=false; }
-		  }
+		}
 		else if ($key=="type")
-		  {
+		{
 			if (GetDroit("ModifUserType"))
  		  	  { $mycond=true; }
 			else
  		  	  { $mycond=false; }
-		  }
+		}
 		else if ($key=="pere")
-		  {
+		{
 			if (GetDroit("ModifParents"))
  		  	  { $mycond=true; }
 			else
  		  	  { $mycond=false; }
-		  }
+		}
 		else if ($key=="mere")
-		  {
+		{
 			if (GetDroit("ModifParents"))
  		  	  { $mycond=true; }
 			else
  		  	  { $mycond=false; }
-		  }
+		}
 
 		// Si on a le droit de modif on autorise
 		if (GetDroit("ModifUserAll"))
@@ -905,33 +905,29 @@ class user_class{
 		return (($t>0) ? $t : "0");
 	}
 
-	function AffDernierVol() {
+	function AffDernierVol()
+	{
 		$sql=$this->sql;
+
+		$res=$this->DernierVol("",0);
+		$dc = (($res["ins"]>0) && ($res["ins"]!=$this->uid)) ? " (DC)" : "";
+		$l=floor((time()-strtotime($res["dte"]))/86400);
+		$d=sql2date($res["dte"],"jour");
+
 		if ($this->type=="eleve")
-		  {
-			// Dernier vol en DC
-			$res=$this->DernierVol("",0);
-
-			$dc = (($res["ins"]>0) ? "(DC)" : "");
-			$d=sql2date($res["dte"],"jour");
-			$l=floor((time()-strtotime($res["dte"]))/86400);
-
-			$ret=(($l<30) ? $d." $dc" : (($l<45) ? "<font color=orange>$d $dc</font>": "<font color=red>$d $dc</font>"));
-		  }
+		{
+			$ret=(($l<30) ? $d.$dc : (($l<45) ? "<font color=orange>".$d.$dc."</font>" : "<font color=red>$d $dc</font>"));
+		}
 		else if (($this->type!="invite") && ($this->type!="membre"))
-		  {
-			$res=$this->DernierVol("",0);
-
-			$d=sql2date($res["dte"],"jour");
-			$l=floor((time()-strtotime($res["dte"]))/86400);
-
-			$ret=(($l<60) ? $d : (($l<90) ? "<font color=orange>$d</font>" : "<font color=red>$d</font>"));
-		  }
+		{
+			$ret=(($l<60) ? $d.$dc : (($l<90) ? "<font color=orange>".$d.$dc."</font>" : "<font color=red>$d</font>"));
+		}
 
 		return $ret;
 	}
 
-	function DernierVol($type="",$tps=0) {
+	function DernierVol($type="",$tps=0)
+	{
 		$sql=$this->sql;
 		if ($type=="DC")
 		  {
@@ -941,7 +937,7 @@ class user_class{
 		  }
 		else
 		  {
-				$query="SELECT id, tpsreel, dte_deb AS dte, uid_instructeur AS ins FROM `".$this->tbl."_calendrier` WHERE uid_pilote = ".$this->uid." AND ".(($tps>0) ? "tpsreel>='".$tps."'" : "tpsreel>0")." ORDER BY dte_deb DESC LIMIT 0,1";
+				$query="SELECT id, tpsreel, dte_deb AS dte, uid_instructeur AS ins FROM `".$this->tbl."_calendrier` WHERE (uid_pilote = '".$this->uid."' OR uid_instructeur = '".$this->uid."') AND ".(($tps>0) ? "tpsreel>='".$tps."'" : "tpsreel>0")." ORDER BY dte_deb DESC LIMIT 0,1";
 				$res=$sql->QueryRow($query);
 		  }
 
