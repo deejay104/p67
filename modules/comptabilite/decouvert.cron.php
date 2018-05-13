@@ -40,7 +40,7 @@
 		$usr = new user_class($id,$sql,false,true);
 		$ret=true;
 		$solde=$usr->CalcSolde();
-		if (($m<-$usr->data["decouvert"]) && ($usr->mail!="") && ($usr->virtuel=="non"))
+		if (($solde<-$usr->data["decouvert"]) && ($usr->mail!="") && ($usr->virtuel=="non"))
 		{
 			myPrint($usr->fullname." - Solde: ".$solde);
 

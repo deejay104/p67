@@ -198,7 +198,7 @@
 		<div class="encadreTitre">Rechercher dans les actualités</div>
 		<form name="recherche" method="post" action="index.php" enctype="multipart/form-data">
 			<input type="hidden" name="mod" value="actualites">
-			<p><input type="text" name="search" OnClick="ClearText(event,'Termes à rechercher');" value="Termes à rechercher" OnKeyPress="CapturePost(event);" style="color:#bbbbbb;"></p>
+			<p><input type="text" name="search" OnFocus="ClearText(event,'Termes à rechercher');" value="Termes à rechercher" OnKeyPress="CapturePost(event);" style="color:#bbbbbb;"></p>
 		</form>
 	</div>
 <!-- BEGIN: aff_reservation -->
@@ -223,8 +223,8 @@
 			<input type="hidden" name="id" value="{form_id}">
 			<input type="hidden" name="checktime" value="{form_checktime}">
 	
-			<input type="text" name="form_titre" value="{news_title}"  OnClick="ClearText(event,'{news_title_clear}');"  style="color:#{new_color};"><br />
-			<textarea name="form_message" OnClick="ClearText(event,'{news_message_clear}');"  style="color:#{new_color}; height:51px;">{news_message}</textarea>
+			<input type="text" name="form_titre" value="{news_title}"  OnFocus="ClearText(event,'{news_title_clear}');"  style="color:#{new_color};"><br />
+			<textarea name="form_message" OnFocus="ClearText(event,'{news_message_clear}');"  style="color:#{new_color}; height:51px;">{news_message}</textarea>
 			<p>
 				<input name='fonc' type='submit' value='Poster'>
 			</p>
