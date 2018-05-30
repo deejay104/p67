@@ -25,7 +25,7 @@
 		}
 		else if ($sql->data["type"]=="invite")
 		{
-			$tabUser[$sql->data["id"]]="INS";
+			$tabUser[$sql->data["id"]]="INV";
 		}
 	}
 	
