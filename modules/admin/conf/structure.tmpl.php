@@ -581,6 +581,7 @@ $tabTmpl=Array
 		"actif" => Array("Type" => "enum('oui','non','off')", "Default" => "oui", "Index" => "1", ),
 		"virtuel" => Array("Type" => "enum('oui','non')", "Default" => "non", "Index" => "1", ),
 		"type" => Array("Type" => "enum('pilote','eleve','instructeur','invite','membre','parent','enfant','employe')", "Default" => "pilote", "Index" => "1", ),
+		"groupe" => Array("Type" => "varchar(5)" ),
 		"decouvert" => Array("Type" => "smallint(6)", "Default" => "0", ),
 		"tarif" => Array("Type" => "smallint(6)", "Default" => "0", ),
 		"dte_naissance" => Array("Type" => "date", "Default" => "0000-00-00", ),
